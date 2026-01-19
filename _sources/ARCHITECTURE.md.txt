@@ -154,7 +154,7 @@ graph TB
             LEVEL2[validation_helpers.py<br/>Business Logic]
             LEVEL3[project_validator.py<br/>Domain Interaction]
         end
-        
+
         METRICS[performance_metrics.py<br/>Performance Profiling]
         TYPES[types.py<br/>Data Models]
 
