@@ -1,0 +1,907 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sec_interp.gui.main_dialog &mdash; SecInterp 2.7.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=dfec817d"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs"></script>
+      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
+
+const defaultStyle = document.createElement('style');
+defaultStyle.textContent = `pre.mermaid {
+    /* Same as .mermaid-container > pre */
+    display: block;
+    width: 100%;
+}
+
+pre.mermaid > svg {
+    /* Same as .mermaid-container > pre > svg */
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}
+`;
+document.head.appendChild(defaultStyle);
+
+const fullscreenStyle = document.createElement('style');
+fullscreenStyle.textContent = `.mermaid-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.mermaid-container > pre {
+    display: block;
+    width: 100%;
+}
+
+.mermaid-container > pre > svg {
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}
+
+.mermaid-fullscreen-btn {
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+    line-height: 1;
+    padding: 0;
+    color: #333;
+}
+
+.mermaid-fullscreen-btn:hover {
+    opacity: 100% !important;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-btn.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-btn.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal {
+    display: none;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 95vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.98);
+    z-index: 9999;
+    padding: 20px;
+    overflow: auto;
+}
+
+.mermaid-fullscreen-modal.dark-theme {
+    background: rgba(0, 0, 0, 0.98);
+}
+
+.mermaid-fullscreen-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen {
+    position: relative;
+    width: 95vw;
+    height: 90vh;
+    max-width: 95vw;
+    max-height: 90vh;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen.dark-theme {
+    background: #1a1a1a;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+}
+
+.mermaid-container-fullscreen pre.mermaid {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen .mermaid svg {
+    height: 100% !important;
+    width: 100% !important;
+    cursor: grab;
+}
+
+.mermaid-fullscreen-close {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s;
+    font-size: 24px;
+    line-height: 1;
+    color: #333;
+}
+
+.mermaid-fullscreen-close:hover {
+    background: white;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-close.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-close.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal .mermaid-fullscreen-btn {
+    display: none !important;
+}`;
+document.head.appendChild(fullscreenStyle);
+
+// Detect if page has dark background
+const isDarkTheme = () => {
+    const bgColor = window.getComputedStyle(document.body).backgroundColor;
+    const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
+    if (match) {
+        const r = parseInt(match[1]);
+        const g = parseInt(match[2]);
+        const b = parseInt(match[3]);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        return brightness < 128;
+    }
+    return false;
+};
+
+const load = async () => {
+    await mermaid.run();
+
+    const all_mermaids = document.querySelectorAll(".mermaid");
+    const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
+
+    if ("False" === "True") {
+        const mermaids_to_add_zoom = -1 === -1 ? all_mermaids.length : -1;
+        if(mermaids_to_add_zoom > 0) {
+            var svgs = d3.selectAll("");
+            if(all_mermaids.length !== mermaids_processed.length) {
+                setTimeout(load, 200);
+                return;
+            } else if(svgs.size() !== mermaids_to_add_zoom) {
+                setTimeout(load, 200);
+                return;
+            } else {
+                svgs.each(function() {
+                    var svg = d3.select(this);
+                    svg.html("<g class='wrapper'>" + svg.html() + "</g>");
+                    var inner = svg.select("g");
+                    var zoom = d3.zoom().on("zoom", function(event) {
+                        inner.attr("transform", event.transform);
+                    });
+                    svg.call(zoom);
+                });
+            }
+        }
+    } else if(all_mermaids.length !== mermaids_processed.length) {
+        // Wait for mermaid to process all diagrams
+        setTimeout(load, 200);
+        return;
+    }
+
+    const darkTheme = isDarkTheme();
+
+    // Stop here if not adding fullscreen capability
+    if ("True" !== "True") return;
+
+    const modal = document.createElement('div');
+    modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Fullscreen diagram viewer');
+    modal.innerHTML = `
+        <button class="mermaid-fullscreen-close${darkTheme ? ' dark-theme' : ''}" aria-label="Close fullscreen">✕</button>
+        <div class="mermaid-container-fullscreen${darkTheme ? ' dark-theme' : ''}"></div>
+    `;
+    document.body.appendChild(modal);
+
+    const modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
+
+    let previousScrollOffset = [window.scrollX, window.scrollY];
+
+    const closeModal = () => {
+        modal.classList.remove('active');
+        modalContent.innerHTML = '';
+        document.body.style.overflow = ''
+        window.scrollTo({left: previousScrollOffset[0], top: previousScrollOffset[1], behavior: 'instant'});
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+
+    const allButtons = [];
+
+    document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
+        if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
+            mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            return;
+        }
+
+        const container = document.createElement('div');
+        container.className = 'mermaid-container';
+        mermaidDiv.parentNode.insertBefore(container, mermaidDiv);
+        container.appendChild(mermaidDiv);
+
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+        fullscreenBtn.setAttribute('aria-label', 'View diagram in fullscreen');
+        fullscreenBtn.textContent = '⛶';
+        fullscreenBtn.style.opacity = '50%';
+
+        // Calculate dynamic position based on diagram's margin and padding
+        const diagramStyle = window.getComputedStyle(mermaidDiv);
+        const marginTop = parseFloat(diagramStyle.marginTop) || 0;
+        const marginRight = parseFloat(diagramStyle.marginRight) || 0;
+        const paddingTop = parseFloat(diagramStyle.paddingTop) || 0;
+        const paddingRight = parseFloat(diagramStyle.paddingRight) || 0;
+        fullscreenBtn.style.top = `${marginTop + paddingTop + 4}px`;
+        fullscreenBtn.style.right = `${marginRight + paddingRight + 4}px`;
+
+        fullscreenBtn.addEventListener('click', () => {
+            previousScrollOffset = [window.scroll, window.scrollY];
+            const clone = mermaidDiv.cloneNode(true);
+            modalContent.innerHTML = '';
+            modalContent.appendChild(clone);
+
+            const svg = clone.querySelector('svg');
+            if (svg) {
+                svg.removeAttribute('width');
+                svg.removeAttribute('height');
+                svg.style.width = '100%';
+                svg.style.height = 'auto';
+                svg.style.maxWidth = '100%';
+                svg.style.sdisplay = 'block';
+
+                if ("False" === "True") {
+                    setTimeout(() => {
+                        const g = svg.querySelector('g');
+                        if (g) {
+                            var svgD3 = d3.select(svg);
+                            svgD3.html("<g class='wrapper'>" + svgD3.html() + "</g>");
+                            var inner = svgD3.select("g");
+                            var zoom = d3.zoom().on("zoom", function(event) {
+                                inner.attr("transform", event.transform);
+                            });
+                            svgD3.call(zoom);
+                        }
+                    }, 100);
+                }
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        container.appendChild(fullscreenBtn);
+        allButtons.push(fullscreenBtn);
+    });
+
+    // Update theme classes when theme changes
+    const updateTheme = () => {
+        const dark = isDarkTheme();
+        allButtons.forEach(btn => {
+            if (dark) {
+                btn.classList.add('dark-theme');
+            } else {
+                btn.classList.remove('dark-theme');
+            }
+        });
+        if (dark) {
+            modal.classList.add('dark-theme');
+            modalContent.classList.add('dark-theme');
+            closeBtn.classList.add('dark-theme');
+        } else {
+            modal.classList.remove('dark-theme');
+            modalContent.classList.remove('dark-theme');
+            closeBtn.classList.remove('dark-theme');
+        }
+    };
+
+    // Watch for theme changes
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    observer.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style']
+    });
+};
+
+window.addEventListener("load", load);
+</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            SecInterp
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../USER_GUIDE.html">SecInterp User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">sec_interp</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">SecInterp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../sec_interp.html">sec_interp</a></li>
+      <li class="breadcrumb-item active">sec_interp.gui.main_dialog</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for sec_interp.gui.main_dialog</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span class="c1"># /***************************************************************************</span>
+<span class="c1"># SecInterpDialog</span>
+<span class="c1">#                                 A QGIS plugin</span>
+<span class="c1"># Data extraction for geological interpretation</span>
+<span class="c1"># Generated by Plugin Builder: http://g-sherman.github.io/Qgis-Plugin-Builder/</span>
+<span class="c1">#                             -------------------</span>
+<span class="c1">#        begin                : 2025-11-15</span>
+<span class="c1">#        git sha              : $Format:%H$</span>
+<span class="c1">#        copyright            : (C) 2025 by Juan M Bernales</span>
+<span class="c1">#        email                : juanbernales@gmail.com</span>
+<span class="c1"># ***************************************************************************/</span>
+<span class="c1">#</span>
+<span class="c1"># /***************************************************************************</span>
+<span class="c1"># *                                                                         *</span>
+<span class="c1"># *   This program is free software; you can redistribute it and/or modify  *</span>
+<span class="c1"># *   it under the terms of the GNU General Public License as published by  *</span>
+<span class="c1"># *   the Free Software Foundation; either version 2 of the License, or     *</span>
+<span class="c1"># *   (at your option) any later version.                                   *</span>
+<span class="c1"># *                                                                         *</span>
+<span class="c1"># ***************************************************************************/</span>
+
+<span class="sd">&quot;&quot;&quot;Main Dialog Module.</span>
+
+<span class="sd">Contains the SecInterpDialog class which is the primary UI for the plugin.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">qgis.core</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Qgis</span><span class="p">,</span>
+    <span class="n">QgsProject</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qgis.PyQt.QtCore</span><span class="w"> </span><span class="kn">import</span> <span class="n">QUrl</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qgis.PyQt.QtGui</span><span class="w"> </span><span class="kn">import</span> <span class="n">QDesktopServices</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qgis.PyQt.QtWidgets</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QDialogButtonBox</span><span class="p">,</span>
+    <span class="n">QPushButton</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">InterpretationPolygon</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.gui.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">show_user_message</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.logger_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_logger</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">_NoOpMessageBar</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Safe no-op messagebar when iface is not available.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">pushMessage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_args</span><span class="p">,</span> <span class="o">**</span><span class="n">_kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;No-op implementation of pushMessage.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.legend_widget</span><span class="w"> </span><span class="kn">import</span> <span class="n">LegendWidget</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.main_dialog_cache_handler</span><span class="w"> </span><span class="kn">import</span> <span class="n">CacheHandler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.main_dialog_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">DialogDataAggregator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.main_dialog_export</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExportManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.main_dialog_interpretation</span><span class="w"> </span><span class="kn">import</span> <span class="n">DialogInterpretationManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.main_dialog_messages</span><span class="w"> </span><span class="kn">import</span> <span class="n">MessageManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.main_dialog_preview</span><span class="w"> </span><span class="kn">import</span> <span class="n">PreviewManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.main_dialog_settings</span><span class="w"> </span><span class="kn">import</span> <span class="n">DialogSettingsManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.main_dialog_signals</span><span class="w"> </span><span class="kn">import</span> <span class="n">DialogSignalManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.main_dialog_status</span><span class="w"> </span><span class="kn">import</span> <span class="n">DialogStatusManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.main_dialog_tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">DialogToolManager</span><span class="p">,</span> <span class="n">NavigationManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.main_dialog_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">DialogEntityManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.main_dialog_validation_manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">DialogValidationManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.preview_layer_factory</span><span class="w"> </span><span class="kn">import</span> <span class="n">PreviewLayerFactory</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.ui.main_window</span><span class="w"> </span><span class="kn">import</span> <span class="n">SecInterpMainWindow</span>
+
+
+<div class="viewcode-block" id="SecInterpDialog">
+<a class="viewcode-back" href="../../../sec_interp.gui.main_dialog.html#sec_interp.gui.SecInterpDialog">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SecInterpDialog</span><span class="p">(</span><span class="n">SecInterpMainWindow</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Dialog for the SecInterp QGIS plugin.</span>
+
+<span class="sd">    This dialog provides the user interface and helper methods to populate</span>
+<span class="sd">    combo boxes with layers from the current QGIS project (raster and vector</span>
+<span class="sd">    layers filtered by geometry type). It also exposes the interface and</span>
+<span class="sd">    plugin instance for interaction with the host application.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        iface (QgsInterface): The QGIS interface instance.</span>
+<span class="sd">        plugin_instance (SecInterp): The plugin instance that created this dialog.</span>
+<span class="sd">        messagebar (QgsMessageBar): The message bar widget for notifications.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SecInterpDialog.__init__">
+<a class="viewcode-back" href="../../../sec_interp.gui.main_dialog.html#sec_interp.gui.SecInterpDialog.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iface</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">plugin_instance</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the dialog.&quot;&quot;&quot;</span>
+        <span class="c1"># Initialize the base class which sets up the programmatic UI</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">iface</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">iface</span> <span class="o">=</span> <span class="n">iface</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plugin_instance</span> <span class="o">=</span> <span class="n">plugin_instance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">project</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span>
+
+        <span class="c1"># Provide a safe, no-op messagebar when iface is not available (tests)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">iface</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">messagebar</span> <span class="o">=</span> <span class="n">_NoOpMessageBar</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">messagebar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">messageBar</span><span class="p">()</span>
+
+        <span class="c1"># Initialize manager instances</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_managers</span><span class="p">()</span>
+
+        <span class="c1"># Create legend widget</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">legend_widget</span> <span class="o">=</span> <span class="n">LegendWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preview_widget</span><span class="o">.</span><span class="n">canvas</span><span class="p">)</span>
+
+        <span class="c1"># Store current preview data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_topo_data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_geol_data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_struct_data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_canvas</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_layers</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># Interpretations list is now managed by interpretation_manager</span>
+        <span class="c1"># Note: interpretation_manager is initialized later in _init_managers</span>
+
+        <span class="c1"># Add cache and reset buttons</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear_cache_btn</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s2">&quot;Clear Cache&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear_cache_btn</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s2">&quot;Clear cached data to force re-processing.&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_box</span><span class="o">.</span><span class="n">addButton</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clear_cache_btn</span><span class="p">,</span> <span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">ActionRole</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset_defaults_btn</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s2">&quot;Reset Defaults&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset_defaults_btn</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s2">&quot;Reset all inputs to their default values.&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_box</span><span class="o">.</span><span class="n">addButton</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reset_defaults_btn</span><span class="p">,</span> <span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">ActionRole</span><span class="p">)</span>
+
+        <span class="c1"># Initialize map tools via tool_manager</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tool_manager</span><span class="o">.</span><span class="n">initialize_tools</span><span class="p">()</span>
+
+        <span class="c1"># Connect all signals</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">signal_manager</span> <span class="o">=</span> <span class="n">DialogSignalManager</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">signal_manager</span><span class="o">.</span><span class="n">connect_all</span><span class="p">()</span>
+
+        <span class="c1"># Connect extra tool buttons</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear_cache_btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clear_cache_handler</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset_defaults_btn</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reset_defaults_handler</span><span class="p">)</span>
+
+        <span class="c1"># Initial state update</span>
+        <span class="c1"># Initial state update</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status_manager</span><span class="o">.</span><span class="n">update_all</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings_manager</span><span class="o">.</span><span class="n">load_settings</span><span class="p">()</span>
+
+        <span class="c1"># Flag to control saving settings on close</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_save_on_close</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_init_managers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize all manager instances.&quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.services.preview_service</span><span class="w"> </span><span class="kn">import</span> <span class="n">PreviewService</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">message_manager</span> <span class="o">=</span> <span class="n">MessageManager</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">validation_manager</span> <span class="o">=</span> <span class="n">DialogValidationManager</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">preview_manager</span> <span class="o">=</span> <span class="n">PreviewManager</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">PreviewService</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plugin_instance</span><span class="o">.</span><span class="n">controller</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">export_manager</span> <span class="o">=</span> <span class="n">ExportManager</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cache_handler</span> <span class="o">=</span> <span class="n">CacheHandler</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_aggregator</span> <span class="o">=</span> <span class="n">DialogDataAggregator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings_manager</span> <span class="o">=</span> <span class="n">DialogSettingsManager</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status_manager</span> <span class="o">=</span> <span class="n">DialogStatusManager</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status_manager</span><span class="o">.</span><span class="n">setup_indicators</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">interpretation_manager</span> <span class="o">=</span> <span class="n">DialogInterpretationManager</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">interpretation_manager</span><span class="o">.</span><span class="n">load_interpretations</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tool_manager</span> <span class="o">=</span> <span class="n">DialogToolManager</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">navigation_manager</span> <span class="o">=</span> <span class="n">NavigationManager</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer_factory</span> <span class="o">=</span> <span class="n">PreviewLayerFactory</span><span class="p">()</span>
+
+<div class="viewcode-block" id="SecInterpDialog.handle_error">
+<a class="viewcode-back" href="../../../sec_interp.gui.main_dialog.html#sec_interp.gui.SecInterpDialog.handle_error">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">:</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Error&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Centralized error handling for the dialog.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            error: The exception to handle.</span>
+<span class="sd">            title: Title for the error message box.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message_manager</span><span class="o">.</span><span class="n">handle_error</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SecInterpDialog.wheelEvent">
+<a class="viewcode-back" href="../../../sec_interp.gui.main_dialog.html#sec_interp.gui.SecInterpDialog.wheelEvent">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">wheelEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle mouse wheel for zooming in preview via navigation_manager.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">navigation_manager</span><span class="o">.</span><span class="n">handle_wheel_event</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+            <span class="k">return</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">wheelEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SecInterpDialog.closeEvent">
+<a class="viewcode-back" href="../../../sec_interp.gui.main_dialog.html#sec_interp.gui.SecInterpDialog.closeEvent">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle dialog close event to clean up resources.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_save_on_close</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">settings_manager</span><span class="o">.</span><span class="n">save_settings</span><span class="p">()</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Closing dialog, cleaning up resources...&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">interpretation_manager</span><span class="o">.</span><span class="n">save_interpretations</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">preview_manager</span><span class="o">.</span><span class="n">cleanup</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">closeEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SecInterpDialog.open_help">
+<a class="viewcode-back" href="../../../sec_interp.gui.main_dialog.html#sec_interp.gui.SecInterpDialog.open_help">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">open_help</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Open the help file in the default browser.&quot;&quot;&quot;</span>
+        <span class="c1"># Fix: help is at project root, main_dialog is in gui/</span>
+        <span class="n">help_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;help&quot;</span> <span class="o">/</span> <span class="s2">&quot;html&quot;</span> <span class="o">/</span> <span class="s2">&quot;index.html&quot;</span>
+        <span class="k">if</span> <span class="n">help_file</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="n">QDesktopServices</span><span class="o">.</span><span class="n">openUrl</span><span class="p">(</span><span class="n">QUrl</span><span class="o">.</span><span class="n">fromLocalFile</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">help_file</span><span class="p">)))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">message_manager</span><span class="o">.</span><span class="n">push_message</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s2">&quot;Error&quot;</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s2">&quot;Help file not found. Please run &#39;make doc&#39; to generate it.&quot;</span><span class="p">),</span>
+                <span class="n">level</span><span class="o">=</span><span class="n">Qgis</span><span class="o">.</span><span class="n">Warning</span><span class="p">,</span>
+            <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SecInterpDialog.toggle_measure_tool">
+<a class="viewcode-back" href="../../../sec_interp.gui.main_dialog.html#sec_interp.gui.SecInterpDialog.toggle_measure_tool">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">toggle_measure_tool</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checked</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Toggle measurement tool via tool_manager.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tool_manager</span><span class="o">.</span><span class="n">toggle_measure_tool</span><span class="p">(</span><span class="n">checked</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SecInterpDialog.update_measurement_display">
+<a class="viewcode-back" href="../../../sec_interp.gui.main_dialog.html#sec_interp.gui.SecInterpDialog.update_measurement_display">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_measurement_display</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metrics</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Display measurement results from multi-point tool via tool_manager.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tool_manager</span><span class="o">.</span><span class="n">update_measurement_display</span><span class="p">(</span><span class="n">metrics</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SecInterpDialog.toggle_interpretation_tool">
+<a class="viewcode-back" href="../../../sec_interp.gui.main_dialog.html#sec_interp.gui.SecInterpDialog.toggle_interpretation_tool">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">toggle_interpretation_tool</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checked</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Toggle interpretation tool via tool_manager.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tool_manager</span><span class="o">.</span><span class="n">toggle_interpretation_tool</span><span class="p">(</span><span class="n">checked</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SecInterpDialog.on_interpretation_finished">
+<a class="viewcode-back" href="../../../sec_interp.gui.main_dialog.html#sec_interp.gui.SecInterpDialog.on_interpretation_finished">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_interpretation_finished</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interpretation</span><span class="p">:</span> <span class="n">InterpretationPolygon</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle finalized interpretation polygon.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">interpretation_manager</span><span class="o">.</span><span class="n">handle_interpretation_finished</span><span class="p">(</span><span class="n">interpretation</span><span class="p">)</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">interpretations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Proxy to interpretations in the manager for backward compatibility.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">interpretation_manager</span><span class="o">.</span><span class="n">interpretations</span>
+
+    <span class="nd">@interpretations</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">interpretations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">interpretation_manager</span><span class="o">.</span><span class="n">interpretations</span> <span class="o">=</span> <span class="n">value</span>
+
+<div class="viewcode-block" id="SecInterpDialog.update_preview_checkbox_states">
+<a class="viewcode-back" href="../../../sec_interp.gui.main_dialog.html#sec_interp.gui.SecInterpDialog.update_preview_checkbox_states">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_preview_checkbox_states</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Enable or disable preview checkboxes via status_manager.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status_manager</span><span class="o">.</span><span class="n">update_preview_checkbox_states</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SecInterpDialog.update_button_state">
+<a class="viewcode-back" href="../../../sec_interp.gui.main_dialog.html#sec_interp.gui.SecInterpDialog.update_button_state">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_button_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Enable or disable buttons via status_manager.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status_manager</span><span class="o">.</span><span class="n">update_button_state</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SecInterpDialog.get_selected_values">
+<a class="viewcode-back" href="../../../sec_interp.gui.main_dialog.html#sec_interp.gui.SecInterpDialog.get_selected_values">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_selected_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the selected values from the dialog.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary with all dialog values in legacy flat format</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_aggregator</span><span class="o">.</span><span class="n">get_all_values</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SecInterpDialog.get_preview_options">
+<a class="viewcode-back" href="../../../sec_interp.gui.main_dialog.html#sec_interp.gui.SecInterpDialog.get_preview_options">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_preview_options</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the state of preview layer checkboxes.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Keys &#39;show_topo&#39;, &#39;show_geol&#39;, &#39;show_struct&#39; with boolean values.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;show_topo&quot;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preview_widget</span><span class="o">.</span><span class="n">chk_topo</span><span class="o">.</span><span class="n">isChecked</span><span class="p">()),</span>
+            <span class="s2">&quot;show_geol&quot;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preview_widget</span><span class="o">.</span><span class="n">chk_geol</span><span class="o">.</span><span class="n">isChecked</span><span class="p">()),</span>
+            <span class="s2">&quot;show_struct&quot;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preview_widget</span><span class="o">.</span><span class="n">chk_struct</span><span class="o">.</span><span class="n">isChecked</span><span class="p">()),</span>
+            <span class="s2">&quot;show_drillholes&quot;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preview_widget</span><span class="o">.</span><span class="n">chk_drillholes</span><span class="o">.</span><span class="n">isChecked</span><span class="p">()),</span>
+            <span class="s2">&quot;show_interpretations&quot;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preview_widget</span><span class="o">.</span><span class="n">chk_interpretations</span><span class="o">.</span><span class="n">isChecked</span><span class="p">()),</span>
+            <span class="s2">&quot;show_legend&quot;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preview_widget</span><span class="o">.</span><span class="n">chk_legend</span><span class="o">.</span><span class="n">isChecked</span><span class="p">()),</span>
+            <span class="s2">&quot;max_points&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">preview_widget</span><span class="o">.</span><span class="n">spin_max_points</span><span class="o">.</span><span class="n">value</span><span class="p">(),</span>
+            <span class="s2">&quot;auto_lod&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">preview_widget</span><span class="o">.</span><span class="n">chk_auto_lod</span><span class="o">.</span><span class="n">isChecked</span><span class="p">(),</span>
+            <span class="s2">&quot;use_adaptive_sampling&quot;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preview_widget</span><span class="o">.</span><span class="n">chk_adaptive_sampling</span><span class="o">.</span><span class="n">isChecked</span><span class="p">()),</span>
+        <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="SecInterpDialog.update_preview_from_checkboxes">
+<a class="viewcode-back" href="../../../sec_interp.gui.main_dialog.html#sec_interp.gui.SecInterpDialog.update_preview_from_checkboxes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_preview_from_checkboxes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update preview when checkboxes change.</span>
+
+<span class="sd">        This method delegates to PreviewManager for preview updates.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">preview_manager</span><span class="o">.</span><span class="n">update_from_checkboxes</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SecInterpDialog.preview_profile_handler">
+<a class="viewcode-back" href="../../../sec_interp.gui.main_dialog.html#sec_interp.gui.SecInterpDialog.preview_profile_handler">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">preview_profile_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate a quick preview with topographic, geological, and structural data.</span>
+
+<span class="sd">        This method delegates to PreviewManager for preview generation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">success</span><span class="p">,</span> <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preview_manager</span><span class="o">.</span><span class="n">generate_preview</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
+            <span class="c1"># Auto-save settings on successful preview</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">settings_manager</span><span class="o">.</span><span class="n">save_settings</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">success</span> <span class="ow">and</span> <span class="n">message</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">message_manager</span><span class="o">.</span><span class="n">push_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s2">&quot;Preview Error&quot;</span><span class="p">),</span> <span class="n">message</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">Qgis</span><span class="o">.</span><span class="n">Warning</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SecInterpDialog.export_preview">
+<a class="viewcode-back" href="../../../sec_interp.gui.main_dialog.html#sec_interp.gui.SecInterpDialog.export_preview">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">export_preview</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Export the current preview to a file using ExportManager.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">export_manager</span><span class="o">.</span><span class="n">export_preview</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SecInterpDialog.accept_handler">
+<a class="viewcode-back" href="../../../sec_interp.gui.main_dialog.html#sec_interp.gui.SecInterpDialog.accept_handler">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">accept_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle the accept button click event.&quot;&quot;&quot;</span>
+        <span class="c1"># Proactively save settings as UI state, even if validation fails</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings_manager</span><span class="o">.</span><span class="n">save_settings</span><span class="p">()</span>
+
+        <span class="c1"># When running without a QGIS iface (tests), skip strict validation</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">iface</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate_inputs</span><span class="p">():</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">interpretation_manager</span><span class="o">.</span><span class="n">save_interpretations</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SecInterpDialog.reject_handler">
+<a class="viewcode-back" href="../../../sec_interp.gui.main_dialog.html#sec_interp.gui.SecInterpDialog.reject_handler">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reject_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle the reject button click event.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_save_on_close</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SecInterpDialog.validate_inputs">
+<a class="viewcode-back" href="../../../sec_interp.gui.main_dialog.html#sec_interp.gui.SecInterpDialog.validate_inputs">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validate the inputs from the dialog.</span>
+
+<span class="sd">        This method delegates to DialogValidationManager for input validation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">is_valid</span><span class="p">,</span> <span class="n">error_message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validation_manager</span><span class="o">.</span><span class="n">validate_inputs</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_valid</span><span class="p">:</span>
+            <span class="n">show_user_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s2">&quot;Validation Error&quot;</span><span class="p">),</span> <span class="n">error_message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">is_valid</span></div>
+
+
+<div class="viewcode-block" id="SecInterpDialog.clear_cache_handler">
+<a class="viewcode-back" href="../../../sec_interp.gui.main_dialog.html#sec_interp.gui.SecInterpDialog.clear_cache_handler">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clear_cache_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Clear cached data via CacheHandler.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cache_handler</span><span class="o">.</span><span class="n">clear_cache</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SecInterpDialog.reset_defaults_handler">
+<a class="viewcode-back" href="../../../sec_interp.gui.main_dialog.html#sec_interp.gui.SecInterpDialog.reset_defaults_handler">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reset_defaults_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset all dialog inputs via settings_manager.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings_manager</span><span class="o">.</span><span class="n">reset_to_defaults</span><span class="p">()</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_populate_field_combobox</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_combobox</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">target_combobox</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Populate a combobox with field names.&quot;&quot;&quot;</span>
+        <span class="n">DialogEntityManager</span><span class="o">.</span><span class="n">populate_field_combobox</span><span class="p">(</span><span class="n">source_combobox</span><span class="p">,</span> <span class="n">target_combobox</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SecInterpDialog.get_layer_names_by_type">
+<a class="viewcode-back" href="../../../sec_interp.gui.main_dialog.html#sec_interp.gui.SecInterpDialog.get_layer_names_by_type">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_layer_names_by_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer_type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get layer names by type.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">DialogEntityManager</span><span class="o">.</span><span class="n">get_layer_names_by_type</span><span class="p">(</span><span class="n">layer_type</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SecInterpDialog.get_layer_names_by_geometry">
+<a class="viewcode-back" href="../../../sec_interp.gui.main_dialog.html#sec_interp.gui.SecInterpDialog.get_layer_names_by_geometry">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_layer_names_by_geometry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">geometry_type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get layer names by geometry.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">DialogEntityManager</span><span class="o">.</span><span class="n">get_layer_names_by_geometry</span><span class="p">(</span><span class="n">geometry_type</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SecInterpDialog.getThemeIcon">
+<a class="viewcode-back" href="../../../sec_interp.gui.main_dialog.html#sec_interp.gui.SecInterpDialog.getThemeIcon">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getThemeIcon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a theme icon via DialogEntityManager.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">DialogEntityManager</span><span class="o">.</span><span class="n">get_theme_icon</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_interpretations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load interpretations via interpretation_manager.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">interpretation_manager</span><span class="o">.</span><span class="n">load_interpretations</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_save_interpretations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Save interpretations via interpretation_manager.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">interpretation_manager</span><span class="o">.</span><span class="n">save_interpretations</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_user_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load user settings via settings_manager.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings_manager</span><span class="o">.</span><span class="n">load_settings</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_save_user_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Save user settings via settings_manager.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings_manager</span><span class="o">.</span><span class="n">save_settings</span><span class="p">()</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Juan M Bernales.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

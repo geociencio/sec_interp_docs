@@ -440,13 +440,14 @@ window.addEventListener("load", load);
            <div itemprop="articleBody">
              
   <h1>Source code for sec_interp.core.performance_metrics</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Performance metrics module for SecInterp plugin.</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span class="sd">&quot;&quot;&quot;Performance metrics module for SecInterp plugin.</span>
 
 <span class="sd">This module provides tools for tracking performance and resource usage</span>
 <span class="sd">across the plugin&#39;s operations.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Generator</span>

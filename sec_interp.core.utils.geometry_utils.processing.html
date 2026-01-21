@@ -51,6 +51,7 @@
 <li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">sec_interp</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="sec_interp.html">sec_interp package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.html#sec_interp.classFactory"><code class="docutils literal notranslate"><span class="pre">classFactory()</span></code></a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="sec_interp.html#subpackages">Subpackages</a><ul class="current">
 <li class="toctree-l4 current"><a class="reference internal" href="sec_interp.core.html">sec_interp.core package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.html">sec_interp.exporters package</a></li>
@@ -94,8 +95,81 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="sec-interp-core-utils-geometry-utils-processing-module">
-<h1>sec_interp.core.utils.geometry_utils.processing module<a class="headerlink" href="#sec-interp-core-utils-geometry-utils-processing-module" title="Link to this heading"></a></h1>
+  <section id="module-sec_interp.core.utils.geometry_utils.processing">
+<span id="sec-interp-core-utils-geometry-utils-processing-module"></span><h1>sec_interp.core.utils.geometry_utils.processing module<a class="headerlink" href="#module-sec_interp.core.utils.geometry_utils.processing" title="Link to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="sec_interp.core.utils.geometry_utils.processing.create_buffer_geometry">
+<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.geometry_utils.processing.</span></span><span class="sig-name descname"><span class="pre">create_buffer_geometry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsGeometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsCoordinateReferenceSystem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qgis.core.QgsGeometry</span></span></span><a class="reference internal" href="_modules/sec_interp/core/utils/geometry_utils/processing.html#create_buffer_geometry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.core.utils.geometry_utils.processing.create_buffer_geometry" title="Link to this definition"></a></dt>
+<dd><p>Create a buffer around a geometry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>geometry</strong> – Input geometry.</p></li>
+<li><p><strong>crs</strong> – Coordinate Reference System of the geometry.</p></li>
+<li><p><strong>distance</strong> – Buffer distance in layer units.</p></li>
+<li><p><strong>segments</strong> – Number of segments for the buffer approximation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The buffered geometry.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sec_interp.core.utils.geometry_utils.processing.create_memory_layer">
+<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.geometry_utils.processing.</span></span><span class="sig-name descname"><span class="pre">create_memory_layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsCoordinateReferenceSystem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">qgis.core.QgsField</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qgis.core.QgsVectorLayer</span></span></span><a class="reference internal" href="_modules/sec_interp/core/utils/geometry_utils/processing.html#create_memory_layer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.core.utils.geometry_utils.processing.create_memory_layer" title="Link to this definition"></a></dt>
+<dd><p>Create a temporary memory (scratch) layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>layer_name</strong> – Name for the layer.</p></li>
+<li><p><strong>layer_type</strong> – QGIS geometry type string (e.g., ‘Point’, ‘LineString’).</p></li>
+<li><p><strong>crs</strong> – Coordinate reference system.</p></li>
+<li><p><strong>fields</strong> – List of fields for the layer.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The created memory layer.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sec_interp.core.utils.geometry_utils.processing.densify_line_by_interval">
+<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.geometry_utils.processing.</span></span><span class="sig-name descname"><span class="pre">densify_line_by_interval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsGeometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qgis.core.QgsGeometry</span></span></span><a class="reference internal" href="_modules/sec_interp/core/utils/geometry_utils/processing.html#densify_line_by_interval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.core.utils.geometry_utils.processing.densify_line_by_interval" title="Link to this definition"></a></dt>
+<dd><p>Densify a line geometry by a specific distance interval.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>geometry</strong> – Line geometry to densify.</p></li>
+<li><p><strong>interval</strong> – Maximum distance between vertices.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The densified geometry.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sec_interp.core.utils.geometry_utils.processing.run_geometry_operation">
+<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.geometry_utils.processing.</span></span><span class="sig-name descname"><span class="pre">run_geometry_operation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">operation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="_modules/sec_interp/core/utils/geometry_utils/processing.html#run_geometry_operation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.core.utils.geometry_utils.processing.run_geometry_operation" title="Link to this definition"></a></dt>
+<dd><p>Wrap generic geometry operations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>operation</strong> – Name of the operation to perform.</p></li>
+<li><p><strong>*args</strong> – Positional arguments for the operation.</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the operation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result of the operation.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 

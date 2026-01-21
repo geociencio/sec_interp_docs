@@ -1,0 +1,776 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sec_interp.gui.preview_renderer &mdash; SecInterp 2.7.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=dfec817d"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs"></script>
+      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
+
+const defaultStyle = document.createElement('style');
+defaultStyle.textContent = `pre.mermaid {
+    /* Same as .mermaid-container > pre */
+    display: block;
+    width: 100%;
+}
+
+pre.mermaid > svg {
+    /* Same as .mermaid-container > pre > svg */
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}
+`;
+document.head.appendChild(defaultStyle);
+
+const fullscreenStyle = document.createElement('style');
+fullscreenStyle.textContent = `.mermaid-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.mermaid-container > pre {
+    display: block;
+    width: 100%;
+}
+
+.mermaid-container > pre > svg {
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}
+
+.mermaid-fullscreen-btn {
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+    line-height: 1;
+    padding: 0;
+    color: #333;
+}
+
+.mermaid-fullscreen-btn:hover {
+    opacity: 100% !important;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-btn.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-btn.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal {
+    display: none;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 95vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.98);
+    z-index: 9999;
+    padding: 20px;
+    overflow: auto;
+}
+
+.mermaid-fullscreen-modal.dark-theme {
+    background: rgba(0, 0, 0, 0.98);
+}
+
+.mermaid-fullscreen-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen {
+    position: relative;
+    width: 95vw;
+    height: 90vh;
+    max-width: 95vw;
+    max-height: 90vh;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen.dark-theme {
+    background: #1a1a1a;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+}
+
+.mermaid-container-fullscreen pre.mermaid {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen .mermaid svg {
+    height: 100% !important;
+    width: 100% !important;
+    cursor: grab;
+}
+
+.mermaid-fullscreen-close {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s;
+    font-size: 24px;
+    line-height: 1;
+    color: #333;
+}
+
+.mermaid-fullscreen-close:hover {
+    background: white;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-close.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-close.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal .mermaid-fullscreen-btn {
+    display: none !important;
+}`;
+document.head.appendChild(fullscreenStyle);
+
+// Detect if page has dark background
+const isDarkTheme = () => {
+    const bgColor = window.getComputedStyle(document.body).backgroundColor;
+    const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
+    if (match) {
+        const r = parseInt(match[1]);
+        const g = parseInt(match[2]);
+        const b = parseInt(match[3]);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        return brightness < 128;
+    }
+    return false;
+};
+
+const load = async () => {
+    await mermaid.run();
+
+    const all_mermaids = document.querySelectorAll(".mermaid");
+    const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
+
+    if ("False" === "True") {
+        const mermaids_to_add_zoom = -1 === -1 ? all_mermaids.length : -1;
+        if(mermaids_to_add_zoom > 0) {
+            var svgs = d3.selectAll("");
+            if(all_mermaids.length !== mermaids_processed.length) {
+                setTimeout(load, 200);
+                return;
+            } else if(svgs.size() !== mermaids_to_add_zoom) {
+                setTimeout(load, 200);
+                return;
+            } else {
+                svgs.each(function() {
+                    var svg = d3.select(this);
+                    svg.html("<g class='wrapper'>" + svg.html() + "</g>");
+                    var inner = svg.select("g");
+                    var zoom = d3.zoom().on("zoom", function(event) {
+                        inner.attr("transform", event.transform);
+                    });
+                    svg.call(zoom);
+                });
+            }
+        }
+    } else if(all_mermaids.length !== mermaids_processed.length) {
+        // Wait for mermaid to process all diagrams
+        setTimeout(load, 200);
+        return;
+    }
+
+    const darkTheme = isDarkTheme();
+
+    // Stop here if not adding fullscreen capability
+    if ("True" !== "True") return;
+
+    const modal = document.createElement('div');
+    modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Fullscreen diagram viewer');
+    modal.innerHTML = `
+        <button class="mermaid-fullscreen-close${darkTheme ? ' dark-theme' : ''}" aria-label="Close fullscreen">✕</button>
+        <div class="mermaid-container-fullscreen${darkTheme ? ' dark-theme' : ''}"></div>
+    `;
+    document.body.appendChild(modal);
+
+    const modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
+
+    let previousScrollOffset = [window.scrollX, window.scrollY];
+
+    const closeModal = () => {
+        modal.classList.remove('active');
+        modalContent.innerHTML = '';
+        document.body.style.overflow = ''
+        window.scrollTo({left: previousScrollOffset[0], top: previousScrollOffset[1], behavior: 'instant'});
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+
+    const allButtons = [];
+
+    document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
+        if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
+            mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            return;
+        }
+
+        const container = document.createElement('div');
+        container.className = 'mermaid-container';
+        mermaidDiv.parentNode.insertBefore(container, mermaidDiv);
+        container.appendChild(mermaidDiv);
+
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+        fullscreenBtn.setAttribute('aria-label', 'View diagram in fullscreen');
+        fullscreenBtn.textContent = '⛶';
+        fullscreenBtn.style.opacity = '50%';
+
+        // Calculate dynamic position based on diagram's margin and padding
+        const diagramStyle = window.getComputedStyle(mermaidDiv);
+        const marginTop = parseFloat(diagramStyle.marginTop) || 0;
+        const marginRight = parseFloat(diagramStyle.marginRight) || 0;
+        const paddingTop = parseFloat(diagramStyle.paddingTop) || 0;
+        const paddingRight = parseFloat(diagramStyle.paddingRight) || 0;
+        fullscreenBtn.style.top = `${marginTop + paddingTop + 4}px`;
+        fullscreenBtn.style.right = `${marginRight + paddingRight + 4}px`;
+
+        fullscreenBtn.addEventListener('click', () => {
+            previousScrollOffset = [window.scroll, window.scrollY];
+            const clone = mermaidDiv.cloneNode(true);
+            modalContent.innerHTML = '';
+            modalContent.appendChild(clone);
+
+            const svg = clone.querySelector('svg');
+            if (svg) {
+                svg.removeAttribute('width');
+                svg.removeAttribute('height');
+                svg.style.width = '100%';
+                svg.style.height = 'auto';
+                svg.style.maxWidth = '100%';
+                svg.style.sdisplay = 'block';
+
+                if ("False" === "True") {
+                    setTimeout(() => {
+                        const g = svg.querySelector('g');
+                        if (g) {
+                            var svgD3 = d3.select(svg);
+                            svgD3.html("<g class='wrapper'>" + svgD3.html() + "</g>");
+                            var inner = svgD3.select("g");
+                            var zoom = d3.zoom().on("zoom", function(event) {
+                                inner.attr("transform", event.transform);
+                            });
+                            svgD3.call(zoom);
+                        }
+                    }, 100);
+                }
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        container.appendChild(fullscreenBtn);
+        allButtons.push(fullscreenBtn);
+    });
+
+    // Update theme classes when theme changes
+    const updateTheme = () => {
+        const dark = isDarkTheme();
+        allButtons.forEach(btn => {
+            if (dark) {
+                btn.classList.add('dark-theme');
+            } else {
+                btn.classList.remove('dark-theme');
+            }
+        });
+        if (dark) {
+            modal.classList.add('dark-theme');
+            modalContent.classList.add('dark-theme');
+            closeBtn.classList.add('dark-theme');
+        } else {
+            modal.classList.remove('dark-theme');
+            modalContent.classList.remove('dark-theme');
+            closeBtn.classList.remove('dark-theme');
+        }
+    };
+
+    // Watch for theme changes
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    observer.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style']
+    });
+};
+
+window.addEventListener("load", load);
+</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            SecInterp
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../USER_GUIDE.html">SecInterp User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">sec_interp</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">SecInterp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../sec_interp.html">sec_interp</a></li>
+      <li class="breadcrumb-item active">sec_interp.gui.preview_renderer</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for sec_interp.gui.preview_renderer</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span class="sd">&quot;&quot;&quot;Preview Renderer Module (PyQGIS Native).</span>
+
+<span class="sd">Handles rendering of interactive previews using native QGIS resources.</span>
+<span class="sd">This module has been refactored to delegate specialized tasks to modular components.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">contextlib</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">qgis.core</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QgsGeometry</span><span class="p">,</span>
+    <span class="n">QgsMapRendererCustomPainterJob</span><span class="p">,</span>
+    <span class="n">QgsMapSettings</span><span class="p">,</span>
+    <span class="n">QgsPointXY</span><span class="p">,</span>
+    <span class="n">QgsProject</span><span class="p">,</span>
+    <span class="n">QgsWkbTypes</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qgis.gui</span><span class="w"> </span><span class="kn">import</span> <span class="n">QgsMapCanvas</span><span class="p">,</span> <span class="n">QgsRubberBand</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qgis.PyQt.QtCore</span><span class="w"> </span><span class="kn">import</span> <span class="n">QRectF</span><span class="p">,</span> <span class="n">QSize</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qgis.PyQt.QtGui</span><span class="w"> </span><span class="kn">import</span> <span class="n">QColor</span><span class="p">,</span> <span class="n">QImage</span><span class="p">,</span> <span class="n">QPainter</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.types</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">GeologyData</span><span class="p">,</span>
+    <span class="n">InterpretationPolygon</span><span class="p">,</span>
+    <span class="n">ProfileData</span><span class="p">,</span>
+    <span class="n">StructureData</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.logger_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_logger</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.preview_axes_manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">PreviewAxesManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.preview_layer_factory</span><span class="w"> </span><span class="kn">import</span> <span class="n">PreviewLayerFactory</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.preview_legend_renderer</span><span class="w"> </span><span class="kn">import</span> <span class="n">PreviewLegendRenderer</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="PreviewRenderer">
+<a class="viewcode-back" href="../../../sec_interp.gui.preview_renderer.html#sec_interp.gui.PreviewRenderer">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PreviewRenderer</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Renders interactive preview using native PyQGIS resources.</span>
+
+<span class="sd">    Acts as an orchestrator for several specialized modules:</span>
+<span class="sd">    - PreviewLayerFactory: Handles layer creation and symbology.</span>
+<span class="sd">    - PreviewAxesManager: Handles grid lines and axes labels.</span>
+<span class="sd">    - PreviewOptimizer: Handles geometric simplification (LOD).</span>
+<span class="sd">    - PreviewLegendRenderer: Handles legend drawing.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="PreviewRenderer.__init__">
+<a class="viewcode-back" href="../../../sec_interp.gui.preview_renderer.html#sec_interp.gui.PreviewRenderer.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">canvas</span><span class="p">:</span> <span class="n">QgsMapCanvas</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize preview renderer.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            canvas: QgsMapCanvas instance (optional)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span> <span class="o">=</span> <span class="n">canvas</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layers</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">interpretation_rubbers</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Specialized components</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer_factory</span> <span class="o">=</span> <span class="n">PreviewLayerFactory</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axes_manager</span> <span class="o">=</span> <span class="n">PreviewAxesManager</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">legend_renderer</span> <span class="o">=</span> <span class="n">PreviewLegendRenderer</span><span class="p">()</span>
+
+        <span class="c1"># State for legend rendering (maintained for backward compatibility)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">has_topography</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">has_structures</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">active_units</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Expose active units from factory for legend compatibility.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_factory</span><span class="o">.</span><span class="n">active_units</span>
+
+<div class="viewcode-block" id="PreviewRenderer.render">
+<a class="viewcode-back" href="../../../sec_interp.gui.preview_renderer.html#sec_interp.gui.PreviewRenderer.render">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">render</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">topo_data</span><span class="p">:</span> <span class="n">ProfileData</span><span class="p">,</span>
+        <span class="n">geol_data</span><span class="p">:</span> <span class="n">GeologyData</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">struct_data</span><span class="p">:</span> <span class="n">StructureData</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">vert_exag</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">dip_line_length</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">max_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="n">preserve_extent</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">use_adaptive_sampling</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">drillhole_data</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">interp_data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">InterpretationPolygon</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">show_legend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">QgsMapCanvas</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">list</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Render preview with all data layers.&quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;render() called&quot;</span><span class="p">)</span>
+
+        <span class="c1"># 1. Clean up previous layers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cleanup_layers</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">has_topography</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">has_structures</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># 2. Create data layers via LayerFactory</span>
+        <span class="n">topo_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_factory</span><span class="o">.</span><span class="n">create_topo_layer</span><span class="p">(</span>
+            <span class="n">topo_data</span><span class="p">,</span> <span class="n">vert_exag</span><span class="p">,</span> <span class="n">max_points</span><span class="p">,</span> <span class="n">use_adaptive_sampling</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">topo_layer</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">has_topography</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="n">topo_fill_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_factory</span><span class="o">.</span><span class="n">create_topo_fill_layer</span><span class="p">(</span>
+            <span class="n">topo_data</span><span class="p">,</span> <span class="n">vert_exag</span><span class="p">,</span> <span class="n">max_points</span>
+        <span class="p">)</span>
+
+        <span class="n">geol_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_factory</span><span class="o">.</span><span class="n">create_geol_layer</span><span class="p">(</span><span class="n">geol_data</span><span class="p">,</span> <span class="n">vert_exag</span><span class="p">,</span> <span class="n">max_points</span><span class="p">)</span>
+
+        <span class="c1"># ... rest of data layers ...</span>
+        <span class="c1"># For structural layer, use topo or geol as reference</span>
+        <span class="n">reference_data</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">topo_data</span>
+            <span class="k">if</span> <span class="n">topo_data</span>
+            <span class="k">else</span> <span class="p">([</span><span class="n">p</span> <span class="k">for</span> <span class="n">seg</span> <span class="ow">in</span> <span class="n">geol_data</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">seg</span><span class="o">.</span><span class="n">points</span><span class="p">]</span> <span class="k">if</span> <span class="n">geol_data</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">struct_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_factory</span><span class="o">.</span><span class="n">create_struct_layer</span><span class="p">(</span>
+            <span class="n">struct_data</span><span class="p">,</span> <span class="n">reference_data</span><span class="p">,</span> <span class="n">vert_exag</span><span class="p">,</span> <span class="n">dip_line_length</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">struct_layer</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">has_structures</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1"># Drillhole layers</span>
+        <span class="n">drillhole_layers</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">drillhole_data</span><span class="p">:</span>
+            <span class="n">trace_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_factory</span><span class="o">.</span><span class="n">create_drillhole_trace_layer</span><span class="p">(</span><span class="n">drillhole_data</span><span class="p">,</span> <span class="n">vert_exag</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">trace_layer</span><span class="p">:</span>
+                <span class="n">drillhole_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">trace_layer</span><span class="p">)</span>
+            <span class="n">interval_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_factory</span><span class="o">.</span><span class="n">create_drillhole_interval_layer</span><span class="p">(</span>
+                <span class="n">drillhole_data</span><span class="p">,</span> <span class="n">vert_exag</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">interval_layer</span><span class="p">:</span>
+                <span class="n">drillhole_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">interval_layer</span><span class="p">)</span>
+
+        <span class="c1"># 2.5 Render interpretations (using rubber bands)</span>
+        <span class="k">if</span> <span class="n">interp_data</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_render_interpretations</span><span class="p">(</span><span class="n">interp_data</span><span class="p">,</span> <span class="n">vert_exag</span><span class="p">)</span>
+
+        <span class="c1"># 3. Collect valid data layers</span>
+        <span class="c1"># Order: Structures on top, then Geology, then Topography line, then Fill, then Drillholes</span>
+        <span class="n">data_layers</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">layer</span>
+            <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="p">[</span>
+                <span class="n">struct_layer</span><span class="p">,</span>
+                <span class="n">geol_layer</span><span class="p">,</span>
+                <span class="n">topo_layer</span><span class="p">,</span>
+                <span class="n">topo_fill_layer</span><span class="p">,</span>
+                <span class="o">*</span><span class="n">drillhole_layers</span><span class="p">,</span>
+            <span class="p">]</span>
+            <span class="k">if</span> <span class="n">layer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="p">]</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">data_layers</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;No valid layers to render&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="p">[]</span>
+
+        <span class="c1"># 4. Axes and Labels</span>
+        <span class="n">extent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_extent</span><span class="p">(</span><span class="n">data_layers</span><span class="p">)</span>
+        <span class="n">axes_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">create_axes_layer</span><span class="p">(</span><span class="n">extent</span><span class="p">,</span> <span class="n">vert_exag</span><span class="p">)</span>
+        <span class="n">labels_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">create_axes_labels_layer</span><span class="p">(</span><span class="n">extent</span><span class="p">,</span> <span class="n">vert_exag</span><span class="p">)</span>
+
+        <span class="c1"># 5. Finalize layers list</span>
+        <span class="n">layers</span> <span class="o">=</span> <span class="p">[</span><span class="n">labels_layer</span><span class="p">,</span> <span class="o">*</span><span class="n">data_layers</span><span class="p">,</span> <span class="n">axes_layer</span><span class="p">]</span>
+        <span class="n">layers</span> <span class="o">=</span> <span class="p">[</span><span class="n">layer</span> <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">layers</span> <span class="k">if</span> <span class="n">layer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layers</span> <span class="o">=</span> <span class="n">layers</span>
+
+        <span class="c1"># 6. Configure canvas</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span> <span class="ow">and</span> <span class="n">extent</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">setLayers</span><span class="p">(</span><span class="n">layers</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">preserve_extent</span><span class="p">:</span>
+                <span class="c1"># Add 10% padding to extent</span>
+                <span class="n">padded_extent</span> <span class="o">=</span> <span class="n">extent</span>
+                <span class="n">padded_extent</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="mf">1.1</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">setExtent</span><span class="p">(</span><span class="n">padded_extent</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">,</span> <span class="n">layers</span></div>
+
+
+<div class="viewcode-block" id="PreviewRenderer.draw_legend">
+<a class="viewcode-back" href="../../../sec_interp.gui.preview_renderer.html#sec_interp.gui.PreviewRenderer.draw_legend">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">draw_legend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">:</span> <span class="n">QPainter</span><span class="p">,</span> <span class="n">rect</span><span class="p">:</span> <span class="n">QRectF</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Draw legend on the given painter. Delegates to PreviewLegendRenderer.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">legend_renderer</span><span class="o">.</span><span class="n">draw_legend</span><span class="p">(</span>
+            <span class="n">painter</span><span class="p">,</span> <span class="n">rect</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_units</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_topography</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_structures</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PreviewRenderer.export_to_image">
+<a class="viewcode-back" href="../../../sec_interp.gui.preview_renderer.html#sec_interp.gui.PreviewRenderer.export_to_image">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">export_to_image</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">layers</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+        <span class="n">extent</span><span class="p">,</span>
+        <span class="n">width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">height</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">output_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">dpi</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">300</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Export preview to image file. Maintains same logic but orchestrated.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">settings</span> <span class="o">=</span> <span class="n">QgsMapSettings</span><span class="p">()</span>
+            <span class="n">settings</span><span class="o">.</span><span class="n">setLayers</span><span class="p">(</span><span class="n">layers</span><span class="p">)</span>
+            <span class="n">settings</span><span class="o">.</span><span class="n">setExtent</span><span class="p">(</span><span class="n">extent</span><span class="p">)</span>
+            <span class="n">settings</span><span class="o">.</span><span class="n">setOutputSize</span><span class="p">(</span><span class="n">QSize</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
+            <span class="n">settings</span><span class="o">.</span><span class="n">setOutputDpi</span><span class="p">(</span><span class="n">dpi</span><span class="p">)</span>
+
+            <span class="n">image</span> <span class="o">=</span> <span class="n">QImage</span><span class="p">(</span><span class="n">QSize</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">),</span> <span class="n">QImage</span><span class="o">.</span><span class="n">Format_ARGB32</span><span class="p">)</span>
+            <span class="n">image</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">QColor</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">))</span>
+
+            <span class="n">painter</span> <span class="o">=</span> <span class="n">QPainter</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setRenderHint</span><span class="p">(</span><span class="n">QPainter</span><span class="o">.</span><span class="n">Antialiasing</span><span class="p">)</span>
+
+            <span class="n">job</span> <span class="o">=</span> <span class="n">QgsMapRendererCustomPainterJob</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="n">painter</span><span class="p">)</span>
+            <span class="n">job</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+            <span class="n">job</span><span class="o">.</span><span class="n">waitForFinished</span><span class="p">()</span>
+
+            <span class="c1"># Delegate legend drawing</span>
+            <span class="k">if</span> <span class="n">show_legend</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">draw_legend</span><span class="p">(</span><span class="n">painter</span><span class="p">,</span> <span class="n">QRectF</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+
+            <span class="k">return</span> <span class="n">image</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Error exporting preview&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_cleanup_layers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove previous layers from QgsProject.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">layer</span><span class="p">:</span>
+                <span class="k">with</span> <span class="n">contextlib</span><span class="o">.</span><span class="n">suppress</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+                    <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">removeMapLayer</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">id</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layers</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer_factory</span><span class="o">.</span><span class="n">active_units</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># Clear interpretation rubber bands</span>
+        <span class="k">for</span> <span class="n">rb</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">interpretation_rubbers</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">rb</span><span class="p">:</span>
+                <span class="k">with</span> <span class="n">contextlib</span><span class="o">.</span><span class="n">suppress</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+                    <span class="n">rb</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+                    <span class="c1"># Python garbage collection should clean up QgsRubberBand if canvas reference is lost</span>
+                    <span class="c1"># but explicit removal from canvas Scene is better</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">scene</span><span class="p">()</span><span class="o">.</span><span class="n">removeItem</span><span class="p">(</span><span class="n">rb</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">interpretation_rubbers</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_render_interpretations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interp_data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">InterpretationPolygon</span><span class="p">],</span> <span class="n">vert_exag</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Render interpretations as QgsRubberBand objects.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">for</span> <span class="n">interp</span> <span class="ow">in</span> <span class="n">interp_data</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">interp</span><span class="o">.</span><span class="n">vertices_2d</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">interp</span><span class="o">.</span><span class="n">vertices_2d</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Create rubber band</span>
+            <span class="n">rb</span> <span class="o">=</span> <span class="n">QgsRubberBand</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">,</span> <span class="n">QgsWkbTypes</span><span class="o">.</span><span class="n">PolygonGeometry</span><span class="p">)</span>
+
+            <span class="c1"># Set style</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">poly_color</span> <span class="o">=</span> <span class="n">QColor</span><span class="p">(</span><span class="n">interp</span><span class="o">.</span><span class="n">color</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">poly_color</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+                    <span class="n">poly_color</span> <span class="o">=</span> <span class="n">QColor</span><span class="p">(</span><span class="s2">&quot;#FF0000&quot;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                <span class="n">poly_color</span> <span class="o">=</span> <span class="n">QColor</span><span class="p">(</span><span class="s2">&quot;#FF0000&quot;</span><span class="p">)</span>
+
+            <span class="n">poly_color</span><span class="o">.</span><span class="n">setAlpha</span><span class="p">(</span><span class="mi">180</span><span class="p">)</span>  <span class="c1"># More vibrant (approx 70%)</span>
+            <span class="n">rb</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">poly_color</span><span class="p">)</span>
+            <span class="n">rb</span><span class="o">.</span><span class="n">setWidth</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># Slightly thicker border</span>
+            <span class="n">rb</span><span class="o">.</span><span class="n">setStrokeColor</span><span class="p">(</span><span class="n">poly_color</span><span class="o">.</span><span class="n">darker</span><span class="p">(</span><span class="mi">160</span><span class="p">))</span>  <span class="c1"># More defined border</span>
+
+            <span class="c1"># Add geometry</span>
+            <span class="c1"># Points are (dist, elev) -&gt; (x, y * exag)</span>
+            <span class="n">points</span> <span class="o">=</span> <span class="p">[</span><span class="n">QgsPointXY</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">*</span> <span class="n">vert_exag</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">interp</span><span class="o">.</span><span class="n">vertices_2d</span><span class="p">]</span>
+            <span class="c1"># Ensure closed for polygon</span>
+            <span class="k">if</span> <span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">points</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="n">points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+            <span class="n">geom</span> <span class="o">=</span> <span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromPolygonXY</span><span class="p">([</span><span class="n">points</span><span class="p">])</span>
+            <span class="n">rb</span><span class="o">.</span><span class="n">setToGeometry</span><span class="p">(</span><span class="n">geom</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">rb</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">interpretation_rubbers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rb</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_calculate_extent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layers</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Combine extents of all given layers.&quot;&quot;&quot;</span>
+        <span class="n">extent</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">layers</span><span class="p">:</span>
+            <span class="n">layer_extent</span> <span class="o">=</span> <span class="n">layer</span><span class="o">.</span><span class="n">extent</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">extent</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">extent</span> <span class="o">=</span> <span class="n">layer_extent</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">extent</span><span class="o">.</span><span class="n">combineExtentWith</span><span class="p">(</span><span class="n">layer_extent</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">extent</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Juan M Bernales.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

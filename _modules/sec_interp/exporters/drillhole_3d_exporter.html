@@ -430,6 +430,7 @@ window.addEventListener("load", load);
       <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
           <li class="breadcrumb-item"><a href="../../sec_interp.html">sec_interp</a></li>
+          <li class="breadcrumb-item"><a href="../exporters.html">sec_interp.exporters</a></li>
       <li class="breadcrumb-item active">sec_interp.exporters.drillhole_3d_exporter</li>
       <li class="wy-breadcrumbs-aside">
       </li>
@@ -440,7 +441,9 @@ window.addEventListener("load", load);
            <div itemprop="articleBody">
              
   <h1>Source code for sec_interp.exporters.drillhole_3d_exporter</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;3D Drillhole Exporter.</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span class="sd">&quot;&quot;&quot;3D Drillhole Exporter.</span>
 
 <span class="sd">This module provides exporters for 3D drillhole data (traces and intervals).</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -466,19 +469,19 @@ window.addEventListener("load", load);
 
 
 <div class="viewcode-block" id="DrillholeTrace3DExporter">
-<a class="viewcode-back" href="../../../sec_interp.exporters.drillhole_3d_exporter.html#sec_interp.exporters.drillhole_3d_exporter.DrillholeTrace3DExporter">[docs]</a>
+<a class="viewcode-back" href="../../../sec_interp.exporters.drillhole_3d_exporter.html#sec_interp.exporters.DrillholeTrace3DExporter">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">DrillholeTrace3DExporter</span><span class="p">(</span><span class="n">BaseExporter</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Exports 3D drillhole traces to a Shapefile.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="DrillholeTrace3DExporter.get_supported_extensions">
-<a class="viewcode-back" href="../../../sec_interp.exporters.drillhole_3d_exporter.html#sec_interp.exporters.drillhole_3d_exporter.DrillholeTrace3DExporter.get_supported_extensions">[docs]</a>
+<a class="viewcode-back" href="../../../sec_interp.exporters.drillhole_3d_exporter.html#sec_interp.exporters.DrillholeTrace3DExporter.get_supported_extensions">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_supported_extensions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get supported extensions.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;.shp&quot;</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="DrillholeTrace3DExporter.export">
-<a class="viewcode-back" href="../../../sec_interp.exporters.drillhole_3d_exporter.html#sec_interp.exporters.drillhole_3d_exporter.DrillholeTrace3DExporter.export">[docs]</a>
+<a class="viewcode-back" href="../../../sec_interp.exporters.drillhole_3d_exporter.html#sec_interp.exporters.DrillholeTrace3DExporter.export">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">export</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_path</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Export 3D drillhole traces to a Shapefile.</span>
 
@@ -534,19 +537,19 @@ window.addEventListener("load", load);
 
 
 <div class="viewcode-block" id="DrillholeInterval3DExporter">
-<a class="viewcode-back" href="../../../sec_interp.exporters.drillhole_3d_exporter.html#sec_interp.exporters.drillhole_3d_exporter.DrillholeInterval3DExporter">[docs]</a>
+<a class="viewcode-back" href="../../../sec_interp.exporters.drillhole_3d_exporter.html#sec_interp.exporters.DrillholeInterval3DExporter">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">DrillholeInterval3DExporter</span><span class="p">(</span><span class="n">BaseExporter</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Exports 3D drillhole intervals to a Shapefile.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="DrillholeInterval3DExporter.get_supported_extensions">
-<a class="viewcode-back" href="../../../sec_interp.exporters.drillhole_3d_exporter.html#sec_interp.exporters.drillhole_3d_exporter.DrillholeInterval3DExporter.get_supported_extensions">[docs]</a>
+<a class="viewcode-back" href="../../../sec_interp.exporters.drillhole_3d_exporter.html#sec_interp.exporters.DrillholeInterval3DExporter.get_supported_extensions">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_supported_extensions</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get supported extensions.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;.shp&quot;</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="DrillholeInterval3DExporter.export">
-<a class="viewcode-back" href="../../../sec_interp.exporters.drillhole_3d_exporter.html#sec_interp.exporters.drillhole_3d_exporter.DrillholeInterval3DExporter.export">[docs]</a>
+<a class="viewcode-back" href="../../../sec_interp.exporters.drillhole_3d_exporter.html#sec_interp.exporters.DrillholeInterval3DExporter.export">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">export</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_path</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Export 3D drillhole intervals to a Shapefile.</span>
 

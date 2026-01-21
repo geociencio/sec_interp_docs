@@ -1,0 +1,629 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sec_interp.gui.main_dialog_config &mdash; SecInterp 2.7.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=dfec817d"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs"></script>
+      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
+
+const defaultStyle = document.createElement('style');
+defaultStyle.textContent = `pre.mermaid {
+    /* Same as .mermaid-container > pre */
+    display: block;
+    width: 100%;
+}
+
+pre.mermaid > svg {
+    /* Same as .mermaid-container > pre > svg */
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}
+`;
+document.head.appendChild(defaultStyle);
+
+const fullscreenStyle = document.createElement('style');
+fullscreenStyle.textContent = `.mermaid-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.mermaid-container > pre {
+    display: block;
+    width: 100%;
+}
+
+.mermaid-container > pre > svg {
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}
+
+.mermaid-fullscreen-btn {
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+    line-height: 1;
+    padding: 0;
+    color: #333;
+}
+
+.mermaid-fullscreen-btn:hover {
+    opacity: 100% !important;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-btn.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-btn.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal {
+    display: none;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 95vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.98);
+    z-index: 9999;
+    padding: 20px;
+    overflow: auto;
+}
+
+.mermaid-fullscreen-modal.dark-theme {
+    background: rgba(0, 0, 0, 0.98);
+}
+
+.mermaid-fullscreen-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen {
+    position: relative;
+    width: 95vw;
+    height: 90vh;
+    max-width: 95vw;
+    max-height: 90vh;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen.dark-theme {
+    background: #1a1a1a;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+}
+
+.mermaid-container-fullscreen pre.mermaid {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen .mermaid svg {
+    height: 100% !important;
+    width: 100% !important;
+    cursor: grab;
+}
+
+.mermaid-fullscreen-close {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s;
+    font-size: 24px;
+    line-height: 1;
+    color: #333;
+}
+
+.mermaid-fullscreen-close:hover {
+    background: white;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-close.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-close.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal .mermaid-fullscreen-btn {
+    display: none !important;
+}`;
+document.head.appendChild(fullscreenStyle);
+
+// Detect if page has dark background
+const isDarkTheme = () => {
+    const bgColor = window.getComputedStyle(document.body).backgroundColor;
+    const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
+    if (match) {
+        const r = parseInt(match[1]);
+        const g = parseInt(match[2]);
+        const b = parseInt(match[3]);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        return brightness < 128;
+    }
+    return false;
+};
+
+const load = async () => {
+    await mermaid.run();
+
+    const all_mermaids = document.querySelectorAll(".mermaid");
+    const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
+
+    if ("False" === "True") {
+        const mermaids_to_add_zoom = -1 === -1 ? all_mermaids.length : -1;
+        if(mermaids_to_add_zoom > 0) {
+            var svgs = d3.selectAll("");
+            if(all_mermaids.length !== mermaids_processed.length) {
+                setTimeout(load, 200);
+                return;
+            } else if(svgs.size() !== mermaids_to_add_zoom) {
+                setTimeout(load, 200);
+                return;
+            } else {
+                svgs.each(function() {
+                    var svg = d3.select(this);
+                    svg.html("<g class='wrapper'>" + svg.html() + "</g>");
+                    var inner = svg.select("g");
+                    var zoom = d3.zoom().on("zoom", function(event) {
+                        inner.attr("transform", event.transform);
+                    });
+                    svg.call(zoom);
+                });
+            }
+        }
+    } else if(all_mermaids.length !== mermaids_processed.length) {
+        // Wait for mermaid to process all diagrams
+        setTimeout(load, 200);
+        return;
+    }
+
+    const darkTheme = isDarkTheme();
+
+    // Stop here if not adding fullscreen capability
+    if ("True" !== "True") return;
+
+    const modal = document.createElement('div');
+    modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Fullscreen diagram viewer');
+    modal.innerHTML = `
+        <button class="mermaid-fullscreen-close${darkTheme ? ' dark-theme' : ''}" aria-label="Close fullscreen">✕</button>
+        <div class="mermaid-container-fullscreen${darkTheme ? ' dark-theme' : ''}"></div>
+    `;
+    document.body.appendChild(modal);
+
+    const modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
+
+    let previousScrollOffset = [window.scrollX, window.scrollY];
+
+    const closeModal = () => {
+        modal.classList.remove('active');
+        modalContent.innerHTML = '';
+        document.body.style.overflow = ''
+        window.scrollTo({left: previousScrollOffset[0], top: previousScrollOffset[1], behavior: 'instant'});
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+
+    const allButtons = [];
+
+    document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
+        if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
+            mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            return;
+        }
+
+        const container = document.createElement('div');
+        container.className = 'mermaid-container';
+        mermaidDiv.parentNode.insertBefore(container, mermaidDiv);
+        container.appendChild(mermaidDiv);
+
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+        fullscreenBtn.setAttribute('aria-label', 'View diagram in fullscreen');
+        fullscreenBtn.textContent = '⛶';
+        fullscreenBtn.style.opacity = '50%';
+
+        // Calculate dynamic position based on diagram's margin and padding
+        const diagramStyle = window.getComputedStyle(mermaidDiv);
+        const marginTop = parseFloat(diagramStyle.marginTop) || 0;
+        const marginRight = parseFloat(diagramStyle.marginRight) || 0;
+        const paddingTop = parseFloat(diagramStyle.paddingTop) || 0;
+        const paddingRight = parseFloat(diagramStyle.paddingRight) || 0;
+        fullscreenBtn.style.top = `${marginTop + paddingTop + 4}px`;
+        fullscreenBtn.style.right = `${marginRight + paddingRight + 4}px`;
+
+        fullscreenBtn.addEventListener('click', () => {
+            previousScrollOffset = [window.scroll, window.scrollY];
+            const clone = mermaidDiv.cloneNode(true);
+            modalContent.innerHTML = '';
+            modalContent.appendChild(clone);
+
+            const svg = clone.querySelector('svg');
+            if (svg) {
+                svg.removeAttribute('width');
+                svg.removeAttribute('height');
+                svg.style.width = '100%';
+                svg.style.height = 'auto';
+                svg.style.maxWidth = '100%';
+                svg.style.sdisplay = 'block';
+
+                if ("False" === "True") {
+                    setTimeout(() => {
+                        const g = svg.querySelector('g');
+                        if (g) {
+                            var svgD3 = d3.select(svg);
+                            svgD3.html("<g class='wrapper'>" + svgD3.html() + "</g>");
+                            var inner = svgD3.select("g");
+                            var zoom = d3.zoom().on("zoom", function(event) {
+                                inner.attr("transform", event.transform);
+                            });
+                            svgD3.call(zoom);
+                        }
+                    }, 100);
+                }
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        container.appendChild(fullscreenBtn);
+        allButtons.push(fullscreenBtn);
+    });
+
+    // Update theme classes when theme changes
+    const updateTheme = () => {
+        const dark = isDarkTheme();
+        allButtons.forEach(btn => {
+            if (dark) {
+                btn.classList.add('dark-theme');
+            } else {
+                btn.classList.remove('dark-theme');
+            }
+        });
+        if (dark) {
+            modal.classList.add('dark-theme');
+            modalContent.classList.add('dark-theme');
+            closeBtn.classList.add('dark-theme');
+        } else {
+            modal.classList.remove('dark-theme');
+            modalContent.classList.remove('dark-theme');
+            closeBtn.classList.remove('dark-theme');
+        }
+    };
+
+    // Watch for theme changes
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    observer.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style']
+    });
+};
+
+window.addEventListener("load", load);
+</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            SecInterp
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../USER_GUIDE.html">SecInterp User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">sec_interp</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">SecInterp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../sec_interp.html">sec_interp</a></li>
+      <li class="breadcrumb-item active">sec_interp.gui.main_dialog_config</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for sec_interp.gui.main_dialog_config</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span class="sd">&quot;&quot;&quot;Configuration and defaults for the SecInterp dialogs.&quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">ClassVar</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">qgis.PyQt.QtGui</span><span class="w"> </span><span class="kn">import</span> <span class="n">QColor</span>
+
+
+<div class="viewcode-block" id="DialogDefaults">
+<a class="viewcode-back" href="../../../sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogDefaults">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DialogDefaults</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Default values for dialog inputs and settings.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Scale and exaggeration</span>
+    <span class="n">SCALE</span> <span class="o">=</span> <span class="s2">&quot;50000&quot;</span>
+    <span class="n">VERTICAL_EXAGGERATION</span> <span class="o">=</span> <span class="s2">&quot;1.0&quot;</span>
+    <span class="n">DIP_SCALE</span> <span class="o">=</span> <span class="s2">&quot;4&quot;</span>
+    <span class="n">DIP_SCALE_FACTOR</span> <span class="o">=</span> <span class="s2">&quot;4&quot;</span>
+
+    <span class="c1"># Buffer and sampling</span>
+    <span class="n">BUFFER_DISTANCE</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># meters</span>
+    <span class="n">SAMPLING_INTERVAL</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># meters</span>
+
+    <span class="c1"># Export settings</span>
+    <span class="n">DPI</span> <span class="o">=</span> <span class="mi">300</span>
+    <span class="n">PREVIEW_WIDTH</span> <span class="o">=</span> <span class="mi">800</span>
+    <span class="n">PREVIEW_HEIGHT</span> <span class="o">=</span> <span class="mi">600</span>
+    <span class="n">EXPORT_QUALITY</span> <span class="o">=</span> <span class="mi">95</span>  <span class="c1"># for JPEG</span>
+
+    <span class="c1"># Colors</span>
+    <span class="n">BACKGROUND_COLOR</span> <span class="o">=</span> <span class="n">QColor</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>  <span class="c1"># White</span>
+    <span class="n">GRID_COLOR</span> <span class="o">=</span> <span class="n">QColor</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>  <span class="c1"># Light gray</span>
+
+    <span class="c1"># Raster band</span>
+    <span class="n">DEFAULT_BAND</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="c1"># File extensions</span>
+    <span class="n">SUPPORTED_IMAGE_FORMATS</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;.png&quot;</span><span class="p">,</span> <span class="s2">&quot;.jpg&quot;</span><span class="p">,</span> <span class="s2">&quot;.jpeg&quot;</span><span class="p">]</span>
+    <span class="n">SUPPORTED_VECTOR_FORMATS</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;.shp&quot;</span><span class="p">]</span>
+    <span class="n">SUPPORTED_DOCUMENT_FORMATS</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;.pdf&quot;</span><span class="p">,</span> <span class="s2">&quot;.svg&quot;</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="DialogConfig">
+<a class="viewcode-back" href="../../../sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DialogConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Configuration for dialog behavior and features.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Caching</span>
+    <span class="n">ENABLE_CACHE</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">CACHE_EXPIRY_SECONDS</span> <span class="o">=</span> <span class="mi">3600</span>  <span class="c1"># 1 hour</span>
+
+    <span class="c1"># Performance metrics</span>
+    <span class="n">ENABLE_PERFORMANCE_METRICS</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">SHOW_METRICS_IN_RESULTS</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">LOG_DETAILED_METRICS</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># UI behavior</span>
+    <span class="n">AUTO_SAVE_SETTINGS</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">SHOW_HELP_ON_START</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">ENABLE_TOOLTIPS</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="c1"># Validation</span>
+    <span class="n">STRICT_VALIDATION</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">ALLOW_EMPTY_GEOLOGY</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">ALLOW_EMPTY_STRUCTURES</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="c1"># Preview</span>
+    <span class="n">AUTO_REFRESH_PREVIEW</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">SHOW_LEGEND</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">ENABLE_ZOOM</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="c1"># Performance</span>
+    <span class="n">MAX_PREVIEW_POINTS</span> <span class="o">=</span> <span class="mi">10000</span>
+    <span class="n">ENABLE_LOD</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># Level of Detail optimization</span>
+
+    <span class="c1"># Logging</span>
+    <span class="n">VERBOSE_LOGGING</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">LOG_PERFORMANCE</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+
+
+<div class="viewcode-block" id="ValidationMessages">
+<a class="viewcode-back" href="../../../sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ValidationMessages</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Standard validation error messages.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Required fields</span>
+    <span class="n">MISSING_RASTER</span> <span class="o">=</span> <span class="s2">&quot;DEM raster layer is required&quot;</span>
+    <span class="n">MISSING_SECTION_LINE</span> <span class="o">=</span> <span class="s2">&quot;Cross-section line is required&quot;</span>
+    <span class="n">MISSING_OUTPUT_PATH</span> <span class="o">=</span> <span class="s2">&quot;Output path is required&quot;</span>
+
+    <span class="c1"># Invalid inputs</span>
+    <span class="n">INVALID_RASTER</span> <span class="o">=</span> <span class="s2">&quot;Selected raster layer is not valid&quot;</span>
+    <span class="n">INVALID_SECTION_LINE</span> <span class="o">=</span> <span class="s2">&quot;Selected section line is not valid&quot;</span>
+    <span class="n">INVALID_OUTPUT_PATH</span> <span class="o">=</span> <span class="s2">&quot;Output path is not valid or not writable&quot;</span>
+
+    <span class="c1"># Geometry errors</span>
+    <span class="n">WRONG_GEOMETRY_TYPE</span> <span class="o">=</span> <span class="s2">&quot;Layer has incorrect geometry type&quot;</span>
+    <span class="n">EMPTY_LAYER</span> <span class="o">=</span> <span class="s2">&quot;Layer contains no features&quot;</span>
+    <span class="n">INVALID_GEOMETRY</span> <span class="o">=</span> <span class="s2">&quot;Layer contains invalid geometries&quot;</span>
+
+    <span class="c1"># Field errors</span>
+    <span class="n">MISSING_FIELD</span> <span class="o">=</span> <span class="s2">&quot;Required field &#39;</span><span class="si">{}</span><span class="s2">&#39; not found in layer&quot;</span>
+    <span class="n">INVALID_FIELD_TYPE</span> <span class="o">=</span> <span class="s2">&quot;Field &#39;</span><span class="si">{}</span><span class="s2">&#39; has incorrect type&quot;</span>
+
+    <span class="c1"># Geology specific</span>
+    <span class="n">MISSING_OUTCROP_LAYER</span> <span class="o">=</span> <span class="s2">&quot;Outcrop layer is required for geological profile&quot;</span>
+    <span class="n">MISSING_OUTCROP_FIELD</span> <span class="o">=</span> <span class="s2">&quot;Outcrop name field is required&quot;</span>
+
+    <span class="c1"># Structure specific</span>
+    <span class="n">MISSING_STRUCTURAL_LAYER</span> <span class="o">=</span> <span class="s2">&quot;Structural layer is required for structure projection&quot;</span>
+    <span class="n">MISSING_DIP_FIELD</span> <span class="o">=</span> <span class="s2">&quot;Dip field is required&quot;</span>
+    <span class="n">MISSING_STRIKE_FIELD</span> <span class="o">=</span> <span class="s2">&quot;Strike field is required&quot;</span>
+
+    <span class="c1"># General</span>
+    <span class="n">VALIDATION_FAILED</span> <span class="o">=</span> <span class="s2">&quot;Input validation failed&quot;</span>
+    <span class="n">UNKNOWN_ERROR</span> <span class="o">=</span> <span class="s2">&quot;An unknown error occurred&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="UIConstants">
+<a class="viewcode-back" href="../../../sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.UIConstants">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">UIConstants</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;UI-related constants.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Widget sizes</span>
+    <span class="n">MIN_PREVIEW_WIDTH</span> <span class="o">=</span> <span class="mi">400</span>
+    <span class="n">MIN_PREVIEW_HEIGHT</span> <span class="o">=</span> <span class="mi">300</span>
+    <span class="n">MAX_PREVIEW_WIDTH</span> <span class="o">=</span> <span class="mi">1920</span>
+    <span class="n">MAX_PREVIEW_HEIGHT</span> <span class="o">=</span> <span class="mi">1080</span>
+
+    <span class="c1"># Icon names (QGIS theme icons)</span>
+    <span class="n">ICON_HELP</span> <span class="o">=</span> <span class="s2">&quot;mActionHelpContents.svg&quot;</span>
+    <span class="n">ICON_REFRESH</span> <span class="o">=</span> <span class="s2">&quot;mActionRefresh.svg&quot;</span>
+    <span class="n">ICON_EXPORT</span> <span class="o">=</span> <span class="s2">&quot;mActionFileSave.svg&quot;</span>
+    <span class="n">ICON_CLEAR</span> <span class="o">=</span> <span class="s2">&quot;mActionDeleteSelected.svg&quot;</span>
+
+    <span class="c1"># Status indicators</span>
+    <span class="n">STATUS_OK</span> <span class="o">=</span> <span class="s2">&quot;✓&quot;</span>
+    <span class="n">STATUS_ERROR</span> <span class="o">=</span> <span class="s2">&quot;✗&quot;</span>
+    <span class="n">STATUS_WARNING</span> <span class="o">=</span> <span class="s2">&quot;⚠&quot;</span>
+
+    <span class="c1"># Required field indicator</span>
+    <span class="n">REQUIRED_INDICATOR</span> <span class="o">=</span> <span class="s2">&quot;*&quot;</span>
+    <span class="n">REQUIRED_COLOR</span> <span class="o">=</span> <span class="n">QColor</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># Red</span></div>
+
+
+
+<span class="c1"># Type aliases for better code readability</span>
+<span class="n">LayerSelection</span> <span class="o">=</span> <span class="n">Any</span>  <span class="c1"># QgsVectorLayer or None</span>
+<span class="n">RasterSelection</span> <span class="o">=</span> <span class="n">Any</span>  <span class="c1"># QgsRasterLayer or None</span>
+<span class="n">ValidationResult</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>  <span class="c1"># (is_valid, error_message)</span>
+<span class="n">DialogValues</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>  <span class="c1"># Dictionary of dialog input values</span>
+<span class="n">ExportSettings</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>  <span class="c1"># Dictionary of export configuration</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Juan M Bernales.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

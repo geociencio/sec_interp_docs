@@ -1,0 +1,984 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sec_interp.sec_interp_plugin &mdash; SecInterp 2.7.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=dfec817d"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs"></script>
+      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
+
+const defaultStyle = document.createElement('style');
+defaultStyle.textContent = `pre.mermaid {
+    /* Same as .mermaid-container > pre */
+    display: block;
+    width: 100%;
+}
+
+pre.mermaid > svg {
+    /* Same as .mermaid-container > pre > svg */
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}
+`;
+document.head.appendChild(defaultStyle);
+
+const fullscreenStyle = document.createElement('style');
+fullscreenStyle.textContent = `.mermaid-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.mermaid-container > pre {
+    display: block;
+    width: 100%;
+}
+
+.mermaid-container > pre > svg {
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}
+
+.mermaid-fullscreen-btn {
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+    line-height: 1;
+    padding: 0;
+    color: #333;
+}
+
+.mermaid-fullscreen-btn:hover {
+    opacity: 100% !important;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-btn.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-btn.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal {
+    display: none;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 95vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.98);
+    z-index: 9999;
+    padding: 20px;
+    overflow: auto;
+}
+
+.mermaid-fullscreen-modal.dark-theme {
+    background: rgba(0, 0, 0, 0.98);
+}
+
+.mermaid-fullscreen-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen {
+    position: relative;
+    width: 95vw;
+    height: 90vh;
+    max-width: 95vw;
+    max-height: 90vh;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen.dark-theme {
+    background: #1a1a1a;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+}
+
+.mermaid-container-fullscreen pre.mermaid {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen .mermaid svg {
+    height: 100% !important;
+    width: 100% !important;
+    cursor: grab;
+}
+
+.mermaid-fullscreen-close {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s;
+    font-size: 24px;
+    line-height: 1;
+    color: #333;
+}
+
+.mermaid-fullscreen-close:hover {
+    background: white;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-close.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-close.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal .mermaid-fullscreen-btn {
+    display: none !important;
+}`;
+document.head.appendChild(fullscreenStyle);
+
+// Detect if page has dark background
+const isDarkTheme = () => {
+    const bgColor = window.getComputedStyle(document.body).backgroundColor;
+    const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
+    if (match) {
+        const r = parseInt(match[1]);
+        const g = parseInt(match[2]);
+        const b = parseInt(match[3]);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        return brightness < 128;
+    }
+    return false;
+};
+
+const load = async () => {
+    await mermaid.run();
+
+    const all_mermaids = document.querySelectorAll(".mermaid");
+    const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
+
+    if ("False" === "True") {
+        const mermaids_to_add_zoom = -1 === -1 ? all_mermaids.length : -1;
+        if(mermaids_to_add_zoom > 0) {
+            var svgs = d3.selectAll("");
+            if(all_mermaids.length !== mermaids_processed.length) {
+                setTimeout(load, 200);
+                return;
+            } else if(svgs.size() !== mermaids_to_add_zoom) {
+                setTimeout(load, 200);
+                return;
+            } else {
+                svgs.each(function() {
+                    var svg = d3.select(this);
+                    svg.html("<g class='wrapper'>" + svg.html() + "</g>");
+                    var inner = svg.select("g");
+                    var zoom = d3.zoom().on("zoom", function(event) {
+                        inner.attr("transform", event.transform);
+                    });
+                    svg.call(zoom);
+                });
+            }
+        }
+    } else if(all_mermaids.length !== mermaids_processed.length) {
+        // Wait for mermaid to process all diagrams
+        setTimeout(load, 200);
+        return;
+    }
+
+    const darkTheme = isDarkTheme();
+
+    // Stop here if not adding fullscreen capability
+    if ("True" !== "True") return;
+
+    const modal = document.createElement('div');
+    modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Fullscreen diagram viewer');
+    modal.innerHTML = `
+        <button class="mermaid-fullscreen-close${darkTheme ? ' dark-theme' : ''}" aria-label="Close fullscreen">✕</button>
+        <div class="mermaid-container-fullscreen${darkTheme ? ' dark-theme' : ''}"></div>
+    `;
+    document.body.appendChild(modal);
+
+    const modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
+
+    let previousScrollOffset = [window.scrollX, window.scrollY];
+
+    const closeModal = () => {
+        modal.classList.remove('active');
+        modalContent.innerHTML = '';
+        document.body.style.overflow = ''
+        window.scrollTo({left: previousScrollOffset[0], top: previousScrollOffset[1], behavior: 'instant'});
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+
+    const allButtons = [];
+
+    document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
+        if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
+            mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            return;
+        }
+
+        const container = document.createElement('div');
+        container.className = 'mermaid-container';
+        mermaidDiv.parentNode.insertBefore(container, mermaidDiv);
+        container.appendChild(mermaidDiv);
+
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+        fullscreenBtn.setAttribute('aria-label', 'View diagram in fullscreen');
+        fullscreenBtn.textContent = '⛶';
+        fullscreenBtn.style.opacity = '50%';
+
+        // Calculate dynamic position based on diagram's margin and padding
+        const diagramStyle = window.getComputedStyle(mermaidDiv);
+        const marginTop = parseFloat(diagramStyle.marginTop) || 0;
+        const marginRight = parseFloat(diagramStyle.marginRight) || 0;
+        const paddingTop = parseFloat(diagramStyle.paddingTop) || 0;
+        const paddingRight = parseFloat(diagramStyle.paddingRight) || 0;
+        fullscreenBtn.style.top = `${marginTop + paddingTop + 4}px`;
+        fullscreenBtn.style.right = `${marginRight + paddingRight + 4}px`;
+
+        fullscreenBtn.addEventListener('click', () => {
+            previousScrollOffset = [window.scroll, window.scrollY];
+            const clone = mermaidDiv.cloneNode(true);
+            modalContent.innerHTML = '';
+            modalContent.appendChild(clone);
+
+            const svg = clone.querySelector('svg');
+            if (svg) {
+                svg.removeAttribute('width');
+                svg.removeAttribute('height');
+                svg.style.width = '100%';
+                svg.style.height = 'auto';
+                svg.style.maxWidth = '100%';
+                svg.style.sdisplay = 'block';
+
+                if ("False" === "True") {
+                    setTimeout(() => {
+                        const g = svg.querySelector('g');
+                        if (g) {
+                            var svgD3 = d3.select(svg);
+                            svgD3.html("<g class='wrapper'>" + svgD3.html() + "</g>");
+                            var inner = svgD3.select("g");
+                            var zoom = d3.zoom().on("zoom", function(event) {
+                                inner.attr("transform", event.transform);
+                            });
+                            svgD3.call(zoom);
+                        }
+                    }, 100);
+                }
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        container.appendChild(fullscreenBtn);
+        allButtons.push(fullscreenBtn);
+    });
+
+    // Update theme classes when theme changes
+    const updateTheme = () => {
+        const dark = isDarkTheme();
+        allButtons.forEach(btn => {
+            if (dark) {
+                btn.classList.add('dark-theme');
+            } else {
+                btn.classList.remove('dark-theme');
+            }
+        });
+        if (dark) {
+            modal.classList.add('dark-theme');
+            modalContent.classList.add('dark-theme');
+            closeBtn.classList.add('dark-theme');
+        } else {
+            modal.classList.remove('dark-theme');
+            modalContent.classList.remove('dark-theme');
+            closeBtn.classList.remove('dark-theme');
+        }
+    };
+
+    // Watch for theme changes
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    observer.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style']
+    });
+};
+
+window.addEventListener("load", load);
+</script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            SecInterp
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../USER_GUIDE.html">SecInterp User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">sec_interp</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">SecInterp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../sec_interp.html">sec_interp</a></li>
+      <li class="breadcrumb-item active">sec_interp.sec_interp_plugin</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for sec_interp.sec_interp_plugin</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span class="c1"># /***************************************************************************</span>
+<span class="c1">#  SecInterp</span>
+<span class="c1">#                                  A QGIS plugin</span>
+<span class="c1">#  Data extraction for geological interpretation.</span>
+<span class="c1">#  Generated by Plugin Builder: http://g-sherman.github.io/Qgis-Plugin-Builder/.</span>
+<span class="c1">#                               -------------------</span>
+<span class="c1">#         begin                : 2025-11-15</span>
+<span class="c1">#         git sha              : $Format:%H$</span>
+<span class="c1">#         copyright            : (C) 2025 by Juan M Bernales</span>
+<span class="c1">#         email                : juanbernales@gmail.com</span>
+<span class="c1">#  ***************************************************************************/</span>
+<span class="c1">#</span>
+<span class="c1"># /***************************************************************************</span>
+<span class="c1">#  *                                                                         *</span>
+<span class="c1">#  *   This program is free software; you can redistribute it and/or modify  *</span>
+<span class="c1">#  *   it under the terms of the GNU General Public License as published by  *</span>
+<span class="c1">#  *   the Free Software Foundation; either version 2 of the License, or     *</span>
+<span class="c1">#  *   (at your option) any later version.                                   *</span>
+<span class="c1">#  *                                                                         *</span>
+<span class="c1">#  ***************************************************************************/</span>
+
+<span class="sd">&quot;&quot;&quot;Main Plugin Module.</span>
+
+<span class="sd">Orchestrates the lifecycle of the SecInterp QGIS plugin.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">qgis.core</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QgsMapLayer</span><span class="p">,</span>
+    <span class="n">QgsProject</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qgis.PyQt.QtCore</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">QCoreApplication</span><span class="p">,</span>
+    <span class="n">QSettings</span><span class="p">,</span>
+    <span class="n">QTranslator</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qgis.PyQt.QtGui</span><span class="w"> </span><span class="kn">import</span> <span class="n">QIcon</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qgis.PyQt.QtWidgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">QAction</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.controller</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProfileController</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">SecInterpError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.services.export_service</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExportService</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">PreviewParams</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.gui.main_dialog</span><span class="w"> </span><span class="kn">import</span> <span class="n">SecInterpDialog</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.gui.preview_renderer</span><span class="w"> </span><span class="kn">import</span> <span class="n">PreviewRenderer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.logger_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_logger</span><span class="p">,</span> <span class="n">setup_logging</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="c1"># DataCache has been moved to core/data_cache.py</span>
+
+
+<div class="viewcode-block" id="SecInterp">
+<a class="viewcode-back" href="../../sec_interp.sec_interp_plugin.html#sec_interp.sec_interp_plugin.SecInterp">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SecInterp</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;QGIS Plugin Implementation for Geological Data Extraction.</span>
+
+<span class="sd">    This class implements the main logic of the SecInterp plugin, handling</span>
+<span class="sd">    initialization, UI integration, and orchestration of data processing tasks.</span>
+<span class="sd">    It connects the QGIS interface with the plugin&#39;s dialog and processing algorithms.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SecInterp.__init__">
+<a class="viewcode-back" href="../../sec_interp.sec_interp_plugin.html#sec_interp.sec_interp_plugin.SecInterp.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iface</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the plugin.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            iface (QgsInterface): An interface instance that will be passed to this class</span>
+<span class="sd">                which provides the hook by which you can manipulate the QGIS</span>
+<span class="sd">                application at run time.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Initialize logging first</span>
+        <span class="n">setup_logging</span><span class="p">()</span>
+
+        <span class="c1"># Save reference to the QGIS interface</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iface</span> <span class="o">=</span> <span class="n">iface</span>
+        <span class="c1"># initialize plugin directory</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plugin_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span>
+        <span class="c1"># initialize locale</span>
+        <span class="n">user_locale</span> <span class="o">=</span> <span class="n">QSettings</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;locale/userLocale&quot;</span><span class="p">,</span> <span class="s2">&quot;en&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Try full locale first (e.g., pt_BR)</span>
+        <span class="n">locale_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plugin_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;i18n/SecInterp_</span><span class="si">{</span><span class="n">user_locale</span><span class="si">}</span><span class="s2">.qm&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">locale_path</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="n">user_locale</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">user_locale</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="c1"># Fallback to language code (e.g., pt)</span>
+            <span class="n">locale_short</span> <span class="o">=</span> <span class="n">user_locale</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">locale_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plugin_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;i18n/SecInterp_</span><span class="si">{</span><span class="n">locale_short</span><span class="si">}</span><span class="s2">.qm&quot;</span>
+
+        <span class="k">if</span> <span class="n">locale_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">translator</span> <span class="o">=</span> <span class="n">QTranslator</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">translator</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">locale_path</span><span class="p">))</span>
+            <span class="n">QCoreApplication</span><span class="o">.</span><span class="n">installTranslator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">translator</span><span class="p">)</span>
+
+        <span class="c1"># Prepare core services BEFORE the dialog (required by PreviewManager)</span>
+        <span class="c1"># Create preview renderer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">preview_renderer</span> <span class="o">=</span> <span class="n">PreviewRenderer</span><span class="p">()</span>
+        <span class="c1"># Initialize controller</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">=</span> <span class="n">ProfileController</span><span class="p">()</span>
+        <span class="c1"># Initialize export service</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">export_service</span> <span class="o">=</span> <span class="n">ExportService</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="p">)</span>
+
+        <span class="c1"># Create the dialog (after services and translation) and keep reference</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span> <span class="o">=</span> <span class="n">SecInterpDialog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">plugin_instance</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first_start</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1"># Declare instance attributes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s2">&quot;&amp;Sec Interp&quot;</span><span class="p">)</span>
+        <span class="c1"># Create custom toolbar and make it visible</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">toolbar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">addToolBar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s2">&quot;Sec Interp&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">toolbar</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="s2">&quot;SecInterp&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">toolbar</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Ensure toolbar is visible</span>
+
+        <span class="c1"># Check if plugin was started the first time in current QGIS session</span>
+        <span class="c1"># Must be set in initGui() to survive plugin reloads</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first_start</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+    <span class="c1"># noinspection PyMethodMayBeStatic</span>
+<div class="viewcode-block" id="SecInterp.tr">
+<a class="viewcode-back" href="../../sec_interp.sec_interp_plugin.html#sec_interp.sec_interp_plugin.SecInterp.tr">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the translation for a string using Qt translation API.</span>
+
+<span class="sd">        We implement this ourselves since we do not inherit QObject.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            message (str): String for translation.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: Translated string (or original if no translation found).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># noinspection PyTypeChecker,PyArgumentList,PyCallByClass</span>
+        <span class="k">return</span> <span class="n">QCoreApplication</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="s2">&quot;SecInterp&quot;</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SecInterp.add_action">
+<a class="viewcode-back" href="../../sec_interp.sec_interp_plugin.html#sec_interp.sec_interp_plugin.SecInterp.add_action">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_action</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">icon_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">callback</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+        <span class="n">enabled_flag</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">add_to_menu</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">add_to_toolbar</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">status_tip</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">whats_this</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">parent</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QAction</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a toolbar icon to the toolbar.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            icon_path (str): Path to the icon for this action.</span>
+<span class="sd">            text (str): Text that should be shown in menu items for this action.</span>
+<span class="sd">            callback (function): Function to be called when the action is triggered.</span>
+<span class="sd">            enabled_flag (bool): A flag indicating if the action should be enabled</span>
+<span class="sd">                by default. Defaults to True.</span>
+<span class="sd">            add_to_menu (bool): Flag indicating whether the action should also</span>
+<span class="sd">                be added to the menu. Defaults to True.</span>
+<span class="sd">            add_to_toolbar (bool): Flag indicating whether the action should also</span>
+<span class="sd">                be added to the toolbar. Defaults to True.</span>
+<span class="sd">            status_tip (str): Optional text to show in a popup when mouse pointer</span>
+<span class="sd">                hovers over the action.</span>
+<span class="sd">            whats_this (str): Optional text to show in the status bar when the</span>
+<span class="sd">                mouse pointer hovers over the action.</span>
+<span class="sd">            parent (QWidget): Parent widget for the new action. Defaults None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            QAction: The action that was created. Note that the action is also</span>
+<span class="sd">                added to self.actions list.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">icon</span> <span class="o">=</span> <span class="n">QIcon</span><span class="p">(</span><span class="n">icon_path</span><span class="p">)</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="n">QAction</span><span class="p">(</span><span class="n">icon</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+        <span class="n">action</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
+        <span class="n">action</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">enabled_flag</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">status_tip</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">action</span><span class="o">.</span><span class="n">setStatusTip</span><span class="p">(</span><span class="n">status_tip</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">whats_this</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">action</span><span class="o">.</span><span class="n">setWhatsThis</span><span class="p">(</span><span class="n">whats_this</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">add_to_toolbar</span><span class="p">:</span>
+            <span class="c1"># Add to custom toolbar</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">toolbar</span><span class="o">.</span><span class="n">addAction</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+            <span class="c1"># Also add to Plugins toolbar for visibility</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">addToolBarIcon</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">add_to_menu</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">addPluginToMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">menu</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">action</span></div>
+
+
+<div class="viewcode-block" id="SecInterp.initGui">
+<a class="viewcode-back" href="../../sec_interp.sec_interp_plugin.html#sec_interp.sec_interp_plugin.SecInterp.initGui">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">initGui</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># noqa: N802</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the menu entries and toolbar icons inside the QGIS GUI.&quot;&quot;&quot;</span>
+        <span class="c1"># Use absolute path to icon file to ensure it loads in toolbar</span>
+        <span class="n">icon_path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plugin_dir</span> <span class="o">/</span> <span class="s2">&quot;icon.png&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_action</span><span class="p">(</span>
+            <span class="n">icon_path</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s2">&quot;Geological data extraction&quot;</span><span class="p">),</span>
+            <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">,</span>
+            <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">mainWindow</span><span class="p">(),</span>
+        <span class="p">)</span>
+
+        <span class="c1"># will be set False in run()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first_start</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="SecInterp.unload">
+<a class="viewcode-back" href="../../sec_interp.sec_interp_plugin.html#sec_interp.sec_interp_plugin.SecInterp.unload">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">unload</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove the plugin menu item and icon from QGIS GUI.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">removePluginMenu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s2">&quot;&amp;Sec Interp&quot;</span><span class="p">),</span> <span class="n">action</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">removeToolBarIcon</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+
+        <span class="c1"># Remove custom toolbar</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolbar</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolbar</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">toolbar</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="SecInterp.run">
+<a class="viewcode-back" href="../../sec_interp.sec_interp_plugin.html#sec_interp.sec_interp_plugin.SecInterp.run">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run method that performs all the real work.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">first_start</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">first_start</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="c1"># Dialog is already initialized in __init__</span>
+            <span class="c1"># Update preview renderer with the dialog&#39;s canvas</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">preview_renderer</span><span class="o">.</span><span class="n">canvas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">preview_widget</span><span class="o">.</span><span class="n">canvas</span>
+
+            <span class="c1"># Connect dialog accepted signal to final processing</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">accepted</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">process_data</span><span class="p">)</span>
+
+        <span class="c1"># Reload interpretations and UI settings to reflect current project state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">_load_interpretations</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">_load_user_settings</span><span class="p">()</span>
+        <span class="c1"># Show the dialog</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="c1"># Run the dialog event loop</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+        <span class="c1"># See if OK was pressed</span>
+        <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+            <span class="c1"># Do something useful here - delete the line containing pass and</span>
+            <span class="c1"># substitute with your code.</span>
+            <span class="k">pass</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_resolve_layer_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">placeholder_text</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QgsMapLayer</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Resolve layer object from UI value.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">QgsMapLayer</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">value</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">value</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">placeholder_text</span> <span class="ow">and</span> <span class="n">value</span> <span class="o">==</span> <span class="n">placeholder_text</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="c1"># Try resolving by ID first (most robust)</span>
+            <span class="n">layer</span> <span class="o">=</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">mapLayer</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">layer</span><span class="p">:</span>
+                <span class="c1"># Fallback to name search</span>
+                <span class="k">for</span> <span class="n">lyr</span> <span class="ow">in</span> <span class="n">QgsProject</span><span class="o">.</span><span class="n">instance</span><span class="p">()</span><span class="o">.</span><span class="n">mapLayers</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">lyr</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
+                        <span class="n">layer</span> <span class="o">=</span> <span class="n">lyr</span>
+                        <span class="k">break</span>
+            <span class="k">return</span> <span class="n">layer</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_and_validate_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PreviewParams</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieve and validate inputs from the dialog.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            PreviewParams: Validated parameters, or None if validation fails.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get values from the dialog pages</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">get_selected_values</span><span class="p">()</span>
+        <span class="c1"># Get preview/LOD options from the preview widget</span>
+        <span class="n">preview_options</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">get_preview_options</span><span class="p">()</span>
+
+        <span class="c1"># 1. Resolve Layer Objects</span>
+        <span class="n">raster_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resolve_layer_obj</span><span class="p">(</span>
+            <span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;raster_layer&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s2">&quot;Select a raster layer&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">line_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resolve_layer_obj</span><span class="p">(</span>
+            <span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;crossline_layer&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s2">&quot;Select a crossline layer&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">outcrop_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resolve_layer_obj</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;outcrop_layer&quot;</span><span class="p">))</span>
+        <span class="n">structural_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resolve_layer_obj</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;structural_layer&quot;</span><span class="p">))</span>
+
+        <span class="c1"># 2. Build PreviewParams</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="n">PreviewParams</span><span class="p">(</span>
+                <span class="n">raster_layer</span><span class="o">=</span><span class="n">raster_layer</span><span class="p">,</span>
+                <span class="n">line_layer</span><span class="o">=</span><span class="n">line_layer</span><span class="p">,</span>
+                <span class="n">band_num</span><span class="o">=</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;selected_band&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                <span class="n">buffer_dist</span><span class="o">=</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;buffer_distance&quot;</span><span class="p">,</span> <span class="mf">100.0</span><span class="p">),</span>
+                <span class="n">outcrop_layer</span><span class="o">=</span><span class="n">outcrop_layer</span><span class="p">,</span>
+                <span class="n">outcrop_name_field</span><span class="o">=</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;outcrop_name_field&quot;</span><span class="p">),</span>
+                <span class="n">struct_layer</span><span class="o">=</span><span class="n">structural_layer</span><span class="p">,</span>
+                <span class="n">dip_field</span><span class="o">=</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dip_field&quot;</span><span class="p">),</span>
+                <span class="n">strike_field</span><span class="o">=</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;strike_field&quot;</span><span class="p">),</span>
+                <span class="n">dip_scale_factor</span><span class="o">=</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dip_scale_factor&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+                <span class="n">collar_layer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_resolve_layer_obj</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;collar_layer_obj&quot;</span><span class="p">)),</span>
+                <span class="n">collar_id_field</span><span class="o">=</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;collar_id_field&quot;</span><span class="p">),</span>
+                <span class="n">collar_use_geometry</span><span class="o">=</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;collar_use_geometry&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>
+                <span class="n">collar_x_field</span><span class="o">=</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;collar_x_field&quot;</span><span class="p">),</span>
+                <span class="n">collar_y_field</span><span class="o">=</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;collar_y_field&quot;</span><span class="p">),</span>
+                <span class="n">collar_z_field</span><span class="o">=</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;collar_z_field&quot;</span><span class="p">),</span>
+                <span class="n">collar_depth_field</span><span class="o">=</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;collar_depth_field&quot;</span><span class="p">),</span>
+                <span class="n">survey_layer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_resolve_layer_obj</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;survey_layer_obj&quot;</span><span class="p">)),</span>
+                <span class="n">survey_id_field</span><span class="o">=</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;survey_id_field&quot;</span><span class="p">),</span>
+                <span class="n">survey_depth_field</span><span class="o">=</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;survey_depth_field&quot;</span><span class="p">),</span>
+                <span class="n">survey_azim_field</span><span class="o">=</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;survey_azim_field&quot;</span><span class="p">),</span>
+                <span class="n">survey_incl_field</span><span class="o">=</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;survey_incl_field&quot;</span><span class="p">),</span>
+                <span class="n">interval_layer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_resolve_layer_obj</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;interval_layer_obj&quot;</span><span class="p">)),</span>
+                <span class="n">interval_id_field</span><span class="o">=</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;interval_id_field&quot;</span><span class="p">),</span>
+                <span class="n">interval_from_field</span><span class="o">=</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;interval_from_field&quot;</span><span class="p">),</span>
+                <span class="n">interval_to_field</span><span class="o">=</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;interval_to_field&quot;</span><span class="p">),</span>
+                <span class="n">interval_lith_field</span><span class="o">=</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;interval_lith_field&quot;</span><span class="p">),</span>
+                <span class="n">max_points</span><span class="o">=</span><span class="n">preview_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;max_points&quot;</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span>
+                <span class="n">auto_lod</span><span class="o">=</span><span class="n">preview_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;auto_lod&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>
+                <span class="n">canvas_width</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">preview_widget</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span>
+            <span class="p">)</span>
+            <span class="c1"># Internal Native Validation</span>
+            <span class="n">params</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">SecInterpError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">handle_error</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s2">&quot;Configuration Error&quot;</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">handle_error</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s2">&quot;Unexpected Error&quot;</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># 3. Connect Layer Notifications for Cache Invalidation</span>
+        <span class="n">active_layers</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">l</span>
+            <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="p">[</span>
+                <span class="n">params</span><span class="o">.</span><span class="n">raster_layer</span><span class="p">,</span>
+                <span class="n">params</span><span class="o">.</span><span class="n">line_layer</span><span class="p">,</span>
+                <span class="n">params</span><span class="o">.</span><span class="n">outcrop_layer</span><span class="p">,</span>
+                <span class="n">params</span><span class="o">.</span><span class="n">struct_layer</span><span class="p">,</span>
+                <span class="n">params</span><span class="o">.</span><span class="n">collar_layer</span><span class="p">,</span>
+                <span class="n">params</span><span class="o">.</span><span class="n">survey_layer</span><span class="p">,</span>
+                <span class="n">params</span><span class="o">.</span><span class="n">interval_layer</span><span class="p">,</span>
+            <span class="p">]</span>
+            <span class="k">if</span> <span class="n">l</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">connect_layer_notifications</span><span class="p">(</span><span class="n">active_layers</span><span class="p">)</span>
+
+        <span class="c1"># Store output path temporarily or return as tuple if needed</span>
+        <span class="c1"># but for now we only return params. Callers need the path separately.</span>
+        <span class="k">return</span> <span class="n">params</span>
+
+<div class="viewcode-block" id="SecInterp.process_data">
+<a class="viewcode-back" href="../../sec_interp.sec_interp_plugin.html#sec_interp.sec_interp_plugin.SecInterp.process_data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">process_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Process profile data by delegating to the dialog&#39;s preview manager.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            inputs: Pre-validated inputs (optional)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple of (profile_data, geol_data, struct_data) or None</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Simply delegate to the dialog&#39;s preview manager if it exists</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;dlg&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="p">:</span>
+            <span class="n">success</span><span class="p">,</span> <span class="n">message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">preview_manager</span><span class="o">.</span><span class="n">generate_preview</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Data processing failed: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+            <span class="c1"># Return cached data from manager for backward compatibility if needed</span>
+            <span class="n">cache</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">preview_manager</span><span class="o">.</span><span class="n">cached_data</span>
+            <span class="k">return</span> <span class="n">cache</span><span class="p">[</span><span class="s2">&quot;topo&quot;</span><span class="p">],</span> <span class="n">cache</span><span class="p">[</span><span class="s2">&quot;geol&quot;</span><span class="p">],</span> <span class="n">cache</span><span class="p">[</span><span class="s2">&quot;struct&quot;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="SecInterp.save_profile_line">
+<a class="viewcode-back" href="../../sec_interp.sec_interp_plugin.html#sec_interp.sec_interp_plugin.SecInterp.save_profile_line">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">save_profile_line</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Save profile data by delegating to the dialog&#39;s export manager.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;dlg&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">export_manager</span><span class="o">.</span><span class="n">export_data</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SecInterp.draw_preview">
+<a class="viewcode-back" href="../../sec_interp.sec_interp_plugin.html#sec_interp.sec_interp_plugin.SecInterp.draw_preview">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">draw_preview</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">topo_data</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+        <span class="n">geol_data</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">struct_data</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">drillhole_data</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">max_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Draw enhanced interactive preview using native PyQGIS renderer.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            topo_data: List of (dist, elev) tuples for topographic profile</span>
+<span class="sd">            geol_data: Optional list of (dist, elev, geology_name) tuples</span>
+<span class="sd">            struct_data: Optional list of (dist, app_dip) tuples</span>
+<span class="sd">            drillhole_data: Optional list of (hole_id, traces, segments) tuples</span>
+<span class="sd">            max_points (int): Maximum number of points for simplified preview (LOD)</span>
+<span class="sd">            **kwargs: Additional arguments passed to renderer (e.g. preserve_extent)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;draw_preview called with:&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;  - topo_data: </span><span class="si">%d</span><span class="s2"> points&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">topo_data</span><span class="p">)</span> <span class="k">if</span> <span class="n">topo_data</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;  - geol_data: </span><span class="si">%d</span><span class="s2"> points&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">geol_data</span><span class="p">)</span> <span class="k">if</span> <span class="n">geol_data</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;  - struct_data: </span><span class="si">%d</span><span class="s2"> points&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">struct_data</span><span class="p">)</span> <span class="k">if</span> <span class="n">struct_data</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;  - drillhole_data: </span><span class="si">%d</span><span class="s2"> holes&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">drillhole_data</span><span class="p">)</span> <span class="k">if</span> <span class="n">drillhole_data</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;  - max_points: </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">max_points</span><span class="p">)</span>
+
+        <span class="c1"># Store data in dialog for re-rendering when checkboxes change</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">current_topo_data</span> <span class="o">=</span> <span class="n">topo_data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">current_geol_data</span> <span class="o">=</span> <span class="n">geol_data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">current_struct_data</span> <span class="o">=</span> <span class="n">struct_data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">current_drillhole_data</span> <span class="o">=</span> <span class="n">drillhole_data</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">current_drillhole_data</span> <span class="o">=</span> <span class="n">drillhole_data</span>
+
+        <span class="c1"># Get preview options from dialog checkboxes</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">get_preview_options</span><span class="p">()</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Preview options: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+
+        <span class="c1"># Filter data based on checkbox states</span>
+        <span class="n">filtered_topo</span> <span class="o">=</span> <span class="n">topo_data</span> <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;show_topo&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">filtered_geol</span> <span class="o">=</span> <span class="n">geol_data</span> <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;show_geol&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">filtered_struct</span> <span class="o">=</span> <span class="n">struct_data</span> <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;show_struct&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">filtered_drill</span> <span class="o">=</span> <span class="n">drillhole_data</span> <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;show_drillholes&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">filtered_interp</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">interpretations</span> <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;show_interpretations&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Filtered data:&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;  - filtered_topo: </span><span class="si">%d</span><span class="s2"> points&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">filtered_topo</span><span class="p">)</span> <span class="k">if</span> <span class="n">filtered_topo</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;  - filtered_geol: </span><span class="si">%d</span><span class="s2"> points&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">filtered_geol</span><span class="p">)</span> <span class="k">if</span> <span class="n">filtered_geol</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s2">&quot;  - filtered_struct: </span><span class="si">%d</span><span class="s2"> points&quot;</span><span class="p">,</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">filtered_struct</span><span class="p">)</span> <span class="k">if</span> <span class="n">filtered_struct</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s2">&quot;  - filtered_interp: </span><span class="si">%d</span><span class="s2"> polygons&quot;</span><span class="p">,</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">filtered_interp</span><span class="p">)</span> <span class="k">if</span> <span class="n">filtered_interp</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Get vertical exaggeration from dialog</span>
+
+        <span class="c1"># Use new numeric method or direct accessor from Page</span>
+        <span class="n">vert_exag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">page_dem</span><span class="o">.</span><span class="n">vertexag_spin</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Vertical exaggeration: </span><span class="si">%.2f</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">vert_exag</span><span class="p">)</span>
+
+        <span class="c1"># Calculate dip line length based on scale factor and raster resolution</span>
+        <span class="n">dip_line_length</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">filtered_struct</span><span class="p">:</span>
+            <span class="n">dip_scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">page_struct</span><span class="o">.</span><span class="n">scale_spin</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">dip_scale</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">raster_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">page_dem</span><span class="o">.</span><span class="n">raster_combo</span><span class="o">.</span><span class="n">currentLayer</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">raster_layer</span> <span class="ow">and</span> <span class="n">raster_layer</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+                    <span class="n">res</span> <span class="o">=</span> <span class="n">raster_layer</span><span class="o">.</span><span class="n">rasterUnitsPerPixelX</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">res</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">dip_line_length</span> <span class="o">=</span> <span class="n">res</span> <span class="o">*</span> <span class="n">dip_scale</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Dip line length: </span><span class="si">%s</span><span class="s2"> (scale: </span><span class="si">%.2f</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="n">dip_line_length</span><span class="p">,</span> <span class="n">dip_scale</span><span class="p">)</span>
+
+        <span class="c1"># Render using native PyQGIS</span>
+        <span class="n">canvas</span><span class="p">,</span> <span class="n">layers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preview_renderer</span><span class="o">.</span><span class="n">render</span><span class="p">(</span>
+            <span class="n">topo_data</span><span class="o">=</span><span class="n">filtered_topo</span><span class="p">,</span>
+            <span class="n">geol_data</span><span class="o">=</span><span class="n">filtered_geol</span><span class="p">,</span>
+            <span class="n">struct_data</span><span class="o">=</span><span class="n">filtered_struct</span><span class="p">,</span>
+            <span class="n">vert_exag</span><span class="o">=</span><span class="n">vert_exag</span><span class="p">,</span>
+            <span class="n">dip_line_length</span><span class="o">=</span><span class="n">dip_line_length</span><span class="p">,</span>
+            <span class="n">max_points</span><span class="o">=</span><span class="n">max_points</span><span class="p">,</span>
+            <span class="n">preserve_extent</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;preserve_extent&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+            <span class="n">drillhole_data</span><span class="o">=</span><span class="n">filtered_drill</span><span class="p">,</span>
+            <span class="n">interp_data</span><span class="o">=</span><span class="n">filtered_interp</span><span class="p">,</span>
+            <span class="n">show_legend</span><span class="o">=</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;show_legend&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Store canvas and layers for export</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">current_canvas</span> <span class="o">=</span> <span class="n">canvas</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">current_layers</span> <span class="o">=</span> <span class="n">layers</span>
+
+        <span class="c1"># Update legend</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="p">,</span> <span class="s2">&quot;legend_widget&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">legend_widget</span><span class="o">.</span><span class="n">update_legend</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">preview_renderer</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;show_legend&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Preview rendered with </span><span class="si">%d</span><span class="s2"> layers&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">layers</span><span class="p">)</span> <span class="k">if</span> <span class="n">layers</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Juan M Bernales.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

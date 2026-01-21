@@ -51,6 +51,7 @@
 <li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">sec_interp</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="sec_interp.html">sec_interp package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.html#sec_interp.classFactory"><code class="docutils literal notranslate"><span class="pre">classFactory()</span></code></a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="sec_interp.html#subpackages">Subpackages</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.html">sec_interp.core package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.html">sec_interp.exporters package</a></li>
@@ -92,8 +93,44 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="sec-interp-gui-main-dialog-settings-module">
-<h1>sec_interp.gui.main_dialog_settings module<a class="headerlink" href="#sec-interp-gui-main-dialog-settings-module" title="Link to this heading"></a></h1>
+  <section id="module-sec_interp.gui.main_dialog_settings">
+<span id="sec-interp-gui-main-dialog-settings-module"></span><h1>sec_interp.gui.main_dialog_settings module<a class="headerlink" href="#module-sec_interp.gui.main_dialog_settings" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="sec_interp.gui.main_dialog_settings.DialogSettingsManager">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sec_interp.gui.main_dialog_settings.</span></span><span class="sig-name descname"><span class="pre">DialogSettingsManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dialog</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.gui.main_dialog.html#sec_interp.gui.main_dialog.SecInterpDialog" title="sec_interp.gui.main_dialog.SecInterpDialog"><span class="pre">sec_interp.gui.main_dialog.SecInterpDialog</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sec_interp/gui/main_dialog_settings.html#DialogSettingsManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.gui.main_dialog_settings.DialogSettingsManager" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Manages persistence of dialog settings.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="sec_interp.gui.main_dialog_settings.DialogSettingsManager.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dialog</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.gui.main_dialog.html#sec_interp.gui.main_dialog.SecInterpDialog" title="sec_interp.gui.main_dialog.SecInterpDialog"><span class="pre">sec_interp.gui.main_dialog.SecInterpDialog</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sec_interp/gui/main_dialog_settings.html#DialogSettingsManager.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.gui.main_dialog_settings.DialogSettingsManager.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize settings manager with reference to parent dialog.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dialog</strong> – The <a class="reference internal" href="sec_interp.gui.main_dialog.html#sec_interp.gui.main_dialog.SecInterpDialog" title="sec_interp.gui.main_dialog.SecInterpDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">sec_interp.gui.main_dialog.SecInterpDialog</span></code></a> instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sec_interp.gui.main_dialog_settings.DialogSettingsManager.load_settings">
+<span class="sig-name descname"><span class="pre">load_settings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/sec_interp/gui/main_dialog_settings.html#DialogSettingsManager.load_settings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.gui.main_dialog_settings.DialogSettingsManager.load_settings" title="Link to this definition"></a></dt>
+<dd><p>Load user settings from previous session.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sec_interp.gui.main_dialog_settings.DialogSettingsManager.reset_to_defaults">
+<span class="sig-name descname"><span class="pre">reset_to_defaults</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/sec_interp/gui/main_dialog_settings.html#DialogSettingsManager.reset_to_defaults"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.gui.main_dialog_settings.DialogSettingsManager.reset_to_defaults" title="Link to this definition"></a></dt>
+<dd><p>Reset all dialog inputs to their default values.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sec_interp.gui.main_dialog_settings.DialogSettingsManager.save_settings">
+<span class="sig-name descname"><span class="pre">save_settings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/sec_interp/gui/main_dialog_settings.html#DialogSettingsManager.save_settings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.gui.main_dialog_settings.DialogSettingsManager.save_settings" title="Link to this definition"></a></dt>
+<dd><p>Save user settings for next session.</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 

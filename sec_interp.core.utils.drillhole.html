@@ -51,6 +51,7 @@
 <li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">sec_interp</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="sec_interp.html">sec_interp package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.html#sec_interp.classFactory"><code class="docutils literal notranslate"><span class="pre">classFactory()</span></code></a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="sec_interp.html#subpackages">Subpackages</a><ul class="current">
 <li class="toctree-l4 current"><a class="reference internal" href="sec_interp.core.html">sec_interp.core package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.html">sec_interp.exporters package</a></li>
@@ -93,8 +94,97 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="sec-interp-core-utils-drillhole-module">
-<h1>sec_interp.core.utils.drillhole module<a class="headerlink" href="#sec-interp-core-utils-drillhole-module" title="Link to this heading"></a></h1>
+  <section id="module-sec_interp.core.utils.drillhole">
+<span id="sec-interp-core-utils-drillhole-module"></span><h1>sec_interp.core.utils.drillhole module<a class="headerlink" href="#module-sec_interp.core.utils.drillhole" title="Link to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="sec_interp.core.utils.drillhole.calculate_drillhole_trajectory">
+<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.drillhole.</span></span><span class="sig-name descname"><span class="pre">calculate_drillhole_trajectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collar_point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsPointXY</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collar_z</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">survey_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section_azimuth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">densify_step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_depth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/sec_interp/core/utils/drillhole.html#calculate_drillhole_trajectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.core.utils.drillhole.calculate_drillhole_trajectory" title="Link to this definition"></a></dt>
+<dd><p>Calculate 3D trajectory of a drillhole using survey data.</p>
+<p>Uses the tangential method for trajectory calculation with densification
+to generate intermediate points for continuous interval projection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>collar_point</strong> – QgsPointXY of collar location (X, Y).</p></li>
+<li><p><strong>collar_z</strong> – Elevation of collar (Z).</p></li>
+<li><p><strong>survey_data</strong> – List of tuples (depth, azimuth, inclination) sorted by depth.</p></li>
+<li><p><strong>section_azimuth</strong> – Azimuth of the section line in degrees.</p></li>
+<li><p><strong>densify_step</strong> – Distance in meters between interpolated points (default 1.0m).</p></li>
+<li><p><strong>total_depth</strong> – Optional total depth. If greater than last survey depth,
+trajectory will be extrapolated using last orientation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>depth: Depth along the hole.</p></li>
+<li><p>x, y, z: 3D coordinates.</p></li>
+<li><p>dist_along_section: Distance along the section line (initially 0.0).</p></li>
+<li><p>offset_from_section: Perpendicular distance from section line (initially 0.0).</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of tuples (depth, x, y, z, dist_along_section, offset_from_section)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sec_interp.core.utils.drillhole.interpolate_intervals_on_trajectory">
+<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.drillhole.</span></span><span class="sig-name descname"><span class="pre">interpolate_intervals_on_trajectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajectory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intervals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/sec_interp/core/utils/drillhole.html#interpolate_intervals_on_trajectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.core.utils.drillhole.interpolate_intervals_on_trajectory" title="Link to this definition"></a></dt>
+<dd><p>Interpolate interval attributes along drillhole trajectory.</p>
+<p>Filters and maps geological intervals onto the 3D trajectory points
+that fall within the specified section buffer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>trajectory</strong> – List of (depth, x, y, z, dist_along, offset) tuples.</p></li>
+<li><p><strong>intervals</strong> – List of (from_depth, to_depth, attribute) tuples.</p></li>
+<li><p><strong>buffer_width</strong> – Maximum perpendicular offset to include a point.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>attribute: The metadata/geology associated with the interval.</p></li>
+<li><p>points_2d: List of (distance, elevation) coordinates for rendering.</p></li>
+<li><p>points_3d: List of (x, y, z) original coordinates for 3D export.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of tuples containing</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sec_interp.core.utils.drillhole.project_trajectory_to_section">
+<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.drillhole.</span></span><span class="sig-name descname"><span class="pre">project_trajectory_to_section</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajectory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_geom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsGeometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsPointXY</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsDistanceArea</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/sec_interp/core/utils/drillhole.html#project_trajectory_to_section"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.core.utils.drillhole.project_trajectory_to_section" title="Link to this definition"></a></dt>
+<dd><p>Project drillhole trajectory points onto section line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>trajectory</strong> – List of (depth, x, y, z, _, _) from <cite>calculate_drillhole_trajectory</cite>.</p></li>
+<li><p><strong>line_geom</strong> – QgsGeometry of the section line.</p></li>
+<li><p><strong>line_start</strong> – QgsPointXY of the section line start.</p></li>
+<li><p><strong>distance_area</strong> – QgsDistanceArea for geodesic measurements.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>depth: Original depth.</p></li>
+<li><p>x, y, z: Original 3D coordinates.</p></li>
+<li><p>dist_along: Projected distance along the section line.</p></li>
+<li><p>offset: Perpendicular offset from the section line.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of tuples (depth, x, y, z, dist_along, offset)</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 
