@@ -1,20 +1,20 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="../">
+<html class="writer-html5" lang="en" data-content_root="../../../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Overview: module code &mdash; SecInterp 2.7.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+  <title>sec_interp.core.services.access_control_service &mdash; SecInterp 2.7.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
 
   
-      <script src="../_static/jquery.js?v=5d32c60e"></script>
-      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=dfec817d"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=dfec817d"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs"></script>
       <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs"></script>
       <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
@@ -380,9 +380,9 @@ const load = async () => {
 
 window.addEventListener("load", load);
 </script>
-    <script src="../_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -393,11 +393,11 @@ window.addEventListener("load", load);
 
           
           
-          <a href="../index.html" class="icon icon-home">
+          <a href="../../../../index.html" class="icon icon-home">
             SecInterp
           </a>
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -406,12 +406,12 @@ window.addEventListener("load", load);
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../USER_GUIDE.html">SecInterp User Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../modules.html">sec_interp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../USER_GUIDE.html">SecInterp User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">sec_interp</a></li>
 </ul>
 
         </div>
@@ -420,15 +420,17 @@ window.addEventListener("load", load);
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">SecInterp</a>
+          <a href="../../../../index.html">SecInterp</a>
       </nav>
 
       <div class="wy-nav-content">
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Overview: module code</li>
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../../sec_interp.html">sec_interp</a></li>
+      <li class="breadcrumb-item active">sec_interp.core.services.access_control_service</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -437,58 +439,51 @@ window.addEventListener("load", load);
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>All modules for which code is available</h1>
-<ul><li><a href="builtins.html">builtins</a></li>
-<li><a href="sec_interp.html">sec_interp</a></li>
-<ul><li><a href="sec_interp/core/config.html">sec_interp.core.config</a></li>
-<li><a href="sec_interp/core/controller.html">sec_interp.core.controller</a></li>
-<li><a href="sec_interp/core/data_cache.html">sec_interp.core.data_cache</a></li>
-<li><a href="sec_interp/core/exceptions.html">sec_interp.core.exceptions</a></li>
-<li><a href="sec_interp/core/interfaces/cache_interface.html">sec_interp.core.interfaces.cache_interface</a></li>
-<li><a href="sec_interp/core/interfaces/drillhole_interface.html">sec_interp.core.interfaces.drillhole_interface</a></li>
-<li><a href="sec_interp/core/interfaces/geology_interface.html">sec_interp.core.interfaces.geology_interface</a></li>
-<li><a href="sec_interp/core/interfaces/preview_interface.html">sec_interp.core.interfaces.preview_interface</a></li>
-<li><a href="sec_interp/core/interfaces/profile_interface.html">sec_interp.core.interfaces.profile_interface</a></li>
-<li><a href="sec_interp/core/interfaces/structure_interface.html">sec_interp.core.interfaces.structure_interface</a></li>
-<li><a href="sec_interp/core/models/settings_model.html">sec_interp.core.models.settings_model</a></li>
-<li><a href="sec_interp/core/performance_metrics.html">sec_interp.core.performance_metrics</a></li>
-<li><a href="sec_interp/core/services/access_control_service.html">sec_interp.core.services.access_control_service</a></li>
-<li><a href="sec_interp/core/services/drillhole_service.html">sec_interp.core.services.drillhole_service</a></li>
-<li><a href="sec_interp/core/services/export_service.html">sec_interp.core.services.export_service</a></li>
-<li><a href="sec_interp/core/services/geology_service.html">sec_interp.core.services.geology_service</a></li>
-<li><a href="sec_interp/core/services/preview_service.html">sec_interp.core.services.preview_service</a></li>
-<li><a href="sec_interp/core/services/profile_service.html">sec_interp.core.services.profile_service</a></li>
-<li><a href="sec_interp/core/services/structure_service.html">sec_interp.core.services.structure_service</a></li>
-<li><a href="sec_interp/core/types.html">sec_interp.core.types</a></li>
-<li><a href="sec_interp/core/utils/drillhole.html">sec_interp.core.utils.drillhole</a></li>
-<li><a href="sec_interp/core/utils/geology.html">sec_interp.core.utils.geology</a></li>
-<li><a href="sec_interp/core/utils/geometry_utils/extraction.html">sec_interp.core.utils.geometry_utils.extraction</a></li>
-<li><a href="sec_interp/core/utils/geometry_utils/filtering.html">sec_interp.core.utils.geometry_utils.filtering</a></li>
-<li><a href="sec_interp/core/utils/geometry_utils/measurement.html">sec_interp.core.utils.geometry_utils.measurement</a></li>
-<li><a href="sec_interp/core/utils/geometry_utils/optimization.html">sec_interp.core.utils.geometry_utils.optimization</a></li>
-<li><a href="sec_interp/core/utils/geometry_utils/processing.html">sec_interp.core.utils.geometry_utils.processing</a></li>
-<li><a href="sec_interp/core/utils/io.html">sec_interp.core.utils.io</a></li>
-<li><a href="sec_interp/core/utils/parsing.html">sec_interp.core.utils.parsing</a></li>
-<li><a href="sec_interp/core/utils/rendering.html">sec_interp.core.utils.rendering</a></li>
-<li><a href="sec_interp/core/utils/resource_manager.html">sec_interp.core.utils.resource_manager</a></li>
-<li><a href="sec_interp/core/utils/sampling.html">sec_interp.core.utils.sampling</a></li>
-<li><a href="sec_interp/core/utils/spatial.html">sec_interp.core.utils.spatial</a></li>
-<li><a href="sec_interp/core/validation/field_validator.html">sec_interp.core.validation.field_validator</a></li>
-<li><a href="sec_interp/core/validation/layer_validator.html">sec_interp.core.validation.layer_validator</a></li>
-<li><a href="sec_interp/core/validation/path_validator.html">sec_interp.core.validation.path_validator</a></li>
-<li><a href="sec_interp/core/validation/project_validator.html">sec_interp.core.validation.project_validator</a></li>
-<li><a href="sec_interp/core/validation/validation_helpers.html">sec_interp.core.validation.validation_helpers</a></li>
-<li><a href="sec_interp/core/validation/validators.html">sec_interp.core.validation.validators</a></li>
-<li><a href="sec_interp/exporters/base_exporter.html">sec_interp.exporters.base_exporter</a></li>
-<li><a href="sec_interp/exporters/csv_exporter.html">sec_interp.exporters.csv_exporter</a></li>
-<li><a href="sec_interp/exporters/drillhole_3d_exporter.html">sec_interp.exporters.drillhole_3d_exporter</a></li>
-<li><a href="sec_interp/gui/legend_widget.html">sec_interp.gui.legend_widget</a></li>
-<li><a href="sec_interp/gui/main_dialog_cache_handler.html">sec_interp.gui.main_dialog_cache_handler</a></li>
-<li><a href="sec_interp/gui/main_dialog_data.html">sec_interp.gui.main_dialog_data</a></li>
-<li><a href="sec_interp/gui/utils.html">sec_interp.gui.utils</a></li>
-<li><a href="sec_interp/logger_config.html">sec_interp.logger_config</a></li>
-<li><a href="sec_interp/resources/resources.html">sec_interp.resources.resources</a></li>
-</ul></ul>
+  <h1>Source code for sec_interp.core.services.access_control_service</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Access Control Service.</span>
+
+<span class="sd">This module provides a service to manage access to restricted features.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">qgis.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">QgsSettings</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.logger_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_logger</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="AccessControlService">
+<a class="viewcode-back" href="../../../../sec_interp.core.services.access_control_service.html#sec_interp.core.services.access_control_service.AccessControlService">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AccessControlService</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Service to manage access to restricted features.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AccessControlService.__init__">
+<a class="viewcode-back" href="../../../../sec_interp.core.services.access_control_service.html#sec_interp.core.services.access_control_service.AccessControlService.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the access control service.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span> <span class="o">=</span> <span class="n">QgsSettings</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="AccessControlService.can_export_3d">
+<a class="viewcode-back" href="../../../../sec_interp.core.services.access_control_service.html#sec_interp.core.services.access_control_service.AccessControlService.can_export_3d">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">can_export_3d</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if the user has permission to export 3D data.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if authorized, False otherwise.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># For now, we link it to the UI toggle in Settings persisted via QgsSettings.</span>
+        <span class="c1"># Default to False to demonstrate the &quot;locked&quot; feel or restricted nature.</span>
+        <span class="n">allowed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s2">&quot;sec_interp/enable_3d&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">allowed</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Access denied for restricted feature: 3D Export&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">allowed</span></div>
+</div>
+
+</pre></div>
 
            </div>
           </div>

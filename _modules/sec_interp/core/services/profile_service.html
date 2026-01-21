@@ -1,20 +1,20 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="../">
+<html class="writer-html5" lang="en" data-content_root="../../../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Overview: module code &mdash; SecInterp 2.7.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+  <title>sec_interp.core.services.profile_service &mdash; SecInterp 2.7.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
 
   
-      <script src="../_static/jquery.js?v=5d32c60e"></script>
-      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=dfec817d"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=dfec817d"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs"></script>
       <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs"></script>
       <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
@@ -380,9 +380,9 @@ const load = async () => {
 
 window.addEventListener("load", load);
 </script>
-    <script src="../_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -393,11 +393,11 @@ window.addEventListener("load", load);
 
           
           
-          <a href="../index.html" class="icon icon-home">
+          <a href="../../../../index.html" class="icon icon-home">
             SecInterp
           </a>
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -406,12 +406,12 @@ window.addEventListener("load", load);
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../USER_GUIDE.html">SecInterp User Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../modules.html">sec_interp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../USER_GUIDE.html">SecInterp User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">sec_interp</a></li>
 </ul>
 
         </div>
@@ -420,15 +420,17 @@ window.addEventListener("load", load);
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">SecInterp</a>
+          <a href="../../../../index.html">SecInterp</a>
       </nav>
 
       <div class="wy-nav-content">
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Overview: module code</li>
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../../sec_interp.html">sec_interp</a></li>
+      <li class="breadcrumb-item active">sec_interp.core.services.profile_service</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -437,58 +439,100 @@ window.addEventListener("load", load);
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>All modules for which code is available</h1>
-<ul><li><a href="builtins.html">builtins</a></li>
-<li><a href="sec_interp.html">sec_interp</a></li>
-<ul><li><a href="sec_interp/core/config.html">sec_interp.core.config</a></li>
-<li><a href="sec_interp/core/controller.html">sec_interp.core.controller</a></li>
-<li><a href="sec_interp/core/data_cache.html">sec_interp.core.data_cache</a></li>
-<li><a href="sec_interp/core/exceptions.html">sec_interp.core.exceptions</a></li>
-<li><a href="sec_interp/core/interfaces/cache_interface.html">sec_interp.core.interfaces.cache_interface</a></li>
-<li><a href="sec_interp/core/interfaces/drillhole_interface.html">sec_interp.core.interfaces.drillhole_interface</a></li>
-<li><a href="sec_interp/core/interfaces/geology_interface.html">sec_interp.core.interfaces.geology_interface</a></li>
-<li><a href="sec_interp/core/interfaces/preview_interface.html">sec_interp.core.interfaces.preview_interface</a></li>
-<li><a href="sec_interp/core/interfaces/profile_interface.html">sec_interp.core.interfaces.profile_interface</a></li>
-<li><a href="sec_interp/core/interfaces/structure_interface.html">sec_interp.core.interfaces.structure_interface</a></li>
-<li><a href="sec_interp/core/models/settings_model.html">sec_interp.core.models.settings_model</a></li>
-<li><a href="sec_interp/core/performance_metrics.html">sec_interp.core.performance_metrics</a></li>
-<li><a href="sec_interp/core/services/access_control_service.html">sec_interp.core.services.access_control_service</a></li>
-<li><a href="sec_interp/core/services/drillhole_service.html">sec_interp.core.services.drillhole_service</a></li>
-<li><a href="sec_interp/core/services/export_service.html">sec_interp.core.services.export_service</a></li>
-<li><a href="sec_interp/core/services/geology_service.html">sec_interp.core.services.geology_service</a></li>
-<li><a href="sec_interp/core/services/preview_service.html">sec_interp.core.services.preview_service</a></li>
-<li><a href="sec_interp/core/services/profile_service.html">sec_interp.core.services.profile_service</a></li>
-<li><a href="sec_interp/core/services/structure_service.html">sec_interp.core.services.structure_service</a></li>
-<li><a href="sec_interp/core/types.html">sec_interp.core.types</a></li>
-<li><a href="sec_interp/core/utils/drillhole.html">sec_interp.core.utils.drillhole</a></li>
-<li><a href="sec_interp/core/utils/geology.html">sec_interp.core.utils.geology</a></li>
-<li><a href="sec_interp/core/utils/geometry_utils/extraction.html">sec_interp.core.utils.geometry_utils.extraction</a></li>
-<li><a href="sec_interp/core/utils/geometry_utils/filtering.html">sec_interp.core.utils.geometry_utils.filtering</a></li>
-<li><a href="sec_interp/core/utils/geometry_utils/measurement.html">sec_interp.core.utils.geometry_utils.measurement</a></li>
-<li><a href="sec_interp/core/utils/geometry_utils/optimization.html">sec_interp.core.utils.geometry_utils.optimization</a></li>
-<li><a href="sec_interp/core/utils/geometry_utils/processing.html">sec_interp.core.utils.geometry_utils.processing</a></li>
-<li><a href="sec_interp/core/utils/io.html">sec_interp.core.utils.io</a></li>
-<li><a href="sec_interp/core/utils/parsing.html">sec_interp.core.utils.parsing</a></li>
-<li><a href="sec_interp/core/utils/rendering.html">sec_interp.core.utils.rendering</a></li>
-<li><a href="sec_interp/core/utils/resource_manager.html">sec_interp.core.utils.resource_manager</a></li>
-<li><a href="sec_interp/core/utils/sampling.html">sec_interp.core.utils.sampling</a></li>
-<li><a href="sec_interp/core/utils/spatial.html">sec_interp.core.utils.spatial</a></li>
-<li><a href="sec_interp/core/validation/field_validator.html">sec_interp.core.validation.field_validator</a></li>
-<li><a href="sec_interp/core/validation/layer_validator.html">sec_interp.core.validation.layer_validator</a></li>
-<li><a href="sec_interp/core/validation/path_validator.html">sec_interp.core.validation.path_validator</a></li>
-<li><a href="sec_interp/core/validation/project_validator.html">sec_interp.core.validation.project_validator</a></li>
-<li><a href="sec_interp/core/validation/validation_helpers.html">sec_interp.core.validation.validation_helpers</a></li>
-<li><a href="sec_interp/core/validation/validators.html">sec_interp.core.validation.validators</a></li>
-<li><a href="sec_interp/exporters/base_exporter.html">sec_interp.exporters.base_exporter</a></li>
-<li><a href="sec_interp/exporters/csv_exporter.html">sec_interp.exporters.csv_exporter</a></li>
-<li><a href="sec_interp/exporters/drillhole_3d_exporter.html">sec_interp.exporters.drillhole_3d_exporter</a></li>
-<li><a href="sec_interp/gui/legend_widget.html">sec_interp.gui.legend_widget</a></li>
-<li><a href="sec_interp/gui/main_dialog_cache_handler.html">sec_interp.gui.main_dialog_cache_handler</a></li>
-<li><a href="sec_interp/gui/main_dialog_data.html">sec_interp.gui.main_dialog_data</a></li>
-<li><a href="sec_interp/gui/utils.html">sec_interp.gui.utils</a></li>
-<li><a href="sec_interp/logger_config.html">sec_interp.logger_config</a></li>
-<li><a href="sec_interp/resources/resources.html">sec_interp.resources.resources</a></li>
-</ul></ul>
+  <h1>Source code for sec_interp.core.services.profile_service</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Profile Data Processing Service.</span>
+
+<span class="sd">This module handles the extraction and processing of topographic profile data</span>
+<span class="sd">from DEM layers along section lines.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># /***************************************************************************</span>
+<span class="c1">#  SecInterp - ProfileService</span>
+<span class="c1">#                                  A QGIS plugin</span>
+<span class="c1">#  Service for generating topographic profiles.</span>
+<span class="c1">#                               -------------------</span>
+<span class="c1">#         begin                : 2025-12-07</span>
+<span class="c1">#         copyright            : (C) 2025 by Juan M Bernales</span>
+<span class="c1">#         email                : juanbernales@gmail.com</span>
+<span class="c1">#  ***************************************************************************/</span>
+<span class="c1">#</span>
+<span class="c1"># /***************************************************************************</span>
+<span class="c1">#  *                                                                         *</span>
+<span class="c1">#  *   This program is free software; you can redistribute it and/or modify  *</span>
+<span class="c1">#  *   it under the terms of the GNU General Public License as published by  *</span>
+<span class="c1">#  *   the Free Software Foundation; either version 2 of the License, or     *</span>
+<span class="c1">#  *   (at your option) any later version.                                   *</span>
+<span class="c1">#  *                                                                         *</span>
+<span class="c1">#  ***************************************************************************/</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">qgis.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">QgsRasterLayer</span><span class="p">,</span> <span class="n">QgsVectorLayer</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span> <span class="k">as</span> <span class="n">scu</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataMissingError</span><span class="p">,</span> <span class="n">GeometryError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.interfaces.profile_interface</span><span class="w"> </span><span class="kn">import</span> <span class="n">IProfileService</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProfileData</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.logger_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_logger</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ProfileService">
+<a class="viewcode-back" href="../../../../sec_interp.core.services.profile_service.html#sec_interp.core.services.ProfileService">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ProfileService</span><span class="p">(</span><span class="n">IProfileService</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Service for generating topographic profiles.</span>
+
+<span class="sd">    This service handles the extraction of elevation data along a cross-section</span>
+<span class="sd">    line by sampling a raster DEM.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ProfileService.generate_topographic_profile">
+<a class="viewcode-back" href="../../../../sec_interp.core.services.profile_service.html#sec_interp.core.services.ProfileService.generate_topographic_profile">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_topographic_profile</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">line_lyr</span><span class="p">:</span> <span class="n">QgsVectorLayer</span><span class="p">,</span>
+        <span class="n">raster_lyr</span><span class="p">:</span> <span class="n">QgsRasterLayer</span><span class="p">,</span>
+        <span class="n">band_number</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">interval</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ProfileData</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate topographic profile data by sampling elevation along the section line.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            line_lyr: The cross-section line layer.</span>
+<span class="sd">            raster_lyr: The DEM/raster layer for elevation.</span>
+<span class="sd">            band_number: Raster band to sample (default: 1).</span>
+<span class="sd">            interval: Optional sampling interval. If None, uses raster resolution.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A list of (distance, elevation) tuples representing the profile.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            DataMissingError: If line layer has no features.</span>
+<span class="sd">            GeometryError: If line geometry is invalid.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">line_feat</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">line_lyr</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">(),</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">line_feat</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">DataMissingError</span><span class="p">(</span><span class="s2">&quot;Line layer has no features&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;layer&quot;</span><span class="p">:</span> <span class="n">line_lyr</span><span class="o">.</span><span class="n">name</span><span class="p">()})</span>
+
+        <span class="n">geom</span> <span class="o">=</span> <span class="n">line_feat</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">geom</span> <span class="ow">or</span> <span class="n">geom</span><span class="o">.</span><span class="n">isNull</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="n">GeometryError</span><span class="p">(</span><span class="s2">&quot;Line geometry is not valid&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;layer&quot;</span><span class="p">:</span> <span class="n">line_lyr</span><span class="o">.</span><span class="n">name</span><span class="p">()})</span>
+
+        <span class="n">da</span> <span class="o">=</span> <span class="n">scu</span><span class="o">.</span><span class="n">create_distance_area</span><span class="p">(</span><span class="n">line_lyr</span><span class="o">.</span><span class="n">crs</span><span class="p">())</span>
+
+        <span class="c1"># Sample points using helper</span>
+        <span class="c1"># For topographic profile, we measure from the start of the line</span>
+        <span class="n">points</span> <span class="o">=</span> <span class="n">scu</span><span class="o">.</span><span class="n">sample_elevation_along_line</span><span class="p">(</span>
+            <span class="n">geom</span><span class="p">,</span> <span class="n">raster_lyr</span><span class="p">,</span> <span class="n">band_number</span><span class="p">,</span> <span class="n">da</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">interval</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Convert QgsPointXY to tuples</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">[(</span><span class="nb">round</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="mi">1</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">y</span><span class="p">(),</span> <span class="mi">1</span><span class="p">))</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">points</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">values</span></div>
+</div>
+
+</pre></div>
 
            </div>
           </div>
