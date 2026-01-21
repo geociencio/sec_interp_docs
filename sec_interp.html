@@ -51,7 +51,6 @@
 <li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">sec_interp</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">sec_interp package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#sec_interp.classFactory"><code class="docutils literal notranslate"><span class="pre">classFactory()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.html">sec_interp.core package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.html">sec_interp.exporters package</a></li>
@@ -95,28 +94,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-sec_interp">
-<span id="sec-interp-package"></span><h1>sec_interp package<a class="headerlink" href="#module-sec_interp" title="Link to this heading"></a></h1>
-<p>SecInterp QGIS Plugin.</p>
-<p>This plugin provides tools for cross-section generation and geological interpretation
-data extraction from QGIS layers.</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="sec_interp.classFactory">
-<span class="sig-prename descclassname"><span class="pre">sec_interp.</span></span><span class="sig-name descname"><span class="pre">classFactory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iface</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QgsInterface</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sec_interp.html#classFactory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.classFactory" title="Link to this definition"></a></dt>
-<dd><p>Load SecInterp class from file SecInterp.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>iface</strong> – A QGIS interface instance.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of the plugin.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>SecInterp</p>
-</dd>
-</dl>
-</dd></dl>
-
+  <section id="sec-interp-package">
+<h1>sec_interp package<a class="headerlink" href="#sec-interp-package" title="Link to this heading"></a></h1>
 <section id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
@@ -132,58 +111,15 @@ data extraction from QGIS layers.</p>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.services.html">sec_interp.core.services package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.services.html#sec_interp.core.services.DrillholeService"><code class="docutils literal notranslate"><span class="pre">DrillholeService</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.services.html#sec_interp.core.services.GeologyService"><code class="docutils literal notranslate"><span class="pre">GeologyService</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.services.html#sec_interp.core.services.ProfileService"><code class="docutils literal notranslate"><span class="pre">ProfileService</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.services.html#sec_interp.core.services.StructureService"><code class="docutils literal notranslate"><span class="pre">StructureService</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.services.html#submodules">Submodules</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.utils.html">sec_interp.core.utils package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.calculate_apparent_dip"><code class="docutils literal notranslate"><span class="pre">calculate_apparent_dip()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.calculate_bounds"><code class="docutils literal notranslate"><span class="pre">calculate_bounds()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.calculate_drillhole_trajectory"><code class="docutils literal notranslate"><span class="pre">calculate_drillhole_trajectory()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.calculate_interval"><code class="docutils literal notranslate"><span class="pre">calculate_interval()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.calculate_line_azimuth"><code class="docutils literal notranslate"><span class="pre">calculate_line_azimuth()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.calculate_step_size"><code class="docutils literal notranslate"><span class="pre">calculate_step_size()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.cardinal_to_azimuth"><code class="docutils literal notranslate"><span class="pre">cardinal_to_azimuth()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.create_buffer_geometry"><code class="docutils literal notranslate"><span class="pre">create_buffer_geometry()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.create_coordinate_transform"><code class="docutils literal notranslate"><span class="pre">create_coordinate_transform()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.create_distance_area"><code class="docutils literal notranslate"><span class="pre">create_distance_area()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.create_memory_layer"><code class="docutils literal notranslate"><span class="pre">create_memory_layer()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.create_shapefile_writer"><code class="docutils literal notranslate"><span class="pre">create_shapefile_writer()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.densify_line_by_interval"><code class="docutils literal notranslate"><span class="pre">densify_line_by_interval()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.filter_features_by_buffer"><code class="docutils literal notranslate"><span class="pre">filter_features_by_buffer()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.get_line_start_point"><code class="docutils literal notranslate"><span class="pre">get_line_start_point()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.get_line_vertices"><code class="docutils literal notranslate"><span class="pre">get_line_vertices()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.interpolate_elevation"><code class="docutils literal notranslate"><span class="pre">interpolate_elevation()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.interpolate_intervals_on_trajectory"><code class="docutils literal notranslate"><span class="pre">interpolate_intervals_on_trajectory()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.parse_dip"><code class="docutils literal notranslate"><span class="pre">parse_dip()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.parse_strike"><code class="docutils literal notranslate"><span class="pre">parse_strike()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.prepare_profile_context"><code class="docutils literal notranslate"><span class="pre">prepare_profile_context()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.project_trajectory_to_section"><code class="docutils literal notranslate"><span class="pre">project_trajectory_to_section()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.sample_elevation_along_line"><code class="docutils literal notranslate"><span class="pre">sample_elevation_along_line()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#subpackages">Subpackages</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#submodules">Submodules</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.validation.html">sec_interp.core.validation package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.validation.html#sec_interp.core.validation.ProjectValidator"><code class="docutils literal notranslate"><span class="pre">ProjectValidator</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.validation.html#sec_interp.core.validation.ValidationParams"><code class="docutils literal notranslate"><span class="pre">ValidationParams</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.validation.html#sec_interp.core.validation.validate_angle_range"><code class="docutils literal notranslate"><span class="pre">validate_angle_range()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.validation.html#sec_interp.core.validation.validate_crs_compatibility"><code class="docutils literal notranslate"><span class="pre">validate_crs_compatibility()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.validation.html#sec_interp.core.validation.validate_field_exists"><code class="docutils literal notranslate"><span class="pre">validate_field_exists()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.validation.html#sec_interp.core.validation.validate_field_type"><code class="docutils literal notranslate"><span class="pre">validate_field_type()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.validation.html#sec_interp.core.validation.validate_integer_input"><code class="docutils literal notranslate"><span class="pre">validate_integer_input()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.validation.html#sec_interp.core.validation.validate_layer_exists"><code class="docutils literal notranslate"><span class="pre">validate_layer_exists()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.validation.html#sec_interp.core.validation.validate_layer_geometry"><code class="docutils literal notranslate"><span class="pre">validate_layer_geometry()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.validation.html#sec_interp.core.validation.validate_layer_has_features"><code class="docutils literal notranslate"><span class="pre">validate_layer_has_features()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.validation.html#sec_interp.core.validation.validate_numeric_input"><code class="docutils literal notranslate"><span class="pre">validate_numeric_input()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.validation.html#sec_interp.core.validation.validate_output_path"><code class="docutils literal notranslate"><span class="pre">validate_output_path()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.validation.html#sec_interp.core.validation.validate_raster_band"><code class="docutils literal notranslate"><span class="pre">validate_raster_band()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.validation.html#sec_interp.core.validation.validate_reasonable_ranges"><code class="docutils literal notranslate"><span class="pre">validate_reasonable_ranges()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.validation.html#sec_interp.core.validation.validate_safe_output_path"><code class="docutils literal notranslate"><span class="pre">validate_safe_output_path()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.validation.html#sec_interp.core.validation.validate_structural_requirements"><code class="docutils literal notranslate"><span class="pre">validate_structural_requirements()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.validation.html#submodules">Submodules</a></li>
 </ul>
 </li>
@@ -191,72 +127,21 @@ data extraction from QGIS layers.</p>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.html#submodules">Submodules</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.algorithms.html">sec_interp.core.algorithms module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.config.html">sec_interp.core.config module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.config.html#sec_interp.core.config.ConfigService"><code class="docutils literal notranslate"><span class="pre">ConfigService</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.controller.html">sec_interp.core.controller module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.controller.html#sec_interp.core.controller.ProfileController"><code class="docutils literal notranslate"><span class="pre">ProfileController</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.data_cache.html">sec_interp.core.data_cache module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.data_cache.html#sec_interp.core.data_cache.DataCache"><code class="docutils literal notranslate"><span class="pre">DataCache</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.exceptions.html">sec_interp.core.exceptions module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.exceptions.html#sec_interp.core.exceptions.ConfigurationError"><code class="docutils literal notranslate"><span class="pre">ConfigurationError</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.exceptions.html#sec_interp.core.exceptions.DataMissingError"><code class="docutils literal notranslate"><span class="pre">DataMissingError</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.exceptions.html#sec_interp.core.exceptions.ExportError"><code class="docutils literal notranslate"><span class="pre">ExportError</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.exceptions.html#sec_interp.core.exceptions.GeometryError"><code class="docutils literal notranslate"><span class="pre">GeometryError</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.exceptions.html#sec_interp.core.exceptions.ProcessingError"><code class="docutils literal notranslate"><span class="pre">ProcessingError</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.exceptions.html#sec_interp.core.exceptions.SecInterpError"><code class="docutils literal notranslate"><span class="pre">SecInterpError</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.exceptions.html#sec_interp.core.exceptions.ValidationError"><code class="docutils literal notranslate"><span class="pre">ValidationError</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.performance_metrics.html">sec_interp.core.performance_metrics module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.performance_metrics.html#sec_interp.core.performance_metrics.MetricsCollector"><code class="docutils literal notranslate"><span class="pre">MetricsCollector</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.performance_metrics.html#sec_interp.core.performance_metrics.PerformanceMonitor"><code class="docutils literal notranslate"><span class="pre">PerformanceMonitor</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.performance_metrics.html#sec_interp.core.performance_metrics.PerformanceTimer"><code class="docutils literal notranslate"><span class="pre">PerformanceTimer</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.performance_metrics.html#sec_interp.core.performance_metrics.format_duration"><code class="docutils literal notranslate"><span class="pre">format_duration()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.performance_metrics.html#sec_interp.core.performance_metrics.performance_monitor"><code class="docutils literal notranslate"><span class="pre">performance_monitor()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.types.html">sec_interp.core.types module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.types.html#sec_interp.core.types.DrillholeTaskInput"><code class="docutils literal notranslate"><span class="pre">DrillholeTaskInput</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.types.html#sec_interp.core.types.ExportSettings"><code class="docutils literal notranslate"><span class="pre">ExportSettings</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.types.html#sec_interp.core.types.FieldType"><code class="docutils literal notranslate"><span class="pre">FieldType</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.types.html#sec_interp.core.types.GeologySegment"><code class="docutils literal notranslate"><span class="pre">GeologySegment</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.types.html#sec_interp.core.types.GeologyTaskInput"><code class="docutils literal notranslate"><span class="pre">GeologyTaskInput</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.types.html#sec_interp.core.types.InterpretationPolygon"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.types.html#sec_interp.core.types.InterpretationPolygon25D"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon25D</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.types.html#sec_interp.core.types.LayerDict"><code class="docutils literal notranslate"><span class="pre">LayerDict</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.types.html#sec_interp.core.types.PointList"><code class="docutils literal notranslate"><span class="pre">PointList</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams"><code class="docutils literal notranslate"><span class="pre">PreviewParams</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.types.html#sec_interp.core.types.PreviewResult"><code class="docutils literal notranslate"><span class="pre">PreviewResult</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.types.html#sec_interp.core.types.SettingsDict"><code class="docutils literal notranslate"><span class="pre">SettingsDict</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.types.html#sec_interp.core.types.StructureMeasurement"><code class="docutils literal notranslate"><span class="pre">StructureMeasurement</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.types.html#sec_interp.core.types.ValidationResult"><code class="docutils literal notranslate"><span class="pre">ValidationResult</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.config.html">sec_interp.core.config module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.controller.html">sec_interp.core.controller module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.data_cache.html">sec_interp.core.data_cache module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.exceptions.html">sec_interp.core.exceptions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.performance_metrics.html">sec_interp.core.performance_metrics module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.types.html">sec_interp.core.types module</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.exporters.html">sec_interp.exporters package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.exporters.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.exporters.base_exporter.html">sec_interp.exporters.base_exporter module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.base_exporter.html#sec_interp.exporters.base_exporter.BaseExporter"><code class="docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.exporters.csv_exporter.html">sec_interp.exporters.csv_exporter module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.csv_exporter.html#sec_interp.exporters.csv_exporter.CSVExporter"><code class="docutils literal notranslate"><span class="pre">CSVExporter</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.exporters.drillhole_3d_exporter.html">sec_interp.exporters.drillhole_3d_exporter module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.drillhole_3d_exporter.html#sec_interp.exporters.drillhole_3d_exporter.DrillholeInterval3DExporter"><code class="docutils literal notranslate"><span class="pre">DrillholeInterval3DExporter</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.drillhole_3d_exporter.html#sec_interp.exporters.drillhole_3d_exporter.DrillholeTrace3DExporter"><code class="docutils literal notranslate"><span class="pre">DrillholeTrace3DExporter</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.exporters.base_exporter.html">sec_interp.exporters.base_exporter module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.exporters.csv_exporter.html">sec_interp.exporters.csv_exporter module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.exporters.drillhole_3d_exporter.html">sec_interp.exporters.drillhole_3d_exporter module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.exporters.drillhole_exporters.html">sec_interp.exporters.drillhole_exporters module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.exporters.image_exporter.html">sec_interp.exporters.image_exporter module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.exporters.interpretation_3d_exporter.html">sec_interp.exporters.interpretation_3d_exporter module</a></li>
@@ -288,20 +173,11 @@ data extraction from QGIS layers.</p>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.legend_widget.html">sec_interp.gui.legend_widget module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.legend_widget.html#sec_interp.gui.legend_widget.LegendWidget"><code class="docutils literal notranslate"><span class="pre">LegendWidget</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.legend_widget.html">sec_interp.gui.legend_widget module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog.html">sec_interp.gui.main_dialog module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_cache_handler.html">sec_interp.gui.main_dialog_cache_handler module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.main_dialog_cache_handler.html#sec_interp.gui.main_dialog_cache_handler.CacheHandler"><code class="docutils literal notranslate"><span class="pre">CacheHandler</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_cache_handler.html">sec_interp.gui.main_dialog_cache_handler module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_config.html">sec_interp.gui.main_dialog_config module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_data.html">sec_interp.gui.main_dialog_data module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.main_dialog_data.html#sec_interp.gui.main_dialog_data.DialogDataAggregator"><code class="docutils literal notranslate"><span class="pre">DialogDataAggregator</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_data.html">sec_interp.gui.main_dialog_data module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_export.html">sec_interp.gui.main_dialog_export module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_interpretation.html">sec_interp.gui.main_dialog_interpretation module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_messages.html">sec_interp.gui.main_dialog_messages module</a></li>
@@ -317,21 +193,14 @@ data extraction from QGIS layers.</p>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_legend_renderer.html">sec_interp.gui.preview_legend_renderer module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_renderer.html">sec_interp.gui.preview_renderer module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_reporter.html">sec_interp.gui.preview_reporter module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.utils.html">sec_interp.gui.utils module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.utils.html#sec_interp.gui.utils.show_user_message"><code class="docutils literal notranslate"><span class="pre">show_user_message()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.utils.html">sec_interp.gui.utils module</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.resources.html">sec_interp.resources package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.resources.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.resources.resources.html">sec_interp.resources.resources module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.resources.resources.html#sec_interp.resources.resources.qCleanupResources"><code class="docutils literal notranslate"><span class="pre">qCleanupResources()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.resources.resources.html#sec_interp.resources.resources.qInitResources"><code class="docutils literal notranslate"><span class="pre">qInitResources()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.resources.resources.html">sec_interp.resources.resources module</a></li>
 </ul>
 </li>
 </ul>
@@ -343,21 +212,7 @@ data extraction from QGIS layers.</p>
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="sec_interp.logger_config.html">sec_interp.logger_config module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.logger_config.html#sec_interp.logger_config.ImmediateFlushFileHandler"><code class="docutils literal notranslate"><span class="pre">ImmediateFlushFileHandler</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.logger_config.html#sec_interp.logger_config.ImmediateFlushFileHandler.emit"><code class="docutils literal notranslate"><span class="pre">ImmediateFlushFileHandler.emit()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.logger_config.html#sec_interp.logger_config.QgsLogHandler"><code class="docutils literal notranslate"><span class="pre">QgsLogHandler</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.logger_config.html#sec_interp.logger_config.QgsLogHandler.__init__"><code class="docutils literal notranslate"><span class="pre">QgsLogHandler.__init__()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.logger_config.html#sec_interp.logger_config.QgsLogHandler.emit"><code class="docutils literal notranslate"><span class="pre">QgsLogHandler.emit()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.logger_config.html#sec_interp.logger_config.get_logger"><code class="docutils literal notranslate"><span class="pre">get_logger()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.logger_config.html#sec_interp.logger_config.log_critical_operation"><code class="docutils literal notranslate"><span class="pre">log_critical_operation()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.logger_config.html#sec_interp.logger_config.setup_logging"><code class="docutils literal notranslate"><span class="pre">setup_logging()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.logger_config.html">sec_interp.logger_config module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.sec_interp_plugin.html">sec_interp.sec_interp_plugin module</a></li>
 </ul>
 </div>
