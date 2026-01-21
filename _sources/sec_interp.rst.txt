@@ -16,7 +16,6 @@ Subpackages
    sec_interp.exporters
    sec_interp.gui
    sec_interp.resources
-   sec_interp.sec_interp
 
 Submodules
 ----------
