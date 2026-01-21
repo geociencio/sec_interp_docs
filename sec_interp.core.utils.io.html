@@ -51,6 +51,7 @@
 <li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">sec_interp</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="sec_interp.html">sec_interp package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.html#sec_interp.classFactory"><code class="docutils literal notranslate"><span class="pre">classFactory()</span></code></a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="sec_interp.html#subpackages">Subpackages</a><ul class="current">
 <li class="toctree-l4 current"><a class="reference internal" href="sec_interp.core.html">sec_interp.core package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.html">sec_interp.exporters package</a></li>
@@ -93,8 +94,33 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="sec-interp-core-utils-io-module">
-<h1>sec_interp.core.utils.io module<a class="headerlink" href="#sec-interp-core-utils-io-module" title="Link to this heading"></a></h1>
+  <section id="module-sec_interp.core.utils.io">
+<span id="sec-interp-core-utils-io-module"></span><h1>sec_interp.core.utils.io module<a class="headerlink" href="#module-sec_interp.core.utils.io" title="Link to this heading"></a></h1>
+<p>I/O Utilities Module.</p>
+<p>File I/O operations and user messaging.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="sec_interp.core.utils.io.create_shapefile_writer">
+<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.io.</span></span><span class="sig-name descname"><span class="pre">create_shapefile_writer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsCoordinateReferenceSystem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsFields</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsWkbTypes.GeometryType</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">qgis.core.QgsWkbTypes.LineString</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qgis.core.QgsVectorFileWriter</span></span></span><a class="reference internal" href="_modules/sec_interp/core/utils/io.html#create_shapefile_writer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.core.utils.io.create_shapefile_writer" title="Link to this definition"></a></dt>
+<dd><p>Create and initialize a QgsVectorFileWriter for Shapefiles.</p>
+<p>Uses the modern <cite>create</cite> static method for QGIS 3.38+ compatibility.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>output_path</strong> – File system path where the shapefile will be created.</p></li>
+<li><p><strong>crs</strong> – The Coordinate Reference System for the new file.</p></li>
+<li><p><strong>fields</strong> – The attribute fields definition.</p></li>
+<li><p><strong>geometry_type</strong> – The mapping geometry type (default: LineString).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An initialized writer object for creating a Shapefile.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>OSError</strong> – If the writer cannot be created or has an initialization error.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 
