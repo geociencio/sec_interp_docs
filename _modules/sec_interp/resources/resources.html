@@ -1,0 +1,654 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sec_interp.resources.resources &mdash; SecInterp 2.7.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=dfec817d"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs"></script>
+      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
+
+const defaultStyle = document.createElement('style');
+defaultStyle.textContent = `pre.mermaid {
+    /* Same as .mermaid-container > pre */
+    display: block;
+    width: 100%;
+}
+
+pre.mermaid > svg {
+    /* Same as .mermaid-container > pre > svg */
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}
+`;
+document.head.appendChild(defaultStyle);
+
+const fullscreenStyle = document.createElement('style');
+fullscreenStyle.textContent = `.mermaid-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.mermaid-container > pre {
+    display: block;
+    width: 100%;
+}
+
+.mermaid-container > pre > svg {
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}
+
+.mermaid-fullscreen-btn {
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+    line-height: 1;
+    padding: 0;
+    color: #333;
+}
+
+.mermaid-fullscreen-btn:hover {
+    opacity: 100% !important;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-btn.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-btn.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal {
+    display: none;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 95vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.98);
+    z-index: 9999;
+    padding: 20px;
+    overflow: auto;
+}
+
+.mermaid-fullscreen-modal.dark-theme {
+    background: rgba(0, 0, 0, 0.98);
+}
+
+.mermaid-fullscreen-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen {
+    position: relative;
+    width: 95vw;
+    height: 90vh;
+    max-width: 95vw;
+    max-height: 90vh;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen.dark-theme {
+    background: #1a1a1a;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+}
+
+.mermaid-container-fullscreen pre.mermaid {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen .mermaid svg {
+    height: 100% !important;
+    width: 100% !important;
+    cursor: grab;
+}
+
+.mermaid-fullscreen-close {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s;
+    font-size: 24px;
+    line-height: 1;
+    color: #333;
+}
+
+.mermaid-fullscreen-close:hover {
+    background: white;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-close.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-close.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal .mermaid-fullscreen-btn {
+    display: none !important;
+}`;
+document.head.appendChild(fullscreenStyle);
+
+// Detect if page has dark background
+const isDarkTheme = () => {
+    const bgColor = window.getComputedStyle(document.body).backgroundColor;
+    const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
+    if (match) {
+        const r = parseInt(match[1]);
+        const g = parseInt(match[2]);
+        const b = parseInt(match[3]);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        return brightness < 128;
+    }
+    return false;
+};
+
+const load = async () => {
+    await mermaid.run();
+
+    const all_mermaids = document.querySelectorAll(".mermaid");
+    const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
+
+    if ("False" === "True") {
+        const mermaids_to_add_zoom = -1 === -1 ? all_mermaids.length : -1;
+        if(mermaids_to_add_zoom > 0) {
+            var svgs = d3.selectAll("");
+            if(all_mermaids.length !== mermaids_processed.length) {
+                setTimeout(load, 200);
+                return;
+            } else if(svgs.size() !== mermaids_to_add_zoom) {
+                setTimeout(load, 200);
+                return;
+            } else {
+                svgs.each(function() {
+                    var svg = d3.select(this);
+                    svg.html("<g class='wrapper'>" + svg.html() + "</g>");
+                    var inner = svg.select("g");
+                    var zoom = d3.zoom().on("zoom", function(event) {
+                        inner.attr("transform", event.transform);
+                    });
+                    svg.call(zoom);
+                });
+            }
+        }
+    } else if(all_mermaids.length !== mermaids_processed.length) {
+        // Wait for mermaid to process all diagrams
+        setTimeout(load, 200);
+        return;
+    }
+
+    const darkTheme = isDarkTheme();
+
+    // Stop here if not adding fullscreen capability
+    if ("True" !== "True") return;
+
+    const modal = document.createElement('div');
+    modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Fullscreen diagram viewer');
+    modal.innerHTML = `
+        <button class="mermaid-fullscreen-close${darkTheme ? ' dark-theme' : ''}" aria-label="Close fullscreen">✕</button>
+        <div class="mermaid-container-fullscreen${darkTheme ? ' dark-theme' : ''}"></div>
+    `;
+    document.body.appendChild(modal);
+
+    const modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
+
+    let previousScrollOffset = [window.scrollX, window.scrollY];
+
+    const closeModal = () => {
+        modal.classList.remove('active');
+        modalContent.innerHTML = '';
+        document.body.style.overflow = ''
+        window.scrollTo({left: previousScrollOffset[0], top: previousScrollOffset[1], behavior: 'instant'});
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+
+    const allButtons = [];
+
+    document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
+        if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
+            mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            return;
+        }
+
+        const container = document.createElement('div');
+        container.className = 'mermaid-container';
+        mermaidDiv.parentNode.insertBefore(container, mermaidDiv);
+        container.appendChild(mermaidDiv);
+
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+        fullscreenBtn.setAttribute('aria-label', 'View diagram in fullscreen');
+        fullscreenBtn.textContent = '⛶';
+        fullscreenBtn.style.opacity = '50%';
+
+        // Calculate dynamic position based on diagram's margin and padding
+        const diagramStyle = window.getComputedStyle(mermaidDiv);
+        const marginTop = parseFloat(diagramStyle.marginTop) || 0;
+        const marginRight = parseFloat(diagramStyle.marginRight) || 0;
+        const paddingTop = parseFloat(diagramStyle.paddingTop) || 0;
+        const paddingRight = parseFloat(diagramStyle.paddingRight) || 0;
+        fullscreenBtn.style.top = `${marginTop + paddingTop + 4}px`;
+        fullscreenBtn.style.right = `${marginRight + paddingRight + 4}px`;
+
+        fullscreenBtn.addEventListener('click', () => {
+            previousScrollOffset = [window.scroll, window.scrollY];
+            const clone = mermaidDiv.cloneNode(true);
+            modalContent.innerHTML = '';
+            modalContent.appendChild(clone);
+
+            const svg = clone.querySelector('svg');
+            if (svg) {
+                svg.removeAttribute('width');
+                svg.removeAttribute('height');
+                svg.style.width = '100%';
+                svg.style.height = 'auto';
+                svg.style.maxWidth = '100%';
+                svg.style.sdisplay = 'block';
+
+                if ("False" === "True") {
+                    setTimeout(() => {
+                        const g = svg.querySelector('g');
+                        if (g) {
+                            var svgD3 = d3.select(svg);
+                            svgD3.html("<g class='wrapper'>" + svgD3.html() + "</g>");
+                            var inner = svgD3.select("g");
+                            var zoom = d3.zoom().on("zoom", function(event) {
+                                inner.attr("transform", event.transform);
+                            });
+                            svgD3.call(zoom);
+                        }
+                    }, 100);
+                }
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        container.appendChild(fullscreenBtn);
+        allButtons.push(fullscreenBtn);
+    });
+
+    // Update theme classes when theme changes
+    const updateTheme = () => {
+        const dark = isDarkTheme();
+        allButtons.forEach(btn => {
+            if (dark) {
+                btn.classList.add('dark-theme');
+            } else {
+                btn.classList.remove('dark-theme');
+            }
+        });
+        if (dark) {
+            modal.classList.add('dark-theme');
+            modalContent.classList.add('dark-theme');
+            closeBtn.classList.add('dark-theme');
+        } else {
+            modal.classList.remove('dark-theme');
+            modalContent.classList.remove('dark-theme');
+            closeBtn.classList.remove('dark-theme');
+        }
+    };
+
+    // Watch for theme changes
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    observer.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style']
+    });
+};
+
+window.addEventListener("load", load);
+</script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            SecInterp
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../USER_GUIDE.html">SecInterp User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">sec_interp</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">SecInterp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../sec_interp.html">sec_interp</a></li>
+      <li class="breadcrumb-item active">sec_interp.resources.resources</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for sec_interp.resources.resources</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="c1"># Resource object code</span>
+<span class="c1">#</span>
+<span class="c1"># Created by: The Resource Compiler for PyQt5 (Qt v5.15.14)</span>
+<span class="c1">#</span>
+<span class="c1"># WARNING! All changes made in this file will be lost!</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">PyQt5</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtCore</span>
+
+<span class="n">qt_resource_data</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\</span>
+<span class="se">\x00\x00\x06\x97\</span>
+<span class="se">\x89\</span>
+<span class="se">\x50\x4e\x47\x0d\x0a\x1a\x0a\x00\x00\x00\x0d\x49\x48\x44\x52\x00\</span>
+<span class="se">\x00\x00\x17\x00\x00\x00\x18\x08\x06\x00\x00\x00\x11\x7c\x66\x75\</span>
+<span class="se">\x00\x00\x00\x01\x73\x52\x47\x42\x01\xd9\xc9\x2c\x7f\x00\x00\x00\</span>
+<span class="se">\x04\x67\x41\x4d\x41\x00\x00\xb1\x8f\x0b\xfc\x61\x05\x00\x00\x00\</span>
+<span class="se">\x20\x63\x48\x52\x4d\x00\x00\x7a\x26\x00\x00\x80\x84\x00\x00\xfa\</span>
+<span class="se">\x00\x00\x00\x80\xe8\x00\x00\x75\x30\x00\x00\xea\x60\x00\x00\x3a\</span>
+<span class="se">\x98\x00\x00\x17\x70\x9c\xba\x51\x3c\x00\x00\x00\x06\x62\x4b\x47\</span>
+<span class="se">\x44\x00\xff\x00\xff\x00\xff\xa0\xbd\xa7\x93\x00\x00\x00\x09\x70\</span>
+<span class="se">\x48\x59\x73\x00\x00\x0b\x13\x00\x00\x0b\x13\x01\x00\x9a\x9c\x18\</span>
+<span class="se">\x00\x00\x00\x07\x74\x49\x4d\x45\x07\xe9\x0b\x18\x03\x0c\x26\x63\</span>
+<span class="se">\x1c\xda\x23\x00\x00\x05\xdb\x49\x44\x41\x54\x48\xc7\x6d\x94\x4d\</span>
+<span class="se">\x6c\x5c\x57\x15\xc7\x7f\xe7\xde\xf7\xde\xcc\x9b\xf1\xc7\x9b\xb1\</span>
+<span class="se">\xc7\x89\xdd\xc4\xf9\x70\x68\x12\x9c\x0f\x4a\x61\x85\x8a\x48\x14\</span>
+<span class="se">\x44\x0b\x08\x89\x0a\x45\x08\x01\x2b\x10\x20\x10\x0b\x16\x95\x90\</span>
+<span class="se">\x40\x6c\xba\x62\x83\x84\x40\x80\x04\x2c\xf8\x10\x6a\x60\x97\xaa\</span>
+<span class="se">\x6a\x48\x25\x5a\xa0\x05\x16\x71\x11\x69\xad\x38\x6d\x1c\xe7\xcb\</span>
+<span class="se">\x19\xdb\xb1\x67\xa6\xf3\xf1\xde\xbc\x8f\x7b\x58\x8c\x81\x20\xf8\</span>
+<span class="se">\xef\xee\x3d\xf7\xfe\xce\x39\xff\x73\x75\x65\xf5\xc6\x53\x5a\x72\</span>
+<span class="se">\x31\x4e\x2c\x85\x78\xdc\x0c\xe7\x89\xf2\x1e\x8a\x90\x89\xc5\x53\</span>
+<span class="se">\xc7\x03\x7f\x02\x80\x40\x73\x52\xf1\x08\x34\x27\x70\x39\xbe\xe6\</span>
+<span class="se">\xec\x1d\xde\x47\x50\xda\x7e\x9d\x66\x30\x45\x3d\xeb\xd2\xb7\x65\</span>
+<span class="se">\x7e\x3b\x79\x04\xef\xcd\xea\x02\x2b\x17\xfe\xca\xb7\x9e\xb9\xca\</span>
+<span class="se">\x2b\xcf\xcd\x70\xea\xd8\x16\x85\xf8\x94\x8a\x2e\x85\xf8\x6c\x07\</span>
+<span class="se">\xf3\x14\x62\xc8\xc4\x63\x6f\xba\x41\xdb\x8b\x68\xa4\x9b\x44\xd9\</span>
+<span class="se">\x1d\x9c\xf8\x0c\xec\x14\xb1\xad\x02\xf0\xfe\xf6\x1f\xb9\x1f\x1e\</span>
+<span class="se">\x25\x35\x1e\x67\x06\x4d\x4c\xf7\xf7\xaf\xf2\xc3\xef\xaf\x70\xe5\</span>
+<span class="se">\xda\xc7\x79\xe2\xfc\x26\x9b\xa5\x03\x78\x2e\xc1\xd3\x1e\x4e\x7c\</span>
+<span class="se">\x2a\x45\x97\xb9\xe4\x2e\xd3\xd9\x0e\x89\x09\x89\xf2\x36\x00\x03\</span>
+<span class="se">\x3b\xcd\xed\xf0\xdd\x2c\x8d\x9f\xa4\xed\xd5\x98\x4e\x9b\x24\xb6\</span>
+<span class="se">\x46\x26\x3e\x56\x1d\x9e\x3a\xbc\x43\x67\x4f\x71\xef\x8b\xcb\x3c\</span>
+<span class="se">\x77\x27\xe2\x07\xeb\xdf\xa0\x3b\xb8\xcb\xd3\x9f\xbe\xc3\xed\xb5\</span>
+<span class="se">\x98\xc0\xdf\xe2\x85\xd7\xcf\xf3\xd1\xc7\x2e\x50\xb2\x42\xc9\x77\</span>
+<span class="se">\x5c\x79\x69\x11\x10\x72\x29\x11\x65\x3b\xc4\xa6\x44\xcf\x86\x6c\</span>
+<span class="se">\x05\xb3\x00\x54\x8b\x1e\x51\xb6\x43\xc7\xab\xe2\xd5\xb3\x36\x97\</span>
+<span class="se">\x6e\x7e\x9e\x8f\x1c\xfa\x05\x2f\xad\x7e\x16\x80\xd5\x6b\x03\x9e\</span>
+<span class="se">\x7f\xe5\xc3\xcc\xee\x29\xd1\x16\xc3\x58\x14\xf0\xe2\xe5\x73\xcc\</span>
+<span class="se">\x26\x37\xf0\x5d\x07\xd1\x1c\x15\x8f\xc0\x55\x79\x44\x0b\x7c\x4d\</span>
+<span class="se">\x48\x4d\x48\x6c\xc7\x68\x7b\x11\x51\xde\xe1\xbe\x3f\x8e\xf7\x56\</span>
+<span class="se">\xb8\x9f\xc5\xfe\xdb\x5c\x5e\xfd\x1c\xe7\x16\x7e\xc9\xb5\x97\x0f\</span>
+<span class="se">\x32\x16\xf9\x7c\xe2\xcc\x65\x5e\x5e\x39\x4f\xb5\x48\x48\x07\x19\</span>
+<span class="se">\x51\xb6\x4d\xe0\x3a\x14\x12\xd0\x09\x0e\xd2\xf3\x26\xd8\xf2\xeb\</span>
+<span class="se">\xd4\xf3\x0e\x85\x58\xde\x0c\xf7\x01\x30\x59\x24\x34\xd2\x4d\xea\</span>
+<span class="se">\x79\x8c\xe9\xd8\x32\xc7\x16\xff\xc0\x54\xd6\xc6\x18\x21\x98\x9a\</span>
+<span class="se">\xc3\x78\xca\xef\x2e\x7e\x80\x23\x83\x37\x58\x2d\xef\x61\xd0\x77\</span>
+<span class="se">\x5c\x6d\x4d\xd2\x0e\x0e\xd2\xf1\xf7\x63\x28\x28\xb9\x21\x55\x97\</span>
+<span class="se">\xd0\xb3\x15\x72\xf1\x38\x35\xb8\x45\x21\x42\xd5\x0d\xe9\x7a\x93\</span>
+<span class="se">\xd4\xf2\x1e\x66\x26\xef\xb1\xbc\x7c\x8e\xf7\x1e\xbd\xc8\xfd\xa5\</span>
+<span class="se">\x47\xb9\x57\xde\x47\xbd\x0c\x9f\xf9\xe4\x9f\x79\xe2\x63\xcb\x84\</span>
+<span class="se">\x4b\x57\x30\xc0\xd3\x67\x5e\xe4\xc8\xc9\xd7\x18\x4a\x09\x5f\x13\</span>
+<span class="se">\xba\xde\x18\x99\x58\x26\xf2\x1e\x33\xc3\x0d\x7c\x97\x71\xb6\x7d\</span>
+<span class="se">\x85\xd9\xe1\x16\x81\x4b\x09\x34\x57\xb9\xba\xf6\x29\x0d\x5d\xc2\</span>
+<span class="se">\x78\xde\xc2\x77\x7d\x0a\xf1\xf9\xf5\xcc\x93\x2c\x0c\x5b\xcc\x27\</span>
+<span class="se">\x9b\xc4\x36\xe4\xf9\xc9\x23\xfc\x64\xfe\x59\xe2\x5c\x88\xaa\x70\</span>
+<span class="se">\xf9\x6f\x4f\x91\x49\xc0\x4a\x38\xcb\xf1\xc1\x5d\xb6\x82\x1a\x0b\</span>
+<span class="se">\x83\x9b\x6c\x07\x0d\xfa\xb6\x4c\xdb\x56\xf5\xd1\xf8\xb6\x9a\xe5\</span>
+<span class="se">\xf2\x7e\xdd\xf2\xeb\x6c\x06\xb3\xfa\x8f\xf1\xf7\xe9\xd0\x8e\xb3\</span>
+<span class="se">\x98\x6c\xf1\x78\xf7\x2a\x7b\xb2\x75\xae\x85\x33\xfa\xdd\x99\x67\</span>
+<span class="se">\xb5\x7b\x5d\x34\xbf\x23\xba\x79\x7d\x81\xd3\x47\x5f\xe0\xc2\xc4\</span>
+<span class="se">\x71\x4e\xf4\x6f\xb1\x5c\xd9\xaf\x13\xf9\x80\xed\xa0\x41\x58\xc4\</span>
+<span class="se">\x3a\x9b\x6c\x68\xa3\xe8\xbb\x81\x09\x0b\x09\xa2\x8a\xfb\xf1\xf5\</span>
+<span class="se">\xaf\xea\xc1\xbc\x2d\x19\xd6\x85\x9a\x72\x28\x5e\x33\x1d\xbf\xae\</span>
+<span class="se">\x97\x4a\x47\xe4\x9b\x07\xbe\x87\x69\xfa\x40\x04\x78\x82\x69\x38\</span>
+<span class="se">\x4d\x63\xf4\xe0\xdb\xf2\xd3\xb5\xaf\x71\x7a\x70\x87\x37\x2a\xfb\</span>
+<span class="se">\x69\xe4\x5d\x2a\x45\x4a\x2d\xef\x12\x65\x0f\x64\x69\xfc\x84\x4a\</span>
+<span class="se">\x12\x96\x5c\x23\x2a\xf1\xb3\xa5\x2f\x70\x38\x6b\x52\x88\x95\xa9\</span>
+<span class="se">\x74\x9b\x67\x66\x3e\xe4\x2e\x36\xbe\x2d\xe6\xde\x24\xc6\x14\x18\</span>
+<span class="se">\x8c\xf8\xfa\x0e\xe0\x93\x89\x6a\x51\xcc\xa8\x3b\xd4\x94\x1f\xad\</span>
+<span class="se">\x7d\x3d\xa9\x0d\xfb\xe5\x9d\xa0\x9a\x1f\x4e\x77\xbc\x85\x78\x8d\</span>
+<span class="se">\x07\xfe\x8c\xdc\x28\xcf\xa8\x24\xe5\xb2\xa3\x24\x4c\x24\x8e\xdf\</span>
+<span class="se">\xdc\xfa\x12\x89\x78\x24\xad\x98\xaf\x9c\xfe\x39\x66\xc3\x07\xa2\</span>
+<span class="se">\x6c\xcc\xf5\xfd\x59\x97\xb0\x66\x9c\x58\x20\x24\xd4\xae\x55\xcd\</span>
+<span class="se">\x08\xd1\xbd\x6d\xc1\x13\xc8\x94\x5f\xdd\xfa\x32\x43\x63\x0b\x15\</span>
+<span class="se">\x63\xde\x32\x55\x95\xa4\x5a\x76\x2a\x9e\xba\x13\x53\x6e\xfe\xf5\</span>
+<span class="se">\x0d\xdb\x45\x01\xc1\x5b\x07\x67\xfd\x42\x14\xb3\xc7\x65\x66\x4b\</span>
+<span class="se">\x14\xc7\x48\x0d\x20\x65\xb2\x68\x9b\xe9\x18\x1d\xfa\xb8\x0d\x5f\</span>
+<span class="se">\xed\x74\xae\x73\x4d\x1f\x07\x04\x02\xa9\x22\x49\xa5\xe4\xb4\xec\</span>
+<span class="se">\x2b\x89\x53\x2a\x22\x2e\x10\xec\x76\x26\x51\xd3\x73\x82\x33\xa0\</span>
+<span class="se">\x78\xaa\x92\xf3\x1f\x35\x14\x72\x11\x6d\x89\x57\xa8\x18\x50\xcc\</span>
+<span class="se">\xc4\xf1\x0d\x21\x57\x95\x40\x94\x12\x8e\x14\x31\xda\xa8\xec\x48\</span>
+<span class="se">\x60\x9d\xf8\x4e\xa4\x97\x8b\xf1\x83\xe1\xdc\xba\x20\x14\x06\x14\</span>
+<span class="se">\x50\x1e\x06\xc3\x68\xb7\x8f\x0a\x80\x4d\xe7\x98\x78\x57\x53\x50\</span>
+<span class="se">\x2d\x10\x51\x12\x84\x96\xf8\xf4\xc5\x93\xa4\x52\xea\x49\xae\xa3\</span>
+<span class="se">\x3f\x53\xd0\xd9\x75\xe3\xea\x85\xca\x3d\x1f\x41\x11\x00\xd6\x81\</span>
+<span class="se">\xb9\x11\xd8\x28\x98\x21\xe4\x65\x40\x6c\x5e\x7d\x6c\x13\xdb\xb3\</span>
+<span class="se">\x68\x49\x33\x19\x48\x19\x23\x8e\x02\x43\xa0\x5d\x4f\x72\xad\x1e\</span>
+<span class="se">\x07\x96\x80\x45\x45\x92\x42\xcd\xa6\x87\x43\x31\xc5\x61\xb0\xab\</span>
+<span class="se">\x50\x9c\x05\x06\xc0\x34\xf0\x1a\x64\xc7\x80\x12\xf0\xce\xbc\x35\</span>
+<span class="se">\xe3\xc6\xb5\xba\x47\x0d\xdd\x86\x05\x23\xb5\xf0\x4f\xb6\x15\x1f\</span>
+<span class="se">\x80\xb8\x34\x61\x00\x36\x80\x10\xa8\x08\x9a\xcf\x43\x0e\x06\x00\</span>
+<span class="se">\x7f\x54\xad\xbd\x06\x78\x60\x97\x80\x32\x60\x60\xd2\xdb\x71\x51\</span>
+<span class="se">\x65\x09\xb1\x14\x00\xb5\xf0\x55\xa0\x4d\x51\xdc\x63\xb4\xbe\x3e\</span>
+<span class="se">\x82\xd4\x77\xbd\xbc\x55\x86\xca\x3a\x2e\x3f\xbc\x6b\xc7\xc3\xf2\</span>
+<span class="se">\x1f\xb2\x3c\x3d\xa9\xa4\x09\xe2\x4b\xc6\xd0\x58\xa8\xd0\x8a\x17\</span>
+<span class="se">\x05\x2c\xd6\x3e\x82\x70\x8a\x56\x3c\x3d\x82\x8f\x8f\xfc\xce\x28\</span>
+<span class="se">\x84\x0c\x84\x94\xff\x55\x0c\xbc\x02\x63\x1f\xdc\x51\x8a\x15\x3a\</span>
+<span class="se">\xbd\x7d\x42\x2a\xde\x6e\x54\xa0\x4b\x2d\xfc\xfb\x6e\xf6\x36\x55\</span>
+<span class="se">\xff\xd2\x08\xde\x01\xdc\x01\x12\x2c\x38\x30\x54\xff\x0f\xdc\x83\</span>
+<span class="se">\xca\x77\xb6\x73\xd3\x34\x6e\xd4\x76\x6b\x17\x8a\x40\x8b\x5a\x78\</span>
+<span class="se">\x9b\x56\x1c\xed\x1e\xbe\x4d\xe0\x3d\x3e\x82\x8f\x05\xe8\xb1\xbf\</span>
+<span class="se">\xc8\x18\xf9\xc8\x0e\xbb\x02\xc5\xec\xee\xd0\x00\x74\x5a\x89\x23\</span>
+<span class="se">\xf5\xd6\x2d\xe4\x02\xa4\xd2\x8a\x6b\xb4\xe2\x3a\xa3\x09\x74\x46\</span>
+<span class="se">\xe5\xcb\xc2\xee\x85\x01\x79\x7e\x03\x19\x06\x41\xb7\xd6\x34\xd5\</span>
+<span class="se">\x7a\x41\x86\x51\xb6\x85\x00\x70\xf0\xef\xe7\x2d\xe3\xef\x69\x59\</span>
+<span class="se">\xe9\x01\xce\x38\xc0\x02\xc3\xdd\xd4\xff\x9a\x4d\x3e\xea\xed\xbf\</span>
+<span class="se">\xf5\x4f\xf3\xe8\xb7\x57\xdd\x83\x7d\x23\x00\x00\x00\x00\x49\x45\</span>
+<span class="se">\x4e\x44\xae\x42\x60\x82\</span>
+<span class="s2">&quot;</span>
+
+<span class="n">qt_resource_name</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\</span>
+<span class="se">\x00\x07\</span>
+<span class="se">\x07\x3b\xe0\xb3\</span>
+<span class="se">\x00\x70\</span>
+<span class="se">\x00\x6c\x00\x75\x00\x67\x00\x69\x00\x6e\x00\x73\</span>
+<span class="se">\x00\x0a\</span>
+<span class="se">\x06\x0a\x9b\xb0\</span>
+<span class="se">\x00\x73\</span>
+<span class="se">\x00\x65\x00\x63\x00\x5f\x00\x69\x00\x6e\x00\x74\x00\x65\x00\x72\x00\x70\</span>
+<span class="se">\x00\x08\</span>
+<span class="se">\x0a\x61\x5a\xa7\</span>
+<span class="se">\x00\x69\</span>
+<span class="se">\x00\x63\x00\x6f\x00\x6e\x00\x2e\x00\x70\x00\x6e\x00\x67\</span>
+<span class="s2">&quot;</span>
+
+<span class="n">qt_resource_struct_v1</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\</span>
+<span class="se">\x00\x00\x00\x00\x00\x02\x00\x00\x00\x01\x00\x00\x00\x01\</span>
+<span class="se">\x00\x00\x00\x00\x00\x02\x00\x00\x00\x01\x00\x00\x00\x02\</span>
+<span class="se">\x00\x00\x00\x14\x00\x02\x00\x00\x00\x01\x00\x00\x00\x03\</span>
+<span class="se">\x00\x00\x00\x2e\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\</span>
+<span class="s2">&quot;</span>
+
+<span class="n">qt_resource_struct_v2</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\</span>
+<span class="se">\x00\x00\x00\x00\x00\x02\x00\x00\x00\x01\x00\x00\x00\x01\</span>
+<span class="se">\x00\x00\x00\x00\x00\x00\x00\x00\</span>
+<span class="se">\x00\x00\x00\x00\x00\x02\x00\x00\x00\x01\x00\x00\x00\x02\</span>
+<span class="se">\x00\x00\x00\x00\x00\x00\x00\x00\</span>
+<span class="se">\x00\x00\x00\x14\x00\x02\x00\x00\x00\x01\x00\x00\x00\x03\</span>
+<span class="se">\x00\x00\x00\x00\x00\x00\x00\x00\</span>
+<span class="se">\x00\x00\x00\x2e\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\</span>
+<span class="se">\x00\x00\x01\x9b\x1e\x90\xab\x79\</span>
+<span class="s2">&quot;</span>
+
+<span class="n">qt_version</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">qVersion</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)]</span>
+<span class="k">if</span> <span class="n">qt_version</span> <span class="o">&lt;</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">]:</span>
+    <span class="n">rcc_version</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">qt_resource_struct</span> <span class="o">=</span> <span class="n">qt_resource_struct_v1</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">rcc_version</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">qt_resource_struct</span> <span class="o">=</span> <span class="n">qt_resource_struct_v2</span>
+
+
+<div class="viewcode-block" id="qInitResources">
+<a class="viewcode-back" href="../../../sec_interp.resources.resources.html#sec_interp.resources.resources.qInitResources">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">qInitResources</span><span class="p">():</span>
+    <span class="n">QtCore</span><span class="o">.</span><span class="n">qRegisterResourceData</span><span class="p">(</span>
+        <span class="n">rcc_version</span><span class="p">,</span> <span class="n">qt_resource_struct</span><span class="p">,</span> <span class="n">qt_resource_name</span><span class="p">,</span> <span class="n">qt_resource_data</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="qCleanupResources">
+<a class="viewcode-back" href="../../../sec_interp.resources.resources.html#sec_interp.resources.resources.qCleanupResources">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">qCleanupResources</span><span class="p">():</span>
+    <span class="n">QtCore</span><span class="o">.</span><span class="n">qUnregisterResourceData</span><span class="p">(</span>
+        <span class="n">rcc_version</span><span class="p">,</span> <span class="n">qt_resource_struct</span><span class="p">,</span> <span class="n">qt_resource_name</span><span class="p">,</span> <span class="n">qt_resource_data</span>
+    <span class="p">)</span></div>
+
+
+
+<span class="n">qInitResources</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Juan M Bernales.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

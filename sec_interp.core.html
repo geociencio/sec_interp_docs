@@ -51,6 +51,7 @@
 <li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">sec_interp</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="sec_interp.html">sec_interp package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.html#sec_interp.classFactory"><code class="docutils literal notranslate"><span class="pre">classFactory()</span></code></a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="sec_interp.html#subpackages">Subpackages</a><ul class="current">
 <li class="toctree-l4 current"><a class="current reference internal" href="#">sec_interp.core package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.html">sec_interp.exporters package</a></li>
@@ -91,18 +92,26 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="sec-interp-core-package">
-<h1>sec_interp.core package<a class="headerlink" href="#sec-interp-core-package" title="Link to this heading"></a></h1>
+  <section id="module-sec_interp.core">
+<span id="sec-interp-core-package"></span><h1>sec_interp.core package<a class="headerlink" href="#module-sec_interp.core" title="Link to this heading"></a></h1>
+<p>Core module for SecInterp plugin.</p>
+<p>Contains business logic, algorithms, and utilities.</p>
 <section id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.core.interfaces.html">sec_interp.core.interfaces package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.interfaces.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.interfaces.cache_interface.html">sec_interp.core.interfaces.cache_interface module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.interfaces.cache_interface.html">sec_interp.core.interfaces.cache_interface module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.interfaces.cache_interface.html#sec_interp.core.interfaces.cache_interface.ICacheService"><code class="docutils literal notranslate"><span class="pre">ICacheService</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.interfaces.drillhole_interface.html">sec_interp.core.interfaces.drillhole_interface module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.interfaces.geology_interface.html">sec_interp.core.interfaces.geology_interface module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.interfaces.preview_interface.html">sec_interp.core.interfaces.preview_interface module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.interfaces.preview_interface.html">sec_interp.core.interfaces.preview_interface module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.interfaces.preview_interface.html#sec_interp.core.interfaces.preview_interface.IPreviewService"><code class="docutils literal notranslate"><span class="pre">IPreviewService</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.interfaces.profile_interface.html">sec_interp.core.interfaces.profile_interface module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.interfaces.structure_interface.html">sec_interp.core.interfaces.structure_interface module</a></li>
 </ul>
@@ -174,7 +183,19 @@
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.core.config.html">sec_interp.core.config module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.core.controller.html">sec_interp.core.controller module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.core.data_cache.html">sec_interp.core.data_cache module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sec_interp.core.exceptions.html">sec_interp.core.exceptions module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.core.exceptions.html">sec_interp.core.exceptions module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.exceptions.html#sec_interp.core.exceptions.ConfigurationError"><code class="docutils literal notranslate"><span class="pre">ConfigurationError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.exceptions.html#sec_interp.core.exceptions.DataMissingError"><code class="docutils literal notranslate"><span class="pre">DataMissingError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.exceptions.html#sec_interp.core.exceptions.ExportError"><code class="docutils literal notranslate"><span class="pre">ExportError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.exceptions.html#sec_interp.core.exceptions.GeometryError"><code class="docutils literal notranslate"><span class="pre">GeometryError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.exceptions.html#sec_interp.core.exceptions.ProcessingError"><code class="docutils literal notranslate"><span class="pre">ProcessingError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.exceptions.html#sec_interp.core.exceptions.SecInterpError"><code class="docutils literal notranslate"><span class="pre">SecInterpError</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.exceptions.html#sec_interp.core.exceptions.SecInterpError.__init__"><code class="docutils literal notranslate"><span class="pre">SecInterpError.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.exceptions.html#sec_interp.core.exceptions.ValidationError"><code class="docutils literal notranslate"><span class="pre">ValidationError</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.core.performance_metrics.html">sec_interp.core.performance_metrics module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.core.types.html">sec_interp.core.types module</a></li>
 </ul>
