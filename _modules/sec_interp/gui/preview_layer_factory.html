@@ -5,24 +5,26 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp.gui.preview_layer_factory &mdash; SecInterp 2.7.0 documentation</title>
+  <title>sec_interp.gui.preview_layer_factory &mdash; SecInterp 2.9.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=dfec817d"></script>
-      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs"></script>
-      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script src="../../../_static/documentation_options.js?v=182a64a0"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
       <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
 
-const defaultStyle = document.createElement('style');
-defaultStyle.textContent = `pre.mermaid {
+
+
+
+
+const initStyles = () => {
+    const defaultStyle = document.createElement('style');
+    defaultStyle.textContent = `pre.mermaid {
     /* Same as .mermaid-container > pre */
     display: block;
     width: 100%;
@@ -33,12 +35,11 @@ pre.mermaid > svg {
     height: 500px;
     width: 100%;
     max-width: 100% !important;
-}
-`;
-document.head.appendChild(defaultStyle);
+}`;
+    document.head.appendChild(defaultStyle);
 
-const fullscreenStyle = document.createElement('style');
-fullscreenStyle.textContent = `.mermaid-container {
+    const fullscreenStyle = document.createElement('style');
+    fullscreenStyle.textContent = `.mermaid-container {
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -190,10 +191,32 @@ fullscreenStyle.textContent = `.mermaid-container {
 .mermaid-fullscreen-modal .mermaid-fullscreen-btn {
     display: none !important;
 }`;
-document.head.appendChild(fullscreenStyle);
+    document.head.appendChild(fullscreenStyle);
+}
 
 // Detect if page has dark background
 const isDarkTheme = () => {
+    // We use a set of heuristics:
+    // 1. Check for common dark mode classes or attributes
+    // 2. Check computed background color brightness
+    if (document.documentElement.classList.contains('dark') ||
+        document.documentElement.getAttribute('data-theme') === 'dark' ||
+        document.body.classList.contains('dark') ||
+        document.body.getAttribute('data-theme') === 'dark') {
+        // console.log("Dark theme detected via class/attribute");
+        return true;
+    }
+    if (document.documentElement.classList.contains('light') ||
+        document.documentElement.getAttribute('data-theme') === 'light' ||
+        document.body.classList.contains('light') ||
+        document.body.getAttribute('data-theme') === 'light') {
+        // console.log("Light theme detected via class/attribute");
+        return false;
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // console.log("Dark theme detected via prefers-color-scheme");
+        return true;
+    }
     const bgColor = window.getComputedStyle(document.body).backgroundColor;
     const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
     if (match) {
@@ -201,15 +224,45 @@ const isDarkTheme = () => {
         const g = parseInt(match[2]);
         const b = parseInt(match[3]);
         const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        // console.log("Background color brightness:", brightness);
         return brightness < 128;
     }
+    // console.log("No dark or light theme detected, defaulting to light theme");
     return false;
 };
 
-const load = async () => {
-    await mermaid.run();
+let darkTheme = isDarkTheme();
+let modal = null;
+let modalContent = null;
+let previousScrollOffset = [window.scrollX, window.scrollY];
 
-    const all_mermaids = document.querySelectorAll(".mermaid");
+const runMermaid = async (rerun) => {
+    console.log("Running mermaid diagrams, rerun =", rerun);
+    // clear all existing mermaid charts
+    let all_mermaids = document.querySelectorAll(".mermaid");
+
+    if (rerun) {
+        all_mermaids.forEach((el) => {
+            if(!el.hasAttribute("data-original-code")) {
+                // store original code
+                // console.log(`Storing original code for first run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+            if(el.getAttribute("data-processed") === "true") {
+                // remove and restore original
+                el.removeAttribute("data-processed");
+                // console.log(`Restoring original code for re-run: `, el.getAttribute('data-original-code'));
+                el.innerHTML = el.getAttribute('data-original-code');
+            } else {
+                // store original code
+                // console.log(`Storing original code for re-run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+        });
+        await mermaid.run();
+    }
+
+    all_mermaids = document.querySelectorAll(".mermaid");
     const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
 
     if ("False" === "True") {
@@ -217,10 +270,10 @@ const load = async () => {
         if(mermaids_to_add_zoom > 0) {
             var svgs = d3.selectAll("");
             if(all_mermaids.length !== mermaids_processed.length) {
-                setTimeout(load, 200);
+                setTimeout(() => runMermaid(false), 200);
                 return;
             } else if(svgs.size() !== mermaids_to_add_zoom) {
-                setTimeout(load, 200);
+                setTimeout(() => runMermaid(false), 200);
                 return;
             } else {
                 svgs.each(function() {
@@ -236,16 +289,21 @@ const load = async () => {
         }
     } else if(all_mermaids.length !== mermaids_processed.length) {
         // Wait for mermaid to process all diagrams
-        setTimeout(load, 200);
+        setTimeout(() => runMermaid(false), 200);
         return;
     }
-
-    const darkTheme = isDarkTheme();
 
     // Stop here if not adding fullscreen capability
     if ("True" !== "True") return;
 
-    const modal = document.createElement('div');
+    if (modal !== null ) {
+        // Destroy existing modal
+        modal.remove();
+        modal = null;
+        modalContent = null;
+    }
+
+    modal = document.createElement('div');
     modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
     modal.setAttribute('role', 'dialog');
     modal.setAttribute('aria-modal', 'true');
@@ -256,10 +314,8 @@ const load = async () => {
     `;
     document.body.appendChild(modal);
 
-    const modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    modalContent = modal.querySelector('.mermaid-container-fullscreen');
     const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
-
-    let previousScrollOffset = [window.scrollX, window.scrollY];
 
     const closeModal = () => {
         modal.classList.remove('active');
@@ -278,11 +334,14 @@ const load = async () => {
         }
     });
 
-    const allButtons = [];
-
     document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
         if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
             mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            // Already processed, adjust button class if needed
+            const existingBtn = mermaidDiv.parentNode.querySelector('.mermaid-fullscreen-btn');
+            if (existingBtn) {
+                existingBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+            }
             return;
         }
 
@@ -340,46 +399,57 @@ const load = async () => {
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         });
-
         container.appendChild(fullscreenBtn);
-        allButtons.push(fullscreenBtn);
-    });
-
-    // Update theme classes when theme changes
-    const updateTheme = () => {
-        const dark = isDarkTheme();
-        allButtons.forEach(btn => {
-            if (dark) {
-                btn.classList.add('dark-theme');
-            } else {
-                btn.classList.remove('dark-theme');
-            }
-        });
-        if (dark) {
-            modal.classList.add('dark-theme');
-            modalContent.classList.add('dark-theme');
-            closeBtn.classList.add('dark-theme');
-        } else {
-            modal.classList.remove('dark-theme');
-            modalContent.classList.remove('dark-theme');
-            closeBtn.classList.remove('dark-theme');
-        }
-    };
-
-    // Watch for theme changes
-    const observer = new MutationObserver(updateTheme);
-    observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['class', 'style', 'data-theme']
-    });
-    observer.observe(document.body, {
-        attributes: true,
-        attributeFilter: ['class', 'style']
     });
 };
 
-window.addEventListener("load", load);
-</script>
+const load = async () => {
+    initStyles();
+
+    await runMermaid(true);
+
+    const reRunIfThemeChanges = async () => {
+        const newDarkTheme = isDarkTheme();
+        if (newDarkTheme !== darkTheme) {
+            darkTheme = newDarkTheme;
+            console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
+            await mermaid.initialize(
+                {...JSON.parse(
+                    `{"startOnLoad": false}`
+                ),
+                ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+                }
+            );
+            await runMermaid(true);
+        }
+    };
+
+    // Update theme classes when theme changes
+    const themeObserver = new MutationObserver(reRunIfThemeChanges);
+    themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    themeObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+};
+
+
+
+
+
+console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
+mermaid.initialize(
+    {...JSON.parse(
+        `{"startOnLoad": false}`
+    ),
+    ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+    }
+);
+
+window.addEventListener("load", load);</script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -440,40 +510,34 @@ window.addEventListener("load", load);
            <div itemprop="articleBody">
              
   <h1>Source code for sec_interp.gui.preview_layer_factory</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<span></span><span class="sd">&quot;&quot;&quot;Factory for creating and styling QGIS memory layers for the preview.&quot;&quot;&quot;</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
-<span class="sd">&quot;&quot;&quot;Layer factory for SecInterp preview.</span>
-
-<span class="sd">Handles creation of temporary memory layers and configuration of native QGIS symbology.</span>
-<span class="sd">&quot;&quot;&quot;</span>
-
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">ClassVar</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">qgis.core</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">QgsCategorizedSymbolRenderer</span><span class="p">,</span>
-    <span class="n">QgsClassificationFixedInterval</span><span class="p">,</span>
     <span class="n">QgsFeature</span><span class="p">,</span>
-    <span class="n">QgsFillSymbol</span><span class="p">,</span>
     <span class="n">QgsGeometry</span><span class="p">,</span>
-    <span class="n">QgsGraduatedSymbolRenderer</span><span class="p">,</span>
-    <span class="n">QgsLineSymbol</span><span class="p">,</span>
-    <span class="n">QgsPalLayerSettings</span><span class="p">,</span>
     <span class="n">QgsPointXY</span><span class="p">,</span>
     <span class="n">QgsProject</span><span class="p">,</span>
-    <span class="n">QgsRendererCategory</span><span class="p">,</span>
-    <span class="n">QgsSingleSymbolRenderer</span><span class="p">,</span>
-    <span class="n">QgsStyle</span><span class="p">,</span>
-    <span class="n">QgsTextFormat</span><span class="p">,</span>
     <span class="n">QgsVectorLayer</span><span class="p">,</span>
-    <span class="n">QgsVectorLayerSimpleLabeling</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">qgis.PyQt.QtGui</span><span class="w"> </span><span class="kn">import</span> <span class="n">QColor</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">GeologyData</span><span class="p">,</span> <span class="n">ProfileData</span><span class="p">,</span> <span class="n">StructureData</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.domain</span><span class="w"> </span><span class="kn">import</span> <span class="n">GeologyData</span><span class="p">,</span> <span class="n">ProfileData</span><span class="p">,</span> <span class="n">StructureData</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.utils.geometry_utils.optimization</span><span class="w"> </span><span class="kn">import</span> <span class="n">PreviewOptimizer</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.logger_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_logger</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">qgis.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">QgsVectorDataProvider</span>
+
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.gui.renderers.color_manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">ColorManager</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.gui.renderers.drillhole_renderer</span><span class="w"> </span><span class="kn">import</span> <span class="n">DrillholeRenderer</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.gui.renderers.geology_renderer</span><span class="w"> </span><span class="kn">import</span> <span class="n">GeologyRenderer</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.gui.renderers.structure_renderer</span><span class="w"> </span><span class="kn">import</span> <span class="n">StructureRenderer</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.gui.renderers.topo_renderer</span><span class="w"> </span><span class="kn">import</span> <span class="n">TopoRenderer</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -483,49 +547,39 @@ window.addEventListener("load", load);
 <span class="k">class</span><span class="w"> </span><span class="nc">PreviewLayerFactory</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Factory for creating and styling QGIS memory layers for the preview.&quot;&quot;&quot;</span>
 
-    <span class="c1"># Color palette for geological units</span>
-    <span class="n">GEOLOGY_COLORS</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">QColor</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="n">QColor</span><span class="p">(</span><span class="mi">231</span><span class="p">,</span> <span class="mi">76</span><span class="p">,</span> <span class="mi">60</span><span class="p">),</span>  <span class="c1"># Red</span>
-        <span class="n">QColor</span><span class="p">(</span><span class="mi">52</span><span class="p">,</span> <span class="mi">152</span><span class="p">,</span> <span class="mi">219</span><span class="p">),</span>  <span class="c1"># Blue</span>
-        <span class="n">QColor</span><span class="p">(</span><span class="mi">46</span><span class="p">,</span> <span class="mi">204</span><span class="p">,</span> <span class="mi">113</span><span class="p">),</span>  <span class="c1"># Green</span>
-        <span class="n">QColor</span><span class="p">(</span><span class="mi">155</span><span class="p">,</span> <span class="mi">89</span><span class="p">,</span> <span class="mi">182</span><span class="p">),</span>  <span class="c1"># Purple</span>
-        <span class="n">QColor</span><span class="p">(</span><span class="mi">241</span><span class="p">,</span> <span class="mi">196</span><span class="p">,</span> <span class="mi">15</span><span class="p">),</span>  <span class="c1"># Yellow</span>
-        <span class="n">QColor</span><span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="mi">126</span><span class="p">,</span> <span class="mi">34</span><span class="p">),</span>  <span class="c1"># Orange</span>
-        <span class="n">QColor</span><span class="p">(</span><span class="mi">26</span><span class="p">,</span> <span class="mi">188</span><span class="p">,</span> <span class="mi">156</span><span class="p">),</span>  <span class="c1"># Turquoise</span>
-        <span class="n">QColor</span><span class="p">(</span><span class="mi">52</span><span class="p">,</span> <span class="mi">73</span><span class="p">,</span> <span class="mi">94</span><span class="p">),</span>  <span class="c1"># Dark Blue/Grey</span>
-        <span class="n">QColor</span><span class="p">(</span><span class="mi">149</span><span class="p">,</span> <span class="mi">165</span><span class="p">,</span> <span class="mi">166</span><span class="p">),</span>  <span class="c1"># Grey</span>
-        <span class="n">QColor</span><span class="p">(</span><span class="mi">211</span><span class="p">,</span> <span class="mi">84</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1"># Pumpkin</span>
-        <span class="n">QColor</span><span class="p">(</span><span class="mi">192</span><span class="p">,</span> <span class="mi">57</span><span class="p">,</span> <span class="mi">43</span><span class="p">),</span>  <span class="c1"># Dark Red</span>
-        <span class="n">QColor</span><span class="p">(</span><span class="mi">127</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="mi">141</span><span class="p">),</span>  <span class="c1"># Dark Grey</span>
-        <span class="n">QColor</span><span class="p">(</span><span class="mi">142</span><span class="p">,</span> <span class="mi">68</span><span class="p">,</span> <span class="mi">173</span><span class="p">),</span>  <span class="c1"># Wisteria</span>
-        <span class="n">QColor</span><span class="p">(</span><span class="mi">41</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">185</span><span class="p">),</span>  <span class="c1"># Belize Hole</span>
-        <span class="n">QColor</span><span class="p">(</span><span class="mi">39</span><span class="p">,</span> <span class="mi">174</span><span class="p">,</span> <span class="mi">96</span><span class="p">),</span>  <span class="c1"># Nephritis</span>
-        <span class="n">QColor</span><span class="p">(</span><span class="mi">22</span><span class="p">,</span> <span class="mi">160</span><span class="p">,</span> <span class="mi">133</span><span class="p">),</span>  <span class="c1"># Green Sea</span>
-    <span class="p">]</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">active_units</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compatibility property for active geological units.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_manager</span><span class="o">.</span><span class="n">_active_units</span>
+
+    <span class="nd">@active_units</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">active_units</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Allow resetting active units for cleanup.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">value</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">color_manager</span><span class="o">.</span><span class="n">_active_units</span> <span class="o">=</span> <span class="p">{}</span>
 
 <div class="viewcode-block" id="PreviewLayerFactory.__init__">
 <a class="viewcode-back" href="../../../sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.__init__">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the layer factory.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">active_units</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">QColor</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span></div>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the layer factory with specialized renderers.&quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.gui.renderers.color_manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">ColorManager</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.gui.renderers.drillhole_renderer</span><span class="w"> </span><span class="kn">import</span> <span class="n">DrillholeRenderer</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.gui.renderers.geology_renderer</span><span class="w"> </span><span class="kn">import</span> <span class="n">GeologyRenderer</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.gui.renderers.structure_renderer</span><span class="w"> </span><span class="kn">import</span> <span class="n">StructureRenderer</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.gui.renderers.topo_renderer</span><span class="w"> </span><span class="kn">import</span> <span class="n">TopoRenderer</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">color_manager</span><span class="p">:</span> <span class="n">ColorManager</span> <span class="o">=</span> <span class="n">ColorManager</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">topo_renderer</span><span class="p">:</span> <span class="n">TopoRenderer</span> <span class="o">=</span> <span class="n">TopoRenderer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">geol_renderer</span><span class="p">:</span> <span class="n">GeologyRenderer</span> <span class="o">=</span> <span class="n">GeologyRenderer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color_manager</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">struct_renderer</span><span class="p">:</span> <span class="n">StructureRenderer</span> <span class="o">=</span> <span class="n">StructureRenderer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">drill_renderer</span><span class="p">:</span> <span class="n">DrillholeRenderer</span> <span class="o">=</span> <span class="n">DrillholeRenderer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color_manager</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="PreviewLayerFactory.get_color_for_unit">
 <a class="viewcode-back" href="../../../sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.get_color_for_unit">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_color_for_unit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QColor</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a consistent color for a geological unit based on its name.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">QColor</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># Default grey</span>
-
-        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_units</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_units</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
-
-        <span class="c1"># Simple hash to map name to index</span>
-        <span class="n">hash_val</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
-        <span class="n">index</span> <span class="o">=</span> <span class="n">hash_val</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">GEOLOGY_COLORS</span><span class="p">)</span>
-        <span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GEOLOGY_COLORS</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">active_units</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">color</span>
-        <span class="k">return</span> <span class="n">color</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_manager</span><span class="o">.</span><span class="n">get_color</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="PreviewLayerFactory.create_memory_layer">
@@ -535,16 +589,16 @@ window.addEventListener("load", load);
         <span class="n">geometry_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">fields</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">QgsVectorLayer</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a memory layer with an unknown CRS.</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">QgsVectorLayer</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="n">QgsVectorDataProvider</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a memory layer with project CRS.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            geometry_type: &quot;Point&quot;, &quot;LineString&quot;, &quot;Polygon&quot;</span>
-<span class="sd">            name: Layer display name</span>
-<span class="sd">            fields: Optional field definition string (e.g., &quot;field=id:integer&quot;)</span>
+<span class="sd">            geometry_type: Geometry type (e.g., &quot;Point&quot;, &quot;LineString&quot;).</span>
+<span class="sd">            name: Display name for the layer.</span>
+<span class="sd">            fields: Optional field definition URI string.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Tuple of (QgsVectorLayer, QgsDataProvider) or (None, None) if failed</span>
+<span class="sd">            Tuple of (Layer, DataProvider).</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">uri</span> <span class="o">=</span> <span class="n">geometry_type</span>
@@ -576,7 +630,8 @@ window.addEventListener("load", load);
         <span class="n">use_adaptive_sampling</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QgsVectorLayer</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create temporary layer for topographic profile with polychromatic elevation styling.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">topo_data</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">topo_data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">MIN_REQUIRED_POINTS</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">topo_data</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">topo_data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">MIN_REQUIRED_POINTS</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
         <span class="c1"># Apply LOD decimation</span>
@@ -614,25 +669,10 @@ window.addEventListener("load", load);
             <span class="k">return</span> <span class="kc">None</span>
 
         <span class="n">provider</span><span class="o">.</span><span class="n">addFeatures</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_style_topo_layer</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">topo_renderer</span><span class="o">.</span><span class="n">apply_style</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span>
         <span class="n">layer</span><span class="o">.</span><span class="n">updateExtents</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">layer</span></div>
 
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_style_topo_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer</span><span class="p">:</span> <span class="n">QgsVectorLayer</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply styles to the topography layer.&quot;&quot;&quot;</span>
-        <span class="n">renderer</span> <span class="o">=</span> <span class="n">QgsGraduatedSymbolRenderer</span><span class="p">(</span><span class="s2">&quot;elev&quot;</span><span class="p">)</span>
-        <span class="n">renderer</span><span class="o">.</span><span class="n">setSourceSymbol</span><span class="p">(</span><span class="n">QgsLineSymbol</span><span class="o">.</span><span class="n">createSimple</span><span class="p">({</span><span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="s2">&quot;0.8&quot;</span><span class="p">,</span> <span class="s2">&quot;capstyle&quot;</span><span class="p">:</span> <span class="s2">&quot;round&quot;</span><span class="p">}))</span>
-
-        <span class="n">style</span> <span class="o">=</span> <span class="n">QgsStyle</span><span class="o">.</span><span class="n">defaultStyle</span><span class="p">()</span>
-        <span class="c1"># Try a terrain-like default ramp</span>
-        <span class="n">color_ramp</span> <span class="o">=</span> <span class="n">style</span><span class="o">.</span><span class="n">colorRamp</span><span class="p">(</span><span class="s2">&quot;Spectral&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">style</span><span class="o">.</span><span class="n">colorRamp</span><span class="p">(</span><span class="s2">&quot;RdYlGn&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">color_ramp</span><span class="p">:</span>
-            <span class="n">renderer</span><span class="o">.</span><span class="n">updateColorRamp</span><span class="p">(</span><span class="n">color_ramp</span><span class="p">)</span>
-
-        <span class="n">renderer</span><span class="o">.</span><span class="n">setClassificationMethod</span><span class="p">(</span><span class="n">QgsClassificationFixedInterval</span><span class="p">())</span>
-        <span class="n">renderer</span><span class="o">.</span><span class="n">updateClasses</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
-        <span class="n">layer</span><span class="o">.</span><span class="n">setRenderer</span><span class="p">(</span><span class="n">renderer</span><span class="p">)</span>
 
 <div class="viewcode-block" id="PreviewLayerFactory.create_topo_fill_layer">
 <a class="viewcode-back" href="../../../sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.create_topo_fill_layer">[docs]</a>
@@ -644,7 +684,8 @@ window.addEventListener("load", load);
         <span class="n">base_elevation</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QgsVectorLayer</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a solid &#39;curtain&#39; fill layer under the topography for depth.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">topo_data</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">topo_data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">MIN_REQUIRED_POINTS</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">topo_data</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">topo_data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">MIN_REQUIRED_POINTS</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
         <span class="n">render_data</span> <span class="o">=</span> <span class="n">PreviewOptimizer</span><span class="o">.</span><span class="n">decimate</span><span class="p">(</span><span class="n">topo_data</span><span class="p">,</span> <span class="n">max_points</span><span class="o">=</span><span class="n">max_points</span><span class="p">)</span>
@@ -674,23 +715,15 @@ window.addEventListener("load", load);
         <span class="n">geom</span> <span class="o">=</span> <span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromPolygonXY</span><span class="p">([</span><span class="n">poly_points</span><span class="p">])</span>
         <span class="n">feat</span> <span class="o">=</span> <span class="n">QgsFeature</span><span class="p">()</span>
         <span class="n">feat</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="n">geom</span><span class="p">)</span>
-        <span class="n">provider</span><span class="o">.</span><span class="n">addFeatures</span><span class="p">([</span><span class="n">feat</span><span class="p">])</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_style_topo_fill_layer</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span>
+        <span class="n">provider</span><span class="o">.</span><span class="n">addFeatures</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">feat</span><span class="p">]</span>
+        <span class="p">)</span>  <span class="c1"># Corrected from &#39;features&#39; to &#39;[feat]&#39; as &#39;features&#39; is not defined here.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">struct_renderer</span><span class="o">.</span><span class="n">apply_style</span><span class="p">(</span>
+            <span class="n">layer</span>
+        <span class="p">)</span>  <span class="c1"># Simple fill style could be here too, but for now reuse</span>
         <span class="n">layer</span><span class="o">.</span><span class="n">updateExtents</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">layer</span></div>
 
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_style_topo_fill_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer</span><span class="p">:</span> <span class="n">QgsVectorLayer</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply styles to the topography fill layer.&quot;&quot;&quot;</span>
-        <span class="n">symbol</span> <span class="o">=</span> <span class="n">QgsFillSymbol</span><span class="o">.</span><span class="n">createSimple</span><span class="p">(</span>
-            <span class="p">{</span>
-                <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;101,67,33,30&quot;</span><span class="p">,</span>  <span class="c1"># Earthy brown, very transparent</span>
-                <span class="s2">&quot;outline_color&quot;</span><span class="p">:</span> <span class="s2">&quot;0,0,0,0&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;outline_width&quot;</span><span class="p">:</span> <span class="s2">&quot;0&quot;</span><span class="p">,</span>
-            <span class="p">}</span>
-        <span class="p">)</span>
-        <span class="n">layer</span><span class="o">.</span><span class="n">setRenderer</span><span class="p">(</span><span class="n">QgsSingleSymbolRenderer</span><span class="p">(</span><span class="n">symbol</span><span class="p">))</span>
 
 <div class="viewcode-block" id="PreviewLayerFactory.create_geol_layer">
 <a class="viewcode-back" href="../../../sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.create_geol_layer">[docs]</a>
@@ -707,8 +740,9 @@ window.addEventListener("load", load);
 
         <span class="n">unique_units</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="o">.</span><span class="n">unit_name</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">geol_data</span><span class="p">}</span>
         <span class="n">features</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">MIN_REQUIRED_POINTS</span> <span class="o">=</span> <span class="mi">2</span>
         <span class="k">for</span> <span class="n">segment</span> <span class="ow">in</span> <span class="n">geol_data</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">segment</span><span class="o">.</span><span class="n">points</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">segment</span><span class="o">.</span><span class="n">points</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">segment</span><span class="o">.</span><span class="n">points</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">segment</span><span class="o">.</span><span class="n">points</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">MIN_REQUIRED_POINTS</span><span class="p">:</span>
                 <span class="k">continue</span>
 
             <span class="n">render_points</span> <span class="o">=</span> <span class="n">PreviewOptimizer</span><span class="o">.</span><span class="n">decimate</span><span class="p">(</span><span class="n">segment</span><span class="o">.</span><span class="n">points</span><span class="p">,</span> <span class="n">max_points</span><span class="o">=</span><span class="n">max_points</span><span class="p">)</span>
@@ -721,27 +755,10 @@ window.addEventListener("load", load);
             <span class="n">features</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">feat</span><span class="p">)</span>
 
         <span class="n">provider</span><span class="o">.</span><span class="n">addFeatures</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_style_geol_layer</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="n">unique_units</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">geol_renderer</span><span class="o">.</span><span class="n">apply_style</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="n">unique_units</span><span class="o">=</span><span class="n">unique_units</span><span class="p">)</span>
         <span class="n">layer</span><span class="o">.</span><span class="n">updateExtents</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">layer</span></div>
 
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_style_geol_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer</span><span class="p">:</span> <span class="n">QgsVectorLayer</span><span class="p">,</span> <span class="n">unique_units</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply styles to the geology layer.&quot;&quot;&quot;</span>
-        <span class="n">categories</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">unit_name</span> <span class="ow">in</span> <span class="n">unique_units</span><span class="p">:</span>
-            <span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_color_for_unit</span><span class="p">(</span><span class="n">unit_name</span><span class="p">)</span>
-            <span class="n">symbol</span> <span class="o">=</span> <span class="n">QgsLineSymbol</span><span class="o">.</span><span class="n">createSimple</span><span class="p">(</span>
-                <span class="p">{</span>
-                    <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">color</span><span class="o">.</span><span class="n">red</span><span class="p">()</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">color</span><span class="o">.</span><span class="n">green</span><span class="p">()</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">color</span><span class="o">.</span><span class="n">blue</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="s2">&quot;0.7&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;capstyle&quot;</span><span class="p">:</span> <span class="s2">&quot;round&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;joinstyle&quot;</span><span class="p">:</span> <span class="s2">&quot;round&quot;</span><span class="p">,</span>
-                <span class="p">}</span>
-            <span class="p">)</span>
-            <span class="n">categories</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">QgsRendererCategory</span><span class="p">(</span><span class="n">unit_name</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">unit_name</span><span class="p">))</span>
-
-        <span class="n">layer</span><span class="o">.</span><span class="n">setRenderer</span><span class="p">(</span><span class="n">QgsCategorizedSymbolRenderer</span><span class="p">(</span><span class="s2">&quot;unit&quot;</span><span class="p">,</span> <span class="n">categories</span><span class="p">))</span>
 
 <div class="viewcode-block" id="PreviewLayerFactory.create_struct_layer">
 <a class="viewcode-back" href="../../../sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.create_struct_layer">[docs]</a>
@@ -792,18 +809,10 @@ window.addEventListener("load", load);
             <span class="n">features</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">feat</span><span class="p">)</span>
 
         <span class="n">provider</span><span class="o">.</span><span class="n">addFeatures</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_style_struct_layer</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">struct_renderer</span><span class="o">.</span><span class="n">apply_style</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span>
         <span class="n">layer</span><span class="o">.</span><span class="n">updateExtents</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">layer</span></div>
 
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_style_struct_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer</span><span class="p">:</span> <span class="n">QgsVectorLayer</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply styles to the structure layer.&quot;&quot;&quot;</span>
-        <span class="n">symbol</span> <span class="o">=</span> <span class="n">QgsLineSymbol</span><span class="o">.</span><span class="n">createSimple</span><span class="p">(</span>
-            <span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;204,0,0&quot;</span><span class="p">,</span> <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="s2">&quot;0.5&quot;</span><span class="p">,</span> <span class="s2">&quot;capstyle&quot;</span><span class="p">:</span> <span class="s2">&quot;round&quot;</span><span class="p">}</span>
-        <span class="p">)</span>
-        <span class="n">layer</span><span class="o">.</span><span class="n">setRenderer</span><span class="p">(</span><span class="n">QgsSingleSymbolRenderer</span><span class="p">(</span><span class="n">symbol</span><span class="p">))</span>
 
 <div class="viewcode-block" id="PreviewLayerFactory.create_drillhole_trace_layer">
 <a class="viewcode-back" href="../../../sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.create_drillhole_trace_layer">[docs]</a>
@@ -826,19 +835,23 @@ window.addEventListener("load", load);
 
         <span class="n">features</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">hole_data</span> <span class="ow">in</span> <span class="n">drillhole_data</span><span class="p">:</span>
-            <span class="c1"># hole_data is (hole_id, trace_2d, trace_3d, trace_3d_proj, segments)</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">hole_data</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">5</span><span class="p">:</span>
-                <span class="n">hole_id</span><span class="p">,</span> <span class="n">trace_points</span> <span class="o">=</span> <span class="n">hole_data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">hole_data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">hole_id</span><span class="p">,</span> <span class="n">trace_points</span> <span class="o">=</span> <span class="n">hole_data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">hole_data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="c1"># hole_data is (hole_id, spatial_points, segments)</span>
+            <span class="n">hole_id</span><span class="p">,</span> <span class="n">trace_points</span> <span class="o">=</span> <span class="n">hole_data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">hole_data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">trace_points</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">trace_points</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">MIN_TRACE_POINTS</span> <span class="o">=</span> <span class="mi">2</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">trace_points</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">trace_points</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">MIN_TRACE_POINTS</span><span class="p">:</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
                     <span class="sa">f</span><span class="s2">&quot;Skipping hole </span><span class="si">{</span><span class="n">hole_id</span><span class="si">}</span><span class="s2">: insufficient trace points (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">trace_points</span><span class="p">)</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">trace_points</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="mi">0</span><span class="si">}</span><span class="s2">)&quot;</span>
                 <span class="p">)</span>
                 <span class="k">continue</span>
 
-            <span class="n">render_points</span> <span class="o">=</span> <span class="p">[</span><span class="n">QgsPointXY</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">*</span> <span class="n">vert_exag</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">trace_points</span><span class="p">]</span>
+            <span class="n">render_points</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">trace_points</span><span class="p">:</span>
+                <span class="c1"># Handle both SpatialMeta objects and legacy tuples</span>
+                <span class="n">dist</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s2">&quot;dist_along&quot;</span><span class="p">,</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="nb">list</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">)</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">)</span>
+                <span class="n">z</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="nb">list</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">)</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">)</span>
+                <span class="n">render_points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">QgsPointXY</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">z</span> <span class="o">*</span> <span class="n">vert_exag</span><span class="p">))</span>
+
             <span class="n">line_geom</span> <span class="o">=</span> <span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromPolylineXY</span><span class="p">(</span><span class="n">render_points</span><span class="p">)</span>
 
             <span class="n">feat</span> <span class="o">=</span> <span class="n">QgsFeature</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">fields</span><span class="p">())</span>
@@ -849,29 +862,10 @@ window.addEventListener("load", load);
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Adding </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">)</span><span class="si">}</span><span class="s2"> drillhole trace features to layer&quot;</span><span class="p">)</span>
 
         <span class="n">provider</span><span class="o">.</span><span class="n">addFeatures</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_style_drillhole_trace_layer</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">drill_renderer</span><span class="o">.</span><span class="n">apply_style</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="s2">&quot;trace&quot;</span><span class="p">)</span>
         <span class="n">layer</span><span class="o">.</span><span class="n">updateExtents</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">layer</span></div>
 
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_style_drillhole_trace_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer</span><span class="p">:</span> <span class="n">QgsVectorLayer</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply styles to the drillhole trace layer.&quot;&quot;&quot;</span>
-        <span class="n">symbol</span> <span class="o">=</span> <span class="n">QgsLineSymbol</span><span class="o">.</span><span class="n">createSimple</span><span class="p">(</span>
-            <span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;50,50,50&quot;</span><span class="p">,</span> <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="s2">&quot;0.3&quot;</span><span class="p">,</span> <span class="s2">&quot;capstyle&quot;</span><span class="p">:</span> <span class="s2">&quot;round&quot;</span><span class="p">}</span>
-        <span class="p">)</span>
-        <span class="n">layer</span><span class="o">.</span><span class="n">setRenderer</span><span class="p">(</span><span class="n">QgsSingleSymbolRenderer</span><span class="p">(</span><span class="n">symbol</span><span class="p">))</span>
-
-        <span class="n">settings</span> <span class="o">=</span> <span class="n">QgsPalLayerSettings</span><span class="p">()</span>
-        <span class="n">settings</span><span class="o">.</span><span class="n">fieldName</span> <span class="o">=</span> <span class="s2">&quot;hole_id&quot;</span>
-        <span class="n">settings</span><span class="o">.</span><span class="n">placement</span> <span class="o">=</span> <span class="n">QgsPalLayerSettings</span><span class="o">.</span><span class="n">Placement</span><span class="o">.</span><span class="n">Line</span>
-
-        <span class="n">txt_format</span> <span class="o">=</span> <span class="n">QgsTextFormat</span><span class="p">()</span>
-        <span class="n">txt_format</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">QColor</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
-        <span class="n">txt_format</span><span class="o">.</span><span class="n">setSize</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
-        <span class="n">settings</span><span class="o">.</span><span class="n">setFormat</span><span class="p">(</span><span class="n">txt_format</span><span class="p">)</span>
-
-        <span class="n">layer</span><span class="o">.</span><span class="n">setLabeling</span><span class="p">(</span><span class="n">QgsVectorLayerSimpleLabeling</span><span class="p">(</span><span class="n">settings</span><span class="p">))</span>
-        <span class="n">layer</span><span class="o">.</span><span class="n">setLabelsEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
 <div class="viewcode-block" id="PreviewLayerFactory.create_drillhole_interval_layer">
 <a class="viewcode-back" href="../../../sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.create_drillhole_interval_layer">[docs]</a>
@@ -884,9 +878,10 @@ window.addEventListener("load", load);
 
         <span class="n">all_segments</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">hole_data</span> <span class="ow">in</span> <span class="n">drillhole_data</span><span class="p">:</span>
-            <span class="c1"># segments are at index 2 (legacy) or 4 (v2.7.0)</span>
-            <span class="n">segments</span> <span class="o">=</span> <span class="n">hole_data</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">hole_data</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">5</span> <span class="k">else</span> <span class="n">hole_data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">segments</span><span class="p">:</span>
+            <span class="c1"># segments are usually the last element</span>
+            <span class="n">MIN_HOLE_DATA_FOR_SEGMENTS</span> <span class="o">=</span> <span class="mi">3</span>
+            <span class="n">segments</span> <span class="o">=</span> <span class="n">hole_data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">hole_data</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">MIN_HOLE_DATA_FOR_SEGMENTS</span> <span class="k">else</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="n">segments</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">segments</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
                 <span class="n">all_segments</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">segments</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">all_segments</span><span class="p">:</span>
@@ -900,8 +895,9 @@ window.addEventListener("load", load);
 
         <span class="n">features</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">unique_units</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">MIN_SEGMENT_POINTS</span> <span class="o">=</span> <span class="mi">2</span>
         <span class="k">for</span> <span class="n">segment</span> <span class="ow">in</span> <span class="n">all_segments</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">segment</span><span class="o">.</span><span class="n">points</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">segment</span><span class="o">.</span><span class="n">points</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">segment</span><span class="o">.</span><span class="n">points</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">segment</span><span class="o">.</span><span class="n">points</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">MIN_SEGMENT_POINTS</span><span class="p">:</span>
                 <span class="k">continue</span>
 
             <span class="n">unique_units</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">segment</span><span class="o">.</span><span class="n">unit_name</span><span class="p">)</span>
@@ -914,27 +910,10 @@ window.addEventListener("load", load);
             <span class="n">features</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">feat</span><span class="p">)</span>
 
         <span class="n">provider</span><span class="o">.</span><span class="n">addFeatures</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_style_drillhole_interval_layer</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="n">unique_units</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">drill_renderer</span><span class="o">.</span><span class="n">apply_style</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="s2">&quot;interval&quot;</span><span class="p">,</span> <span class="n">unique_units</span><span class="o">=</span><span class="n">unique_units</span><span class="p">)</span>
         <span class="n">layer</span><span class="o">.</span><span class="n">updateExtents</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">layer</span></div>
 
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_style_drillhole_interval_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer</span><span class="p">:</span> <span class="n">QgsVectorLayer</span><span class="p">,</span> <span class="n">unique_units</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply styles to the drillhole interval layer.&quot;&quot;&quot;</span>
-        <span class="n">categories</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">unit_name</span> <span class="ow">in</span> <span class="n">unique_units</span><span class="p">:</span>
-            <span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_color_for_unit</span><span class="p">(</span><span class="n">unit_name</span><span class="p">)</span>
-            <span class="n">symbol</span> <span class="o">=</span> <span class="n">QgsLineSymbol</span><span class="o">.</span><span class="n">createSimple</span><span class="p">(</span>
-                <span class="p">{</span>
-                    <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">color</span><span class="o">.</span><span class="n">red</span><span class="p">()</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">color</span><span class="o">.</span><span class="n">green</span><span class="p">()</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">color</span><span class="o">.</span><span class="n">blue</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="s2">&quot;2.0&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;capstyle&quot;</span><span class="p">:</span> <span class="s2">&quot;flat&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;joinstyle&quot;</span><span class="p">:</span> <span class="s2">&quot;bevel&quot;</span><span class="p">,</span>
-                <span class="p">}</span>
-            <span class="p">)</span>
-            <span class="n">categories</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">QgsRendererCategory</span><span class="p">(</span><span class="n">unit_name</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">unit_name</span><span class="p">))</span>
-
-        <span class="n">layer</span><span class="o">.</span><span class="n">setRenderer</span><span class="p">(</span><span class="n">QgsCategorizedSymbolRenderer</span><span class="p">(</span><span class="s2">&quot;unit&quot;</span><span class="p">,</span> <span class="n">categories</span><span class="p">))</span>
 
 <div class="viewcode-block" id="PreviewLayerFactory.interpolate_elevation">
 <a class="viewcode-back" href="../../../sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.interpolate_elevation">[docs]</a>

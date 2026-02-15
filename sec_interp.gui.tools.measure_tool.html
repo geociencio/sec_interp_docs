@@ -6,16 +6,16 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp.gui.tools.measure_tool module &mdash; SecInterp 2.7.0 documentation</title>
+  <title>sec_interp.gui.tools.measure_tool module &mdash; SecInterp 2.9.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=dfec817d"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/documentation_options.js?v=182a64a0"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -96,15 +96,30 @@
              
   <section id="module-sec_interp.gui.tools.measure_tool">
 <span id="sec-interp-gui-tools-measure-tool-module"></span><h1>sec_interp.gui.tools.measure_tool module<a class="headerlink" href="#module-sec_interp.gui.tools.measure_tool" title="Link to this heading"></a></h1>
+<p>Measurement tool for Profile View.</p>
+<p>This module provides the ProfileMeasureTool for measuring distances,
+elevation differences, and slopes in the profile preview window.
+It separates UI event handling from spatial snapping logic.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="sec_interp.gui.tools.measure_tool.ProfileMeasureTool">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sec_interp.gui.tools.measure_tool.</span></span><span class="sig-name descname"><span class="pre">ProfileMeasureTool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sec_interp/gui/tools/measure_tool.html#ProfileMeasureTool"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.gui.tools.measure_tool.ProfileMeasureTool" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.gui.tools.measure_tool.</span></span><span class="sig-name descname"><span class="pre">ProfileMeasureTool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sec_interp/gui/tools/measure_tool.html#ProfileMeasureTool"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.gui.tools.measure_tool.ProfileMeasureTool" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QgsMapToolEmitPoint</span></code></p>
 <p>Map tool for measuring distances in profile view.</p>
 <p>Supports multi-point polyline measurements:
 - Click to add points along the trace
 - Click “Finalizar” button in UI to complete measurement
 - Right-click or Escape to cancel and reset</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="sec_interp.gui.tools.measure_tool.ProfileMeasureTool.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">canvas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.gui.QgsMapCanvas</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sec_interp/gui/tools/measure_tool.html#ProfileMeasureTool.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.gui.tools.measure_tool.ProfileMeasureTool.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the profile measurement tool.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>canvas</strong> – The map canvas where measurement is performed.</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.gui.tools.measure_tool.ProfileMeasureTool.activate">
 <span class="sig-name descname"><span class="pre">activate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/sec_interp/gui/tools/measure_tool.html#ProfileMeasureTool.activate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.gui.tools.measure_tool.ProfileMeasureTool.activate" title="Link to this definition"></a></dt>
@@ -142,6 +157,8 @@
 <dt class="sig sig-object py" id="sec_interp.gui.tools.measure_tool.ProfileMeasureTool.deactivate">
 <span class="sig-name descname"><span class="pre">deactivate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/sec_interp/gui/tools/measure_tool.html#ProfileMeasureTool.deactivate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.gui.tools.measure_tool.ProfileMeasureTool.deactivate" title="Link to this definition"></a></dt>
 <dd><p>Deactivate the measurement tool.</p>
+<p>Note: We no longer call reset() here to allow measurements to persist
+visually until a new one is started or explicitly cleared.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -185,9 +202,20 @@ the visual elements (rubber band and markers) visible.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="sec_interp.gui.tools.measure_tool.ProfileSnapper">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sec_interp.gui.tools.measure_tool.</span></span><span class="sig-name descname"><span class="pre">ProfileSnapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">canvas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.gui.QgsMapCanvas</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sec_interp/gui/tools/measure_tool.html#ProfileSnapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.gui.tools.measure_tool.ProfileSnapper" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.gui.tools.measure_tool.</span></span><span class="sig-name descname"><span class="pre">ProfileSnapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">canvas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.gui.QgsMapCanvas</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sec_interp/gui/tools/measure_tool.html#ProfileSnapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.gui.tools.measure_tool.ProfileSnapper" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Helper class to handle point snapping functionality.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="sec_interp.gui.tools.measure_tool.ProfileSnapper.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">canvas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.gui.QgsMapCanvas</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sec_interp/gui/tools/measure_tool.html#ProfileSnapper.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.gui.tools.measure_tool.ProfileSnapper.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the profile snapper.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>canvas</strong> – The map canvas to snap on.</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.gui.tools.measure_tool.ProfileSnapper.snap">
 <span class="sig-name descname"><span class="pre">snap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mouse_pos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.PyQt.QtCore.QPoint</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qgis.core.QgsPointXY</span></span></span><a class="reference internal" href="_modules/sec_interp/gui/tools/measure_tool.html#ProfileSnapper.snap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.gui.tools.measure_tool.ProfileSnapper.snap" title="Link to this definition"></a></dt>

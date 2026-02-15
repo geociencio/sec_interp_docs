@@ -5,24 +5,26 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; SecInterp 2.7.0 documentation</title>
+  <title>Index &mdash; SecInterp 2.9.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=dfec817d"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs"></script>
-      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script src="_static/documentation_options.js?v=182a64a0"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
       <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
 
-const defaultStyle = document.createElement('style');
-defaultStyle.textContent = `pre.mermaid {
+
+
+
+
+const initStyles = () => {
+    const defaultStyle = document.createElement('style');
+    defaultStyle.textContent = `pre.mermaid {
     /* Same as .mermaid-container > pre */
     display: block;
     width: 100%;
@@ -33,12 +35,11 @@ pre.mermaid > svg {
     height: 500px;
     width: 100%;
     max-width: 100% !important;
-}
-`;
-document.head.appendChild(defaultStyle);
+}`;
+    document.head.appendChild(defaultStyle);
 
-const fullscreenStyle = document.createElement('style');
-fullscreenStyle.textContent = `.mermaid-container {
+    const fullscreenStyle = document.createElement('style');
+    fullscreenStyle.textContent = `.mermaid-container {
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -190,10 +191,32 @@ fullscreenStyle.textContent = `.mermaid-container {
 .mermaid-fullscreen-modal .mermaid-fullscreen-btn {
     display: none !important;
 }`;
-document.head.appendChild(fullscreenStyle);
+    document.head.appendChild(fullscreenStyle);
+}
 
 // Detect if page has dark background
 const isDarkTheme = () => {
+    // We use a set of heuristics:
+    // 1. Check for common dark mode classes or attributes
+    // 2. Check computed background color brightness
+    if (document.documentElement.classList.contains('dark') ||
+        document.documentElement.getAttribute('data-theme') === 'dark' ||
+        document.body.classList.contains('dark') ||
+        document.body.getAttribute('data-theme') === 'dark') {
+        // console.log("Dark theme detected via class/attribute");
+        return true;
+    }
+    if (document.documentElement.classList.contains('light') ||
+        document.documentElement.getAttribute('data-theme') === 'light' ||
+        document.body.classList.contains('light') ||
+        document.body.getAttribute('data-theme') === 'light') {
+        // console.log("Light theme detected via class/attribute");
+        return false;
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // console.log("Dark theme detected via prefers-color-scheme");
+        return true;
+    }
     const bgColor = window.getComputedStyle(document.body).backgroundColor;
     const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
     if (match) {
@@ -201,15 +224,45 @@ const isDarkTheme = () => {
         const g = parseInt(match[2]);
         const b = parseInt(match[3]);
         const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        // console.log("Background color brightness:", brightness);
         return brightness < 128;
     }
+    // console.log("No dark or light theme detected, defaulting to light theme");
     return false;
 };
 
-const load = async () => {
-    await mermaid.run();
+let darkTheme = isDarkTheme();
+let modal = null;
+let modalContent = null;
+let previousScrollOffset = [window.scrollX, window.scrollY];
 
-    const all_mermaids = document.querySelectorAll(".mermaid");
+const runMermaid = async (rerun) => {
+    console.log("Running mermaid diagrams, rerun =", rerun);
+    // clear all existing mermaid charts
+    let all_mermaids = document.querySelectorAll(".mermaid");
+
+    if (rerun) {
+        all_mermaids.forEach((el) => {
+            if(!el.hasAttribute("data-original-code")) {
+                // store original code
+                // console.log(`Storing original code for first run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+            if(el.getAttribute("data-processed") === "true") {
+                // remove and restore original
+                el.removeAttribute("data-processed");
+                // console.log(`Restoring original code for re-run: `, el.getAttribute('data-original-code'));
+                el.innerHTML = el.getAttribute('data-original-code');
+            } else {
+                // store original code
+                // console.log(`Storing original code for re-run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+        });
+        await mermaid.run();
+    }
+
+    all_mermaids = document.querySelectorAll(".mermaid");
     const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
 
     if ("False" === "True") {
@@ -217,10 +270,10 @@ const load = async () => {
         if(mermaids_to_add_zoom > 0) {
             var svgs = d3.selectAll("");
             if(all_mermaids.length !== mermaids_processed.length) {
-                setTimeout(load, 200);
+                setTimeout(() => runMermaid(false), 200);
                 return;
             } else if(svgs.size() !== mermaids_to_add_zoom) {
-                setTimeout(load, 200);
+                setTimeout(() => runMermaid(false), 200);
                 return;
             } else {
                 svgs.each(function() {
@@ -236,16 +289,21 @@ const load = async () => {
         }
     } else if(all_mermaids.length !== mermaids_processed.length) {
         // Wait for mermaid to process all diagrams
-        setTimeout(load, 200);
+        setTimeout(() => runMermaid(false), 200);
         return;
     }
-
-    const darkTheme = isDarkTheme();
 
     // Stop here if not adding fullscreen capability
     if ("True" !== "True") return;
 
-    const modal = document.createElement('div');
+    if (modal !== null ) {
+        // Destroy existing modal
+        modal.remove();
+        modal = null;
+        modalContent = null;
+    }
+
+    modal = document.createElement('div');
     modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
     modal.setAttribute('role', 'dialog');
     modal.setAttribute('aria-modal', 'true');
@@ -256,10 +314,8 @@ const load = async () => {
     `;
     document.body.appendChild(modal);
 
-    const modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    modalContent = modal.querySelector('.mermaid-container-fullscreen');
     const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
-
-    let previousScrollOffset = [window.scrollX, window.scrollY];
 
     const closeModal = () => {
         modal.classList.remove('active');
@@ -278,11 +334,14 @@ const load = async () => {
         }
     });
 
-    const allButtons = [];
-
     document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
         if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
             mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            // Already processed, adjust button class if needed
+            const existingBtn = mermaidDiv.parentNode.querySelector('.mermaid-fullscreen-btn');
+            if (existingBtn) {
+                existingBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+            }
             return;
         }
 
@@ -340,46 +399,57 @@ const load = async () => {
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         });
-
         container.appendChild(fullscreenBtn);
-        allButtons.push(fullscreenBtn);
-    });
-
-    // Update theme classes when theme changes
-    const updateTheme = () => {
-        const dark = isDarkTheme();
-        allButtons.forEach(btn => {
-            if (dark) {
-                btn.classList.add('dark-theme');
-            } else {
-                btn.classList.remove('dark-theme');
-            }
-        });
-        if (dark) {
-            modal.classList.add('dark-theme');
-            modalContent.classList.add('dark-theme');
-            closeBtn.classList.add('dark-theme');
-        } else {
-            modal.classList.remove('dark-theme');
-            modalContent.classList.remove('dark-theme');
-            closeBtn.classList.remove('dark-theme');
-        }
-    };
-
-    // Watch for theme changes
-    const observer = new MutationObserver(updateTheme);
-    observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['class', 'style', 'data-theme']
-    });
-    observer.observe(document.body, {
-        attributes: true,
-        attributeFilter: ['class', 'style']
     });
 };
 
-window.addEventListener("load", load);
-</script>
+const load = async () => {
+    initStyles();
+
+    await runMermaid(true);
+
+    const reRunIfThemeChanges = async () => {
+        const newDarkTheme = isDarkTheme();
+        if (newDarkTheme !== darkTheme) {
+            darkTheme = newDarkTheme;
+            console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
+            await mermaid.initialize(
+                {...JSON.parse(
+                    `{"startOnLoad": false}`
+                ),
+                ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+                }
+            );
+            await runMermaid(true);
+        }
+    };
+
+    // Update theme classes when theme changes
+    const themeObserver = new MutationObserver(reRunIfThemeChanges);
+    themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    themeObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+};
+
+
+
+
+
+console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
+mermaid.initialize(
+    {...JSON.parse(
+        `{"startOnLoad": false}`
+    ),
+    ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+    }
+);
+
+window.addEventListener("load", load);</script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -464,6 +534,9 @@ window.addEventListener("load", load);
  | <a href="#U"><strong>U</strong></a>
  | <a href="#V"><strong>V</strong></a>
  | <a href="#W"><strong>W</strong></a>
+ | <a href="#X"><strong>X</strong></a>
+ | <a href="#Y"><strong>Y</strong></a>
+ | <a href="#Z"><strong>Z</strong></a>
  
 </div>
 <h2 id="_">_</h2>
@@ -492,9 +565,21 @@ window.addEventListener("load", load);
 </li>
         <li><a href="sec_interp.core.services.access_control_service.html#sec_interp.core.services.access_control_service.AccessControlService.__init__">(sec_interp.core.services.access_control_service.AccessControlService method)</a>
 </li>
+        <li><a href="sec_interp.core.services.drillhole.trajectory_engine.html#sec_interp.core.services.drillhole.trajectory_engine.TrajectoryEngine.__init__">(sec_interp.core.services.drillhole.trajectory_engine.TrajectoryEngine method)</a>
+</li>
+        <li><a href="sec_interp.core.services.drillhole_service.html#sec_interp.core.services.drillhole_service.DrillholeService.__init__">(sec_interp.core.services.drillhole_service.DrillholeService method)</a>
+</li>
+        <li><a href="sec_interp.core.services.html#sec_interp.core.services.DrillholeService.__init__">(sec_interp.core.services.DrillholeService method)</a>
+</li>
         <li><a href="sec_interp.core.services.export_service.html#sec_interp.core.services.export_service.ExportService.__init__">(sec_interp.core.services.export_service.ExportService method)</a>
 </li>
+        <li><a href="sec_interp.core.services.geology_service.html#sec_interp.core.services.geology_service.GeologyService.__init__">(sec_interp.core.services.geology_service.GeologyService method)</a>
+</li>
+        <li><a href="sec_interp.core.services.html#sec_interp.core.services.GeologyService.__init__">(sec_interp.core.services.GeologyService method)</a>
+</li>
         <li><a href="sec_interp.core.services.preview_service.html#sec_interp.core.services.preview_service.PreviewService.__init__">(sec_interp.core.services.preview_service.PreviewService method)</a>
+</li>
+        <li><a href="sec_interp.core.validation.validation_helpers.html#sec_interp.core.validation.validation_helpers.ValidationContext.__init__">(sec_interp.core.validation.validation_helpers.ValidationContext method)</a>
 </li>
         <li><a href="sec_interp.core.validation.validators.html#sec_interp.core.validation.validators.FieldValidator.__init__">(sec_interp.core.validation.validators.FieldValidator method)</a>
 </li>
@@ -505,6 +590,10 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.exporters.html#sec_interp.exporters.Interpretation2DExporter.__init__">(sec_interp.exporters.Interpretation2DExporter method)</a>
 </li>
         <li><a href="sec_interp.exporters.interpretation_exporters.html#sec_interp.exporters.interpretation_exporters.Interpretation2DExporter.__init__">(sec_interp.exporters.interpretation_exporters.Interpretation2DExporter method)</a>
+</li>
+        <li><a href="sec_interp.gui.legend_widget.html#sec_interp.gui.legend_widget.LegendWidget.__init__">(sec_interp.gui.legend_widget.LegendWidget method)</a>
+</li>
+        <li><a href="sec_interp.gui.lod_calculator.html#sec_interp.gui.lod_calculator.LODCalculator.__init__">(sec_interp.gui.lod_calculator.LODCalculator method)</a>
 </li>
         <li><a href="sec_interp.gui.main_dialog.html#sec_interp.gui.main_dialog.SecInterpDialog.__init__">(sec_interp.gui.main_dialog.SecInterpDialog method)</a>
 </li>
@@ -536,7 +625,15 @@ window.addEventListener("load", load);
 </li>
         <li><a href="sec_interp.gui.preview_renderer.html#sec_interp.gui.preview_renderer.PreviewRenderer.__init__">(sec_interp.gui.preview_renderer.PreviewRenderer method)</a>
 </li>
+        <li><a href="sec_interp.gui.preview_task_orchestrator.html#sec_interp.gui.preview_task_orchestrator.PreviewTaskOrchestrator.__init__">(sec_interp.gui.preview_task_orchestrator.PreviewTaskOrchestrator method)</a>
+</li>
         <li><a href="sec_interp.gui.html#sec_interp.gui.PreviewRenderer.__init__">(sec_interp.gui.PreviewRenderer method)</a>
+</li>
+        <li><a href="sec_interp.gui.renderers.color_manager.html#sec_interp.gui.renderers.color_manager.ColorManager.__init__">(sec_interp.gui.renderers.color_manager.ColorManager method)</a>
+</li>
+        <li><a href="sec_interp.gui.renderers.drillhole_renderer.html#sec_interp.gui.renderers.drillhole_renderer.DrillholeRenderer.__init__">(sec_interp.gui.renderers.drillhole_renderer.DrillholeRenderer method)</a>
+</li>
+        <li><a href="sec_interp.gui.renderers.geology_renderer.html#sec_interp.gui.renderers.geology_renderer.GeologyRenderer.__init__">(sec_interp.gui.renderers.geology_renderer.GeologyRenderer method)</a>
 </li>
         <li><a href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.__init__">(sec_interp.gui.SecInterpDialog method)</a>
 </li>
@@ -544,15 +641,37 @@ window.addEventListener("load", load);
 </li>
         <li><a href="sec_interp.gui.tasks.geology_task.html#sec_interp.gui.tasks.geology_task.GeologyGenerationTask.__init__">(sec_interp.gui.tasks.geology_task.GeologyGenerationTask method)</a>
 </li>
+        <li><a href="sec_interp.gui.tools.interpretation_tool.html#sec_interp.gui.tools.interpretation_tool.ProfileInterpretationTool.__init__">(sec_interp.gui.tools.interpretation_tool.ProfileInterpretationTool method)</a>
+</li>
+        <li><a href="sec_interp.gui.tools.interpretation_tool.html#sec_interp.gui.tools.interpretation_tool.ProfileSnapper.__init__">(sec_interp.gui.tools.interpretation_tool.ProfileSnapper method)</a>
+</li>
+        <li><a href="sec_interp.gui.tools.measure_tool.html#sec_interp.gui.tools.measure_tool.ProfileMeasureTool.__init__">(sec_interp.gui.tools.measure_tool.ProfileMeasureTool method)</a>
+</li>
+        <li><a href="sec_interp.gui.tools.measure_tool.html#sec_interp.gui.tools.measure_tool.ProfileSnapper.__init__">(sec_interp.gui.tools.measure_tool.ProfileSnapper method)</a>
+</li>
+        <li><a href="sec_interp.gui.ui.main_window.html#sec_interp.gui.ui.main_window.SecInterpMainWindow.__init__">(sec_interp.gui.ui.main_window.SecInterpMainWindow method)</a>
+</li>
         <li><a href="sec_interp.gui.ui.pages.base_page.html#sec_interp.gui.ui.pages.base_page.BasePage.__init__">(sec_interp.gui.ui.pages.base_page.BasePage method)</a>
 </li>
         <li><a href="sec_interp.gui.ui.pages.dem_page.html#sec_interp.gui.ui.pages.dem_page.DemPage.__init__">(sec_interp.gui.ui.pages.dem_page.DemPage method)</a>
 </li>
+        <li><a href="sec_interp.gui.ui.pages.drillhole_page.html#sec_interp.gui.ui.pages.drillhole_page.DrillholePage.__init__">(sec_interp.gui.ui.pages.drillhole_page.DrillholePage method)</a>
+</li>
+        <li><a href="sec_interp.gui.ui.pages.geology_page.html#sec_interp.gui.ui.pages.geology_page.GeologyPage.__init__">(sec_interp.gui.ui.pages.geology_page.GeologyPage method)</a>
+</li>
         <li><a href="sec_interp.gui.ui.pages.interpretation_page.html#sec_interp.gui.ui.pages.interpretation_page.InterpretationPage.__init__">(sec_interp.gui.ui.pages.interpretation_page.InterpretationPage method)</a>
+</li>
+        <li><a href="sec_interp.gui.ui.pages.preview_page.html#sec_interp.gui.ui.pages.preview_page.PreviewWidget.__init__">(sec_interp.gui.ui.pages.preview_page.PreviewWidget method)</a>
+</li>
+        <li><a href="sec_interp.gui.ui.pages.section_page.html#sec_interp.gui.ui.pages.section_page.SectionPage.__init__">(sec_interp.gui.ui.pages.section_page.SectionPage method)</a>
 </li>
         <li><a href="sec_interp.gui.ui.pages.settings_page.html#sec_interp.gui.ui.pages.settings_page.SettingsPage.__init__">(sec_interp.gui.ui.pages.settings_page.SettingsPage method)</a>
 </li>
         <li><a href="sec_interp.gui.ui.pages.html#sec_interp.gui.ui.pages.SettingsPage.__init__">(sec_interp.gui.ui.pages.SettingsPage method)</a>
+</li>
+        <li><a href="sec_interp.gui.ui.pages.structure_page.html#sec_interp.gui.ui.pages.structure_page.StructurePage.__init__">(sec_interp.gui.ui.pages.structure_page.StructurePage method)</a>
+</li>
+        <li><a href="sec_interp.gui.ui.sidebar.html#sec_interp.gui.ui.sidebar.Sidebar.__init__">(sec_interp.gui.ui.sidebar.Sidebar method)</a>
 </li>
         <li><a href="sec_interp.logger_config.html#sec_interp.logger_config.QgsLogHandler.__init__">(sec_interp.logger_config.QgsLogHandler method)</a>
 </li>
@@ -571,6 +690,8 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.StructureSettings.__post_init__">(sec_interp.core.models.settings_model.StructureSettings method)</a>
 </li>
       </ul></li>
+      <li><a href="sec_interp.core.validation.validation_helpers.html#sec_interp.core.validation.validation_helpers.RichValidationError.__str__">__str__() (sec_interp.core.validation.validation_helpers.RichValidationError method)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -593,9 +714,11 @@ window.addEventListener("load", load);
       </ul></li>
       <li><a href="sec_interp.gui.main_dialog_tools.html#sec_interp.gui.main_dialog_tools.DialogToolManager.activate_default_tool">activate_default_tool() (sec_interp.gui.main_dialog_tools.DialogToolManager method)</a>
 </li>
-      <li><a href="sec_interp.gui.preview_renderer.html#sec_interp.gui.preview_renderer.PreviewRenderer.active_units">active_units (sec_interp.gui.preview_renderer.PreviewRenderer property)</a>
+      <li><a href="sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.active_units">active_units (sec_interp.gui.preview_layer_factory.PreviewLayerFactory property)</a>
 
       <ul>
+        <li><a href="sec_interp.gui.preview_renderer.html#sec_interp.gui.preview_renderer.PreviewRenderer.active_units">(sec_interp.gui.preview_renderer.PreviewRenderer property)</a>
+</li>
         <li><a href="sec_interp.gui.html#sec_interp.gui.PreviewRenderer.active_units">(sec_interp.gui.PreviewRenderer property)</a>
 </li>
       </ul></li>
@@ -611,32 +734,62 @@ window.addEventListener("load", load);
 </li>
       <li><a href="sec_interp.core.performance_metrics.html#sec_interp.core.performance_metrics.MetricsCollector.add_metadata">add_metadata() (sec_interp.core.performance_metrics.MetricsCollector method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sec_interp.core.validation.validation_helpers.html#sec_interp.core.validation.validation_helpers.ValidationContext.add_warning">add_warning() (sec_interp.core.validation.validation_helpers.ValidationContext method)</a>
 </li>
       <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig.ALLOW_EMPTY_GEOLOGY">ALLOW_EMPTY_GEOLOGY (sec_interp.gui.main_dialog_config.DialogConfig attribute)</a>
 </li>
       <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig.ALLOW_EMPTY_STRUCTURES">ALLOW_EMPTY_STRUCTURES (sec_interp.gui.main_dialog_config.DialogConfig attribute)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#id53">apparent_dip (sec_interp.core.types.StructureMeasurement attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.StructureMeasurement.apparent_dip">[1]</a>
-</li>
-      <li><a href="sec_interp.gui.main_dialog_interpretation.html#sec_interp.gui.main_dialog_interpretation.DialogInterpretationManager.apply_attribute_inheritance">apply_attribute_inheritance() (sec_interp.gui.main_dialog_interpretation.DialogInterpretationManager method)</a>
-</li>
-      <li><a href="sec_interp.core.types.html#id0">attributes (sec_interp.core.types.GeologySegment attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.GeologySegment.attributes">[1]</a>
+      <li><a href="sec_interp.core.domain.entities.html#id17">apparent_dip (sec_interp.core.domain.entities.StructureMeasurement attribute)</a>, <a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.StructureMeasurement.apparent_dip">[1]</a>
 
       <ul>
-        <li><a href="sec_interp.core.types.html#id4">(sec_interp.core.types.InterpretationPolygon attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.InterpretationPolygon.attributes">[1]</a>
-</li>
-        <li><a href="sec_interp.core.types.html#id11">(sec_interp.core.types.InterpretationPolygon25D attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.InterpretationPolygon25D.attributes">[1]</a>
-</li>
-        <li><a href="sec_interp.core.types.html#id54">(sec_interp.core.types.StructureMeasurement attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.StructureMeasurement.attributes">[1]</a>
+        <li><a href="sec_interp.core.domain.html#id87">(sec_interp.core.domain.StructureMeasurement attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.StructureMeasurement.apparent_dip">[1]</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.PreviewSettings.auto_lod">auto_lod (sec_interp.core.models.settings_model.PreviewSettings attribute)</a>
+      <li><a href="sec_interp.gui.main_dialog_interpretation.html#sec_interp.gui.main_dialog_interpretation.DialogInterpretationManager.apply_attribute_inheritance">apply_attribute_inheritance() (sec_interp.gui.main_dialog_interpretation.DialogInterpretationManager method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="sec_interp.gui.renderers.base_renderer.html#sec_interp.gui.renderers.base_renderer.BasePreviewRenderer.apply_style">apply_style() (sec_interp.gui.renderers.base_renderer.BasePreviewRenderer method)</a>
 
       <ul>
-        <li><a href="sec_interp.core.types.html#id17">(sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.auto_lod">[1]</a>
+        <li><a href="sec_interp.gui.renderers.drillhole_renderer.html#sec_interp.gui.renderers.drillhole_renderer.DrillholeRenderer.apply_style">(sec_interp.gui.renderers.drillhole_renderer.DrillholeRenderer method)</a>
+</li>
+        <li><a href="sec_interp.gui.renderers.geology_renderer.html#sec_interp.gui.renderers.geology_renderer.GeologyRenderer.apply_style">(sec_interp.gui.renderers.geology_renderer.GeologyRenderer method)</a>
+</li>
+        <li><a href="sec_interp.gui.renderers.structure_renderer.html#sec_interp.gui.renderers.structure_renderer.StructureRenderer.apply_style">(sec_interp.gui.renderers.structure_renderer.StructureRenderer method)</a>
+</li>
+        <li><a href="sec_interp.gui.renderers.topo_renderer.html#sec_interp.gui.renderers.topo_renderer.TopoRenderer.apply_style">(sec_interp.gui.renderers.topo_renderer.TopoRenderer method)</a>
+</li>
+      </ul></li>
+      <li><a href="sec_interp.core.domain.entities.html#id0">attributes (sec_interp.core.domain.entities.GeologySegment attribute)</a>, <a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.GeologySegment.attributes">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.entities.html#id4">(sec_interp.core.domain.entities.InterpretationPolygon attribute)</a>, <a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon.attributes">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.entities.html#id11">(sec_interp.core.domain.entities.InterpretationPolygon25D attribute)</a>, <a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon25D.attributes">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.entities.html#id18">(sec_interp.core.domain.entities.StructureMeasurement attribute)</a>, <a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.StructureMeasurement.attributes">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.html#id16">(sec_interp.core.domain.GeologySegment attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.GeologySegment.attributes">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.html#id29">(sec_interp.core.domain.InterpretationPolygon attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.InterpretationPolygon.attributes">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.html#id36">(sec_interp.core.domain.InterpretationPolygon25D attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.InterpretationPolygon25D.attributes">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.spatial_meta.html#id0">(sec_interp.core.domain.spatial_meta.SpatialMeta attribute)</a>, <a href="sec_interp.core.domain.spatial_meta.html#sec_interp.core.domain.spatial_meta.SpatialMeta.attributes">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.html#id78">(sec_interp.core.domain.SpatialMeta attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.SpatialMeta.attributes">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.html#id88">(sec_interp.core.domain.StructureMeasurement attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.StructureMeasurement.attributes">[1]</a>
+</li>
+      </ul></li>
+      <li><a href="sec_interp.core.domain.dtos.html#id0">auto_lod (sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.auto_lod">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#id42">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.auto_lod">[1]</a>
+</li>
+        <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.PreviewSettings.auto_lod">(sec_interp.core.models.settings_model.PreviewSettings attribute)</a>
 </li>
       </ul></li>
       <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig.AUTO_REFRESH_PREVIEW">AUTO_REFRESH_PREVIEW (sec_interp.gui.main_dialog_config.DialogConfig attribute)</a>
@@ -659,8 +812,12 @@ window.addEventListener("load", load);
 </li>
       <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DemSettings.band">band (sec_interp.core.models.settings_model.DemSettings attribute)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#id18">band_num (sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.band_num">[1]</a>
+      <li><a href="sec_interp.core.domain.dtos.html#id1">band_num (sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.band_num">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#id43">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.band_num">[1]</a>
 </li>
+      </ul></li>
       <li><a href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ValidationParams.band_number">band_number (sec_interp.core.validation.project_validator.ValidationParams attribute)</a>
 
       <ul>
@@ -675,16 +832,26 @@ window.addEventListener("load", load);
       </ul></li>
       <li><a href="sec_interp.gui.ui.pages.base_page.html#sec_interp.gui.ui.pages.base_page.BasePage">BasePage (class in sec_interp.gui.ui.pages.base_page)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.FieldType.BOOL">BOOL (sec_interp.core.types.FieldType attribute)</a>
+      <li><a href="sec_interp.gui.renderers.base_renderer.html#sec_interp.gui.renderers.base_renderer.BasePreviewRenderer">BasePreviewRenderer (class in sec_interp.gui.renderers.base_renderer)</a>
 </li>
-      <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.SectionSettings.buffer_dist">buffer_dist (sec_interp.core.models.settings_model.SectionSettings attribute)</a>
+      <li><a href="sec_interp.core.domain.enums.html#sec_interp.core.domain.enums.FieldType.BOOL">BOOL (sec_interp.core.domain.enums.FieldType attribute)</a>
 
       <ul>
-        <li><a href="sec_interp.core.types.html#id19">(sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.buffer_dist">[1]</a>
+        <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.FieldType.BOOL">(sec_interp.core.domain.FieldType attribute)</a>
 </li>
-        <li><a href="sec_interp.core.types.html#id47">(sec_interp.core.types.PreviewResult attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewResult.buffer_dist">[1]</a>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="sec_interp.core.domain.dtos.html#id2">buffer_dist (sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.buffer_dist">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.dtos.html#id30">(sec_interp.core.domain.dtos.PreviewResult attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewResult.buffer_dist">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.html#id44">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.buffer_dist">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.html#id72">(sec_interp.core.domain.PreviewResult attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewResult.buffer_dist">[1]</a>
+</li>
+        <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.SectionSettings.buffer_dist">(sec_interp.core.models.settings_model.SectionSettings attribute)</a>
 </li>
         <li><a href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ValidationParams.buffer_dist">(sec_interp.core.validation.project_validator.ValidationParams attribute)</a>
 </li>
@@ -693,7 +860,13 @@ window.addEventListener("load", load);
       </ul></li>
       <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogDefaults.BUFFER_DISTANCE">BUFFER_DISTANCE (sec_interp.gui.main_dialog_config.DialogDefaults attribute)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.DrillholeTaskInput.buffer_width">buffer_width (sec_interp.core.types.DrillholeTaskInput attribute)</a>
+      <li><a href="sec_interp.core.domain.html#id0">buffer_width (sec_interp.core.domain.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.DrillholeTaskInput.buffer_width">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.task_inputs.html#id0">(sec_interp.core.domain.task_inputs.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.task_inputs.html#sec_interp.core.domain.task_inputs.DrillholeTaskInput.buffer_width">[1]</a>
+</li>
+      </ul></li>
+      <li><a href="sec_interp.core.services.drillhole.collar_processor.html#sec_interp.core.services.drillhole.collar_processor.CollarProcessor.build_coordinate_map">build_coordinate_map() (sec_interp.core.services.drillhole.collar_processor.CollarProcessor method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -727,6 +900,8 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.core.utils.drillhole.html#sec_interp.core.utils.drillhole.calculate_drillhole_trajectory">(in module sec_interp.core.utils.drillhole)</a>
 </li>
       </ul></li>
+      <li><a href="sec_interp.gui.preview_param_hasher.html#sec_interp.gui.preview_param_hasher.PreviewParamHasher.calculate_hash">calculate_hash() (sec_interp.gui.preview_param_hasher.PreviewParamHasher static method)</a>
+</li>
       <li><a href="sec_interp.core.utils.html#sec_interp.core.utils.calculate_interval">calculate_interval() (in module sec_interp.core.utils)</a>
 
       <ul>
@@ -740,8 +915,14 @@ window.addEventListener("load", load);
 </li>
       </ul></li>
       <li><a href="sec_interp.core.services.preview_service.html#sec_interp.core.services.preview_service.PreviewService.calculate_max_points">calculate_max_points() (sec_interp.core.services.preview_service.PreviewService static method)</a>
+
+      <ul>
+        <li><a href="sec_interp.gui.lod_calculator.html#sec_interp.gui.lod_calculator.LODCalculator.calculate_max_points">(sec_interp.gui.lod_calculator.LODCalculator method)</a>
 </li>
+      </ul></li>
       <li><a href="sec_interp.core.utils.geometry_utils.measurement.html#sec_interp.core.utils.geometry_utils.measurement.calculate_polyline_metrics">calculate_polyline_metrics() (in module sec_interp.core.utils.geometry_utils.measurement)</a>
+</li>
+      <li><a href="sec_interp.core.utils.geometry_utils.processing.html#sec_interp.core.utils.geometry_utils.processing.calculate_segment_range">calculate_segment_range() (in module sec_interp.core.utils.geometry_utils.processing)</a>
 </li>
       <li><a href="sec_interp.core.utils.html#sec_interp.core.utils.calculate_step_size">calculate_step_size() (in module sec_interp.core.utils)</a>
 
@@ -755,8 +936,14 @@ window.addEventListener("load", load);
 </li>
       <li><a href="sec_interp.gui.main_dialog_validation_manager.html#sec_interp.gui.main_dialog_validation_manager.DialogValidationManager.can_preview">can_preview() (sec_interp.gui.main_dialog_validation_manager.DialogValidationManager method)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#id20">canvas_width (sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.canvas_width">[1]</a>
+      <li><a href="sec_interp.gui.preview_task_orchestrator.html#sec_interp.gui.preview_task_orchestrator.PreviewTaskOrchestrator.cancel_active_tasks">cancel_active_tasks() (sec_interp.gui.preview_task_orchestrator.PreviewTaskOrchestrator method)</a>
 </li>
+      <li><a href="sec_interp.core.domain.dtos.html#id3">canvas_width (sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.canvas_width">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#id45">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.canvas_width">[1]</a>
+</li>
+      </ul></li>
       <li><a href="sec_interp.gui.tools.interpretation_tool.html#sec_interp.gui.tools.interpretation_tool.ProfileInterpretationTool.canvasDoubleClickEvent">canvasDoubleClickEvent() (sec_interp.gui.tools.interpretation_tool.ProfileInterpretationTool method)</a>
 </li>
       <li><a href="sec_interp.gui.tools.interpretation_tool.html#sec_interp.gui.tools.interpretation_tool.ProfileInterpretationTool.canvasMoveEvent">canvasMoveEvent() (sec_interp.gui.tools.interpretation_tool.ProfileInterpretationTool method)</a>
@@ -801,6 +988,8 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.clear_cache_handler">(sec_interp.gui.SecInterpDialog method)</a>
 </li>
       </ul></li>
+      <li><a href="sec_interp.core.utils.metadata_reader.html#sec_interp.core.utils.metadata_reader.clear_metadata_cache">clear_metadata_cache() (in module sec_interp.core.utils.metadata_reader)</a>
+</li>
       <li><a href="sec_interp.gui.main_dialog.html#sec_interp.gui.main_dialog.SecInterpDialog.closeEvent">closeEvent() (sec_interp.gui.main_dialog.SecInterpDialog method)</a>
 
       <ul>
@@ -809,14 +998,22 @@ window.addEventListener("load", load);
       </ul></li>
       <li><a href="sec_interp.core.validation.validators.html#sec_interp.core.validation.validators.coerce_type">coerce_type() (in module sec_interp.core.validation.validators)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.DrillholeTaskInput.collar_data">collar_data (sec_interp.core.types.DrillholeTaskInput attribute)</a>
-</li>
-      <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings.collar_depth_field">collar_depth_field (sec_interp.core.models.settings_model.DrillholeSettings attribute)</a>
+      <li><a href="sec_interp.core.domain.html#id1">collar_data (sec_interp.core.domain.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.DrillholeTaskInput.collar_data">[1]</a>
 
       <ul>
-        <li><a href="sec_interp.core.types.html#sec_interp.core.types.DrillholeTaskInput.collar_depth_field">(sec_interp.core.types.DrillholeTaskInput attribute)</a>
+        <li><a href="sec_interp.core.domain.task_inputs.html#id1">(sec_interp.core.domain.task_inputs.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.task_inputs.html#sec_interp.core.domain.task_inputs.DrillholeTaskInput.collar_data">[1]</a>
 </li>
-        <li><a href="sec_interp.core.types.html#id21">(sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.collar_depth_field">[1]</a>
+      </ul></li>
+      <li><a href="sec_interp.core.domain.html#id2">collar_depth_field (sec_interp.core.domain.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.DrillholeTaskInput.collar_depth_field">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.dtos.html#id4">(sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.collar_depth_field">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.html#id46">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.collar_depth_field">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.task_inputs.html#id2">(sec_interp.core.domain.task_inputs.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.task_inputs.html#sec_interp.core.domain.task_inputs.DrillholeTaskInput.collar_depth_field">[1]</a>
+</li>
+        <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings.collar_depth_field">(sec_interp.core.models.settings_model.DrillholeSettings attribute)</a>
 </li>
       </ul></li>
       <li><a href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ValidationParams.collar_id">collar_id (sec_interp.core.validation.project_validator.ValidationParams attribute)</a>
@@ -825,17 +1022,23 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.core.validation.html#sec_interp.core.validation.ValidationParams.collar_id">(sec_interp.core.validation.ValidationParams attribute)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings.collar_id_field">collar_id_field (sec_interp.core.models.settings_model.DrillholeSettings attribute)</a>
+      <li><a href="sec_interp.core.domain.html#id3">collar_id_field (sec_interp.core.domain.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.DrillholeTaskInput.collar_id_field">[1]</a>
 
       <ul>
-        <li><a href="sec_interp.core.types.html#sec_interp.core.types.DrillholeTaskInput.collar_id_field">(sec_interp.core.types.DrillholeTaskInput attribute)</a>
+        <li><a href="sec_interp.core.domain.dtos.html#id5">(sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.collar_id_field">[1]</a>
 </li>
-        <li><a href="sec_interp.core.types.html#id22">(sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.collar_id_field">[1]</a>
+        <li><a href="sec_interp.core.domain.html#id47">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.collar_id_field">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.task_inputs.html#id3">(sec_interp.core.domain.task_inputs.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.task_inputs.html#sec_interp.core.domain.task_inputs.DrillholeTaskInput.collar_id_field">[1]</a>
+</li>
+        <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings.collar_id_field">(sec_interp.core.models.settings_model.DrillholeSettings attribute)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.types.html#id23">collar_layer (sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.collar_layer">[1]</a>
+      <li><a href="sec_interp.core.domain.dtos.html#id6">collar_layer (sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.collar_layer">[1]</a>
 
       <ul>
+        <li><a href="sec_interp.core.domain.html#id48">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.collar_layer">[1]</a>
+</li>
         <li><a href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ValidationParams.collar_layer">(sec_interp.core.validation.project_validator.ValidationParams attribute)</a>
 </li>
         <li><a href="sec_interp.core.validation.html#sec_interp.core.validation.ValidationParams.collar_layer">(sec_interp.core.validation.ValidationParams attribute)</a>
@@ -853,20 +1056,28 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.core.validation.html#sec_interp.core.validation.ValidationParams.collar_use_geom">(sec_interp.core.validation.ValidationParams attribute)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.types.html#id24">collar_use_geometry (sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.collar_use_geometry">[1]</a>
+      <li><a href="sec_interp.core.domain.dtos.html#id7">collar_use_geometry (sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.collar_use_geometry">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#id49">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.collar_use_geometry">[1]</a>
 </li>
+      </ul></li>
       <li><a href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ValidationParams.collar_x">collar_x (sec_interp.core.validation.project_validator.ValidationParams attribute)</a>
 
       <ul>
         <li><a href="sec_interp.core.validation.html#sec_interp.core.validation.ValidationParams.collar_x">(sec_interp.core.validation.ValidationParams attribute)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings.collar_x_field">collar_x_field (sec_interp.core.models.settings_model.DrillholeSettings attribute)</a>
+      <li><a href="sec_interp.core.domain.html#id4">collar_x_field (sec_interp.core.domain.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.DrillholeTaskInput.collar_x_field">[1]</a>
 
       <ul>
-        <li><a href="sec_interp.core.types.html#sec_interp.core.types.DrillholeTaskInput.collar_x_field">(sec_interp.core.types.DrillholeTaskInput attribute)</a>
+        <li><a href="sec_interp.core.domain.dtos.html#id8">(sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.collar_x_field">[1]</a>
 </li>
-        <li><a href="sec_interp.core.types.html#id25">(sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.collar_x_field">[1]</a>
+        <li><a href="sec_interp.core.domain.html#id50">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.collar_x_field">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.task_inputs.html#id4">(sec_interp.core.domain.task_inputs.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.task_inputs.html#sec_interp.core.domain.task_inputs.DrillholeTaskInput.collar_x_field">[1]</a>
+</li>
+        <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings.collar_x_field">(sec_interp.core.models.settings_model.DrillholeSettings attribute)</a>
 </li>
       </ul></li>
       <li><a href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ValidationParams.collar_y">collar_y (sec_interp.core.validation.project_validator.ValidationParams attribute)</a>
@@ -875,23 +1086,39 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.core.validation.html#sec_interp.core.validation.ValidationParams.collar_y">(sec_interp.core.validation.ValidationParams attribute)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings.collar_y_field">collar_y_field (sec_interp.core.models.settings_model.DrillholeSettings attribute)</a>
+      <li><a href="sec_interp.core.domain.html#id5">collar_y_field (sec_interp.core.domain.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.DrillholeTaskInput.collar_y_field">[1]</a>
 
       <ul>
-        <li><a href="sec_interp.core.types.html#sec_interp.core.types.DrillholeTaskInput.collar_y_field">(sec_interp.core.types.DrillholeTaskInput attribute)</a>
+        <li><a href="sec_interp.core.domain.dtos.html#id9">(sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.collar_y_field">[1]</a>
 </li>
-        <li><a href="sec_interp.core.types.html#id26">(sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.collar_y_field">[1]</a>
+        <li><a href="sec_interp.core.domain.html#id51">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.collar_y_field">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.task_inputs.html#id5">(sec_interp.core.domain.task_inputs.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.task_inputs.html#sec_interp.core.domain.task_inputs.DrillholeTaskInput.collar_y_field">[1]</a>
+</li>
+        <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings.collar_y_field">(sec_interp.core.models.settings_model.DrillholeSettings attribute)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings.collar_z_field">collar_z_field (sec_interp.core.models.settings_model.DrillholeSettings attribute)</a>
+      <li><a href="sec_interp.core.domain.html#id6">collar_z_field (sec_interp.core.domain.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.DrillholeTaskInput.collar_z_field">[1]</a>
 
       <ul>
-        <li><a href="sec_interp.core.types.html#sec_interp.core.types.DrillholeTaskInput.collar_z_field">(sec_interp.core.types.DrillholeTaskInput attribute)</a>
+        <li><a href="sec_interp.core.domain.dtos.html#id10">(sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.collar_z_field">[1]</a>
 </li>
-        <li><a href="sec_interp.core.types.html#id27">(sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.collar_z_field">[1]</a>
+        <li><a href="sec_interp.core.domain.html#id52">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.collar_z_field">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.task_inputs.html#id6">(sec_interp.core.domain.task_inputs.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.task_inputs.html#sec_interp.core.domain.task_inputs.DrillholeTaskInput.collar_z_field">[1]</a>
+</li>
+        <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings.collar_z_field">(sec_interp.core.models.settings_model.DrillholeSettings attribute)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.types.html#id5">color (sec_interp.core.types.InterpretationPolygon attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.InterpretationPolygon.color">[1]</a>
+      <li><a href="sec_interp.core.services.drillhole.collar_processor.html#sec_interp.core.services.drillhole.collar_processor.CollarProcessor">CollarProcessor (class in sec_interp.core.services.drillhole.collar_processor)</a>
+</li>
+      <li><a href="sec_interp.core.domain.entities.html#id5">color (sec_interp.core.domain.entities.InterpretationPolygon attribute)</a>, <a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon.color">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#id30">(sec_interp.core.domain.InterpretationPolygon attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.InterpretationPolygon.color">[1]</a>
+</li>
+      </ul></li>
+      <li><a href="sec_interp.gui.renderers.color_manager.html#sec_interp.gui.renderers.color_manager.ColorManager">ColorManager (class in sec_interp.gui.renderers.color_manager)</a>
 </li>
       <li><a href="sec_interp.core.validation.validation_helpers.html#sec_interp.core.validation.validation_helpers.DependencyRule.condition">condition (sec_interp.core.validation.validation_helpers.DependencyRule attribute)</a>
 </li>
@@ -933,6 +1160,8 @@ window.addEventListener("load", load);
       </ul></li>
       <li><a href="sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.create_drillhole_interval_layer">create_drillhole_interval_layer() (sec_interp.gui.preview_layer_factory.PreviewLayerFactory method)</a>
 </li>
+      <li><a href="sec_interp.core.services.drillhole.trajectory_engine.html#sec_interp.core.services.drillhole.trajectory_engine.TrajectoryEngine.create_drillhole_result_tuple">create_drillhole_result_tuple() (sec_interp.core.services.drillhole.trajectory_engine.TrajectoryEngine method)</a>
+</li>
       <li><a href="sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.create_drillhole_trace_layer">create_drillhole_trace_layer() (sec_interp.gui.preview_layer_factory.PreviewLayerFactory method)</a>
 </li>
       <li><a href="sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.create_geol_layer">create_geol_layer() (sec_interp.gui.preview_layer_factory.PreviewLayerFactory method)</a>
@@ -959,12 +1188,22 @@ window.addEventListener("load", load);
 </li>
       <li><a href="sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.create_topo_layer">create_topo_layer() (sec_interp.gui.preview_layer_factory.PreviewLayerFactory method)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#id6">created_at (sec_interp.core.types.InterpretationPolygon attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.InterpretationPolygon.created_at">[1]</a>
+      <li><a href="sec_interp.core.domain.entities.html#id6">created_at (sec_interp.core.domain.entities.InterpretationPolygon attribute)</a>, <a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon.created_at">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#id31">(sec_interp.core.domain.InterpretationPolygon attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.InterpretationPolygon.created_at">[1]</a>
 </li>
-      <li><a href="sec_interp.core.types.html#id12">crs (sec_interp.core.types.InterpretationPolygon25D attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.InterpretationPolygon25D.crs">[1]</a>
+      </ul></li>
+      <li><a href="sec_interp.core.domain.entities.html#id12">crs_authid (sec_interp.core.domain.entities.InterpretationPolygon25D attribute)</a>, <a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon25D.crs_authid">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#id20">(sec_interp.core.domain.GeologyTaskInput attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.GeologyTaskInput.crs_authid">[1]</a>
 </li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.GeologyTaskInput.crs_authid">crs_authid (sec_interp.core.types.GeologyTaskInput attribute)</a>
+        <li><a href="sec_interp.core.domain.html#id37">(sec_interp.core.domain.InterpretationPolygon25D attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.InterpretationPolygon25D.crs_authid">[1]</a>
 </li>
+        <li><a href="sec_interp.core.domain.task_inputs.html#id16">(sec_interp.core.domain.task_inputs.GeologyTaskInput attribute)</a>, <a href="sec_interp.core.domain.task_inputs.html#sec_interp.core.domain.task_inputs.GeologyTaskInput.crs_authid">[1]</a>
+</li>
+      </ul></li>
       <li><a href="sec_interp.exporters.html#sec_interp.exporters.CSVExporter">CSVExporter (class in sec_interp.exporters)</a>
 
       <ul>
@@ -981,12 +1220,22 @@ window.addEventListener("load", load);
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sec_interp.core.data_cache.html#sec_interp.core.data_cache.DataCache">DataCache (class in sec_interp.core.data_cache)</a>
 </li>
+      <li><a href="sec_interp.core.services.drillhole.data_fetcher.html#sec_interp.core.services.drillhole.data_fetcher.DataFetcher">DataFetcher (class in sec_interp.core.services.drillhole.data_fetcher)</a>
+</li>
       <li><a href="sec_interp.core.exceptions.html#sec_interp.core.exceptions.DataMissingError">DataMissingError</a>
 </li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.FieldType.DATE">DATE (sec_interp.core.types.FieldType attribute)</a>
+      <li><a href="sec_interp.core.domain.enums.html#sec_interp.core.domain.enums.FieldType.DATE">DATE (sec_interp.core.domain.enums.FieldType attribute)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.FieldType.DATE">(sec_interp.core.domain.FieldType attribute)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.FieldType.DATE_TIME">DATE_TIME (sec_interp.core.types.FieldType attribute)</a>
+      </ul></li>
+      <li><a href="sec_interp.core.domain.enums.html#sec_interp.core.domain.enums.FieldType.DATE_TIME">DATE_TIME (sec_interp.core.domain.enums.FieldType attribute)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.FieldType.DATE_TIME">(sec_interp.core.domain.FieldType attribute)</a>
 </li>
+      </ul></li>
       <li><a href="sec_interp.gui.tools.interpretation_tool.html#sec_interp.gui.tools.interpretation_tool.ProfileInterpretationTool.deactivate">deactivate() (sec_interp.gui.tools.interpretation_tool.ProfileInterpretationTool method)</a>
 
       <ul>
@@ -996,6 +1245,30 @@ window.addEventListener("load", load);
       <li><a href="sec_interp.core.utils.geometry_utils.optimization.html#sec_interp.core.utils.geometry_utils.optimization.PreviewOptimizer.decimate">decimate() (sec_interp.core.utils.geometry_utils.optimization.PreviewOptimizer static method)</a>
 </li>
       <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogDefaults.DEFAULT_BAND">DEFAULT_BAND (sec_interp.gui.main_dialog_config.DialogDefaults attribute)</a>
+</li>
+      <li><a href="sec_interp.core.config.html#sec_interp.core.config.ConfigService.DEFAULT_BUFFER_DIST">DEFAULT_BUFFER_DIST (sec_interp.core.config.ConfigService attribute)</a>
+</li>
+      <li><a href="sec_interp.core.services.drillhole.collar_processor.html#sec_interp.core.services.drillhole.collar_processor.CollarProcessor.DEFAULT_BUFFER_SEGMENTS">DEFAULT_BUFFER_SEGMENTS (sec_interp.core.services.drillhole.collar_processor.CollarProcessor attribute)</a>
+</li>
+      <li><a href="sec_interp.core.config.html#sec_interp.core.config.ConfigService.DEFAULT_DEM_BAND">DEFAULT_DEM_BAND (sec_interp.core.config.ConfigService attribute)</a>
+</li>
+      <li><a href="sec_interp.core.config.html#sec_interp.core.config.ConfigService.DEFAULT_DPI">DEFAULT_DPI (sec_interp.core.config.ConfigService attribute)</a>
+</li>
+      <li><a href="sec_interp.core.config.html#sec_interp.core.config.ConfigService.DEFAULT_EXPORT_QUALITY">DEFAULT_EXPORT_QUALITY (sec_interp.core.config.ConfigService attribute)</a>
+</li>
+      <li><a href="sec_interp.core.config.html#sec_interp.core.config.ConfigService.DEFAULT_MAX_POINTS">DEFAULT_MAX_POINTS (sec_interp.core.config.ConfigService attribute)</a>
+</li>
+      <li><a href="sec_interp.core.config.html#sec_interp.core.config.ConfigService.DEFAULT_PREVIEW_HEIGHT">DEFAULT_PREVIEW_HEIGHT (sec_interp.core.config.ConfigService attribute)</a>
+</li>
+      <li><a href="sec_interp.core.config.html#sec_interp.core.config.ConfigService.DEFAULT_PREVIEW_WIDTH">DEFAULT_PREVIEW_WIDTH (sec_interp.core.config.ConfigService attribute)</a>
+</li>
+      <li><a href="sec_interp.core.config.html#sec_interp.core.config.ConfigService.DEFAULT_SAMPLING_INTERVAL">DEFAULT_SAMPLING_INTERVAL (sec_interp.core.config.ConfigService attribute)</a>
+</li>
+      <li><a href="sec_interp.core.config.html#sec_interp.core.config.ConfigService.DEFAULT_SCALE">DEFAULT_SCALE (sec_interp.core.config.ConfigService attribute)</a>
+</li>
+      <li><a href="sec_interp.core.data_cache.html#sec_interp.core.data_cache.DataCache.DEFAULT_TTL_SECONDS">DEFAULT_TTL_SECONDS (sec_interp.core.data_cache.DataCache attribute)</a>
+</li>
+      <li><a href="sec_interp.core.config.html#sec_interp.core.config.ConfigService.DEFAULT_VERT_EXAG">DEFAULT_VERT_EXAG (sec_interp.core.config.ConfigService attribute)</a>
 </li>
       <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.PluginSettings.dem">dem (sec_interp.core.models.settings_model.PluginSettings attribute)</a>
 </li>
@@ -1012,6 +1285,18 @@ window.addEventListener("load", load);
 </li>
       </ul></li>
       <li><a href="sec_interp.core.validation.validation_helpers.html#sec_interp.core.validation.validation_helpers.DependencyRule">DependencyRule (class in sec_interp.core.validation.validation_helpers)</a>
+</li>
+      <li><a href="sec_interp.core.services.drillhole.collar_processor.html#sec_interp.core.services.drillhole.collar_processor.CollarProcessor.detach_features">detach_features() (sec_interp.core.services.drillhole.collar_processor.CollarProcessor method)</a>
+</li>
+      <li><a href="sec_interp.core.interfaces.structure_interface.html#sec_interp.core.interfaces.structure_interface.IStructureService.detach_structures">detach_structures() (sec_interp.core.interfaces.structure_interface.IStructureService method)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.services.structure_service.html#sec_interp.core.services.structure_service.StructureService.detach_structures">(sec_interp.core.services.structure_service.StructureService method)</a>
+</li>
+        <li><a href="sec_interp.core.services.html#sec_interp.core.services.StructureService.detach_structures">(sec_interp.core.services.StructureService method)</a>
+</li>
+      </ul></li>
+      <li><a href="sec_interp.core.services.drillhole.survey_processor.html#sec_interp.core.services.drillhole.survey_processor.SurveyProcessor.determine_final_depth">determine_final_depth() (sec_interp.core.services.drillhole.survey_processor.SurveyProcessor method)</a>
 </li>
       <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig">DialogConfig (class in sec_interp.gui.main_dialog_config)</a>
 </li>
@@ -1031,22 +1316,26 @@ window.addEventListener("load", load);
 </li>
       <li><a href="sec_interp.gui.main_dialog_tools.html#sec_interp.gui.main_dialog_tools.DialogToolManager">DialogToolManager (class in sec_interp.gui.main_dialog_tools)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sec_interp.gui.main_dialog_validation_manager.html#sec_interp.gui.main_dialog_validation_manager.DialogValidationManager">DialogValidationManager (class in sec_interp.gui.main_dialog_validation_manager)</a>
 </li>
-      <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.StructureSettings.dip_field">dip_field (sec_interp.core.models.settings_model.StructureSettings attribute)</a>
+      <li><a href="sec_interp.core.domain.dtos.html#id11">dip_field (sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.dip_field">[1]</a>
 
       <ul>
-        <li><a href="sec_interp.core.types.html#id28">(sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.dip_field">[1]</a>
+        <li><a href="sec_interp.core.domain.html#id53">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.dip_field">[1]</a>
+</li>
+        <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.StructureSettings.dip_field">(sec_interp.core.models.settings_model.StructureSettings attribute)</a>
 </li>
       </ul></li>
       <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogDefaults.DIP_SCALE">DIP_SCALE (sec_interp.gui.main_dialog_config.DialogDefaults attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.StructureSettings.dip_scale_factor">dip_scale_factor (sec_interp.core.models.settings_model.StructureSettings attribute)</a>
+      <li><a href="sec_interp.core.domain.dtos.html#id12">dip_scale_factor (sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.dip_scale_factor">[1]</a>
 
       <ul>
-        <li><a href="sec_interp.core.types.html#id29">(sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.dip_scale_factor">[1]</a>
+        <li><a href="sec_interp.core.domain.html#id54">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.dip_scale_factor">[1]</a>
+</li>
+        <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.StructureSettings.dip_scale_factor">(sec_interp.core.models.settings_model.StructureSettings attribute)</a>
 </li>
         <li><a href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ValidationParams.dip_scale_factor">(sec_interp.core.validation.project_validator.ValidationParams attribute)</a>
 </li>
@@ -1055,10 +1344,30 @@ window.addEventListener("load", load);
       </ul></li>
       <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogDefaults.DIP_SCALE_FACTOR">DIP_SCALE_FACTOR (sec_interp.gui.main_dialog_config.DialogDefaults attribute)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#id55">distance (sec_interp.core.types.StructureMeasurement attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.StructureMeasurement.distance">[1]</a>
+      <li><a href="sec_interp.core.domain.spatial_meta.html#id1">dist_along (sec_interp.core.domain.spatial_meta.SpatialMeta attribute)</a>, <a href="sec_interp.core.domain.spatial_meta.html#sec_interp.core.domain.spatial_meta.SpatialMeta.dist_along">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#id79">(sec_interp.core.domain.SpatialMeta attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.SpatialMeta.dist_along">[1]</a>
 </li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.FieldType.DOUBLE">DOUBLE (sec_interp.core.types.FieldType attribute)</a>
+      </ul></li>
+      <li><a href="sec_interp.core.domain.entities.html#id19">distance (sec_interp.core.domain.entities.StructureMeasurement attribute)</a>, <a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.StructureMeasurement.distance">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#id89">(sec_interp.core.domain.StructureMeasurement attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.StructureMeasurement.distance">[1]</a>
 </li>
+      </ul></li>
+      <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.DomainGeometry">DomainGeometry (in module sec_interp.core.domain)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.DomainGeometry">(in module sec_interp.core.domain.entities)</a>
+</li>
+      </ul></li>
+      <li><a href="sec_interp.core.domain.enums.html#sec_interp.core.domain.enums.FieldType.DOUBLE">DOUBLE (sec_interp.core.domain.enums.FieldType attribute)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.FieldType.DOUBLE">(sec_interp.core.domain.FieldType attribute)</a>
+</li>
+      </ul></li>
       <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogDefaults.DPI">DPI (sec_interp.gui.main_dialog_config.DialogDefaults attribute)</a>
 </li>
       <li><a href="sec_interp.gui.preview_legend_renderer.html#sec_interp.gui.preview_legend_renderer.PreviewLegendRenderer.draw_legend">draw_legend() (sec_interp.gui.preview_legend_renderer.PreviewLegendRenderer static method)</a>
@@ -1071,12 +1380,16 @@ window.addEventListener("load", load);
       </ul></li>
       <li><a href="sec_interp.sec_interp_plugin.html#sec_interp.sec_interp_plugin.SecInterp.draw_preview">draw_preview() (sec_interp.sec_interp_plugin.SecInterp method)</a>
 </li>
-      <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.PluginSettings.drillhole">drillhole (sec_interp.core.models.settings_model.PluginSettings attribute)</a>
+      <li><a href="sec_interp.core.domain.dtos.html#id31">drillhole (sec_interp.core.domain.dtos.PreviewResult attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewResult.drillhole">[1]</a>
 
       <ul>
-        <li><a href="sec_interp.core.types.html#id48">(sec_interp.core.types.PreviewResult attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewResult.drillhole">[1]</a>
+        <li><a href="sec_interp.core.domain.html#id73">(sec_interp.core.domain.PreviewResult attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewResult.drillhole">[1]</a>
+</li>
+        <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.PluginSettings.drillhole">(sec_interp.core.models.settings_model.PluginSettings attribute)</a>
 </li>
       </ul></li>
+      <li><a href="sec_interp.core.services.preview_service.html#sec_interp.core.services.preview_service.PreviewService.drillhole_service">drillhole_service (sec_interp.core.services.preview_service.PreviewService property)</a>
+</li>
       <li><a href="sec_interp.gui.tasks.drillhole_task.html#sec_interp.gui.tasks.drillhole_task.DrillholeGenerationTask">DrillholeGenerationTask (class in sec_interp.gui.tasks.drillhole_task)</a>
 </li>
       <li><a href="sec_interp.exporters.html#sec_interp.exporters.DrillholeInterval3DExporter">DrillholeInterval3DExporter (class in sec_interp.exporters)</a>
@@ -1093,6 +1406,8 @@ window.addEventListener("load", load);
       </ul></li>
       <li><a href="sec_interp.gui.ui.pages.drillhole_page.html#sec_interp.gui.ui.pages.drillhole_page.DrillholePage">DrillholePage (class in sec_interp.gui.ui.pages.drillhole_page)</a>
 </li>
+      <li><a href="sec_interp.gui.renderers.drillhole_renderer.html#sec_interp.gui.renderers.drillhole_renderer.DrillholeRenderer">DrillholeRenderer (class in sec_interp.gui.renderers.drillhole_renderer)</a>
+</li>
       <li><a href="sec_interp.core.services.html#sec_interp.core.services.DrillholeService">DrillholeService (class in sec_interp.core.services)</a>
 
       <ul>
@@ -1101,8 +1416,12 @@ window.addEventListener("load", load);
       </ul></li>
       <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings">DrillholeSettings (class in sec_interp.core.models.settings_model)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.DrillholeTaskInput">DrillholeTaskInput (class in sec_interp.core.types)</a>
+      <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.DrillholeTaskInput">DrillholeTaskInput (class in sec_interp.core.domain)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.task_inputs.html#sec_interp.core.domain.task_inputs.DrillholeTaskInput">(class in sec_interp.core.domain.task_inputs)</a>
 </li>
+      </ul></li>
       <li><a href="sec_interp.exporters.html#sec_interp.exporters.DrillholeTrace3DExporter">DrillholeTrace3DExporter (class in sec_interp.exporters)</a>
 
       <ul>
@@ -1121,8 +1440,12 @@ window.addEventListener("load", load);
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="sec_interp.core.types.html#id56">elevation (sec_interp.core.types.StructureMeasurement attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.StructureMeasurement.elevation">[1]</a>
+      <li><a href="sec_interp.core.domain.entities.html#id20">elevation (sec_interp.core.domain.entities.StructureMeasurement attribute)</a>, <a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.StructureMeasurement.elevation">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#id90">(sec_interp.core.domain.StructureMeasurement attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.StructureMeasurement.elevation">[1]</a>
 </li>
+      </ul></li>
       <li><a href="sec_interp.logger_config.html#sec_interp.logger_config.ImmediateFlushFileHandler.emit">emit() (sec_interp.logger_config.ImmediateFlushFileHandler method)</a>
 
       <ul>
@@ -1143,6 +1466,12 @@ window.addEventListener("load", load);
 </li>
       <li><a href="sec_interp.core.validation.validation_helpers.html#sec_interp.core.validation.validation_helpers.DependencyRule.error_message">error_message (sec_interp.core.validation.validation_helpers.DependencyRule attribute)</a>
 </li>
+      <li><a href="sec_interp.gui.tasks.drillhole_task.html#sec_interp.gui.tasks.drillhole_task.DrillholeGenerationTask.error_occurred">error_occurred (sec_interp.gui.tasks.drillhole_task.DrillholeGenerationTask attribute)</a>
+
+      <ul>
+        <li><a href="sec_interp.gui.tasks.geology_task.html#sec_interp.gui.tasks.geology_task.GeologyGenerationTask.error_occurred">(sec_interp.gui.tasks.geology_task.GeologyGenerationTask attribute)</a>
+</li>
+      </ul></li>
       <li><a href="sec_interp.core.validation.validation_helpers.html#sec_interp.core.validation.validation_helpers.ValidationContext.errors">errors (sec_interp.core.validation.validation_helpers.ValidationContext property)</a>
 </li>
       <li><a href="sec_interp.gui.legend_widget.html#sec_interp.gui.legend_widget.LegendWidget.eventFilter">eventFilter() (sec_interp.gui.legend_widget.LegendWidget method)</a>
@@ -1251,7 +1580,7 @@ window.addEventListener("load", load);
 </li>
       <li><a href="sec_interp.core.services.export_service.html#sec_interp.core.services.export_service.ExportService">ExportService (class in sec_interp.core.services.export_service)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.ExportSettings">ExportSettings (in module sec_interp.core.types)</a>
+      <li><a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.ExportSettings">ExportSettings (in module sec_interp.core.domain.entities)</a>
 </li>
       <li><a href="sec_interp.core.utils.geometry.html#sec_interp.core.utils.geometry.extract_all_vertices">extract_all_vertices() (in module sec_interp.core.utils.geometry)</a>
 
@@ -1259,18 +1588,38 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.core.utils.geometry_utils.extraction.html#sec_interp.core.utils.geometry_utils.extraction.extract_all_vertices">(in module sec_interp.core.utils.geometry_utils.extraction)</a>
 </li>
       </ul></li>
+      <li><a href="sec_interp.core.services.drillhole.collar_processor.html#sec_interp.core.services.drillhole.collar_processor.CollarProcessor.extract_and_project_detached">extract_and_project_detached() (sec_interp.core.services.drillhole.collar_processor.CollarProcessor method)</a>
+</li>
+      <li><a href="sec_interp.core.services.drillhole.collar_processor.html#sec_interp.core.services.drillhole.collar_processor.CollarProcessor.extract_attributes_agnostic">extract_attributes_agnostic() (sec_interp.core.services.drillhole.collar_processor.CollarProcessor method)</a>
+</li>
+      <li><a href="sec_interp.core.utils.html#sec_interp.core.utils.extract_feature_attributes">extract_feature_attributes() (in module sec_interp.core.utils)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.utils.parsing.html#sec_interp.core.utils.parsing.extract_feature_attributes">(in module sec_interp.core.utils.parsing)</a>
+</li>
+      </ul></li>
+      <li><a href="sec_interp.core.utils.geometry_utils.extraction.html#sec_interp.core.utils.geometry_utils.extraction.extract_lines_from_geometry">extract_lines_from_geometry() (in module sec_interp.core.utils.geometry_utils.extraction)</a>
+</li>
+      <li><a href="sec_interp.core.services.drillhole.collar_processor.html#sec_interp.core.services.drillhole.collar_processor.CollarProcessor.extract_point_agnostic">extract_point_agnostic() (sec_interp.core.services.drillhole.collar_processor.CollarProcessor method)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="sec_interp.core.services.drillhole.data_fetcher.html#sec_interp.core.services.drillhole.data_fetcher.DataFetcher.fetch_bulk_data">fetch_bulk_data() (sec_interp.core.services.drillhole.data_fetcher.DataFetcher method)</a>
+</li>
       <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.GeologySettings.field">field (sec_interp.core.models.settings_model.GeologySettings attribute)</a>
 </li>
       <li><a href="sec_interp.core.validation.validation_helpers.html#sec_interp.core.validation.validation_helpers.RichValidationError.field_name">field_name (sec_interp.core.validation.validation_helpers.RichValidationError attribute)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.FieldType">FieldType (class in sec_interp.core.types)</a>
+      <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.FieldType">FieldType (class in sec_interp.core.domain)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.enums.html#sec_interp.core.domain.enums.FieldType">(class in sec_interp.core.domain.enums)</a>
 </li>
+      </ul></li>
       <li><a href="sec_interp.core.validation.validators.html#sec_interp.core.validation.validators.FieldValidator">FieldValidator (class in sec_interp.core.validation.validators)</a>
 </li>
       <li><a href="sec_interp.core.utils.html#sec_interp.core.utils.filter_features_by_buffer">filter_features_by_buffer() (in module sec_interp.core.utils)</a>
@@ -1291,6 +1640,12 @@ window.addEventListener("load", load);
 
       <ul>
         <li><a href="sec_interp.gui.tasks.geology_task.html#sec_interp.gui.tasks.geology_task.GeologyGenerationTask.finished">(sec_interp.gui.tasks.geology_task.GeologyGenerationTask method)</a>
+</li>
+      </ul></li>
+      <li><a href="sec_interp.gui.tasks.drillhole_task.html#sec_interp.gui.tasks.drillhole_task.DrillholeGenerationTask.finished_with_results">finished_with_results (sec_interp.gui.tasks.drillhole_task.DrillholeGenerationTask attribute)</a>
+
+      <ul>
+        <li><a href="sec_interp.gui.tasks.geology_task.html#sec_interp.gui.tasks.geology_task.GeologyGenerationTask.finished_with_results">(sec_interp.gui.tasks.geology_task.GeologyGenerationTask attribute)</a>
 </li>
       </ul></li>
       <li><a href="sec_interp.gui.preview_reporter.html#sec_interp.gui.preview_reporter.PreviewReporter.format_drillhole_summary">format_drillhole_summary() (sec_interp.gui.preview_reporter.PreviewReporter static method)</a>
@@ -1321,6 +1676,12 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.core.services.preview_service.html#sec_interp.core.services.preview_service.PreviewService.generate_all">(sec_interp.core.services.preview_service.PreviewService method)</a>
 </li>
       </ul></li>
+      <li><a href="sec_interp.core.services.drillhole_service.html#sec_interp.core.services.drillhole_service.DrillholeService.generate_drillhole_data">generate_drillhole_data() (sec_interp.core.services.drillhole_service.DrillholeService method)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.services.html#sec_interp.core.services.DrillholeService.generate_drillhole_data">(sec_interp.core.services.DrillholeService method)</a>
+</li>
+      </ul></li>
       <li><a href="sec_interp.core.interfaces.geology_interface.html#sec_interp.core.interfaces.geology_interface.IGeologyService.generate_geological_profile">generate_geological_profile() (sec_interp.core.interfaces.geology_interface.IGeologyService method)</a>
 
       <ul>
@@ -1341,18 +1702,30 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.core.services.html#sec_interp.core.services.ProfileService.generate_topographic_profile">(sec_interp.core.services.ProfileService method)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.types.html#id49">geol (sec_interp.core.types.PreviewResult attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewResult.geol">[1]</a>
+      <li><a href="sec_interp.core.domain.dtos.html#id32">geol (sec_interp.core.domain.dtos.PreviewResult attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewResult.geol">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#id74">(sec_interp.core.domain.PreviewResult attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewResult.geol">[1]</a>
 </li>
+      </ul></li>
       <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.PluginSettings.geology">geology (sec_interp.core.models.settings_model.PluginSettings attribute)</a>
 </li>
-      <li><a href="sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.GEOLOGY_COLORS">GEOLOGY_COLORS (sec_interp.gui.preview_layer_factory.PreviewLayerFactory attribute)</a>
+      <li><a href="sec_interp.gui.renderers.color_manager.html#sec_interp.gui.renderers.color_manager.ColorManager.GEOLOGY_COLORS">GEOLOGY_COLORS (sec_interp.gui.renderers.color_manager.ColorManager attribute)</a>
+</li>
+      <li><a href="sec_interp.core.services.preview_service.html#sec_interp.core.services.preview_service.PreviewService.geology_service">geology_service (sec_interp.core.services.preview_service.PreviewService property)</a>
 </li>
       <li><a href="sec_interp.gui.tasks.geology_task.html#sec_interp.gui.tasks.geology_task.GeologyGenerationTask">GeologyGenerationTask (class in sec_interp.gui.tasks.geology_task)</a>
 </li>
       <li><a href="sec_interp.gui.ui.pages.geology_page.html#sec_interp.gui.ui.pages.geology_page.GeologyPage">GeologyPage (class in sec_interp.gui.ui.pages.geology_page)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.GeologySegment">GeologySegment (class in sec_interp.core.types)</a>
+      <li><a href="sec_interp.gui.renderers.geology_renderer.html#sec_interp.gui.renderers.geology_renderer.GeologyRenderer">GeologyRenderer (class in sec_interp.gui.renderers.geology_renderer)</a>
 </li>
+      <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.GeologySegment">GeologySegment (class in sec_interp.core.domain)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.GeologySegment">(class in sec_interp.core.domain.entities)</a>
+</li>
+      </ul></li>
       <li><a href="sec_interp.core.services.html#sec_interp.core.services.GeologyService">GeologyService (class in sec_interp.core.services)</a>
 
       <ul>
@@ -1367,12 +1740,20 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.exporters.profile_exporters.html#sec_interp.exporters.profile_exporters.GeologyShpExporter">(class in sec_interp.exporters.profile_exporters)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.GeologyTaskInput">GeologyTaskInput (class in sec_interp.core.types)</a>
-</li>
-      <li><a href="sec_interp.core.types.html#id1">geometry (sec_interp.core.types.GeologySegment attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.GeologySegment.geometry">[1]</a>
+      <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.GeologyTaskInput">GeologyTaskInput (class in sec_interp.core.domain)</a>
 
       <ul>
-        <li><a href="sec_interp.core.types.html#id13">(sec_interp.core.types.InterpretationPolygon25D attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.InterpretationPolygon25D.geometry">[1]</a>
+        <li><a href="sec_interp.core.domain.task_inputs.html#sec_interp.core.domain.task_inputs.GeologyTaskInput">(class in sec_interp.core.domain.task_inputs)</a>
+</li>
+      </ul></li>
+      <li><a href="sec_interp.core.domain.entities.html#id1">geometry_wkt (sec_interp.core.domain.entities.GeologySegment attribute)</a>, <a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.GeologySegment.geometry_wkt">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.entities.html#id13">(sec_interp.core.domain.entities.InterpretationPolygon25D attribute)</a>, <a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon25D.geometry_wkt">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.html#id17">(sec_interp.core.domain.GeologySegment attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.GeologySegment.geometry_wkt">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.html#id38">(sec_interp.core.domain.InterpretationPolygon25D attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.InterpretationPolygon25D.geometry_wkt">[1]</a>
 </li>
       </ul></li>
       <li><a href="sec_interp.core.exceptions.html#sec_interp.core.exceptions.GeometryError">GeometryError</a>
@@ -1394,6 +1775,8 @@ window.addEventListener("load", load);
       <li><a href="sec_interp.core.data_cache.html#sec_interp.core.data_cache.DataCache.get_cache_size">get_cache_size() (sec_interp.core.data_cache.DataCache method)</a>
 </li>
       <li><a href="sec_interp.core.controller.html#sec_interp.core.controller.ProfileController.get_cached_data">get_cached_data() (sec_interp.core.controller.ProfileController method)</a>
+</li>
+      <li><a href="sec_interp.gui.renderers.color_manager.html#sec_interp.gui.renderers.color_manager.ColorManager.get_color">get_color() (sec_interp.gui.renderers.color_manager.ColorManager method)</a>
 </li>
       <li><a href="sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.get_color_for_unit">get_color_for_unit() (sec_interp.gui.preview_layer_factory.PreviewLayerFactory method)</a>
 </li>
@@ -1417,10 +1800,18 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.gui.ui.pages.structure_page.html#sec_interp.gui.ui.pages.structure_page.StructurePage.get_data">(sec_interp.gui.ui.pages.structure_page.StructurePage method)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.PreviewResult.get_distance_range">get_distance_range() (sec_interp.core.types.PreviewResult method)</a>
+      <li><a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewResult.get_distance_range">get_distance_range() (sec_interp.core.domain.dtos.PreviewResult method)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewResult.get_distance_range">(sec_interp.core.domain.PreviewResult method)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.PreviewResult.get_elevation_range">get_elevation_range() (sec_interp.core.types.PreviewResult method)</a>
+      </ul></li>
+      <li><a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewResult.get_elevation_range">get_elevation_range() (sec_interp.core.domain.dtos.PreviewResult method)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewResult.get_elevation_range">(sec_interp.core.domain.PreviewResult method)</a>
 </li>
+      </ul></li>
       <li><a href="sec_interp.exporters.html#sec_interp.exporters.get_exporter">get_exporter() (in module sec_interp.exporters)</a>
 </li>
       <li><a href="sec_interp.gui.main_dialog.html#sec_interp.gui.main_dialog.SecInterpDialog.get_layer_names_by_geometry">get_layer_names_by_geometry() (sec_interp.gui.main_dialog.SecInterpDialog method)</a>
@@ -1431,6 +1822,8 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.get_layer_names_by_geometry">(sec_interp.gui.SecInterpDialog method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sec_interp.gui.main_dialog.html#sec_interp.gui.main_dialog.SecInterpDialog.get_layer_names_by_type">get_layer_names_by_type() (sec_interp.gui.main_dialog.SecInterpDialog method)</a>
 
       <ul>
@@ -1445,8 +1838,6 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.core.utils.spatial.html#sec_interp.core.utils.spatial.get_line_start_point">(in module sec_interp.core.utils.spatial)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sec_interp.core.utils.html#sec_interp.core.utils.get_line_vertices">get_line_vertices() (in module sec_interp.core.utils)</a>
 
       <ul>
@@ -1583,16 +1974,22 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.handle_error">(sec_interp.gui.SecInterpDialog method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sec_interp.gui.main_dialog_interpretation.html#sec_interp.gui.main_dialog_interpretation.DialogInterpretationManager.handle_interpretation_finished">handle_interpretation_finished() (sec_interp.gui.main_dialog_interpretation.DialogInterpretationManager method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sec_interp.gui.main_dialog_tools.html#sec_interp.gui.main_dialog_tools.NavigationManager.handle_wheel_event">handle_wheel_event() (sec_interp.gui.main_dialog_tools.NavigationManager method)</a>
 </li>
       <li><a href="sec_interp.core.validation.validation_helpers.html#sec_interp.core.validation.validation_helpers.ValidationContext.has_errors">has_errors (sec_interp.core.validation.validation_helpers.ValidationContext property)</a>
 </li>
       <li><a href="sec_interp.core.validation.validation_helpers.html#sec_interp.core.validation.validation_helpers.ValidationContext.has_warnings">has_warnings (sec_interp.core.validation.validation_helpers.ValidationContext property)</a>
 </li>
+      <li><a href="sec_interp.core.domain.spatial_meta.html#id2">hole_id (sec_interp.core.domain.spatial_meta.SpatialMeta attribute)</a>, <a href="sec_interp.core.domain.spatial_meta.html#sec_interp.core.domain.spatial_meta.SpatialMeta.hole_id">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#id80">(sec_interp.core.domain.SpatialMeta attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.SpatialMeta.hole_id">[1]</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -1609,10 +2006,14 @@ window.addEventListener("load", load);
 </li>
       <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.UIConstants.ICON_REFRESH">ICON_REFRESH (sec_interp.gui.main_dialog_config.UIConstants attribute)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#id7">id (sec_interp.core.types.InterpretationPolygon attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.InterpretationPolygon.id">[1]</a>
+      <li><a href="sec_interp.core.domain.entities.html#id7">id (sec_interp.core.domain.entities.InterpretationPolygon attribute)</a>, <a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon.id">[1]</a>
 
       <ul>
-        <li><a href="sec_interp.core.types.html#id14">(sec_interp.core.types.InterpretationPolygon25D attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.InterpretationPolygon25D.id">[1]</a>
+        <li><a href="sec_interp.core.domain.entities.html#id14">(sec_interp.core.domain.entities.InterpretationPolygon25D attribute)</a>, <a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon25D.id">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.html#id32">(sec_interp.core.domain.InterpretationPolygon attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.InterpretationPolygon.id">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.html#id39">(sec_interp.core.domain.InterpretationPolygon25D attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.InterpretationPolygon25D.id">[1]</a>
 </li>
       </ul></li>
       <li><a href="sec_interp.core.interfaces.drillhole_interface.html#sec_interp.core.interfaces.drillhole_interface.IDrillholeService">IDrillholeService (class in sec_interp.core.interfaces.drillhole_interface)</a>
@@ -1641,8 +2042,12 @@ window.addEventListener("load", load);
 </li>
       <li><a href="sec_interp.gui.main_dialog_tools.html#sec_interp.gui.main_dialog_tools.DialogToolManager.initialize_tools">initialize_tools() (sec_interp.gui.main_dialog_tools.DialogToolManager method)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.FieldType.INT">INT (sec_interp.core.types.FieldType attribute)</a>
+      <li><a href="sec_interp.core.domain.enums.html#sec_interp.core.domain.enums.FieldType.INT">INT (sec_interp.core.domain.enums.FieldType attribute)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.FieldType.INT">(sec_interp.core.domain.FieldType attribute)</a>
 </li>
+      </ul></li>
       <li><a href="sec_interp.core.utils.html#sec_interp.core.utils.interpolate_elevation">interpolate_elevation() (in module sec_interp.core.utils)</a>
 
       <ul>
@@ -1651,12 +2056,16 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.interpolate_elevation">(sec_interp.gui.preview_layer_factory.PreviewLayerFactory method)</a>
 </li>
       </ul></li>
+      <li><a href="sec_interp.core.services.drillhole.interval_processor.html#sec_interp.core.services.drillhole.interval_processor.IntervalProcessor.interpolate_hole_intervals">interpolate_hole_intervals() (sec_interp.core.services.drillhole.interval_processor.IntervalProcessor method)</a>
+</li>
       <li><a href="sec_interp.core.utils.html#sec_interp.core.utils.interpolate_intervals_on_trajectory">interpolate_intervals_on_trajectory() (in module sec_interp.core.utils)</a>
 
       <ul>
         <li><a href="sec_interp.core.utils.drillhole.html#sec_interp.core.utils.drillhole.interpolate_intervals_on_trajectory">(in module sec_interp.core.utils.drillhole)</a>
 </li>
       </ul></li>
+      <li><a href="sec_interp.core.utils.geometry_utils.processing.html#sec_interp.core.utils.geometry_utils.processing.interpolate_segment_points">interpolate_segment_points() (in module sec_interp.core.utils.geometry_utils.processing)</a>
+</li>
       <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.PluginSettings.interpretation">interpretation (sec_interp.core.models.settings_model.PluginSettings attribute)</a>
 </li>
       <li><a href="sec_interp.exporters.html#sec_interp.exporters.Interpretation2DExporter">Interpretation2DExporter (class in sec_interp.exporters)</a>
@@ -1673,10 +2082,18 @@ window.addEventListener("load", load);
       </ul></li>
       <li><a href="sec_interp.gui.ui.pages.interpretation_page.html#sec_interp.gui.ui.pages.interpretation_page.InterpretationPage">InterpretationPage (class in sec_interp.gui.ui.pages.interpretation_page)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.InterpretationPolygon">InterpretationPolygon (class in sec_interp.core.types)</a>
+      <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.InterpretationPolygon">InterpretationPolygon (class in sec_interp.core.domain)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon">(class in sec_interp.core.domain.entities)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.InterpretationPolygon25D">InterpretationPolygon25D (class in sec_interp.core.types)</a>
+      </ul></li>
+      <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.InterpretationPolygon25D">InterpretationPolygon25D (class in sec_interp.core.domain)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon25D">(class in sec_interp.core.domain.entities)</a>
 </li>
+      </ul></li>
       <li><a href="sec_interp.gui.main_dialog.html#sec_interp.gui.main_dialog.SecInterpDialog.interpretations">interpretations (sec_interp.gui.main_dialog.SecInterpDialog property)</a>
 
       <ul>
@@ -1685,18 +2102,24 @@ window.addEventListener("load", load);
       </ul></li>
       <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.InterpretationSettings">InterpretationSettings (class in sec_interp.core.models.settings_model)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.DrillholeTaskInput.interval_data">interval_data (sec_interp.core.types.DrillholeTaskInput attribute)</a>
+      <li><a href="sec_interp.core.domain.html#id7">interval_data (sec_interp.core.domain.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.DrillholeTaskInput.interval_data">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.task_inputs.html#id7">(sec_interp.core.domain.task_inputs.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.task_inputs.html#sec_interp.core.domain.task_inputs.DrillholeTaskInput.interval_data">[1]</a>
 </li>
+      </ul></li>
       <li><a href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ValidationParams.interval_from">interval_from (sec_interp.core.validation.project_validator.ValidationParams attribute)</a>
 
       <ul>
         <li><a href="sec_interp.core.validation.html#sec_interp.core.validation.ValidationParams.interval_from">(sec_interp.core.validation.ValidationParams attribute)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings.interval_from_field">interval_from_field (sec_interp.core.models.settings_model.DrillholeSettings attribute)</a>
+      <li><a href="sec_interp.core.domain.dtos.html#id13">interval_from_field (sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.interval_from_field">[1]</a>
 
       <ul>
-        <li><a href="sec_interp.core.types.html#id30">(sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.interval_from_field">[1]</a>
+        <li><a href="sec_interp.core.domain.html#id55">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.interval_from_field">[1]</a>
+</li>
+        <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings.interval_from_field">(sec_interp.core.models.settings_model.DrillholeSettings attribute)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -1707,15 +2130,19 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.core.validation.html#sec_interp.core.validation.ValidationParams.interval_id">(sec_interp.core.validation.ValidationParams attribute)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings.interval_id_field">interval_id_field (sec_interp.core.models.settings_model.DrillholeSettings attribute)</a>
+      <li><a href="sec_interp.core.domain.dtos.html#id14">interval_id_field (sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.interval_id_field">[1]</a>
 
       <ul>
-        <li><a href="sec_interp.core.types.html#id31">(sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.interval_id_field">[1]</a>
+        <li><a href="sec_interp.core.domain.html#id56">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.interval_id_field">[1]</a>
+</li>
+        <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings.interval_id_field">(sec_interp.core.models.settings_model.DrillholeSettings attribute)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.types.html#id32">interval_layer (sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.interval_layer">[1]</a>
+      <li><a href="sec_interp.core.domain.dtos.html#id15">interval_layer (sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.interval_layer">[1]</a>
 
       <ul>
+        <li><a href="sec_interp.core.domain.html#id57">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.interval_layer">[1]</a>
+</li>
         <li><a href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ValidationParams.interval_layer">(sec_interp.core.validation.project_validator.ValidationParams attribute)</a>
 </li>
         <li><a href="sec_interp.core.validation.html#sec_interp.core.validation.ValidationParams.interval_layer">(sec_interp.core.validation.ValidationParams attribute)</a>
@@ -1731,10 +2158,12 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.core.validation.html#sec_interp.core.validation.ValidationParams.interval_lith">(sec_interp.core.validation.ValidationParams attribute)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings.interval_lith_field">interval_lith_field (sec_interp.core.models.settings_model.DrillholeSettings attribute)</a>
+      <li><a href="sec_interp.core.domain.dtos.html#id16">interval_lith_field (sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.interval_lith_field">[1]</a>
 
       <ul>
-        <li><a href="sec_interp.core.types.html#id33">(sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.interval_lith_field">[1]</a>
+        <li><a href="sec_interp.core.domain.html#id58">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.interval_lith_field">[1]</a>
+</li>
+        <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings.interval_lith_field">(sec_interp.core.models.settings_model.DrillholeSettings attribute)</a>
 </li>
       </ul></li>
       <li><a href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ValidationParams.interval_to">interval_to (sec_interp.core.validation.project_validator.ValidationParams attribute)</a>
@@ -1743,12 +2172,16 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.core.validation.html#sec_interp.core.validation.ValidationParams.interval_to">(sec_interp.core.validation.ValidationParams attribute)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings.interval_to_field">interval_to_field (sec_interp.core.models.settings_model.DrillholeSettings attribute)</a>
+      <li><a href="sec_interp.core.domain.dtos.html#id17">interval_to_field (sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.interval_to_field">[1]</a>
 
       <ul>
-        <li><a href="sec_interp.core.types.html#id34">(sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.interval_to_field">[1]</a>
+        <li><a href="sec_interp.core.domain.html#id59">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.interval_to_field">[1]</a>
+</li>
+        <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings.interval_to_field">(sec_interp.core.models.settings_model.DrillholeSettings attribute)</a>
 </li>
       </ul></li>
+      <li><a href="sec_interp.core.services.drillhole.interval_processor.html#sec_interp.core.services.drillhole.interval_processor.IntervalProcessor">IntervalProcessor (class in sec_interp.core.services.drillhole.interval_processor)</a>
+</li>
       <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.INVALID_FIELD_TYPE">INVALID_FIELD_TYPE (sec_interp.gui.main_dialog_config.ValidationMessages attribute)</a>
 </li>
       <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.INVALID_GEOMETRY">INVALID_GEOMETRY (sec_interp.gui.main_dialog_config.ValidationMessages attribute)</a>
@@ -1849,37 +2282,63 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.StructureSettings.layer_name">(sec_interp.core.models.settings_model.StructureSettings attribute)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.LayerDict">LayerDict (in module sec_interp.core.types)</a>
+      <li><a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.LayerDict">LayerDict (in module sec_interp.core.domain.entities)</a>
 </li>
       <li><a href="sec_interp.gui.legend_widget.html#sec_interp.gui.legend_widget.LegendWidget">LegendWidget (class in sec_interp.gui.legend_widget)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.DrillholeTaskInput.line_crs_authid">line_crs_authid (sec_interp.core.types.DrillholeTaskInput attribute)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.DrillholeTaskInput.line_geometry">line_geometry (sec_interp.core.types.DrillholeTaskInput attribute)</a>
+      <li><a href="sec_interp.core.domain.html#id8">line_crs_authid (sec_interp.core.domain.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.DrillholeTaskInput.line_crs_authid">[1]</a>
 
       <ul>
-        <li><a href="sec_interp.core.types.html#sec_interp.core.types.GeologyTaskInput.line_geometry">(sec_interp.core.types.GeologyTaskInput attribute)</a>
+        <li><a href="sec_interp.core.domain.task_inputs.html#id8">(sec_interp.core.domain.task_inputs.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.task_inputs.html#sec_interp.core.domain.task_inputs.DrillholeTaskInput.line_crs_authid">[1]</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.types.html#id35">line_layer (sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.line_layer">[1]</a>
+      <li><a href="sec_interp.core.domain.html#id9">line_geometry_wkt (sec_interp.core.domain.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.DrillholeTaskInput.line_geometry_wkt">[1]</a>
 
       <ul>
+        <li><a href="sec_interp.core.domain.html#id21">(sec_interp.core.domain.GeologyTaskInput attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.GeologyTaskInput.line_geometry_wkt">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.task_inputs.html#id9">(sec_interp.core.domain.task_inputs.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.task_inputs.html#sec_interp.core.domain.task_inputs.DrillholeTaskInput.line_geometry_wkt">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.task_inputs.html#id17">(sec_interp.core.domain.task_inputs.GeologyTaskInput attribute)</a>, <a href="sec_interp.core.domain.task_inputs.html#sec_interp.core.domain.task_inputs.GeologyTaskInput.line_geometry_wkt">[1]</a>
+</li>
+      </ul></li>
+      <li><a href="sec_interp.core.domain.dtos.html#id18">line_layer (sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.line_layer">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#id60">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.line_layer">[1]</a>
+</li>
         <li><a href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ValidationParams.line_layer">(sec_interp.core.validation.project_validator.ValidationParams attribute)</a>
 </li>
         <li><a href="sec_interp.core.validation.html#sec_interp.core.validation.ValidationParams.line_layer">(sec_interp.core.validation.ValidationParams attribute)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.DrillholeTaskInput.line_start">line_start (sec_interp.core.types.DrillholeTaskInput attribute)</a>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="sec_interp.core.domain.html#id10">line_start_x (sec_interp.core.domain.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.DrillholeTaskInput.line_start_x">[1]</a>
 
       <ul>
-        <li><a href="sec_interp.core.types.html#sec_interp.core.types.GeologyTaskInput.line_start">(sec_interp.core.types.GeologyTaskInput attribute)</a>
+        <li><a href="sec_interp.core.domain.html#id22">(sec_interp.core.domain.GeologyTaskInput attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.GeologyTaskInput.line_start_x">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.task_inputs.html#id10">(sec_interp.core.domain.task_inputs.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.task_inputs.html#sec_interp.core.domain.task_inputs.DrillholeTaskInput.line_start_x">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.task_inputs.html#id18">(sec_interp.core.domain.task_inputs.GeologyTaskInput attribute)</a>, <a href="sec_interp.core.domain.task_inputs.html#sec_interp.core.domain.task_inputs.GeologyTaskInput.line_start_x">[1]</a>
+</li>
+      </ul></li>
+      <li><a href="sec_interp.core.domain.html#id11">line_start_y (sec_interp.core.domain.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.DrillholeTaskInput.line_start_y">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#id23">(sec_interp.core.domain.GeologyTaskInput attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.GeologyTaskInput.line_start_y">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.task_inputs.html#id11">(sec_interp.core.domain.task_inputs.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.task_inputs.html#sec_interp.core.domain.task_inputs.DrillholeTaskInput.line_start_y">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.task_inputs.html#id19">(sec_interp.core.domain.task_inputs.GeologyTaskInput attribute)</a>, <a href="sec_interp.core.domain.task_inputs.html#sec_interp.core.domain.task_inputs.GeologyTaskInput.line_start_y">[1]</a>
 </li>
       </ul></li>
       <li><a href="sec_interp.gui.main_dialog_interpretation.html#sec_interp.gui.main_dialog_interpretation.DialogInterpretationManager.load_interpretations">load_interpretations() (sec_interp.gui.main_dialog_interpretation.DialogInterpretationManager method)</a>
 </li>
       <li><a href="sec_interp.gui.main_dialog_settings.html#sec_interp.gui.main_dialog_settings.DialogSettingsManager.load_settings">load_settings() (sec_interp.gui.main_dialog_settings.DialogSettingsManager method)</a>
+</li>
+      <li><a href="sec_interp.gui.lod_calculator.html#sec_interp.gui.lod_calculator.LODCalculator">LODCalculator (class in sec_interp.gui.lod_calculator)</a>
 </li>
       <li><a href="sec_interp.logger_config.html#sec_interp.logger_config.log_critical_operation">log_critical_operation() (in module sec_interp.logger_config)</a>
 </li>
@@ -1887,22 +2346,36 @@ window.addEventListener("load", load);
 </li>
       <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig.LOG_PERFORMANCE">LOG_PERFORMANCE (sec_interp.gui.main_dialog_config.DialogConfig attribute)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.FieldType.LONG_LONG">LONG_LONG (sec_interp.core.types.FieldType attribute)</a>
+      <li><a href="sec_interp.core.domain.enums.html#sec_interp.core.domain.enums.FieldType.LONG_LONG">LONG_LONG (sec_interp.core.domain.enums.FieldType attribute)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.FieldType.LONG_LONG">(sec_interp.core.domain.FieldType attribute)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.GeologyTaskInput.master_grid_dists">master_grid_dists (sec_interp.core.types.GeologyTaskInput attribute)</a>
-</li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.GeologyTaskInput.master_profile_data">master_profile_data (sec_interp.core.types.GeologyTaskInput attribute)</a>
-</li>
-      <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.PreviewSettings.max_points">max_points (sec_interp.core.models.settings_model.PreviewSettings attribute)</a>
+      <li><a href="sec_interp.core.domain.html#id24">master_grid_dists (sec_interp.core.domain.GeologyTaskInput attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.GeologyTaskInput.master_grid_dists">[1]</a>
 
       <ul>
-        <li><a href="sec_interp.core.types.html#id36">(sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.max_points">[1]</a>
+        <li><a href="sec_interp.core.domain.task_inputs.html#id20">(sec_interp.core.domain.task_inputs.GeologyTaskInput attribute)</a>, <a href="sec_interp.core.domain.task_inputs.html#sec_interp.core.domain.task_inputs.GeologyTaskInput.master_grid_dists">[1]</a>
+</li>
+      </ul></li>
+      <li><a href="sec_interp.core.domain.html#id25">master_profile_data (sec_interp.core.domain.GeologyTaskInput attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.GeologyTaskInput.master_profile_data">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.task_inputs.html#id21">(sec_interp.core.domain.task_inputs.GeologyTaskInput attribute)</a>, <a href="sec_interp.core.domain.task_inputs.html#sec_interp.core.domain.task_inputs.GeologyTaskInput.master_profile_data">[1]</a>
+</li>
+      </ul></li>
+      <li><a href="sec_interp.core.domain.dtos.html#id19">max_points (sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.max_points">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#id61">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.max_points">[1]</a>
+</li>
+        <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.PreviewSettings.max_points">(sec_interp.core.models.settings_model.PreviewSettings attribute)</a>
 </li>
       </ul></li>
       <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.UIConstants.MAX_PREVIEW_HEIGHT">MAX_PREVIEW_HEIGHT (sec_interp.gui.main_dialog_config.UIConstants attribute)</a>
@@ -1929,8 +2402,12 @@ window.addEventListener("load", load);
 </li>
       <li><a href="sec_interp.core.performance_metrics.html#sec_interp.core.performance_metrics.MetricsCollector.metadata">metadata (sec_interp.core.performance_metrics.MetricsCollector attribute)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#id50">metrics (sec_interp.core.types.PreviewResult attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewResult.metrics">[1]</a>
+      <li><a href="sec_interp.core.domain.dtos.html#id33">metrics (sec_interp.core.domain.dtos.PreviewResult attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewResult.metrics">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#id75">(sec_interp.core.domain.PreviewResult attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewResult.metrics">[1]</a>
 </li>
+      </ul></li>
       <li><a href="sec_interp.core.performance_metrics.html#sec_interp.core.performance_metrics.MetricsCollector">MetricsCollector (class in sec_interp.core.performance_metrics)</a>
 </li>
       <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.UIConstants.MIN_PREVIEW_HEIGHT">MIN_PREVIEW_HEIGHT (sec_interp.gui.main_dialog_config.UIConstants attribute)</a>
@@ -1971,6 +2448,18 @@ window.addEventListener("load", load);
 </li>
         <li><a href="sec_interp.core.data_cache.html#module-sec_interp.core.data_cache">sec_interp.core.data_cache</a>
 </li>
+        <li><a href="sec_interp.core.domain.html#module-sec_interp.core.domain">sec_interp.core.domain</a>
+</li>
+        <li><a href="sec_interp.core.domain.dtos.html#module-sec_interp.core.domain.dtos">sec_interp.core.domain.dtos</a>
+</li>
+        <li><a href="sec_interp.core.domain.entities.html#module-sec_interp.core.domain.entities">sec_interp.core.domain.entities</a>
+</li>
+        <li><a href="sec_interp.core.domain.enums.html#module-sec_interp.core.domain.enums">sec_interp.core.domain.enums</a>
+</li>
+        <li><a href="sec_interp.core.domain.spatial_meta.html#module-sec_interp.core.domain.spatial_meta">sec_interp.core.domain.spatial_meta</a>
+</li>
+        <li><a href="sec_interp.core.domain.task_inputs.html#module-sec_interp.core.domain.task_inputs">sec_interp.core.domain.task_inputs</a>
+</li>
         <li><a href="sec_interp.core.exceptions.html#module-sec_interp.core.exceptions">sec_interp.core.exceptions</a>
 </li>
         <li><a href="sec_interp.core.interfaces.html#module-sec_interp.core.interfaces">sec_interp.core.interfaces</a>
@@ -1997,6 +2486,20 @@ window.addEventListener("load", load);
 </li>
         <li><a href="sec_interp.core.services.access_control_service.html#module-sec_interp.core.services.access_control_service">sec_interp.core.services.access_control_service</a>
 </li>
+        <li><a href="sec_interp.core.services.drillhole.html#module-sec_interp.core.services.drillhole">sec_interp.core.services.drillhole</a>
+</li>
+        <li><a href="sec_interp.core.services.drillhole.collar_processor.html#module-sec_interp.core.services.drillhole.collar_processor">sec_interp.core.services.drillhole.collar_processor</a>
+</li>
+        <li><a href="sec_interp.core.services.drillhole.data_fetcher.html#module-sec_interp.core.services.drillhole.data_fetcher">sec_interp.core.services.drillhole.data_fetcher</a>
+</li>
+        <li><a href="sec_interp.core.services.drillhole.interval_processor.html#module-sec_interp.core.services.drillhole.interval_processor">sec_interp.core.services.drillhole.interval_processor</a>
+</li>
+        <li><a href="sec_interp.core.services.drillhole.projection_engine.html#module-sec_interp.core.services.drillhole.projection_engine">sec_interp.core.services.drillhole.projection_engine</a>
+</li>
+        <li><a href="sec_interp.core.services.drillhole.survey_processor.html#module-sec_interp.core.services.drillhole.survey_processor">sec_interp.core.services.drillhole.survey_processor</a>
+</li>
+        <li><a href="sec_interp.core.services.drillhole.trajectory_engine.html#module-sec_interp.core.services.drillhole.trajectory_engine">sec_interp.core.services.drillhole.trajectory_engine</a>
+</li>
         <li><a href="sec_interp.core.services.drillhole_service.html#module-sec_interp.core.services.drillhole_service">sec_interp.core.services.drillhole_service</a>
 </li>
         <li><a href="sec_interp.core.services.export_service.html#module-sec_interp.core.services.export_service">sec_interp.core.services.export_service</a>
@@ -2008,8 +2511,6 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.core.services.profile_service.html#module-sec_interp.core.services.profile_service">sec_interp.core.services.profile_service</a>
 </li>
         <li><a href="sec_interp.core.services.structure_service.html#module-sec_interp.core.services.structure_service">sec_interp.core.services.structure_service</a>
-</li>
-        <li><a href="sec_interp.core.types.html#module-sec_interp.core.types">sec_interp.core.types</a>
 </li>
         <li><a href="sec_interp.core.utils.html#module-sec_interp.core.utils">sec_interp.core.utils</a>
 </li>
@@ -2032,6 +2533,8 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.core.utils.geometry_utils.processing.html#module-sec_interp.core.utils.geometry_utils.processing">sec_interp.core.utils.geometry_utils.processing</a>
 </li>
         <li><a href="sec_interp.core.utils.io.html#module-sec_interp.core.utils.io">sec_interp.core.utils.io</a>
+</li>
+        <li><a href="sec_interp.core.utils.metadata_reader.html#module-sec_interp.core.utils.metadata_reader">sec_interp.core.utils.metadata_reader</a>
 </li>
         <li><a href="sec_interp.core.utils.parsing.html#module-sec_interp.core.utils.parsing">sec_interp.core.utils.parsing</a>
 </li>
@@ -2085,6 +2588,8 @@ window.addEventListener("load", load);
 </li>
         <li><a href="sec_interp.gui.legend_widget.html#module-sec_interp.gui.legend_widget">sec_interp.gui.legend_widget</a>
 </li>
+        <li><a href="sec_interp.gui.lod_calculator.html#module-sec_interp.gui.lod_calculator">sec_interp.gui.lod_calculator</a>
+</li>
         <li><a href="sec_interp.gui.main_dialog.html#module-sec_interp.gui.main_dialog">sec_interp.gui.main_dialog</a>
 </li>
         <li><a href="sec_interp.gui.main_dialog_cache_handler.html#module-sec_interp.gui.main_dialog_cache_handler">sec_interp.gui.main_dialog_cache_handler</a>
@@ -2119,9 +2624,27 @@ window.addEventListener("load", load);
 </li>
         <li><a href="sec_interp.gui.preview_legend_renderer.html#module-sec_interp.gui.preview_legend_renderer">sec_interp.gui.preview_legend_renderer</a>
 </li>
+        <li><a href="sec_interp.gui.preview_param_hasher.html#module-sec_interp.gui.preview_param_hasher">sec_interp.gui.preview_param_hasher</a>
+</li>
         <li><a href="sec_interp.gui.preview_renderer.html#module-sec_interp.gui.preview_renderer">sec_interp.gui.preview_renderer</a>
 </li>
         <li><a href="sec_interp.gui.preview_reporter.html#module-sec_interp.gui.preview_reporter">sec_interp.gui.preview_reporter</a>
+</li>
+        <li><a href="sec_interp.gui.preview_task_orchestrator.html#module-sec_interp.gui.preview_task_orchestrator">sec_interp.gui.preview_task_orchestrator</a>
+</li>
+        <li><a href="sec_interp.gui.renderers.html#module-sec_interp.gui.renderers">sec_interp.gui.renderers</a>
+</li>
+        <li><a href="sec_interp.gui.renderers.base_renderer.html#module-sec_interp.gui.renderers.base_renderer">sec_interp.gui.renderers.base_renderer</a>
+</li>
+        <li><a href="sec_interp.gui.renderers.color_manager.html#module-sec_interp.gui.renderers.color_manager">sec_interp.gui.renderers.color_manager</a>
+</li>
+        <li><a href="sec_interp.gui.renderers.drillhole_renderer.html#module-sec_interp.gui.renderers.drillhole_renderer">sec_interp.gui.renderers.drillhole_renderer</a>
+</li>
+        <li><a href="sec_interp.gui.renderers.geology_renderer.html#module-sec_interp.gui.renderers.geology_renderer">sec_interp.gui.renderers.geology_renderer</a>
+</li>
+        <li><a href="sec_interp.gui.renderers.structure_renderer.html#module-sec_interp.gui.renderers.structure_renderer">sec_interp.gui.renderers.structure_renderer</a>
+</li>
+        <li><a href="sec_interp.gui.renderers.topo_renderer.html#module-sec_interp.gui.renderers.topo_renderer">sec_interp.gui.renderers.topo_renderer</a>
 </li>
         <li><a href="sec_interp.gui.services.html#module-sec_interp.gui.services">sec_interp.gui.services</a>
 </li>
@@ -2180,24 +2703,50 @@ window.addEventListener("load", load);
 <h2 id="N">N</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="sec_interp.core.types.html#id8">name (sec_interp.core.types.InterpretationPolygon attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.InterpretationPolygon.name">[1]</a>
+      <li><a href="sec_interp.core.domain.entities.html#id8">name (sec_interp.core.domain.entities.InterpretationPolygon attribute)</a>, <a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon.name">[1]</a>
 
       <ul>
-        <li><a href="sec_interp.core.types.html#id15">(sec_interp.core.types.InterpretationPolygon25D attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.InterpretationPolygon25D.name">[1]</a>
+        <li><a href="sec_interp.core.domain.entities.html#id15">(sec_interp.core.domain.entities.InterpretationPolygon25D attribute)</a>, <a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon25D.name">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.html#id33">(sec_interp.core.domain.InterpretationPolygon attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.InterpretationPolygon.name">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.html#id40">(sec_interp.core.domain.InterpretationPolygon25D attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.InterpretationPolygon25D.name">[1]</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sec_interp.gui.main_dialog_tools.html#sec_interp.gui.main_dialog_tools.NavigationManager">NavigationManager (class in sec_interp.gui.main_dialog_tools)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.FieldType.NULL">NULL (sec_interp.core.types.FieldType attribute)</a>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="sec_interp.core.domain.spatial_meta.html#id3">norm_x (sec_interp.core.domain.spatial_meta.SpatialMeta attribute)</a>, <a href="sec_interp.core.domain.spatial_meta.html#sec_interp.core.domain.spatial_meta.SpatialMeta.norm_x">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#id81">(sec_interp.core.domain.SpatialMeta attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.SpatialMeta.norm_x">[1]</a>
 </li>
+      </ul></li>
+      <li><a href="sec_interp.core.domain.spatial_meta.html#id4">norm_y (sec_interp.core.domain.spatial_meta.SpatialMeta attribute)</a>, <a href="sec_interp.core.domain.spatial_meta.html#sec_interp.core.domain.spatial_meta.SpatialMeta.norm_y">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#id82">(sec_interp.core.domain.SpatialMeta attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.SpatialMeta.norm_y">[1]</a>
+</li>
+      </ul></li>
+      <li><a href="sec_interp.core.domain.enums.html#sec_interp.core.domain.enums.FieldType.NULL">NULL (sec_interp.core.domain.enums.FieldType attribute)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.FieldType.NULL">(sec_interp.core.domain.FieldType attribute)</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="O">O</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="sec_interp.core.domain.spatial_meta.html#id5">offset (sec_interp.core.domain.spatial_meta.SpatialMeta attribute)</a>, <a href="sec_interp.core.domain.spatial_meta.html#sec_interp.core.domain.spatial_meta.SpatialMeta.offset">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#id83">(sec_interp.core.domain.SpatialMeta attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.SpatialMeta.offset">[1]</a>
+</li>
+      </ul></li>
       <li><a href="sec_interp.gui.main_dialog.html#sec_interp.gui.main_dialog.SecInterpDialog.on_interpretation_finished">on_interpretation_finished() (sec_interp.gui.main_dialog.SecInterpDialog method)</a>
 
       <ul>
@@ -2210,32 +2759,50 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.open_help">(sec_interp.gui.SecInterpDialog method)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.types.html#id57">original_dip (sec_interp.core.types.StructureMeasurement attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.StructureMeasurement.original_dip">[1]</a>
+      <li><a href="sec_interp.core.domain.entities.html#id21">original_dip (sec_interp.core.domain.entities.StructureMeasurement attribute)</a>, <a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.StructureMeasurement.original_dip">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#id91">(sec_interp.core.domain.StructureMeasurement attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.StructureMeasurement.original_dip">[1]</a>
 </li>
-      <li><a href="sec_interp.core.types.html#id58">original_strike (sec_interp.core.types.StructureMeasurement attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.StructureMeasurement.original_strike">[1]</a>
+      </ul></li>
+      <li><a href="sec_interp.core.domain.entities.html#id22">original_strike (sec_interp.core.domain.entities.StructureMeasurement attribute)</a>, <a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.StructureMeasurement.original_strike">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#id92">(sec_interp.core.domain.StructureMeasurement attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.StructureMeasurement.original_strike">[1]</a>
 </li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.GeologyTaskInput.outcrop_data">outcrop_data (sec_interp.core.types.GeologyTaskInput attribute)</a>
+      </ul></li>
+      <li><a href="sec_interp.core.domain.html#id26">outcrop_data (sec_interp.core.domain.GeologyTaskInput attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.GeologyTaskInput.outcrop_data">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.task_inputs.html#id22">(sec_interp.core.domain.task_inputs.GeologyTaskInput attribute)</a>, <a href="sec_interp.core.domain.task_inputs.html#sec_interp.core.domain.task_inputs.GeologyTaskInput.outcrop_data">[1]</a>
 </li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ValidationParams.outcrop_field">outcrop_field (sec_interp.core.validation.project_validator.ValidationParams attribute)</a>
 
       <ul>
         <li><a href="sec_interp.core.validation.html#sec_interp.core.validation.ValidationParams.outcrop_field">(sec_interp.core.validation.ValidationParams attribute)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="sec_interp.core.types.html#id37">outcrop_layer (sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.outcrop_layer">[1]</a>
+      <li><a href="sec_interp.core.domain.dtos.html#id20">outcrop_layer (sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.outcrop_layer">[1]</a>
 
       <ul>
+        <li><a href="sec_interp.core.domain.html#id62">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.outcrop_layer">[1]</a>
+</li>
         <li><a href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ValidationParams.outcrop_layer">(sec_interp.core.validation.project_validator.ValidationParams attribute)</a>
 </li>
         <li><a href="sec_interp.core.validation.html#sec_interp.core.validation.ValidationParams.outcrop_layer">(sec_interp.core.validation.ValidationParams attribute)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.GeologyTaskInput.outcrop_name_field">outcrop_name_field (sec_interp.core.types.GeologyTaskInput attribute)</a>
+      <li><a href="sec_interp.core.domain.dtos.html#id21">outcrop_name_field (sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.outcrop_name_field">[1]</a>
 
       <ul>
-        <li><a href="sec_interp.core.types.html#id38">(sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.outcrop_name_field">[1]</a>
+        <li><a href="sec_interp.core.domain.html#id27">(sec_interp.core.domain.GeologyTaskInput attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.GeologyTaskInput.outcrop_name_field">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.html#id63">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.outcrop_name_field">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.task_inputs.html#id23">(sec_interp.core.domain.task_inputs.GeologyTaskInput attribute)</a>, <a href="sec_interp.core.domain.task_inputs.html#sec_interp.core.domain.task_inputs.GeologyTaskInput.outcrop_name_field">[1]</a>
 </li>
       </ul></li>
       <li><a href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ValidationParams.output_path">output_path (sec_interp.core.validation.project_validator.ValidationParams attribute)</a>
@@ -2251,6 +2818,8 @@ window.addEventListener("load", load);
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sec_interp.gui.legend_widget.html#sec_interp.gui.legend_widget.LegendWidget.paintEvent">paintEvent() (sec_interp.gui.legend_widget.LegendWidget method)</a>
+</li>
+      <li><a href="sec_interp.core.exceptions.html#sec_interp.core.exceptions.ParameterError">ParameterError</a>
 </li>
       <li><a href="sec_interp.core.utils.html#sec_interp.core.utils.parse_dip">parse_dip() (in module sec_interp.core.utils)</a>
 
@@ -2284,20 +2853,42 @@ window.addEventListener("load", load);
       </ul></li>
       <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.PluginSettings">PluginSettings (class in sec_interp.core.models.settings_model)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.PointList">PointList (in module sec_interp.core.types)</a>
+      <li><a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.Point2D">Point2D (in module sec_interp.core.domain.entities)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#id2">points (sec_interp.core.types.GeologySegment attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.GeologySegment.points">[1]</a>
+      <li><a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.Point3D">Point3D (in module sec_interp.core.domain.entities)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.GeologySegment.points_3d">points_3d (sec_interp.core.types.GeologySegment attribute)</a>
+      <li><a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.PointList">PointList (in module sec_interp.core.domain.entities)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.GeologySegment.points_3d_projected">points_3d_projected (sec_interp.core.types.GeologySegment attribute)</a>
+      <li><a href="sec_interp.core.domain.entities.html#id2">points (sec_interp.core.domain.entities.GeologySegment attribute)</a>, <a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.GeologySegment.points">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#id18">(sec_interp.core.domain.GeologySegment attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.GeologySegment.points">[1]</a>
 </li>
+      </ul></li>
+      <li><a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.GeologySegment.points_3d">points_3d (sec_interp.core.domain.entities.GeologySegment attribute)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.GeologySegment.points_3d">(sec_interp.core.domain.GeologySegment attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.GeologySegment.points_3d_projected">points_3d_projected (sec_interp.core.domain.entities.GeologySegment attribute)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.GeologySegment.points_3d_projected">(sec_interp.core.domain.GeologySegment attribute)</a>
+</li>
+      </ul></li>
       <li><a href="sec_interp.gui.tools.interpretation_tool.html#sec_interp.gui.tools.interpretation_tool.ProfileInterpretationTool.polygonFinished">polygonFinished (sec_interp.gui.tools.interpretation_tool.ProfileInterpretationTool attribute)</a>
 </li>
       <li><a href="sec_interp.gui.main_dialog_utils.html#sec_interp.gui.main_dialog_utils.DialogEntityManager.populate_field_combobox">populate_field_combobox() (sec_interp.gui.main_dialog_utils.DialogEntityManager static method)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.DrillholeTaskInput.pre_sampled_z">pre_sampled_z (sec_interp.core.types.DrillholeTaskInput attribute)</a>
+      <li><a href="sec_interp.core.services.drillhole.collar_processor.html#sec_interp.core.services.drillhole.collar_processor.CollarProcessor.pre_sample_z">pre_sample_z() (sec_interp.core.services.drillhole.collar_processor.CollarProcessor method)</a>
 </li>
+      <li><a href="sec_interp.core.domain.html#id12">pre_sampled_z (sec_interp.core.domain.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.DrillholeTaskInput.pre_sampled_z">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.task_inputs.html#id12">(sec_interp.core.domain.task_inputs.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.task_inputs.html#sec_interp.core.domain.task_inputs.DrillholeTaskInput.pre_sampled_z">[1]</a>
+</li>
+      </ul></li>
       <li><a href="sec_interp.core.config.html#sec_interp.core.config.ConfigService.PREFIX">PREFIX (sec_interp.core.config.ConfigService attribute)</a>
 </li>
       <li><a href="sec_interp.core.utils.html#sec_interp.core.utils.prepare_profile_context">prepare_profile_context() (in module sec_interp.core.utils)</a>
@@ -2340,8 +2931,14 @@ window.addEventListener("load", load);
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams">PreviewParams (class in sec_interp.core.types)</a>
+      <li><a href="sec_interp.gui.preview_param_hasher.html#sec_interp.gui.preview_param_hasher.PreviewParamHasher">PreviewParamHasher (class in sec_interp.gui.preview_param_hasher)</a>
 </li>
+      <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams">PreviewParams (class in sec_interp.core.domain)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams">(class in sec_interp.core.domain.dtos)</a>
+</li>
+      </ul></li>
       <li><a href="sec_interp.gui.html#sec_interp.gui.PreviewRenderer">PreviewRenderer (class in sec_interp.gui)</a>
 
       <ul>
@@ -2350,11 +2947,17 @@ window.addEventListener("load", load);
       </ul></li>
       <li><a href="sec_interp.gui.preview_reporter.html#sec_interp.gui.preview_reporter.PreviewReporter">PreviewReporter (class in sec_interp.gui.preview_reporter)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.PreviewResult">PreviewResult (class in sec_interp.core.types)</a>
+      <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewResult">PreviewResult (class in sec_interp.core.domain)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewResult">(class in sec_interp.core.domain.dtos)</a>
 </li>
+      </ul></li>
       <li><a href="sec_interp.core.services.preview_service.html#sec_interp.core.services.preview_service.PreviewService">PreviewService (class in sec_interp.core.services.preview_service)</a>
 </li>
       <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.PreviewSettings">PreviewSettings (class in sec_interp.core.models.settings_model)</a>
+</li>
+      <li><a href="sec_interp.gui.preview_task_orchestrator.html#sec_interp.gui.preview_task_orchestrator.PreviewTaskOrchestrator">PreviewTaskOrchestrator (class in sec_interp.gui.preview_task_orchestrator)</a>
 </li>
       <li><a href="sec_interp.gui.ui.pages.preview_page.html#sec_interp.gui.ui.pages.preview_page.PreviewWidget">PreviewWidget (class in sec_interp.gui.ui.pages.preview_page)</a>
 </li>
@@ -2368,6 +2971,8 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.core.services.html#sec_interp.core.services.DrillholeService.process_intervals">(sec_interp.core.services.DrillholeService method)</a>
 </li>
       </ul></li>
+      <li><a href="sec_interp.core.services.drillhole.trajectory_engine.html#sec_interp.core.services.drillhole.trajectory_engine.TrajectoryEngine.process_single_hole">process_single_hole() (sec_interp.core.services.drillhole.trajectory_engine.TrajectoryEngine method)</a>
+</li>
       <li><a href="sec_interp.core.services.drillhole_service.html#sec_interp.core.services.drillhole_service.DrillholeService.process_task_data">process_task_data() (sec_interp.core.services.drillhole_service.DrillholeService method)</a>
 
       <ul>
@@ -2404,6 +3009,8 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.gui.tools.measure_tool.html#sec_interp.gui.tools.measure_tool.ProfileSnapper">(class in sec_interp.gui.tools.measure_tool)</a>
 </li>
       </ul></li>
+      <li><a href="sec_interp.gui.tasks.geology_task.html#sec_interp.gui.tasks.geology_task.GeologyGenerationTask.progress_changed">progress_changed (sec_interp.gui.tasks.geology_task.GeologyGenerationTask attribute)</a>
+</li>
       <li><a href="sec_interp.core.interfaces.drillhole_interface.html#sec_interp.core.interfaces.drillhole_interface.IDrillholeService.project_collars">project_collars() (sec_interp.core.interfaces.drillhole_interface.IDrillholeService method)</a>
 
       <ul>
@@ -2412,6 +3019,8 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.core.services.html#sec_interp.core.services.DrillholeService.project_collars">(sec_interp.core.services.DrillholeService method)</a>
 </li>
       </ul></li>
+      <li><a href="sec_interp.core.services.drillhole.projection_engine.html#sec_interp.core.services.drillhole.projection_engine.ProjectionEngine.project_point_to_line">project_point_to_line() (sec_interp.core.services.drillhole.projection_engine.ProjectionEngine static method)</a>
+</li>
       <li><a href="sec_interp.core.interfaces.structure_interface.html#sec_interp.core.interfaces.structure_interface.IStructureService.project_structures">project_structures() (sec_interp.core.interfaces.structure_interface.IStructureService method)</a>
 
       <ul>
@@ -2426,6 +3035,8 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.core.utils.drillhole.html#sec_interp.core.utils.drillhole.project_trajectory_to_section">(in module sec_interp.core.utils.drillhole)</a>
 </li>
       </ul></li>
+      <li><a href="sec_interp.core.services.drillhole.projection_engine.html#sec_interp.core.services.drillhole.projection_engine.ProjectionEngine">ProjectionEngine (class in sec_interp.core.services.drillhole.projection_engine)</a>
+</li>
       <li><a href="sec_interp.core.validation.html#sec_interp.core.validation.ProjectValidator">ProjectValidator (class in sec_interp.core.validation)</a>
 
       <ul>
@@ -2456,14 +3067,18 @@ window.addEventListener("load", load);
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sec_interp.core.validation.validation_helpers.html#sec_interp.core.validation.validation_helpers.ValidationContext.raise_if_errors">raise_if_errors() (sec_interp.core.validation.validation_helpers.ValidationContext method)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#id39">raster_layer (sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.raster_layer">[1]</a>
+      <li><a href="sec_interp.core.domain.dtos.html#id22">raster_layer (sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.raster_layer">[1]</a>
 
       <ul>
+        <li><a href="sec_interp.core.domain.html#id64">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.raster_layer">[1]</a>
+</li>
         <li><a href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ValidationParams.raster_layer">(sec_interp.core.validation.project_validator.ValidationParams attribute)</a>
 </li>
         <li><a href="sec_interp.core.validation.html#sec_interp.core.validation.ValidationParams.raster_layer">(sec_interp.core.validation.ValidationParams attribute)</a>
 </li>
       </ul></li>
+      <li><a href="sec_interp.core.utils.metadata_reader.html#sec_interp.core.utils.metadata_reader.read_plugin_metadata">read_plugin_metadata() (in module sec_interp.core.utils.metadata_reader)</a>
+</li>
       <li><a href="sec_interp.core.performance_metrics.html#sec_interp.core.performance_metrics.MetricsCollector.record_count">record_count() (sec_interp.core.performance_metrics.MetricsCollector method)</a>
 </li>
       <li><a href="sec_interp.core.performance_metrics.html#sec_interp.core.performance_metrics.MetricsCollector.record_timing">record_timing() (sec_interp.core.performance_metrics.MetricsCollector method)</a>
@@ -2482,10 +3097,10 @@ window.addEventListener("load", load);
       </ul></li>
       <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.UIConstants.REQUIRED_COLOR">REQUIRED_COLOR (sec_interp.gui.main_dialog_config.UIConstants attribute)</a>
 </li>
-      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.UIConstants.REQUIRED_INDICATOR">REQUIRED_INDICATOR (sec_interp.gui.main_dialog_config.UIConstants attribute)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.UIConstants.REQUIRED_INDICATOR">REQUIRED_INDICATOR (sec_interp.gui.main_dialog_config.UIConstants attribute)</a>
+</li>
       <li><a href="sec_interp.gui.tools.interpretation_tool.html#sec_interp.gui.tools.interpretation_tool.ProfileInterpretationTool.reset">reset() (sec_interp.gui.tools.interpretation_tool.ProfileInterpretationTool method)</a>
 
       <ul>
@@ -2530,6 +3145,12 @@ window.addEventListener("load", load);
 
       <ul>
         <li><a href="sec_interp.core.utils.sampling.html#sec_interp.core.utils.sampling.sample_elevation_along_line">(in module sec_interp.core.utils.sampling)</a>
+</li>
+      </ul></li>
+      <li><a href="sec_interp.core.utils.html#sec_interp.core.utils.sample_point_elevation">sample_point_elevation() (in module sec_interp.core.utils)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.utils.sampling.html#sec_interp.core.utils.sampling.sample_point_elevation">(in module sec_interp.core.utils.sampling)</a>
 </li>
       </ul></li>
       <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogDefaults.SAMPLING_INTERVAL">SAMPLING_INTERVAL (sec_interp.gui.main_dialog_config.DialogDefaults attribute)</a>
@@ -2590,6 +3211,48 @@ window.addEventListener("load", load);
 
       <ul>
         <li><a href="sec_interp.core.data_cache.html#module-sec_interp.core.data_cache">module</a>
+</li>
+      </ul></li>
+      <li>
+    sec_interp.core.domain
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#module-sec_interp.core.domain">module</a>
+</li>
+      </ul></li>
+      <li>
+    sec_interp.core.domain.dtos
+
+      <ul>
+        <li><a href="sec_interp.core.domain.dtos.html#module-sec_interp.core.domain.dtos">module</a>
+</li>
+      </ul></li>
+      <li>
+    sec_interp.core.domain.entities
+
+      <ul>
+        <li><a href="sec_interp.core.domain.entities.html#module-sec_interp.core.domain.entities">module</a>
+</li>
+      </ul></li>
+      <li>
+    sec_interp.core.domain.enums
+
+      <ul>
+        <li><a href="sec_interp.core.domain.enums.html#module-sec_interp.core.domain.enums">module</a>
+</li>
+      </ul></li>
+      <li>
+    sec_interp.core.domain.spatial_meta
+
+      <ul>
+        <li><a href="sec_interp.core.domain.spatial_meta.html#module-sec_interp.core.domain.spatial_meta">module</a>
+</li>
+      </ul></li>
+      <li>
+    sec_interp.core.domain.task_inputs
+
+      <ul>
+        <li><a href="sec_interp.core.domain.task_inputs.html#module-sec_interp.core.domain.task_inputs">module</a>
 </li>
       </ul></li>
       <li>
@@ -2684,6 +3347,55 @@ window.addEventListener("load", load);
 </li>
       </ul></li>
       <li>
+    sec_interp.core.services.drillhole
+
+      <ul>
+        <li><a href="sec_interp.core.services.drillhole.html#module-sec_interp.core.services.drillhole">module</a>
+</li>
+      </ul></li>
+      <li>
+    sec_interp.core.services.drillhole.collar_processor
+
+      <ul>
+        <li><a href="sec_interp.core.services.drillhole.collar_processor.html#module-sec_interp.core.services.drillhole.collar_processor">module</a>
+</li>
+      </ul></li>
+      <li>
+    sec_interp.core.services.drillhole.data_fetcher
+
+      <ul>
+        <li><a href="sec_interp.core.services.drillhole.data_fetcher.html#module-sec_interp.core.services.drillhole.data_fetcher">module</a>
+</li>
+      </ul></li>
+      <li>
+    sec_interp.core.services.drillhole.interval_processor
+
+      <ul>
+        <li><a href="sec_interp.core.services.drillhole.interval_processor.html#module-sec_interp.core.services.drillhole.interval_processor">module</a>
+</li>
+      </ul></li>
+      <li>
+    sec_interp.core.services.drillhole.projection_engine
+
+      <ul>
+        <li><a href="sec_interp.core.services.drillhole.projection_engine.html#module-sec_interp.core.services.drillhole.projection_engine">module</a>
+</li>
+      </ul></li>
+      <li>
+    sec_interp.core.services.drillhole.survey_processor
+
+      <ul>
+        <li><a href="sec_interp.core.services.drillhole.survey_processor.html#module-sec_interp.core.services.drillhole.survey_processor">module</a>
+</li>
+      </ul></li>
+      <li>
+    sec_interp.core.services.drillhole.trajectory_engine
+
+      <ul>
+        <li><a href="sec_interp.core.services.drillhole.trajectory_engine.html#module-sec_interp.core.services.drillhole.trajectory_engine">module</a>
+</li>
+      </ul></li>
+      <li>
     sec_interp.core.services.drillhole_service
 
       <ul>
@@ -2723,13 +3435,6 @@ window.addEventListener("load", load);
 
       <ul>
         <li><a href="sec_interp.core.services.structure_service.html#module-sec_interp.core.services.structure_service">module</a>
-</li>
-      </ul></li>
-      <li>
-    sec_interp.core.types
-
-      <ul>
-        <li><a href="sec_interp.core.types.html#module-sec_interp.core.types">module</a>
 </li>
       </ul></li>
       <li>
@@ -2807,6 +3512,13 @@ window.addEventListener("load", load);
 
       <ul>
         <li><a href="sec_interp.core.utils.io.html#module-sec_interp.core.utils.io">module</a>
+</li>
+      </ul></li>
+      <li>
+    sec_interp.core.utils.metadata_reader
+
+      <ul>
+        <li><a href="sec_interp.core.utils.metadata_reader.html#module-sec_interp.core.utils.metadata_reader">module</a>
 </li>
       </ul></li>
       <li>
@@ -2992,6 +3704,13 @@ window.addEventListener("load", load);
 </li>
       </ul></li>
       <li>
+    sec_interp.gui.lod_calculator
+
+      <ul>
+        <li><a href="sec_interp.gui.lod_calculator.html#module-sec_interp.gui.lod_calculator">module</a>
+</li>
+      </ul></li>
+      <li>
     sec_interp.gui.main_dialog
 
       <ul>
@@ -3061,8 +3780,6 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.gui.main_dialog_signals.html#module-sec_interp.gui.main_dialog_signals">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     sec_interp.gui.main_dialog_status
 
@@ -3077,6 +3794,8 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.gui.main_dialog_tools.html#module-sec_interp.gui.main_dialog_tools">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     sec_interp.gui.main_dialog_utils
 
@@ -3113,6 +3832,13 @@ window.addEventListener("load", load);
 </li>
       </ul></li>
       <li>
+    sec_interp.gui.preview_param_hasher
+
+      <ul>
+        <li><a href="sec_interp.gui.preview_param_hasher.html#module-sec_interp.gui.preview_param_hasher">module</a>
+</li>
+      </ul></li>
+      <li>
     sec_interp.gui.preview_renderer
 
       <ul>
@@ -3124,6 +3850,62 @@ window.addEventListener("load", load);
 
       <ul>
         <li><a href="sec_interp.gui.preview_reporter.html#module-sec_interp.gui.preview_reporter">module</a>
+</li>
+      </ul></li>
+      <li>
+    sec_interp.gui.preview_task_orchestrator
+
+      <ul>
+        <li><a href="sec_interp.gui.preview_task_orchestrator.html#module-sec_interp.gui.preview_task_orchestrator">module</a>
+</li>
+      </ul></li>
+      <li>
+    sec_interp.gui.renderers
+
+      <ul>
+        <li><a href="sec_interp.gui.renderers.html#module-sec_interp.gui.renderers">module</a>
+</li>
+      </ul></li>
+      <li>
+    sec_interp.gui.renderers.base_renderer
+
+      <ul>
+        <li><a href="sec_interp.gui.renderers.base_renderer.html#module-sec_interp.gui.renderers.base_renderer">module</a>
+</li>
+      </ul></li>
+      <li>
+    sec_interp.gui.renderers.color_manager
+
+      <ul>
+        <li><a href="sec_interp.gui.renderers.color_manager.html#module-sec_interp.gui.renderers.color_manager">module</a>
+</li>
+      </ul></li>
+      <li>
+    sec_interp.gui.renderers.drillhole_renderer
+
+      <ul>
+        <li><a href="sec_interp.gui.renderers.drillhole_renderer.html#module-sec_interp.gui.renderers.drillhole_renderer">module</a>
+</li>
+      </ul></li>
+      <li>
+    sec_interp.gui.renderers.geology_renderer
+
+      <ul>
+        <li><a href="sec_interp.gui.renderers.geology_renderer.html#module-sec_interp.gui.renderers.geology_renderer">module</a>
+</li>
+      </ul></li>
+      <li>
+    sec_interp.gui.renderers.structure_renderer
+
+      <ul>
+        <li><a href="sec_interp.gui.renderers.structure_renderer.html#module-sec_interp.gui.renderers.structure_renderer">module</a>
+</li>
+      </ul></li>
+      <li>
+    sec_interp.gui.renderers.topo_renderer
+
+      <ul>
+        <li><a href="sec_interp.gui.renderers.topo_renderer.html#module-sec_interp.gui.renderers.topo_renderer">module</a>
 </li>
       </ul></li>
       <li>
@@ -3315,8 +4097,12 @@ window.addEventListener("load", load);
 </li>
       <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.PluginSettings.section">section (sec_interp.core.models.settings_model.PluginSettings attribute)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.DrillholeTaskInput.section_azimuth">section_azimuth (sec_interp.core.types.DrillholeTaskInput attribute)</a>
+      <li><a href="sec_interp.core.domain.html#id13">section_azimuth (sec_interp.core.domain.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.DrillholeTaskInput.section_azimuth">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.task_inputs.html#id13">(sec_interp.core.domain.task_inputs.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.task_inputs.html#sec_interp.core.domain.task_inputs.DrillholeTaskInput.section_azimuth">[1]</a>
 </li>
+      </ul></li>
       <li><a href="sec_interp.gui.ui.pages.section_page.html#sec_interp.gui.ui.pages.section_page.SectionPage">SectionPage (class in sec_interp.gui.ui.pages.section_page)</a>
 </li>
       <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.SectionSettings">SectionSettings (class in sec_interp.core.models.settings_model)</a>
@@ -3329,7 +4115,9 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.core.interfaces.cache_interface.html#sec_interp.core.interfaces.cache_interface.ICacheService.set">(sec_interp.core.interfaces.cache_interface.ICacheService method)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.SettingsDict">SettingsDict (in module sec_interp.core.types)</a>
+      <li><a href="sec_interp.gui.tasks.geology_task.html#sec_interp.gui.tasks.geology_task.GeologyGenerationTask.setProgress">setProgress() (sec_interp.gui.tasks.geology_task.GeologyGenerationTask method)</a>
+</li>
+      <li><a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.SettingsDict">SettingsDict (in module sec_interp.core.domain.entities)</a>
 </li>
       <li><a href="sec_interp.gui.ui.pages.html#sec_interp.gui.ui.pages.SettingsPage">SettingsPage (class in sec_interp.gui.ui.pages)</a>
 
@@ -3379,6 +4167,16 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.gui.tools.measure_tool.html#sec_interp.gui.tools.measure_tool.ProfileSnapper.snap">(sec_interp.gui.tools.measure_tool.ProfileSnapper method)</a>
 </li>
       </ul></li>
+      <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.SpatialMeta">SpatialMeta (class in sec_interp.core.domain)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.spatial_meta.html#sec_interp.core.domain.spatial_meta.SpatialMeta">(class in sec_interp.core.domain.spatial_meta)</a>
+</li>
+      </ul></li>
+      <li><a href="sec_interp.gui.preview_task_orchestrator.html#sec_interp.gui.preview_task_orchestrator.PreviewTaskOrchestrator.start_drillhole_task">start_drillhole_task() (sec_interp.gui.preview_task_orchestrator.PreviewTaskOrchestrator method)</a>
+</li>
+      <li><a href="sec_interp.gui.preview_task_orchestrator.html#sec_interp.gui.preview_task_orchestrator.PreviewTaskOrchestrator.start_geology_task">start_geology_task() (sec_interp.gui.preview_task_orchestrator.PreviewTaskOrchestrator method)</a>
+</li>
       <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.UIConstants.STATUS_ERROR">STATUS_ERROR (sec_interp.gui.main_dialog_config.UIConstants attribute)</a>
 </li>
       <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.UIConstants.STATUS_OK">STATUS_OK (sec_interp.gui.main_dialog_config.UIConstants attribute)</a>
@@ -3387,25 +4185,37 @@ window.addEventListener("load", load);
 </li>
       <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig.STRICT_VALIDATION">STRICT_VALIDATION (sec_interp.gui.main_dialog_config.DialogConfig attribute)</a>
 </li>
-      <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.StructureSettings.strike_field">strike_field (sec_interp.core.models.settings_model.StructureSettings attribute)</a>
+      <li><a href="sec_interp.core.domain.dtos.html#id23">strike_field (sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.strike_field">[1]</a>
 
       <ul>
-        <li><a href="sec_interp.core.types.html#id40">(sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.strike_field">[1]</a>
+        <li><a href="sec_interp.core.domain.html#id65">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.strike_field">[1]</a>
+</li>
+        <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.StructureSettings.strike_field">(sec_interp.core.models.settings_model.StructureSettings attribute)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.FieldType.STRING">STRING (sec_interp.core.types.FieldType attribute)</a>
+      <li><a href="sec_interp.core.domain.enums.html#sec_interp.core.domain.enums.FieldType.STRING">STRING (sec_interp.core.domain.enums.FieldType attribute)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.FieldType.STRING">(sec_interp.core.domain.FieldType attribute)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#id51">struct (sec_interp.core.types.PreviewResult attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewResult.struct">[1]</a>
+      </ul></li>
+      <li><a href="sec_interp.core.domain.dtos.html#id34">struct (sec_interp.core.domain.dtos.PreviewResult attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewResult.struct">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#id76">(sec_interp.core.domain.PreviewResult attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewResult.struct">[1]</a>
 </li>
+      </ul></li>
       <li><a href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ValidationParams.struct_dip_field">struct_dip_field (sec_interp.core.validation.project_validator.ValidationParams attribute)</a>
 
       <ul>
         <li><a href="sec_interp.core.validation.html#sec_interp.core.validation.ValidationParams.struct_dip_field">(sec_interp.core.validation.ValidationParams attribute)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.types.html#id41">struct_layer (sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.struct_layer">[1]</a>
+      <li><a href="sec_interp.core.domain.dtos.html#id24">struct_layer (sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.struct_layer">[1]</a>
 
       <ul>
+        <li><a href="sec_interp.core.domain.html#id66">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.struct_layer">[1]</a>
+</li>
         <li><a href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ValidationParams.struct_layer">(sec_interp.core.validation.project_validator.ValidationParams attribute)</a>
 </li>
         <li><a href="sec_interp.core.validation.html#sec_interp.core.validation.ValidationParams.struct_layer">(sec_interp.core.validation.ValidationParams attribute)</a>
@@ -3419,9 +4229,15 @@ window.addEventListener("load", load);
       </ul></li>
       <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.PluginSettings.structure">structure (sec_interp.core.models.settings_model.PluginSettings attribute)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.StructureMeasurement">StructureMeasurement (class in sec_interp.core.types)</a>
+      <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.StructureMeasurement">StructureMeasurement (class in sec_interp.core.domain)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.StructureMeasurement">(class in sec_interp.core.domain.entities)</a>
 </li>
+      </ul></li>
       <li><a href="sec_interp.gui.ui.pages.structure_page.html#sec_interp.gui.ui.pages.structure_page.StructurePage">StructurePage (class in sec_interp.gui.ui.pages.structure_page)</a>
+</li>
+      <li><a href="sec_interp.gui.renderers.structure_renderer.html#sec_interp.gui.renderers.structure_renderer.StructureRenderer">StructureRenderer (class in sec_interp.gui.renderers.structure_renderer)</a>
 </li>
       <li><a href="sec_interp.core.services.html#sec_interp.core.services.StructureService">StructureService (class in sec_interp.core.services)</a>
 
@@ -3461,24 +4277,32 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.core.validation.html#sec_interp.core.validation.ValidationParams.survey_azim">(sec_interp.core.validation.ValidationParams attribute)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings.survey_azim_field">survey_azim_field (sec_interp.core.models.settings_model.DrillholeSettings attribute)</a>
+      <li><a href="sec_interp.core.domain.dtos.html#id25">survey_azim_field (sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.survey_azim_field">[1]</a>
 
       <ul>
-        <li><a href="sec_interp.core.types.html#id42">(sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.survey_azim_field">[1]</a>
+        <li><a href="sec_interp.core.domain.html#id67">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.survey_azim_field">[1]</a>
+</li>
+        <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings.survey_azim_field">(sec_interp.core.models.settings_model.DrillholeSettings attribute)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.DrillholeTaskInput.survey_data">survey_data (sec_interp.core.types.DrillholeTaskInput attribute)</a>
+      <li><a href="sec_interp.core.domain.html#id14">survey_data (sec_interp.core.domain.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.DrillholeTaskInput.survey_data">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.task_inputs.html#id14">(sec_interp.core.domain.task_inputs.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.task_inputs.html#sec_interp.core.domain.task_inputs.DrillholeTaskInput.survey_data">[1]</a>
 </li>
+      </ul></li>
       <li><a href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ValidationParams.survey_depth">survey_depth (sec_interp.core.validation.project_validator.ValidationParams attribute)</a>
 
       <ul>
         <li><a href="sec_interp.core.validation.html#sec_interp.core.validation.ValidationParams.survey_depth">(sec_interp.core.validation.ValidationParams attribute)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings.survey_depth_field">survey_depth_field (sec_interp.core.models.settings_model.DrillholeSettings attribute)</a>
+      <li><a href="sec_interp.core.domain.dtos.html#id26">survey_depth_field (sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.survey_depth_field">[1]</a>
 
       <ul>
-        <li><a href="sec_interp.core.types.html#id43">(sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.survey_depth_field">[1]</a>
+        <li><a href="sec_interp.core.domain.html#id68">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.survey_depth_field">[1]</a>
+</li>
+        <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings.survey_depth_field">(sec_interp.core.models.settings_model.DrillholeSettings attribute)</a>
 </li>
       </ul></li>
       <li><a href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ValidationParams.survey_id">survey_id (sec_interp.core.validation.project_validator.ValidationParams attribute)</a>
@@ -3487,10 +4311,12 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.core.validation.html#sec_interp.core.validation.ValidationParams.survey_id">(sec_interp.core.validation.ValidationParams attribute)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings.survey_id_field">survey_id_field (sec_interp.core.models.settings_model.DrillholeSettings attribute)</a>
+      <li><a href="sec_interp.core.domain.dtos.html#id27">survey_id_field (sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.survey_id_field">[1]</a>
 
       <ul>
-        <li><a href="sec_interp.core.types.html#id44">(sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.survey_id_field">[1]</a>
+        <li><a href="sec_interp.core.domain.html#id69">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.survey_id_field">[1]</a>
+</li>
+        <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings.survey_id_field">(sec_interp.core.models.settings_model.DrillholeSettings attribute)</a>
 </li>
       </ul></li>
       <li><a href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ValidationParams.survey_incl">survey_incl (sec_interp.core.validation.project_validator.ValidationParams attribute)</a>
@@ -3499,15 +4325,19 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.core.validation.html#sec_interp.core.validation.ValidationParams.survey_incl">(sec_interp.core.validation.ValidationParams attribute)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings.survey_incl_field">survey_incl_field (sec_interp.core.models.settings_model.DrillholeSettings attribute)</a>
+      <li><a href="sec_interp.core.domain.dtos.html#id28">survey_incl_field (sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.survey_incl_field">[1]</a>
 
       <ul>
-        <li><a href="sec_interp.core.types.html#id45">(sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.survey_incl_field">[1]</a>
+        <li><a href="sec_interp.core.domain.html#id70">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.survey_incl_field">[1]</a>
+</li>
+        <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings.survey_incl_field">(sec_interp.core.models.settings_model.DrillholeSettings attribute)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.types.html#id46">survey_layer (sec_interp.core.types.PreviewParams attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.survey_layer">[1]</a>
+      <li><a href="sec_interp.core.domain.dtos.html#id29">survey_layer (sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.survey_layer">[1]</a>
 
       <ul>
+        <li><a href="sec_interp.core.domain.html#id71">(sec_interp.core.domain.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.survey_layer">[1]</a>
+</li>
         <li><a href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ValidationParams.survey_layer">(sec_interp.core.validation.project_validator.ValidationParams attribute)</a>
 </li>
         <li><a href="sec_interp.core.validation.html#sec_interp.core.validation.ValidationParams.survey_layer">(sec_interp.core.validation.ValidationParams attribute)</a>
@@ -3516,6 +4346,8 @@ window.addEventListener("load", load);
       <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings.survey_layer_id">survey_layer_id (sec_interp.core.models.settings_model.DrillholeSettings attribute)</a>
 </li>
       <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings.survey_layer_name">survey_layer_name (sec_interp.core.models.settings_model.DrillholeSettings attribute)</a>
+</li>
+      <li><a href="sec_interp.core.services.drillhole.survey_processor.html#sec_interp.core.services.drillhole.survey_processor.SurveyProcessor">SurveyProcessor (class in sec_interp.core.services.drillhole.survey_processor)</a>
 </li>
       <li><a href="sec_interp.exporters.html#sec_interp.exporters.SVGExporter">SVGExporter (class in sec_interp.exporters)</a>
 
@@ -3539,6 +4371,18 @@ window.addEventListener("load", load);
 </li>
       <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.PluginSettings.to_dict">to_dict() (sec_interp.core.models.settings_model.PluginSettings method)</a>
 </li>
+      <li><a href="sec_interp.core.domain.spatial_meta.html#sec_interp.core.domain.spatial_meta.SpatialMeta.to_vec2_profile">to_vec2_profile() (sec_interp.core.domain.spatial_meta.SpatialMeta method)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.SpatialMeta.to_vec2_profile">(sec_interp.core.domain.SpatialMeta method)</a>
+</li>
+      </ul></li>
+      <li><a href="sec_interp.core.domain.spatial_meta.html#sec_interp.core.domain.spatial_meta.SpatialMeta.to_vec3">to_vec3() (sec_interp.core.domain.spatial_meta.SpatialMeta method)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.SpatialMeta.to_vec3">(sec_interp.core.domain.SpatialMeta method)</a>
+</li>
+      </ul></li>
       <li><a href="sec_interp.gui.main_dialog.html#sec_interp.gui.main_dialog.SecInterpDialog.toggle_interpretation_tool">toggle_interpretation_tool() (sec_interp.gui.main_dialog.SecInterpDialog method)</a>
 
       <ul>
@@ -3547,8 +4391,6 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.toggle_interpretation_tool">(sec_interp.gui.SecInterpDialog method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sec_interp.gui.main_dialog.html#sec_interp.gui.main_dialog.SecInterpDialog.toggle_measure_tool">toggle_measure_tool() (sec_interp.gui.main_dialog.SecInterpDialog method)</a>
 
       <ul>
@@ -3557,16 +4399,34 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.toggle_measure_tool">(sec_interp.gui.SecInterpDialog method)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.GeologyTaskInput.tolerance">tolerance (sec_interp.core.types.GeologyTaskInput attribute)</a>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="sec_interp.core.domain.html#id28">tolerance (sec_interp.core.domain.GeologyTaskInput attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.GeologyTaskInput.tolerance">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.task_inputs.html#id24">(sec_interp.core.domain.task_inputs.GeologyTaskInput attribute)</a>, <a href="sec_interp.core.domain.task_inputs.html#sec_interp.core.domain.task_inputs.GeologyTaskInput.tolerance">[1]</a>
 </li>
-      <li><a href="sec_interp.core.types.html#id52">topo (sec_interp.core.types.PreviewResult attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.PreviewResult.topo">[1]</a>
+      </ul></li>
+      <li><a href="sec_interp.core.domain.dtos.html#id35">topo (sec_interp.core.domain.dtos.PreviewResult attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewResult.topo">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#id77">(sec_interp.core.domain.PreviewResult attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewResult.topo">[1]</a>
+</li>
+      </ul></li>
+      <li><a href="sec_interp.gui.renderers.topo_renderer.html#sec_interp.gui.renderers.topo_renderer.TopoRenderer">TopoRenderer (class in sec_interp.gui.renderers.topo_renderer)</a>
 </li>
       <li><a href="sec_interp.sec_interp_plugin.html#sec_interp.sec_interp_plugin.SecInterp.tr">tr() (sec_interp.sec_interp_plugin.SecInterp method)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#id9">type (sec_interp.core.types.InterpretationPolygon attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.InterpretationPolygon.type">[1]</a>
+      <li><a href="sec_interp.core.services.drillhole.trajectory_engine.html#sec_interp.core.services.drillhole.trajectory_engine.TrajectoryEngine">TrajectoryEngine (class in sec_interp.core.services.drillhole.trajectory_engine)</a>
+</li>
+      <li><a href="sec_interp.core.domain.entities.html#id9">type (sec_interp.core.domain.entities.InterpretationPolygon attribute)</a>, <a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon.type">[1]</a>
 
       <ul>
-        <li><a href="sec_interp.core.types.html#id16">(sec_interp.core.types.InterpretationPolygon25D attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.InterpretationPolygon25D.type">[1]</a>
+        <li><a href="sec_interp.core.domain.entities.html#id16">(sec_interp.core.domain.entities.InterpretationPolygon25D attribute)</a>, <a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon25D.type">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.html#id34">(sec_interp.core.domain.InterpretationPolygon attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.InterpretationPolygon.type">[1]</a>
+</li>
+        <li><a href="sec_interp.core.domain.html#id41">(sec_interp.core.domain.InterpretationPolygon25D attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.InterpretationPolygon25D.type">[1]</a>
 </li>
       </ul></li>
   </ul></td>
@@ -3577,8 +4437,12 @@ window.addEventListener("load", load);
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.UIConstants">UIConstants (class in sec_interp.gui.main_dialog_config)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#id3">unit_name (sec_interp.core.types.GeologySegment attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.GeologySegment.unit_name">[1]</a>
+      <li><a href="sec_interp.core.domain.entities.html#id3">unit_name (sec_interp.core.domain.entities.GeologySegment attribute)</a>, <a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.GeologySegment.unit_name">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#id19">(sec_interp.core.domain.GeologySegment attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.GeologySegment.unit_name">[1]</a>
 </li>
+      </ul></li>
       <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.UNKNOWN_ERROR">UNKNOWN_ERROR (sec_interp.gui.main_dialog_config.ValidationMessages attribute)</a>
 </li>
       <li><a href="sec_interp.sec_interp_plugin.html#sec_interp.sec_interp_plugin.SecInterp.unload">unload() (sec_interp.sec_interp_plugin.SecInterp method)</a>
@@ -3627,17 +4491,23 @@ window.addEventListener("load", load);
 </li>
       <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DrillholeSettings.use_geom">use_geom (sec_interp.core.models.settings_model.DrillholeSettings attribute)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.DrillholeTaskInput.use_geometry">use_geometry (sec_interp.core.types.DrillholeTaskInput attribute)</a>
+      <li><a href="sec_interp.core.domain.html#id15">use_geometry (sec_interp.core.domain.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.DrillholeTaskInput.use_geometry">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.task_inputs.html#id15">(sec_interp.core.domain.task_inputs.DrillholeTaskInput attribute)</a>, <a href="sec_interp.core.domain.task_inputs.html#sec_interp.core.domain.task_inputs.DrillholeTaskInput.use_geometry">[1]</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="V">V</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.PreviewParams.validate">validate() (sec_interp.core.types.PreviewParams method)</a>
+      <li><a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.validate">validate() (sec_interp.core.domain.dtos.PreviewParams method)</a>
 
       <ul>
+        <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.validate">(sec_interp.core.domain.PreviewParams method)</a>
+</li>
         <li><a href="sec_interp.core.validation.validation_helpers.html#sec_interp.core.validation.validation_helpers.DependencyRule.validate">(sec_interp.core.validation.validation_helpers.DependencyRule method)</a>
 </li>
         <li><a href="sec_interp.gui.ui.pages.base_page.html#sec_interp.gui.ui.pages.base_page.BasePage.validate">(sec_interp.gui.ui.pages.base_page.BasePage method)</a>
@@ -3805,7 +4675,7 @@ window.addEventListener("load", load);
         <li><a href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ValidationParams">(class in sec_interp.core.validation.project_validator)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.types.html#sec_interp.core.types.ValidationResult">ValidationResult (in module sec_interp.core.types)</a>
+      <li><a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.ValidationResult">ValidationResult (in module sec_interp.core.domain.entities)</a>
 </li>
       <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig.VERBOSE_LOGGING">VERBOSE_LOGGING (sec_interp.gui.main_dialog_config.DialogConfig attribute)</a>
 </li>
@@ -3819,8 +4689,12 @@ window.addEventListener("load", load);
       </ul></li>
       <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogDefaults.VERTICAL_EXAGGERATION">VERTICAL_EXAGGERATION (sec_interp.gui.main_dialog_config.DialogDefaults attribute)</a>
 </li>
-      <li><a href="sec_interp.core.types.html#id10">vertices_2d (sec_interp.core.types.InterpretationPolygon attribute)</a>, <a href="sec_interp.core.types.html#sec_interp.core.types.InterpretationPolygon.vertices_2d">[1]</a>
+      <li><a href="sec_interp.core.domain.entities.html#id10">vertices_2d (sec_interp.core.domain.entities.InterpretationPolygon attribute)</a>, <a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon.vertices_2d">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#id35">(sec_interp.core.domain.InterpretationPolygon attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.InterpretationPolygon.vertices_2d">[1]</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -3838,6 +4712,62 @@ window.addEventListener("load", load);
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.WRONG_GEOMETRY_TYPE">WRONG_GEOMETRY_TYPE (sec_interp.gui.main_dialog_config.ValidationMessages attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="X">X</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="sec_interp.core.domain.spatial_meta.html#id6">x_3d (sec_interp.core.domain.spatial_meta.SpatialMeta attribute)</a>, <a href="sec_interp.core.domain.spatial_meta.html#sec_interp.core.domain.spatial_meta.SpatialMeta.x_3d">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#id84">(sec_interp.core.domain.SpatialMeta attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.SpatialMeta.x_3d">[1]</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="sec_interp.core.domain.spatial_meta.html#sec_interp.core.domain.spatial_meta.SpatialMeta.x_proj">x_proj (sec_interp.core.domain.spatial_meta.SpatialMeta attribute)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.SpatialMeta.x_proj">(sec_interp.core.domain.SpatialMeta attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Y">Y</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="sec_interp.core.domain.spatial_meta.html#id7">y_3d (sec_interp.core.domain.spatial_meta.SpatialMeta attribute)</a>, <a href="sec_interp.core.domain.spatial_meta.html#sec_interp.core.domain.spatial_meta.SpatialMeta.y_3d">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#id85">(sec_interp.core.domain.SpatialMeta attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.SpatialMeta.y_3d">[1]</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="sec_interp.core.domain.spatial_meta.html#sec_interp.core.domain.spatial_meta.SpatialMeta.y_proj">y_proj (sec_interp.core.domain.spatial_meta.SpatialMeta attribute)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.SpatialMeta.y_proj">(sec_interp.core.domain.SpatialMeta attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Z">Z</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="sec_interp.core.domain.spatial_meta.html#id8">z (sec_interp.core.domain.spatial_meta.SpatialMeta attribute)</a>, <a href="sec_interp.core.domain.spatial_meta.html#sec_interp.core.domain.spatial_meta.SpatialMeta.z">[1]</a>
+
+      <ul>
+        <li><a href="sec_interp.core.domain.html#id86">(sec_interp.core.domain.SpatialMeta attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.SpatialMeta.z">[1]</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig.ZOOM_DEBOUNCE_MS">ZOOM_DEBOUNCE_MS (sec_interp.gui.main_dialog_config.DialogConfig attribute)</a>
 </li>
   </ul></td>
 </tr></table>

@@ -5,24 +5,26 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp.core.utils.drillhole &mdash; SecInterp 2.7.0 documentation</title>
+  <title>sec_interp.core.utils.drillhole &mdash; SecInterp 2.9.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../../_static/documentation_options.js?v=dfec817d"></script>
-      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs"></script>
-      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script src="../../../../_static/documentation_options.js?v=182a64a0"></script>
+      <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
       <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
 
-const defaultStyle = document.createElement('style');
-defaultStyle.textContent = `pre.mermaid {
+
+
+
+
+const initStyles = () => {
+    const defaultStyle = document.createElement('style');
+    defaultStyle.textContent = `pre.mermaid {
     /* Same as .mermaid-container > pre */
     display: block;
     width: 100%;
@@ -33,12 +35,11 @@ pre.mermaid > svg {
     height: 500px;
     width: 100%;
     max-width: 100% !important;
-}
-`;
-document.head.appendChild(defaultStyle);
+}`;
+    document.head.appendChild(defaultStyle);
 
-const fullscreenStyle = document.createElement('style');
-fullscreenStyle.textContent = `.mermaid-container {
+    const fullscreenStyle = document.createElement('style');
+    fullscreenStyle.textContent = `.mermaid-container {
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -190,10 +191,32 @@ fullscreenStyle.textContent = `.mermaid-container {
 .mermaid-fullscreen-modal .mermaid-fullscreen-btn {
     display: none !important;
 }`;
-document.head.appendChild(fullscreenStyle);
+    document.head.appendChild(fullscreenStyle);
+}
 
 // Detect if page has dark background
 const isDarkTheme = () => {
+    // We use a set of heuristics:
+    // 1. Check for common dark mode classes or attributes
+    // 2. Check computed background color brightness
+    if (document.documentElement.classList.contains('dark') ||
+        document.documentElement.getAttribute('data-theme') === 'dark' ||
+        document.body.classList.contains('dark') ||
+        document.body.getAttribute('data-theme') === 'dark') {
+        // console.log("Dark theme detected via class/attribute");
+        return true;
+    }
+    if (document.documentElement.classList.contains('light') ||
+        document.documentElement.getAttribute('data-theme') === 'light' ||
+        document.body.classList.contains('light') ||
+        document.body.getAttribute('data-theme') === 'light') {
+        // console.log("Light theme detected via class/attribute");
+        return false;
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // console.log("Dark theme detected via prefers-color-scheme");
+        return true;
+    }
     const bgColor = window.getComputedStyle(document.body).backgroundColor;
     const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
     if (match) {
@@ -201,15 +224,45 @@ const isDarkTheme = () => {
         const g = parseInt(match[2]);
         const b = parseInt(match[3]);
         const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        // console.log("Background color brightness:", brightness);
         return brightness < 128;
     }
+    // console.log("No dark or light theme detected, defaulting to light theme");
     return false;
 };
 
-const load = async () => {
-    await mermaid.run();
+let darkTheme = isDarkTheme();
+let modal = null;
+let modalContent = null;
+let previousScrollOffset = [window.scrollX, window.scrollY];
 
-    const all_mermaids = document.querySelectorAll(".mermaid");
+const runMermaid = async (rerun) => {
+    console.log("Running mermaid diagrams, rerun =", rerun);
+    // clear all existing mermaid charts
+    let all_mermaids = document.querySelectorAll(".mermaid");
+
+    if (rerun) {
+        all_mermaids.forEach((el) => {
+            if(!el.hasAttribute("data-original-code")) {
+                // store original code
+                // console.log(`Storing original code for first run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+            if(el.getAttribute("data-processed") === "true") {
+                // remove and restore original
+                el.removeAttribute("data-processed");
+                // console.log(`Restoring original code for re-run: `, el.getAttribute('data-original-code'));
+                el.innerHTML = el.getAttribute('data-original-code');
+            } else {
+                // store original code
+                // console.log(`Storing original code for re-run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+        });
+        await mermaid.run();
+    }
+
+    all_mermaids = document.querySelectorAll(".mermaid");
     const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
 
     if ("False" === "True") {
@@ -217,10 +270,10 @@ const load = async () => {
         if(mermaids_to_add_zoom > 0) {
             var svgs = d3.selectAll("");
             if(all_mermaids.length !== mermaids_processed.length) {
-                setTimeout(load, 200);
+                setTimeout(() => runMermaid(false), 200);
                 return;
             } else if(svgs.size() !== mermaids_to_add_zoom) {
-                setTimeout(load, 200);
+                setTimeout(() => runMermaid(false), 200);
                 return;
             } else {
                 svgs.each(function() {
@@ -236,16 +289,21 @@ const load = async () => {
         }
     } else if(all_mermaids.length !== mermaids_processed.length) {
         // Wait for mermaid to process all diagrams
-        setTimeout(load, 200);
+        setTimeout(() => runMermaid(false), 200);
         return;
     }
-
-    const darkTheme = isDarkTheme();
 
     // Stop here if not adding fullscreen capability
     if ("True" !== "True") return;
 
-    const modal = document.createElement('div');
+    if (modal !== null ) {
+        // Destroy existing modal
+        modal.remove();
+        modal = null;
+        modalContent = null;
+    }
+
+    modal = document.createElement('div');
     modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
     modal.setAttribute('role', 'dialog');
     modal.setAttribute('aria-modal', 'true');
@@ -256,10 +314,8 @@ const load = async () => {
     `;
     document.body.appendChild(modal);
 
-    const modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    modalContent = modal.querySelector('.mermaid-container-fullscreen');
     const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
-
-    let previousScrollOffset = [window.scrollX, window.scrollY];
 
     const closeModal = () => {
         modal.classList.remove('active');
@@ -278,11 +334,14 @@ const load = async () => {
         }
     });
 
-    const allButtons = [];
-
     document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
         if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
             mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            // Already processed, adjust button class if needed
+            const existingBtn = mermaidDiv.parentNode.querySelector('.mermaid-fullscreen-btn');
+            if (existingBtn) {
+                existingBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+            }
             return;
         }
 
@@ -340,46 +399,57 @@ const load = async () => {
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         });
-
         container.appendChild(fullscreenBtn);
-        allButtons.push(fullscreenBtn);
-    });
-
-    // Update theme classes when theme changes
-    const updateTheme = () => {
-        const dark = isDarkTheme();
-        allButtons.forEach(btn => {
-            if (dark) {
-                btn.classList.add('dark-theme');
-            } else {
-                btn.classList.remove('dark-theme');
-            }
-        });
-        if (dark) {
-            modal.classList.add('dark-theme');
-            modalContent.classList.add('dark-theme');
-            closeBtn.classList.add('dark-theme');
-        } else {
-            modal.classList.remove('dark-theme');
-            modalContent.classList.remove('dark-theme');
-            closeBtn.classList.remove('dark-theme');
-        }
-    };
-
-    // Watch for theme changes
-    const observer = new MutationObserver(updateTheme);
-    observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['class', 'style', 'data-theme']
-    });
-    observer.observe(document.body, {
-        attributes: true,
-        attributeFilter: ['class', 'style']
     });
 };
 
-window.addEventListener("load", load);
-</script>
+const load = async () => {
+    initStyles();
+
+    await runMermaid(true);
+
+    const reRunIfThemeChanges = async () => {
+        const newDarkTheme = isDarkTheme();
+        if (newDarkTheme !== darkTheme) {
+            darkTheme = newDarkTheme;
+            console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
+            await mermaid.initialize(
+                {...JSON.parse(
+                    `{"startOnLoad": false}`
+                ),
+                ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+                }
+            );
+            await runMermaid(true);
+        }
+    };
+
+    // Update theme classes when theme changes
+    const themeObserver = new MutationObserver(reRunIfThemeChanges);
+    themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    themeObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+};
+
+
+
+
+
+console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
+mermaid.initialize(
+    {...JSON.parse(
+        `{"startOnLoad": false}`
+    ),
+    ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+    }
+);
+
+window.addEventListener("load", load);</script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
@@ -440,11 +510,12 @@ window.addEventListener("load", load);
            <div itemprop="articleBody">
              
   <h1>Source code for sec_interp.core.utils.drillhole</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
-<span class="sd">&quot;&quot;&quot;Drillhole Utilities Module.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Drillhole Utilities Module.</span>
 
 <span class="sd">Calculations for drillhole geometry and projection.</span>
 <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
@@ -455,137 +526,160 @@ window.addEventListener("load", load);
 <div class="viewcode-block" id="calculate_drillhole_trajectory">
 <a class="viewcode-back" href="../../../../sec_interp.core.utils.drillhole.html#sec_interp.core.utils.calculate_drillhole_trajectory">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">calculate_drillhole_trajectory</span><span class="p">(</span>
-    <span class="n">collar_point</span><span class="p">:</span> <span class="n">QgsPointXY</span><span class="p">,</span>
+    <span class="n">collar_point</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
     <span class="n">collar_z</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">survey_data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
     <span class="n">section_azimuth</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">densify_step</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
     <span class="n">total_depth</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate 3D trajectory of a drillhole using survey data.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the 3D trajectory of a drillhole using survey data.</span>
 
-<span class="sd">    Uses the tangential method for trajectory calculation with densification</span>
-<span class="sd">    to generate intermediate points for continuous interval projection.</span>
+<span class="sd">    Calculates X, Y, Z positions along the hole using minimum curvature or</span>
+<span class="sd">    tangential approximation based on survey readings (depth, azimuth, dip).</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        collar_point: QgsPointXY of collar location (X, Y).</span>
-<span class="sd">        collar_z: Elevation of collar (Z).</span>
-<span class="sd">        survey_data: List of tuples (depth, azimuth, inclination) sorted by depth.</span>
-<span class="sd">        section_azimuth: Azimuth of the section line in degrees.</span>
-<span class="sd">        densify_step: Distance in meters between interpolated points (default 1.0m).</span>
-<span class="sd">        total_depth: Optional total depth. If greater than last survey depth,</span>
-<span class="sd">                     trajectory will be extrapolated using last orientation.</span>
+<span class="sd">        collar_point: Starting point (QgsPointXY or tuple).</span>
+<span class="sd">        collar_z: Starting elevation.</span>
+<span class="sd">        survey_data: List of (depth, azimuth, inclination) tuples.</span>
+<span class="sd">        section_azimuth: Azimuth of the section line (for relative calcs).</span>
+<span class="sd">        densify_step: Distance between interpolated points in meters.</span>
+<span class="sd">        total_depth: Total depth of the hole.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        A list of tuples (depth, x, y, z, dist_along_section, offset_from_section):</span>
-<span class="sd">            - depth: Depth along the hole.</span>
-<span class="sd">            - x, y, z: 3D coordinates.</span>
-<span class="sd">            - dist_along_section: Distance along the section line (initially 0.0).</span>
-<span class="sd">            - offset_from_section: Perpendicular distance from section line (initially 0.0).</span>
+<span class="sd">        List of (depth, x, y, z, 0.0, 0.0) trajectory points.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">survey_data</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">total_depth</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="c1"># No survey but depth provided: assume vertical hole</span>
-            <span class="c1"># Add a dummy survey point at surface with vertical inclination (-90)</span>
-            <span class="n">survey_data</span> <span class="o">=</span> <span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">90.0</span><span class="p">)]</span>
-        <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">total_depth</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[]</span>
+        <span class="n">survey_data</span> <span class="o">=</span> <span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">90.0</span><span class="p">)]</span>
 
     <span class="n">trajectory</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">_initialize_start_point</span><span class="p">(</span><span class="n">collar_point</span><span class="p">)</span>
 
-    <span class="c1"># Start at collar</span>
-    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">collar_point</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">collar_point</span><span class="o">.</span><span class="n">y</span><span class="p">(),</span> <span class="n">collar_z</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">collar_z</span>
     <span class="n">prev_depth</span> <span class="o">=</span> <span class="mf">0.0</span>
-
-    <span class="c1"># Add collar point</span>
     <span class="n">trajectory</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span>
 
-    <span class="n">last_azimuth</span> <span class="o">=</span> <span class="mf">0.0</span>
-    <span class="n">last_inclination</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">last_azim</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">last_incl</span> <span class="o">=</span> <span class="mf">0.0</span>
     <span class="n">last_survey_depth</span> <span class="o">=</span> <span class="mf">0.0</span>
 
     <span class="k">for</span> <span class="n">depth</span><span class="p">,</span> <span class="n">azimuth</span><span class="p">,</span> <span class="n">inclination</span> <span class="ow">in</span> <span class="n">survey_data</span><span class="p">:</span>
-        <span class="c1"># Keep track of last orientation for extrapolation</span>
-        <span class="n">last_azimuth</span> <span class="o">=</span> <span class="n">azimuth</span>
-        <span class="n">last_inclination</span> <span class="o">=</span> <span class="n">inclination</span>
-        <span class="n">last_survey_depth</span> <span class="o">=</span> <span class="n">depth</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">prev_depth</span> <span class="o">=</span> <span class="n">_process_survey_segment</span><span class="p">(</span>
+            <span class="n">depth</span><span class="p">,</span> <span class="n">azimuth</span><span class="p">,</span> <span class="n">inclination</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">prev_depth</span><span class="p">,</span> <span class="n">densify_step</span><span class="p">,</span> <span class="n">trajectory</span>
+        <span class="p">)</span>
+        <span class="n">last_azim</span><span class="p">,</span> <span class="n">last_incl</span><span class="p">,</span> <span class="n">last_survey_depth</span> <span class="o">=</span> <span class="n">azimuth</span><span class="p">,</span> <span class="n">inclination</span><span class="p">,</span> <span class="n">depth</span>
 
-        <span class="k">if</span> <span class="n">depth</span> <span class="o">&lt;=</span> <span class="n">prev_depth</span><span class="p">:</span>
-            <span class="k">continue</span>
-
-        <span class="c1"># Calculate interval</span>
-        <span class="n">interval</span> <span class="o">=</span> <span class="n">depth</span> <span class="o">-</span> <span class="n">prev_depth</span>
-
-        <span class="c1"># Convert angles to radians</span>
-        <span class="n">azim_rad</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">azimuth</span><span class="p">)</span>
-
-        <span class="c1"># Inclination convention: -90° = vertical down, 0° = horizontal</span>
-        <span class="c1"># We need to convert to standard convention where 0° = vertical down</span>
-        <span class="c1"># Standard: 0° down, 90° horizontal</span>
-        <span class="n">standard_incl_rad</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">90</span> <span class="o">+</span> <span class="n">inclination</span><span class="p">)</span>
-
-        <span class="c1"># Vertical component (negative because Z decreases downward)</span>
-        <span class="n">total_dz</span> <span class="o">=</span> <span class="o">-</span><span class="n">interval</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">standard_incl_rad</span><span class="p">)</span>
-
-        <span class="c1"># Horizontal components (East, North)</span>
-        <span class="n">total_dx</span> <span class="o">=</span> <span class="n">interval</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">standard_incl_rad</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">azim_rad</span><span class="p">)</span>
-        <span class="n">total_dy</span> <span class="o">=</span> <span class="n">interval</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">standard_incl_rad</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">azim_rad</span><span class="p">)</span>
-
-        <span class="c1"># Densify: generate intermediate points along this segment</span>
-        <span class="n">num_steps</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">interval</span> <span class="o">/</span> <span class="n">densify_step</span><span class="p">))</span>
-
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-            <span class="c1"># Calculate fraction of segment</span>
-            <span class="n">fraction</span> <span class="o">=</span> <span class="n">i</span> <span class="o">/</span> <span class="n">num_steps</span>
-
-            <span class="c1"># Interpolate depth</span>
-            <span class="n">interp_depth</span> <span class="o">=</span> <span class="n">prev_depth</span> <span class="o">+</span> <span class="n">interval</span> <span class="o">*</span> <span class="n">fraction</span>
-
-            <span class="c1"># Interpolate position (linear interpolation along segment)</span>
-            <span class="n">interp_x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">total_dx</span> <span class="o">*</span> <span class="n">fraction</span>
-            <span class="n">interp_y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">total_dy</span> <span class="o">*</span> <span class="n">fraction</span>
-            <span class="n">interp_z</span> <span class="o">=</span> <span class="n">z</span> <span class="o">+</span> <span class="n">total_dz</span> <span class="o">*</span> <span class="n">fraction</span>
-
-            <span class="c1"># Add interpolated point</span>
-            <span class="n">trajectory</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">interp_depth</span><span class="p">,</span> <span class="n">interp_x</span><span class="p">,</span> <span class="n">interp_y</span><span class="p">,</span> <span class="n">interp_z</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span>
-
-        <span class="c1"># Update position to end of segment</span>
-        <span class="n">x</span> <span class="o">+=</span> <span class="n">total_dx</span>
-        <span class="n">y</span> <span class="o">+=</span> <span class="n">total_dy</span>
-        <span class="n">z</span> <span class="o">+=</span> <span class="n">total_dz</span>
-
-        <span class="n">prev_depth</span> <span class="o">=</span> <span class="n">depth</span>
-
-    <span class="c1"># Extrapolate if total_depth is provided and greater than last survey</span>
     <span class="k">if</span> <span class="n">total_depth</span> <span class="o">&gt;</span> <span class="n">last_survey_depth</span><span class="p">:</span>
-        <span class="c1"># Calculate interval</span>
-        <span class="n">interval</span> <span class="o">=</span> <span class="n">total_depth</span> <span class="o">-</span> <span class="n">last_survey_depth</span>
-
-        <span class="c1"># Use last known orientation</span>
-        <span class="n">azim_rad</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">last_azimuth</span><span class="p">)</span>
-        <span class="n">standard_incl_rad</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">90</span> <span class="o">+</span> <span class="n">last_inclination</span><span class="p">)</span>
-
-        <span class="c1"># Vertical component</span>
-        <span class="n">total_dz</span> <span class="o">=</span> <span class="o">-</span><span class="n">interval</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">standard_incl_rad</span><span class="p">)</span>
-
-        <span class="c1"># Horizontal components</span>
-        <span class="n">total_dx</span> <span class="o">=</span> <span class="n">interval</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">standard_incl_rad</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">azim_rad</span><span class="p">)</span>
-        <span class="n">total_dy</span> <span class="o">=</span> <span class="n">interval</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">standard_incl_rad</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">azim_rad</span><span class="p">)</span>
-
-        <span class="c1"># Densify extrapolation</span>
-        <span class="n">num_steps</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">interval</span> <span class="o">/</span> <span class="n">densify_step</span><span class="p">))</span>
-
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-            <span class="n">fraction</span> <span class="o">=</span> <span class="n">i</span> <span class="o">/</span> <span class="n">num_steps</span>
-            <span class="n">interp_depth</span> <span class="o">=</span> <span class="n">last_survey_depth</span> <span class="o">+</span> <span class="n">interval</span> <span class="o">*</span> <span class="n">fraction</span>
-            <span class="n">interp_x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">total_dx</span> <span class="o">*</span> <span class="n">fraction</span>
-            <span class="n">interp_y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">total_dy</span> <span class="o">*</span> <span class="n">fraction</span>
-            <span class="n">interp_z</span> <span class="o">=</span> <span class="n">z</span> <span class="o">+</span> <span class="n">total_dz</span> <span class="o">*</span> <span class="n">fraction</span>
-            <span class="n">trajectory</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">interp_depth</span><span class="p">,</span> <span class="n">interp_x</span><span class="p">,</span> <span class="n">interp_y</span><span class="p">,</span> <span class="n">interp_z</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span>
+        <span class="n">trajectory</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+            <span class="n">_extrapolate_trajectory</span><span class="p">(</span>
+                <span class="n">x</span><span class="p">,</span>
+                <span class="n">y</span><span class="p">,</span>
+                <span class="n">z</span><span class="p">,</span>
+                <span class="n">last_survey_depth</span><span class="p">,</span>
+                <span class="n">total_depth</span><span class="p">,</span>
+                <span class="n">last_azim</span><span class="p">,</span>
+                <span class="n">last_incl</span><span class="p">,</span>
+                <span class="n">densify_step</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">trajectory</span></div>
 
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_calculate_segment_delta</span><span class="p">(</span>
+    <span class="n">interval</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">azimuth</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">inclination</span><span class="p">:</span> <span class="nb">float</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate X, Y, Z deltas for a survey segment.&quot;&quot;&quot;</span>
+    <span class="n">azim_rad</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">azimuth</span><span class="p">)</span>
+    <span class="n">standard_incl_rad</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">90</span> <span class="o">+</span> <span class="n">inclination</span><span class="p">)</span>
+    <span class="n">dz</span> <span class="o">=</span> <span class="o">-</span><span class="n">interval</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">standard_incl_rad</span><span class="p">)</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">interval</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">standard_incl_rad</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">azim_rad</span><span class="p">)</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">interval</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">standard_incl_rad</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">azim_rad</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">dz</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_initialize_start_point</span><span class="p">(</span><span class="n">collar_point</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract X and Y coordinates from a point-like object.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">collar_point</span><span class="o">.</span><span class="n">x</span><span class="p">()</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">collar_point</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="n">collar_point</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">collar_point</span><span class="o">.</span><span class="n">y</span><span class="p">()</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">collar_point</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="n">collar_point</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_process_survey_segment</span><span class="p">(</span>
+    <span class="n">depth</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">azimuth</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">inclination</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">z</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">prev_depth</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">densify_step</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">trajectory</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Process a single survey segment and update coordinates.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">depth</span> <span class="o">&lt;=</span> <span class="n">prev_depth</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">prev_depth</span>
+
+    <span class="n">interval</span> <span class="o">=</span> <span class="n">depth</span> <span class="o">-</span> <span class="n">prev_depth</span>
+    <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">dz</span> <span class="o">=</span> <span class="n">_calculate_segment_delta</span><span class="p">(</span><span class="n">interval</span><span class="p">,</span> <span class="n">azimuth</span><span class="p">,</span> <span class="n">inclination</span><span class="p">)</span>
+
+    <span class="n">trajectory</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+        <span class="n">_calculate_segment_points</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">prev_depth</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">dz</span><span class="p">,</span> <span class="n">interval</span><span class="p">,</span> <span class="n">densify_step</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">dx</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">dy</span><span class="p">,</span> <span class="n">z</span> <span class="o">+</span> <span class="n">dz</span><span class="p">,</span> <span class="n">depth</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_calculate_segment_points</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">z</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">prev_depth</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">dx</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">dy</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">dz</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">interval</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">step</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate densified points for a single segment.&quot;&quot;&quot;</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">num_steps</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">interval</span> <span class="o">/</span> <span class="n">step</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">frac</span> <span class="o">=</span> <span class="n">i</span> <span class="o">/</span> <span class="n">num_steps</span>
+        <span class="n">points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="p">(</span>
+                <span class="n">prev_depth</span> <span class="o">+</span> <span class="n">interval</span> <span class="o">*</span> <span class="n">frac</span><span class="p">,</span>
+                <span class="n">x</span> <span class="o">+</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">frac</span><span class="p">,</span>
+                <span class="n">y</span> <span class="o">+</span> <span class="n">dy</span> <span class="o">*</span> <span class="n">frac</span><span class="p">,</span>
+                <span class="n">z</span> <span class="o">+</span> <span class="n">dz</span> <span class="o">*</span> <span class="n">frac</span><span class="p">,</span>
+                <span class="mf">0.0</span><span class="p">,</span>
+                <span class="mf">0.0</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">points</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_extrapolate_trajectory</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">z</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">last_depth</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">total_depth</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">azim</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">incl</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">step</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extrapolate trajectory from last known survey point.&quot;&quot;&quot;</span>
+    <span class="n">interval</span> <span class="o">=</span> <span class="n">total_depth</span> <span class="o">-</span> <span class="n">last_depth</span>
+    <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">dz</span> <span class="o">=</span> <span class="n">_calculate_segment_delta</span><span class="p">(</span><span class="n">interval</span><span class="p">,</span> <span class="n">azim</span><span class="p">,</span> <span class="n">incl</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_calculate_segment_points</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">last_depth</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">dz</span><span class="p">,</span> <span class="n">interval</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="project_trajectory_to_section">
@@ -593,26 +687,28 @@ window.addEventListener("load", load);
 <span class="k">def</span><span class="w"> </span><span class="nf">project_trajectory_to_section</span><span class="p">(</span>
     <span class="n">trajectory</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">],</span>
     <span class="n">line_geom</span><span class="p">:</span> <span class="n">QgsGeometry</span><span class="p">,</span>
-    <span class="n">line_start</span><span class="p">:</span> <span class="n">QgsPointXY</span><span class="p">,</span>
+    <span class="n">line_start</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>  <span class="c1"># Point2D or QgsPointXY</span>
     <span class="n">distance_area</span><span class="p">:</span> <span class="n">QgsDistanceArea</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Project drillhole trajectory points onto section line.</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Project drillhole trajectory points onto the section line.</span>
+
+<span class="sd">    Calculates the 2D projection (distance along section) and the offset</span>
+<span class="sd">    (distance from section) for each point in a 3D trajectory.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        trajectory: List of (depth, x, y, z, _, _) from `calculate_drillhole_trajectory`.</span>
-<span class="sd">        line_geom: QgsGeometry of the section line.</span>
-<span class="sd">        line_start: QgsPointXY of the section line start.</span>
-<span class="sd">        distance_area: QgsDistanceArea for geodesic measurements.</span>
+<span class="sd">        trajectory: List of 3D trajectory points (depth, x, y, z, ...).</span>
+<span class="sd">        line_geom: Section line geometry.</span>
+<span class="sd">        line_start: Reference start point for distance calculation.</span>
+<span class="sd">        distance_area: Distance calculation utility.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        List of tuples (depth, x, y, z, dist_along, offset):</span>
-<span class="sd">            - depth: Original depth.</span>
-<span class="sd">            - x, y, z: Original 3D coordinates.</span>
-<span class="sd">            - dist_along: Projected distance along the section line.</span>
-<span class="sd">            - offset: Perpendicular offset from the section line.</span>
+<span class="sd">        List of (depth, x, y, z, dist_along, offset, proj_x, proj_y) tuples.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">projected</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Ensure line_start is QgsPointXY</span>
+    <span class="n">start_pt</span> <span class="o">=</span> <span class="n">line_start</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">line_start</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="n">QgsPointXY</span><span class="p">(</span><span class="n">line_start</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">line_start</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
     <span class="k">for</span> <span class="n">depth</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">trajectory</span><span class="p">:</span>
         <span class="n">point</span> <span class="o">=</span> <span class="n">QgsPointXY</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
@@ -623,7 +719,7 @@ window.addEventListener("load", load);
         <span class="n">nearest_pt_xy</span> <span class="o">=</span> <span class="n">nearest_point</span><span class="o">.</span><span class="n">asPoint</span><span class="p">()</span>
 
         <span class="c1"># Calculate distance along section</span>
-        <span class="n">dist_along</span> <span class="o">=</span> <span class="n">distance_area</span><span class="o">.</span><span class="n">measureLine</span><span class="p">(</span><span class="n">line_start</span><span class="p">,</span> <span class="n">nearest_pt_xy</span><span class="p">)</span>
+        <span class="n">dist_along</span> <span class="o">=</span> <span class="n">distance_area</span><span class="o">.</span><span class="n">measureLine</span><span class="p">(</span><span class="n">start_pt</span><span class="p">,</span> <span class="n">nearest_pt_xy</span><span class="p">)</span>
 
         <span class="c1"># Calculate offset from section</span>
         <span class="n">offset</span> <span class="o">=</span> <span class="n">distance_area</span><span class="o">.</span><span class="n">measureLine</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">nearest_pt_xy</span><span class="p">)</span>

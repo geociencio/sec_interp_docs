@@ -5,24 +5,26 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp.core.services.structure_service &mdash; SecInterp 2.7.0 documentation</title>
+  <title>sec_interp.core.services.structure_service &mdash; SecInterp 2.9.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../../_static/documentation_options.js?v=dfec817d"></script>
-      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs"></script>
-      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script src="../../../../_static/documentation_options.js?v=182a64a0"></script>
+      <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
       <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
 
-const defaultStyle = document.createElement('style');
-defaultStyle.textContent = `pre.mermaid {
+
+
+
+
+const initStyles = () => {
+    const defaultStyle = document.createElement('style');
+    defaultStyle.textContent = `pre.mermaid {
     /* Same as .mermaid-container > pre */
     display: block;
     width: 100%;
@@ -33,12 +35,11 @@ pre.mermaid > svg {
     height: 500px;
     width: 100%;
     max-width: 100% !important;
-}
-`;
-document.head.appendChild(defaultStyle);
+}`;
+    document.head.appendChild(defaultStyle);
 
-const fullscreenStyle = document.createElement('style');
-fullscreenStyle.textContent = `.mermaid-container {
+    const fullscreenStyle = document.createElement('style');
+    fullscreenStyle.textContent = `.mermaid-container {
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -190,10 +191,32 @@ fullscreenStyle.textContent = `.mermaid-container {
 .mermaid-fullscreen-modal .mermaid-fullscreen-btn {
     display: none !important;
 }`;
-document.head.appendChild(fullscreenStyle);
+    document.head.appendChild(fullscreenStyle);
+}
 
 // Detect if page has dark background
 const isDarkTheme = () => {
+    // We use a set of heuristics:
+    // 1. Check for common dark mode classes or attributes
+    // 2. Check computed background color brightness
+    if (document.documentElement.classList.contains('dark') ||
+        document.documentElement.getAttribute('data-theme') === 'dark' ||
+        document.body.classList.contains('dark') ||
+        document.body.getAttribute('data-theme') === 'dark') {
+        // console.log("Dark theme detected via class/attribute");
+        return true;
+    }
+    if (document.documentElement.classList.contains('light') ||
+        document.documentElement.getAttribute('data-theme') === 'light' ||
+        document.body.classList.contains('light') ||
+        document.body.getAttribute('data-theme') === 'light') {
+        // console.log("Light theme detected via class/attribute");
+        return false;
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // console.log("Dark theme detected via prefers-color-scheme");
+        return true;
+    }
     const bgColor = window.getComputedStyle(document.body).backgroundColor;
     const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
     if (match) {
@@ -201,15 +224,45 @@ const isDarkTheme = () => {
         const g = parseInt(match[2]);
         const b = parseInt(match[3]);
         const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        // console.log("Background color brightness:", brightness);
         return brightness < 128;
     }
+    // console.log("No dark or light theme detected, defaulting to light theme");
     return false;
 };
 
-const load = async () => {
-    await mermaid.run();
+let darkTheme = isDarkTheme();
+let modal = null;
+let modalContent = null;
+let previousScrollOffset = [window.scrollX, window.scrollY];
 
-    const all_mermaids = document.querySelectorAll(".mermaid");
+const runMermaid = async (rerun) => {
+    console.log("Running mermaid diagrams, rerun =", rerun);
+    // clear all existing mermaid charts
+    let all_mermaids = document.querySelectorAll(".mermaid");
+
+    if (rerun) {
+        all_mermaids.forEach((el) => {
+            if(!el.hasAttribute("data-original-code")) {
+                // store original code
+                // console.log(`Storing original code for first run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+            if(el.getAttribute("data-processed") === "true") {
+                // remove and restore original
+                el.removeAttribute("data-processed");
+                // console.log(`Restoring original code for re-run: `, el.getAttribute('data-original-code'));
+                el.innerHTML = el.getAttribute('data-original-code');
+            } else {
+                // store original code
+                // console.log(`Storing original code for re-run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+        });
+        await mermaid.run();
+    }
+
+    all_mermaids = document.querySelectorAll(".mermaid");
     const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
 
     if ("False" === "True") {
@@ -217,10 +270,10 @@ const load = async () => {
         if(mermaids_to_add_zoom > 0) {
             var svgs = d3.selectAll("");
             if(all_mermaids.length !== mermaids_processed.length) {
-                setTimeout(load, 200);
+                setTimeout(() => runMermaid(false), 200);
                 return;
             } else if(svgs.size() !== mermaids_to_add_zoom) {
-                setTimeout(load, 200);
+                setTimeout(() => runMermaid(false), 200);
                 return;
             } else {
                 svgs.each(function() {
@@ -236,16 +289,21 @@ const load = async () => {
         }
     } else if(all_mermaids.length !== mermaids_processed.length) {
         // Wait for mermaid to process all diagrams
-        setTimeout(load, 200);
+        setTimeout(() => runMermaid(false), 200);
         return;
     }
-
-    const darkTheme = isDarkTheme();
 
     // Stop here if not adding fullscreen capability
     if ("True" !== "True") return;
 
-    const modal = document.createElement('div');
+    if (modal !== null ) {
+        // Destroy existing modal
+        modal.remove();
+        modal = null;
+        modalContent = null;
+    }
+
+    modal = document.createElement('div');
     modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
     modal.setAttribute('role', 'dialog');
     modal.setAttribute('aria-modal', 'true');
@@ -256,10 +314,8 @@ const load = async () => {
     `;
     document.body.appendChild(modal);
 
-    const modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    modalContent = modal.querySelector('.mermaid-container-fullscreen');
     const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
-
-    let previousScrollOffset = [window.scrollX, window.scrollY];
 
     const closeModal = () => {
         modal.classList.remove('active');
@@ -278,11 +334,14 @@ const load = async () => {
         }
     });
 
-    const allButtons = [];
-
     document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
         if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
             mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            // Already processed, adjust button class if needed
+            const existingBtn = mermaidDiv.parentNode.querySelector('.mermaid-fullscreen-btn');
+            if (existingBtn) {
+                existingBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+            }
             return;
         }
 
@@ -340,46 +399,57 @@ const load = async () => {
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         });
-
         container.appendChild(fullscreenBtn);
-        allButtons.push(fullscreenBtn);
-    });
-
-    // Update theme classes when theme changes
-    const updateTheme = () => {
-        const dark = isDarkTheme();
-        allButtons.forEach(btn => {
-            if (dark) {
-                btn.classList.add('dark-theme');
-            } else {
-                btn.classList.remove('dark-theme');
-            }
-        });
-        if (dark) {
-            modal.classList.add('dark-theme');
-            modalContent.classList.add('dark-theme');
-            closeBtn.classList.add('dark-theme');
-        } else {
-            modal.classList.remove('dark-theme');
-            modalContent.classList.remove('dark-theme');
-            closeBtn.classList.remove('dark-theme');
-        }
-    };
-
-    // Watch for theme changes
-    const observer = new MutationObserver(updateTheme);
-    observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['class', 'style', 'data-theme']
-    });
-    observer.observe(document.body, {
-        attributes: true,
-        attributeFilter: ['class', 'style']
     });
 };
 
-window.addEventListener("load", load);
-</script>
+const load = async () => {
+    initStyles();
+
+    await runMermaid(true);
+
+    const reRunIfThemeChanges = async () => {
+        const newDarkTheme = isDarkTheme();
+        if (newDarkTheme !== darkTheme) {
+            darkTheme = newDarkTheme;
+            console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
+            await mermaid.initialize(
+                {...JSON.parse(
+                    `{"startOnLoad": false}`
+                ),
+                ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+                }
+            );
+            await runMermaid(true);
+        }
+    };
+
+    // Update theme classes when theme changes
+    const themeObserver = new MutationObserver(reRunIfThemeChanges);
+    themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    themeObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+};
+
+
+
+
+
+console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
+mermaid.initialize(
+    {...JSON.parse(
+        `{"startOnLoad": false}`
+    ),
+    ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+    }
+);
+
+window.addEventListener("load", load);</script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
@@ -440,13 +510,11 @@ window.addEventListener("load", load);
            <div itemprop="articleBody">
              
   <h1>Source code for sec_interp.core.services.structure_service</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
-<span class="sd">&quot;&quot;&quot;Structure Data Processing Service.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Structure Data Processing Service.</span>
 
 <span class="sd">This module handles the calculation of apparent dips and projection</span>
 <span class="sd">of structural measurements (planes, lines) onto the section plane.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-
 
 <span class="c1"># /***************************************************************************</span>
 <span class="c1">#  SecInterp - StructureService</span>
@@ -466,6 +534,8 @@ window.addEventListener("load", load);
 <span class="c1">#  *   (at your option) any later version.                                   *</span>
 <span class="c1">#  *                                                                         *</span>
 <span class="c1">#  ***************************************************************************/</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterator</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">qgis.core</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
@@ -474,15 +544,14 @@ window.addEventListener("load", load);
     <span class="n">QgsFeature</span><span class="p">,</span>
     <span class="n">QgsGeometry</span><span class="p">,</span>
     <span class="n">QgsPointXY</span><span class="p">,</span>
-    <span class="n">QgsRaster</span><span class="p">,</span>
     <span class="n">QgsRasterLayer</span><span class="p">,</span>
     <span class="n">QgsVectorLayer</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span> <span class="k">as</span> <span class="n">scu</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataMissingError</span><span class="p">,</span> <span class="n">GeometryError</span><span class="p">,</span> <span class="n">ProcessingError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.domain</span><span class="w"> </span><span class="kn">import</span> <span class="n">StructureData</span><span class="p">,</span> <span class="n">StructureMeasurement</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProcessingError</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.interfaces.structure_interface</span><span class="w"> </span><span class="kn">import</span> <span class="n">IStructureService</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">StructureData</span><span class="p">,</span> <span class="n">StructureMeasurement</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.logger_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_logger</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -497,61 +566,82 @@ window.addEventListener("load", load);
 <span class="sd">    (dip/strike) onto a cross-section plane to calculate apparent dip.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+<div class="viewcode-block" id="StructureService.detach_structures">
+<a class="viewcode-back" href="../../../../sec_interp.core.services.structure_service.html#sec_interp.core.services.StructureService.detach_structures">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">detach_structures</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">struct_lyr</span><span class="p">:</span> <span class="n">QgsVectorLayer</span><span class="p">,</span>
+        <span class="n">line_geom</span><span class="p">:</span> <span class="n">QgsGeometry</span><span class="p">,</span>
+        <span class="n">buffer_m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Extract structural features within buffer into detached dictionaries.</span>
+
+<span class="sd">        Uses a spatial index filter via a buffer around the section line.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            struct_lyr: Structural measurements vector layer.</span>
+<span class="sd">            line_geom: Section line geometry.</span>
+<span class="sd">            buffer_m: Buffer distance in meters.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of detached dictionaries containing WKT and attributes.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">buffer_geom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_buffer_zone</span><span class="p">(</span><span class="n">line_geom</span><span class="p">,</span> <span class="n">struct_lyr</span><span class="o">.</span><span class="n">crs</span><span class="p">(),</span> <span class="n">buffer_m</span><span class="p">)</span>
+        <span class="n">filtered_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_structures</span><span class="p">(</span><span class="n">struct_lyr</span><span class="p">,</span> <span class="n">buffer_geom</span><span class="p">,</span> <span class="n">struct_lyr</span><span class="o">.</span><span class="n">crs</span><span class="p">())</span>
+
+        <span class="n">detached_data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="n">filtered_features</span><span class="p">:</span>
+            <span class="n">detached_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;wkt&quot;</span><span class="p">:</span> <span class="n">feat</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span><span class="o">.</span><span class="n">asWkt</span><span class="p">()</span> <span class="k">if</span> <span class="n">feat</span><span class="o">.</span><span class="n">hasGeometry</span><span class="p">()</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="s2">&quot;attributes&quot;</span><span class="p">:</span> <span class="n">scu</span><span class="o">.</span><span class="n">extract_feature_attributes</span><span class="p">(</span><span class="n">feat</span><span class="p">),</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">detached_data</span></div>
+
+
 <div class="viewcode-block" id="StructureService.project_structures">
 <a class="viewcode-back" href="../../../../sec_interp.core.services.structure_service.html#sec_interp.core.services.StructureService.project_structures">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">project_structures</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">line_lyr</span><span class="p">:</span> <span class="n">QgsVectorLayer</span><span class="p">,</span>
+        <span class="n">line_geom</span><span class="p">:</span> <span class="n">QgsGeometry</span><span class="p">,</span>
+        <span class="n">line_start</span><span class="p">:</span> <span class="n">QgsPointXY</span><span class="p">,</span>
+        <span class="n">da</span><span class="p">:</span> <span class="n">QgsDistanceArea</span><span class="p">,</span>
         <span class="n">raster_lyr</span><span class="p">:</span> <span class="n">QgsRasterLayer</span><span class="p">,</span>
-        <span class="n">struct_lyr</span><span class="p">:</span> <span class="n">QgsVectorLayer</span><span class="p">,</span>
-        <span class="n">buffer_m</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">struct_data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+        <span class="n">buffer_m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">line_az</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">dip_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">strike_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">band_number</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">StructureData</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Project structural measurements onto the cross-section plane.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Project detached structural measurements onto the section plane.</span>
 
-<span class="sd">        Filters structures within a buffer, samples elevation, and calculates</span>
-<span class="sd">        apparent dip for each measurement.</span>
+<span class="sd">        Calculates stations (distance along section), elevations from DEM,</span>
+<span class="sd">        and apparent dips based on the section orientation.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            line_lyr: The cross-section line vector layer.</span>
-<span class="sd">            raster_lyr: The DEM raster layer for elevation sampling.</span>
-<span class="sd">            struct_lyr: Vector layer containing structural measurements.</span>
-<span class="sd">            buffer_m: Search buffer distance in meters.</span>
-<span class="sd">            line_az: Azimuth of the section line in degrees.</span>
-<span class="sd">            dip_field: Name of the field containing dip values.</span>
-<span class="sd">            strike_field: Name of the field containing strike values.</span>
-<span class="sd">            band_number: Raster band to use for elevation (default: 1).</span>
+<span class="sd">            line_geom: Section line geometry.</span>
+<span class="sd">            line_start: Section start point.</span>
+<span class="sd">            da: Distance calculator.</span>
+<span class="sd">            raster_lyr: Elevation raster layer.</span>
+<span class="sd">            struct_data: List of detached structural data.</span>
+<span class="sd">            buffer_m: Projection buffer (m).</span>
+<span class="sd">            line_az: Section azimuth in degrees.</span>
+<span class="sd">            dip_field: Field name for dip angle.</span>
+<span class="sd">            strike_field: Field name for strike azimuth.</span>
+<span class="sd">            band_number: Raster band for elevation.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            A list of StructureMeasurement objects sorted by distance along section.</span>
-
-<span class="sd">        Raises:</span>
-<span class="sd">            DataMissingError: If line layer has no features.</span>
-<span class="sd">            GeometryError: If line geometry is invalid.</span>
+<span class="sd">            StructureData: Sorted list of projected StructureMeasurement objects.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Logging: Initial setup</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Analyzing structures in </span><span class="si">{</span><span class="n">struct_lyr</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s2"> with buffer </span><span class="si">{</span><span class="n">buffer_m</span><span class="si">}</span><span class="s2">m&quot;</span><span class="p">)</span>
-
-        <span class="n">line_geom</span><span class="p">,</span> <span class="n">line_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_line_info</span><span class="p">(</span><span class="n">line_lyr</span><span class="p">)</span>
-
-        <span class="c1"># 1. Create Buffer</span>
-        <span class="n">buffer_geom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_buffer_zone</span><span class="p">(</span><span class="n">line_geom</span><span class="p">,</span> <span class="n">line_lyr</span><span class="o">.</span><span class="n">crs</span><span class="p">(),</span> <span class="n">buffer_m</span><span class="p">)</span>
-
-        <span class="c1"># 2. Filter Measures</span>
-        <span class="n">filtered_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_structures</span><span class="p">(</span><span class="n">struct_lyr</span><span class="p">,</span> <span class="n">buffer_geom</span><span class="p">,</span> <span class="n">line_lyr</span><span class="o">.</span><span class="n">crs</span><span class="p">())</span>
-
-        <span class="c1"># 3. Process Features</span>
         <span class="n">projected_structs</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">crs</span> <span class="o">=</span> <span class="n">struct_lyr</span><span class="o">.</span><span class="n">crs</span><span class="p">()</span>
-        <span class="n">da</span> <span class="o">=</span> <span class="n">scu</span><span class="o">.</span><span class="n">create_distance_area</span><span class="p">(</span><span class="n">crs</span><span class="p">)</span>
 
-        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">filtered_features</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">struct_data</span><span class="p">:</span>
             <span class="n">measurement</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_single_structure</span><span class="p">(</span>
-                <span class="n">f</span><span class="p">,</span>
+                <span class="n">item</span><span class="p">,</span>
                 <span class="n">line_geom</span><span class="p">,</span>
                 <span class="n">line_start</span><span class="p">,</span>
                 <span class="n">da</span><span class="p">,</span>
@@ -567,9 +657,7 @@ window.addEventListener("load", load);
         <span class="c1"># Sort by distance</span>
         <span class="n">projected_structs</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">distance</span><span class="p">)</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Processed </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">projected_structs</span><span class="p">)</span><span class="si">}</span><span class="s2"> structural measurements from </span><span class="si">{</span><span class="n">struct_lyr</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Processed </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">projected_structs</span><span class="p">)</span><span class="si">}</span><span class="s2"> structural measurements&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">projected_structs</span></div>
 
 
@@ -631,7 +719,7 @@ window.addEventListener("load", load);
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_process_single_structure</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">feature</span><span class="p">:</span> <span class="n">QgsFeature</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
         <span class="n">line_geom</span><span class="p">:</span> <span class="n">QgsGeometry</span><span class="p">,</span>
         <span class="n">line_start</span><span class="p">:</span> <span class="n">QgsPointXY</span><span class="p">,</span>
         <span class="n">da</span><span class="p">:</span> <span class="n">QgsDistanceArea</span><span class="p">,</span>
@@ -641,25 +729,32 @@ window.addEventListener("load", load);
         <span class="n">dip_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">strike_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">StructureMeasurement</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Process a single structure feature to calculate its 2D coordinates and apparent dip.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Process a single structure from detached data.</span>
+
+<span class="sd">        Projects the measurement point onto the section line and calculates</span>
+<span class="sd">        geological properties.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            feature: The source structural point feature.</span>
-<span class="sd">            line_geom: The section line geometry.</span>
-<span class="sd">            line_start: The start point of the section line.</span>
-<span class="sd">            da: The distance calculation object.</span>
-<span class="sd">            raster_lyr: The DEM layer for elevation sampling.</span>
-<span class="sd">            band_number: The raster band index.</span>
-<span class="sd">            line_az: The azimuth of the section line.</span>
-<span class="sd">            dip_field: Field name for original dip.</span>
-<span class="sd">            strike_field: Field name for original strike.</span>
+<span class="sd">            data: Detached structure data.</span>
+<span class="sd">            line_geom: Section line geometry.</span>
+<span class="sd">            line_start: Start point.</span>
+<span class="sd">            da: Distance measurer.</span>
+<span class="sd">            raster_lyr: Elevation raster.</span>
+<span class="sd">            band_number: Band num.</span>
+<span class="sd">            line_az: Section azimuth.</span>
+<span class="sd">            dip_field: Dip field.</span>
+<span class="sd">            strike_field: Strike field.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            The projected measurement object, or None if invalid or cannot be projected.</span>
+<span class="sd">            StructureMeasurement or None if projection fails.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">struct_geom</span> <span class="o">=</span> <span class="n">feature</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">struct_geom</span> <span class="ow">or</span> <span class="n">struct_geom</span><span class="o">.</span><span class="n">isNull</span><span class="p">():</span>
+        <span class="n">wkt</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;wkt&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">wkt</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">struct_geom</span> <span class="o">=</span> <span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromWkt</span><span class="p">(</span><span class="n">wkt</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">struct_geom</span><span class="o">.</span><span class="n">isNull</span><span class="p">():</span>
             <span class="k">return</span> <span class="kc">None</span>
 
         <span class="c1"># Project point onto line to get true station distance</span>
@@ -671,12 +766,13 @@ window.addEventListener("load", load);
         <span class="n">proj_pt</span> <span class="o">=</span> <span class="n">line_geom</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">proj_dist</span><span class="p">)</span><span class="o">.</span><span class="n">asPoint</span><span class="p">()</span>
 
         <span class="c1"># Measure geodesic distance from start</span>
-        <span class="c1"># Using measureLine ensures correct units (meters) even if CRS is geographic</span>
         <span class="n">dist</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">measureLine</span><span class="p">(</span><span class="n">line_start</span><span class="p">,</span> <span class="n">proj_pt</span><span class="p">)</span>
 
-        <span class="n">elev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sample_elevation</span><span class="p">(</span><span class="n">raster_lyr</span><span class="p">,</span> <span class="n">proj_pt</span><span class="p">,</span> <span class="n">band_number</span><span class="p">)</span>
+        <span class="n">elev</span> <span class="o">=</span> <span class="n">scu</span><span class="o">.</span><span class="n">sample_point_elevation</span><span class="p">(</span><span class="n">raster_lyr</span><span class="p">,</span> <span class="n">proj_pt</span><span class="p">,</span> <span class="n">band_number</span><span class="p">)</span>
 
-        <span class="n">parsed_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_structural_data</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="n">strike_field</span><span class="p">,</span> <span class="n">dip_field</span><span class="p">,</span> <span class="n">line_az</span><span class="p">)</span>
+        <span class="n">parsed_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_structural_data</span><span class="p">(</span>
+            <span class="n">data</span><span class="p">[</span><span class="s2">&quot;attributes&quot;</span><span class="p">],</span> <span class="n">strike_field</span><span class="p">,</span> <span class="n">dip_field</span><span class="p">,</span> <span class="n">line_az</span>
+        <span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">parsed_data</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
@@ -689,58 +785,12 @@ window.addEventListener("load", load);
             <span class="n">apparent_dip</span><span class="o">=</span><span class="nb">round</span><span class="p">(</span><span class="n">app_dip</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
             <span class="n">original_dip</span><span class="o">=</span><span class="n">dip_angle</span><span class="p">,</span>
             <span class="n">original_strike</span><span class="o">=</span><span class="n">strike</span><span class="p">,</span>
-            <span class="n">attributes</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">feature</span><span class="o">.</span><span class="n">fields</span><span class="p">()</span><span class="o">.</span><span class="n">names</span><span class="p">(),</span> <span class="n">feature</span><span class="o">.</span><span class="n">attributes</span><span class="p">(),</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">)),</span>
+            <span class="n">attributes</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;attributes&quot;</span><span class="p">],</span>
         <span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_line_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line_lyr</span><span class="p">:</span> <span class="n">QgsVectorLayer</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">QgsGeometry</span><span class="p">,</span> <span class="n">QgsPointXY</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Extract geometry and start point from the line layer.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            line_lyr: The vector layer containing the section line.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            A tuple containing (line_geometry, start_point).</span>
-
-<span class="sd">        Raises:</span>
-<span class="sd">            DataMissingError: If layer has no features.</span>
-<span class="sd">            GeometryError: If geometry is invalid.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">line_feat</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">line_lyr</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">(),</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">line_feat</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">DataMissingError</span><span class="p">(</span><span class="s2">&quot;Line layer has no features&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;layer&quot;</span><span class="p">:</span> <span class="n">line_lyr</span><span class="o">.</span><span class="n">name</span><span class="p">()})</span>
-
-        <span class="n">line_geom</span> <span class="o">=</span> <span class="n">line_feat</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">line_geom</span> <span class="ow">or</span> <span class="n">line_geom</span><span class="o">.</span><span class="n">isNull</span><span class="p">():</span>
-            <span class="k">raise</span> <span class="n">GeometryError</span><span class="p">(</span><span class="s2">&quot;Line geometry is not valid&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;layer&quot;</span><span class="p">:</span> <span class="n">line_lyr</span><span class="o">.</span><span class="n">name</span><span class="p">()})</span>
-
-        <span class="k">if</span> <span class="n">line_geom</span><span class="o">.</span><span class="n">isMultipart</span><span class="p">():</span>
-            <span class="n">line_start</span> <span class="o">=</span> <span class="n">line_geom</span><span class="o">.</span><span class="n">asMultiPolyline</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">line_start</span> <span class="o">=</span> <span class="n">line_geom</span><span class="o">.</span><span class="n">asPolyline</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
-
-        <span class="k">return</span> <span class="n">line_geom</span><span class="p">,</span> <span class="n">line_start</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_sample_elevation</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">raster_lyr</span><span class="p">:</span> <span class="n">QgsRasterLayer</span><span class="p">,</span> <span class="n">point</span><span class="p">:</span> <span class="n">QgsPointXY</span><span class="p">,</span> <span class="n">band_number</span><span class="p">:</span> <span class="nb">int</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sample elevation from a raster at a given point.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            raster_lyr: The DEM raster layer.</span>
-<span class="sd">            point: The point to sample.</span>
-<span class="sd">            band_number: The band index.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            The sampled elevation value or 0.0 if sampling fails.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">res_val</span> <span class="o">=</span> <span class="n">raster_lyr</span><span class="o">.</span><span class="n">dataProvider</span><span class="p">()</span><span class="o">.</span><span class="n">identify</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">QgsRaster</span><span class="o">.</span><span class="n">IdentifyFormatValue</span><span class="p">)</span><span class="o">.</span><span class="n">results</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">res_val</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">band_number</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_parse_structural_data</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">feature</span><span class="p">:</span> <span class="n">QgsFeature</span><span class="p">,</span>
+        <span class="n">attributes</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
         <span class="n">strike_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">dip_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">line_az</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
@@ -748,19 +798,19 @@ window.addEventListener("load", load);
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Parse strike and dip attributes and calculate apparent dip.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            feature: The feature containing attributes.</span>
-<span class="sd">            strike_field: Field name for strike.</span>
-<span class="sd">            dip_field: Field name for dip.</span>
+<span class="sd">            attributes: Feature attributes dictionary.</span>
+<span class="sd">            strike_field: Name of the strike field.</span>
+<span class="sd">            dip_field: Name of the dip field.</span>
 <span class="sd">            line_az: Azimuth of the section line.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            A tuple of (strike, dip_angle, apparent_dip) or None if validation fails.</span>
+<span class="sd">            Tuple (strike, dip, apparent_dip) or None if parsing fails.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">strike_raw</span> <span class="o">=</span> <span class="n">feature</span><span class="p">[</span><span class="n">strike_field</span><span class="p">]</span>
-            <span class="n">dip_raw</span> <span class="o">=</span> <span class="n">feature</span><span class="p">[</span><span class="n">dip_field</span><span class="p">]</span>
-        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">strike_raw</span> <span class="o">=</span> <span class="n">attributes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">strike_field</span><span class="p">)</span>
+            <span class="n">dip_raw</span> <span class="o">=</span> <span class="n">attributes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dip_field</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">None</span>
 
         <span class="n">strike</span> <span class="o">=</span> <span class="n">scu</span><span class="o">.</span><span class="n">parse_strike</span><span class="p">(</span><span class="n">strike_raw</span><span class="p">)</span>
@@ -769,8 +819,11 @@ window.addEventListener("load", load);
         <span class="k">if</span> <span class="n">strike</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">dip_angle</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
+        <span class="n">MAX_STRIKE</span> <span class="o">=</span> <span class="mi">360</span>
+        <span class="n">MAX_DIP_ANGLE</span> <span class="o">=</span> <span class="mi">90</span>
+
         <span class="c1"># Validate ranges</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">strike</span> <span class="o">&lt;=</span> <span class="mi">360</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">dip_angle</span> <span class="o">&lt;=</span> <span class="mi">90</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">strike</span> <span class="o">&lt;=</span> <span class="n">MAX_STRIKE</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">dip_angle</span> <span class="o">&lt;=</span> <span class="n">MAX_DIP_ANGLE</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">None</span>
 
         <span class="n">app_dip</span> <span class="o">=</span> <span class="n">scu</span><span class="o">.</span><span class="n">calculate_apparent_dip</span><span class="p">(</span><span class="n">strike</span><span class="p">,</span> <span class="n">dip_angle</span><span class="p">,</span> <span class="n">line_az</span><span class="p">)</span>

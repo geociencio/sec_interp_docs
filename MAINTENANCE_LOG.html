@@ -6,16 +6,16 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SecInterp - Maintenance &amp; Release Log &mdash; SecInterp 2.7.0 documentation</title>
+  <title>SecInterp - Maintenance &amp; Release Log &mdash; SecInterp 2.9.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=dfec817d"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/documentation_options.js?v=182a64a0"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -49,7 +49,10 @@
 <li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">SecInterp - Maintenance &amp; Release Log</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#v2-8-0-plan-phase-1-2026-01-20">[v2.8.0 Plan - Phase 1] - 2026-01-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v2-10-0-plan-phase-1-2026-02-01">[v2.10.0 Plan - Phase 1] - 2026-02-01</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#phase-closure-v2-9-0-architectural-consolidation">[Phase Closure v2.9.0] - ARCHITECTURAL CONSOLIDATION</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#phase-closure-v2-8-0-debt-reduction-ui-improvements">[Phase Closure v2.8.0] - DEBT REDUCTION &amp; UI IMPROVEMENTS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v2-8-0-plan-phase-2-2026-01-24">[v2.8.0 Plan - Phase 2] - 2026-01-24</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#v2-7-0-plan-phase-1-2026-01-15">[v2.7.0 Plan - Phase 1] - 2026-01-15</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#release-process">🚀 Release Process</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#unreleased">[Unreleased]</a></li>
@@ -71,6 +74,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#historical-refactoring-notes">📁 Historical Refactoring Notes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#phase-closure-v3-0-0-release-internationalization">[Phase Closure v3.0.0] - RELEASE &amp; INTERNATIONALIZATION</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#phase-closure-v2-7-0-refactor-stabilization">[Phase Closure v2.7.0] - REFACTOR &amp; STABILIZATION</a></li>
 </ul>
 </li>
@@ -107,11 +111,35 @@
 <h1>SecInterp - Maintenance &amp; Release Log<a class="headerlink" href="#secinterp-maintenance-release-log" title="Link to this heading"></a></h1>
 <p>This document serves as the central record for project history, release procedures, and past refactoring analysis.</p>
 <hr class="docutils" />
-<section id="v2-8-0-plan-phase-1-2026-01-20">
-<h2>[v2.8.0 Plan - Phase 1] - 2026-01-20<a class="headerlink" href="#v2-8-0-plan-phase-1-2026-01-20" title="Link to this heading"></a></h2>
+<section id="v2-10-0-plan-phase-1-2026-02-01">
+<h2>[v2.10.0 Plan - Phase 1] - 2026-02-01<a class="headerlink" href="#v2-10-0-plan-phase-1-2026-02-01" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p><strong>Legend Visibility</strong>: Implemented <code class="docutils literal notranslate"><span class="pre">show_legend</span></code> in <code class="docutils literal notranslate"><span class="pre">PreviewSettings</span></code> with project persistence. Added UI toggle in Preview page and ensured all image/vector exporters (PNG, PDF, SVG) respect the setting. Fixed interactive canvas visibility logic.</p></li>
+<li><p><strong>Focus</strong>: Quality Score &gt; 60, QGIS 4.x Prep (PyQt5 cleanup), ExportService Refactor.</p></li>
+<li><p><strong>Goals</strong>: Eliminate technical debt in resources.py and reduce cyclomatic complexity in 3D exporters.</p></li>
 </ul>
+</section>
+<section id="phase-closure-v2-9-0-architectural-consolidation">
+<h2>[Phase Closure v2.9.0] - ARCHITECTURAL CONSOLIDATION<a class="headerlink" href="#phase-closure-v2-9-0-architectural-consolidation" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Date</strong>: 2026-02-01</p></li>
+<li><p><strong>Focus</strong>: Core Domain Migration, Drillhole Service Decomposition, v2.9.0 Release Stabilization.</p></li>
+<li><p><strong>Outcome</strong>: 199 Tests Passing (100%). Quality Score: 54.3/100 (+9 pts). Official release published.</p></li>
+<li><p><strong>Reference</strong>: <span class="xref myst">Phase Closure Document</span> | <span class="xref myst">Technical Analysis</span></p></li>
+</ul>
+<hr class="docutils" />
+</section>
+<section id="phase-closure-v2-8-0-debt-reduction-ui-improvements">
+<h2>[Phase Closure v2.8.0] - DEBT REDUCTION &amp; UI IMPROVEMENTS<a class="headerlink" href="#phase-closure-v2-8-0-debt-reduction-ui-improvements" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Date</strong>: 2026-01-25</p></li>
+<li><p><strong>Focus</strong>: Core Decoupling, Async Safety, Legend Visibility.</p></li>
+<li><p><strong>Outcome</strong>: 359 Tests Passing, Core-QGIS Decoupling finalized with WKT/DTO pattern.</p></li>
+<li><p><strong>Reference</strong>: <span class="xref myst">Phase Closure Document</span></p></li>
+</ul>
+<hr class="docutils" />
+</section>
+<section id="v2-8-0-plan-phase-2-2026-01-24">
+<h2>[v2.8.0 Plan - Phase 2] - 2026-01-24<a class="headerlink" href="#v2-8-0-plan-phase-2-2026-01-24" title="Link to this heading"></a></h2>
 </section>
 <section id="v2-7-0-plan-phase-1-2026-01-15">
 <h2>[v2.7.0 Plan - Phase 1] - 2026-01-15<a class="headerlink" href="#v2-7-0-plan-phase-1-2026-01-15" title="Link to this heading"></a></h2>
@@ -132,7 +160,7 @@
 <h3>1. Preparation<a class="headerlink" href="#preparation" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Update Metadata</strong>: Increment <code class="docutils literal notranslate"><span class="pre">version</span></code> in <code class="docutils literal notranslate"><span class="pre">metadata.txt</span></code>.</p></li>
-<li><p><strong>Sync Project Brain</strong>: Update <code class="docutils literal notranslate"><span class="pre">.ai-context/project_brain.md</span></code>.</p></li>
+<li><p><strong>Sync AI Context</strong>: Update <code class="docutils literal notranslate"><span class="pre">AI_CONTEXT.md</span></code> and <code class="docutils literal notranslate"><span class="pre">project_context.json</span></code>.</p></li>
 <li><p><strong>Update Changelog</strong>: Add the new version to the top of the <a class="reference internal" href="#-project-history"><span class="xref myst">Project History</span></a> section below.</p></li>
 <li><p><strong>Update User Guide</strong>: Ensure screenshots and feature descriptions in <code class="docutils literal notranslate"><span class="pre">docs/USER_GUIDE.md</span></code> are current.</p></li>
 </ul>
@@ -344,6 +372,16 @@ mv<span class="w"> </span>sec_interp.zip<span class="w"> </span>sec_interp_vX.Y.
 See <code class="docutils literal notranslate"><span class="pre">docs/docsec/archive/</span></code> for original walkthroughs if deep historical context is needed.</p>
 </div></blockquote>
 </div></blockquote>
+<section id="phase-closure-v3-0-0-release-internationalization">
+<h3>[Phase Closure v3.0.0] - RELEASE &amp; INTERNATIONALIZATION<a class="headerlink" href="#phase-closure-v3-0-0-release-internationalization" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Date</strong>: 2026-02-14</p></li>
+<li><p><strong>Focus</strong>: Internationalization (i18n), Modular Services, Release Optimization.</p></li>
+<li><p><strong>Outcome</strong>: 8 Languages Supported, Package Size Reduced 99.6% (218KB), 361 Tests Passing.</p></li>
+<li><p><strong>Key Infra</strong>: <code class="docutils literal notranslate"><span class="pre">.qgisignore</span></code>, GitHub Actions Security Scan (100/100).</p></li>
+<li><p><strong>Reference</strong>: <span class="xref myst">Phase Closure Document</span></p></li>
+</ul>
+</section>
 <section id="phase-closure-v2-7-0-refactor-stabilization">
 <h3>[Phase Closure v2.7.0] - REFACTOR &amp; STABILIZATION<a class="headerlink" href="#phase-closure-v2-7-0-refactor-stabilization" title="Link to this heading"></a></h3>
 <ul class="simple">

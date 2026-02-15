@@ -5,24 +5,26 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp.sec_interp_plugin &mdash; SecInterp 2.7.0 documentation</title>
+  <title>sec_interp.sec_interp_plugin &mdash; SecInterp 2.9.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=dfec817d"></script>
-      <script src="../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs"></script>
-      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script src="../../_static/documentation_options.js?v=182a64a0"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
       <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
 
-const defaultStyle = document.createElement('style');
-defaultStyle.textContent = `pre.mermaid {
+
+
+
+
+const initStyles = () => {
+    const defaultStyle = document.createElement('style');
+    defaultStyle.textContent = `pre.mermaid {
     /* Same as .mermaid-container > pre */
     display: block;
     width: 100%;
@@ -33,12 +35,11 @@ pre.mermaid > svg {
     height: 500px;
     width: 100%;
     max-width: 100% !important;
-}
-`;
-document.head.appendChild(defaultStyle);
+}`;
+    document.head.appendChild(defaultStyle);
 
-const fullscreenStyle = document.createElement('style');
-fullscreenStyle.textContent = `.mermaid-container {
+    const fullscreenStyle = document.createElement('style');
+    fullscreenStyle.textContent = `.mermaid-container {
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -190,10 +191,32 @@ fullscreenStyle.textContent = `.mermaid-container {
 .mermaid-fullscreen-modal .mermaid-fullscreen-btn {
     display: none !important;
 }`;
-document.head.appendChild(fullscreenStyle);
+    document.head.appendChild(fullscreenStyle);
+}
 
 // Detect if page has dark background
 const isDarkTheme = () => {
+    // We use a set of heuristics:
+    // 1. Check for common dark mode classes or attributes
+    // 2. Check computed background color brightness
+    if (document.documentElement.classList.contains('dark') ||
+        document.documentElement.getAttribute('data-theme') === 'dark' ||
+        document.body.classList.contains('dark') ||
+        document.body.getAttribute('data-theme') === 'dark') {
+        // console.log("Dark theme detected via class/attribute");
+        return true;
+    }
+    if (document.documentElement.classList.contains('light') ||
+        document.documentElement.getAttribute('data-theme') === 'light' ||
+        document.body.classList.contains('light') ||
+        document.body.getAttribute('data-theme') === 'light') {
+        // console.log("Light theme detected via class/attribute");
+        return false;
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // console.log("Dark theme detected via prefers-color-scheme");
+        return true;
+    }
     const bgColor = window.getComputedStyle(document.body).backgroundColor;
     const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
     if (match) {
@@ -201,15 +224,45 @@ const isDarkTheme = () => {
         const g = parseInt(match[2]);
         const b = parseInt(match[3]);
         const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        // console.log("Background color brightness:", brightness);
         return brightness < 128;
     }
+    // console.log("No dark or light theme detected, defaulting to light theme");
     return false;
 };
 
-const load = async () => {
-    await mermaid.run();
+let darkTheme = isDarkTheme();
+let modal = null;
+let modalContent = null;
+let previousScrollOffset = [window.scrollX, window.scrollY];
 
-    const all_mermaids = document.querySelectorAll(".mermaid");
+const runMermaid = async (rerun) => {
+    console.log("Running mermaid diagrams, rerun =", rerun);
+    // clear all existing mermaid charts
+    let all_mermaids = document.querySelectorAll(".mermaid");
+
+    if (rerun) {
+        all_mermaids.forEach((el) => {
+            if(!el.hasAttribute("data-original-code")) {
+                // store original code
+                // console.log(`Storing original code for first run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+            if(el.getAttribute("data-processed") === "true") {
+                // remove and restore original
+                el.removeAttribute("data-processed");
+                // console.log(`Restoring original code for re-run: `, el.getAttribute('data-original-code'));
+                el.innerHTML = el.getAttribute('data-original-code');
+            } else {
+                // store original code
+                // console.log(`Storing original code for re-run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+        });
+        await mermaid.run();
+    }
+
+    all_mermaids = document.querySelectorAll(".mermaid");
     const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
 
     if ("False" === "True") {
@@ -217,10 +270,10 @@ const load = async () => {
         if(mermaids_to_add_zoom > 0) {
             var svgs = d3.selectAll("");
             if(all_mermaids.length !== mermaids_processed.length) {
-                setTimeout(load, 200);
+                setTimeout(() => runMermaid(false), 200);
                 return;
             } else if(svgs.size() !== mermaids_to_add_zoom) {
-                setTimeout(load, 200);
+                setTimeout(() => runMermaid(false), 200);
                 return;
             } else {
                 svgs.each(function() {
@@ -236,16 +289,21 @@ const load = async () => {
         }
     } else if(all_mermaids.length !== mermaids_processed.length) {
         // Wait for mermaid to process all diagrams
-        setTimeout(load, 200);
+        setTimeout(() => runMermaid(false), 200);
         return;
     }
-
-    const darkTheme = isDarkTheme();
 
     // Stop here if not adding fullscreen capability
     if ("True" !== "True") return;
 
-    const modal = document.createElement('div');
+    if (modal !== null ) {
+        // Destroy existing modal
+        modal.remove();
+        modal = null;
+        modalContent = null;
+    }
+
+    modal = document.createElement('div');
     modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
     modal.setAttribute('role', 'dialog');
     modal.setAttribute('aria-modal', 'true');
@@ -256,10 +314,8 @@ const load = async () => {
     `;
     document.body.appendChild(modal);
 
-    const modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    modalContent = modal.querySelector('.mermaid-container-fullscreen');
     const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
-
-    let previousScrollOffset = [window.scrollX, window.scrollY];
 
     const closeModal = () => {
         modal.classList.remove('active');
@@ -278,11 +334,14 @@ const load = async () => {
         }
     });
 
-    const allButtons = [];
-
     document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
         if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
             mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            // Already processed, adjust button class if needed
+            const existingBtn = mermaidDiv.parentNode.querySelector('.mermaid-fullscreen-btn');
+            if (existingBtn) {
+                existingBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+            }
             return;
         }
 
@@ -340,46 +399,57 @@ const load = async () => {
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         });
-
         container.appendChild(fullscreenBtn);
-        allButtons.push(fullscreenBtn);
-    });
-
-    // Update theme classes when theme changes
-    const updateTheme = () => {
-        const dark = isDarkTheme();
-        allButtons.forEach(btn => {
-            if (dark) {
-                btn.classList.add('dark-theme');
-            } else {
-                btn.classList.remove('dark-theme');
-            }
-        });
-        if (dark) {
-            modal.classList.add('dark-theme');
-            modalContent.classList.add('dark-theme');
-            closeBtn.classList.add('dark-theme');
-        } else {
-            modal.classList.remove('dark-theme');
-            modalContent.classList.remove('dark-theme');
-            closeBtn.classList.remove('dark-theme');
-        }
-    };
-
-    // Watch for theme changes
-    const observer = new MutationObserver(updateTheme);
-    observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['class', 'style', 'data-theme']
-    });
-    observer.observe(document.body, {
-        attributes: true,
-        attributeFilter: ['class', 'style']
     });
 };
 
-window.addEventListener("load", load);
-</script>
+const load = async () => {
+    initStyles();
+
+    await runMermaid(true);
+
+    const reRunIfThemeChanges = async () => {
+        const newDarkTheme = isDarkTheme();
+        if (newDarkTheme !== darkTheme) {
+            darkTheme = newDarkTheme;
+            console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
+            await mermaid.initialize(
+                {...JSON.parse(
+                    `{"startOnLoad": false}`
+                ),
+                ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+                }
+            );
+            await runMermaid(true);
+        }
+    };
+
+    // Update theme classes when theme changes
+    const themeObserver = new MutationObserver(reRunIfThemeChanges);
+    themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    themeObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+};
+
+
+
+
+
+console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
+mermaid.initialize(
+    {...JSON.parse(
+        `{"startOnLoad": false}`
+    ),
+    ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+    }
+);
+
+window.addEventListener("load", load);</script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -440,33 +510,12 @@ window.addEventListener("load", load);
            <div itemprop="articleBody">
              
   <h1>Source code for sec_interp.sec_interp_plugin</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
-<span class="c1"># /***************************************************************************</span>
-<span class="c1">#  SecInterp</span>
-<span class="c1">#                                  A QGIS plugin</span>
-<span class="c1">#  Data extraction for geological interpretation.</span>
-<span class="c1">#  Generated by Plugin Builder: http://g-sherman.github.io/Qgis-Plugin-Builder/.</span>
-<span class="c1">#                               -------------------</span>
-<span class="c1">#         begin                : 2025-11-15</span>
-<span class="c1">#         git sha              : $Format:%H$</span>
-<span class="c1">#         copyright            : (C) 2025 by Juan M Bernales</span>
-<span class="c1">#         email                : juanbernales@gmail.com</span>
-<span class="c1">#  ***************************************************************************/</span>
-<span class="c1">#</span>
-<span class="c1"># /***************************************************************************</span>
-<span class="c1">#  *                                                                         *</span>
-<span class="c1">#  *   This program is free software; you can redistribute it and/or modify  *</span>
-<span class="c1">#  *   it under the terms of the GNU General Public License as published by  *</span>
-<span class="c1">#  *   the Free Software Foundation; either version 2 of the License, or     *</span>
-<span class="c1">#  *   (at your option) any later version.                                   *</span>
-<span class="c1">#  *                                                                         *</span>
-<span class="c1">#  ***************************************************************************/</span>
-
-<span class="sd">&quot;&quot;&quot;Main Plugin Module.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Main Plugin Module.</span>
 
 <span class="sd">Orchestrates the lifecycle of the SecInterp QGIS plugin.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
@@ -484,9 +533,9 @@ window.addEventListener("load", load);
 <span class="kn">from</span><span class="w"> </span><span class="nn">qgis.PyQt.QtWidgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">QAction</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.controller</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProfileController</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.domain</span><span class="w"> </span><span class="kn">import</span> <span class="n">PreviewParams</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">SecInterpError</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.services.export_service</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExportService</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">PreviewParams</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.gui.main_dialog</span><span class="w"> </span><span class="kn">import</span> <span class="n">SecInterpDialog</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.gui.preview_renderer</span><span class="w"> </span><span class="kn">import</span> <span class="n">PreviewRenderer</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.logger_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_logger</span><span class="p">,</span> <span class="n">setup_logging</span>
@@ -531,7 +580,8 @@ window.addEventListener("load", load);
         <span class="c1"># Try full locale first (e.g., pt_BR)</span>
         <span class="n">locale_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plugin_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;i18n/SecInterp_</span><span class="si">{</span><span class="n">user_locale</span><span class="si">}</span><span class="s2">.qm&quot;</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">locale_path</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="n">user_locale</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">user_locale</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">MIN_LOCALE_LENGTH</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">locale_path</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="n">user_locale</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">user_locale</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">MIN_LOCALE_LENGTH</span><span class="p">:</span>
             <span class="c1"># Fallback to language code (e.g., pt)</span>
             <span class="n">locale_short</span> <span class="o">=</span> <span class="n">user_locale</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
             <span class="n">locale_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plugin_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;i18n/SecInterp_</span><span class="si">{</span><span class="n">locale_short</span><span class="si">}</span><span class="s2">.qm&quot;</span>
@@ -725,15 +775,8 @@ window.addEventListener("load", load);
         <span class="k">return</span> <span class="kc">None</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_and_validate_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PreviewParams</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieve and validate inputs from the dialog.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            PreviewParams: Validated parameters, or None if validation fails.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Get values from the dialog pages</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieve and validate inputs from the dialog.&quot;&quot;&quot;</span>
         <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">get_selected_values</span><span class="p">()</span>
-        <span class="c1"># Get preview/LOD options from the preview widget</span>
         <span class="n">preview_options</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">get_preview_options</span><span class="p">()</span>
 
         <span class="c1"># 1. Resolve Layer Objects</span>
@@ -743,19 +786,16 @@ window.addEventListener("load", load);
         <span class="n">line_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resolve_layer_obj</span><span class="p">(</span>
             <span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;crossline_layer&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s2">&quot;Select a crossline layer&quot;</span><span class="p">)</span>
         <span class="p">)</span>
-        <span class="n">outcrop_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resolve_layer_obj</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;outcrop_layer&quot;</span><span class="p">))</span>
-        <span class="n">structural_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resolve_layer_obj</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;structural_layer&quot;</span><span class="p">))</span>
 
-        <span class="c1"># 2. Build PreviewParams</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">params</span> <span class="o">=</span> <span class="n">PreviewParams</span><span class="p">(</span>
                 <span class="n">raster_layer</span><span class="o">=</span><span class="n">raster_layer</span><span class="p">,</span>
                 <span class="n">line_layer</span><span class="o">=</span><span class="n">line_layer</span><span class="p">,</span>
                 <span class="n">band_num</span><span class="o">=</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;selected_band&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
                 <span class="n">buffer_dist</span><span class="o">=</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;buffer_distance&quot;</span><span class="p">,</span> <span class="mf">100.0</span><span class="p">),</span>
-                <span class="n">outcrop_layer</span><span class="o">=</span><span class="n">outcrop_layer</span><span class="p">,</span>
+                <span class="n">outcrop_layer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_resolve_layer_obj</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;outcrop_layer&quot;</span><span class="p">)),</span>
                 <span class="n">outcrop_name_field</span><span class="o">=</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;outcrop_name_field&quot;</span><span class="p">),</span>
-                <span class="n">struct_layer</span><span class="o">=</span><span class="n">structural_layer</span><span class="p">,</span>
+                <span class="n">struct_layer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_resolve_layer_obj</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;structural_layer&quot;</span><span class="p">)),</span>
                 <span class="n">dip_field</span><span class="o">=</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dip_field&quot;</span><span class="p">),</span>
                 <span class="n">strike_field</span><span class="o">=</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;strike_field&quot;</span><span class="p">),</span>
                 <span class="n">dip_scale_factor</span><span class="o">=</span><span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dip_scale_factor&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
@@ -780,17 +820,21 @@ window.addEventListener("load", load);
                 <span class="n">auto_lod</span><span class="o">=</span><span class="n">preview_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;auto_lod&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>
                 <span class="n">canvas_width</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">preview_widget</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span>
             <span class="p">)</span>
-            <span class="c1"># Internal Native Validation</span>
             <span class="n">params</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
         <span class="k">except</span> <span class="n">SecInterpError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">handle_error</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s2">&quot;Configuration Error&quot;</span><span class="p">))</span>
             <span class="k">return</span> <span class="kc">None</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">handle_error</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s2">&quot;Unexpected Error&quot;</span><span class="p">))</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">handle_error</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s2">&quot;Input Processing Error&quot;</span><span class="p">))</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="c1"># 3. Connect Layer Notifications for Cache Invalidation</span>
-        <span class="n">active_layers</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="c1"># 3. Connect Layer Notifications</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">connect_layer_notifications</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_collect_active_layers</span><span class="p">(</span><span class="n">params</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">params</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_collect_active_layers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">PreviewParams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">QgsMapLayer</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Collect all active layers from parameters for monitoring.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span>
             <span class="n">l</span>
             <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="p">[</span>
                 <span class="n">params</span><span class="o">.</span><span class="n">raster_layer</span><span class="p">,</span>
@@ -803,11 +847,6 @@ window.addEventListener("load", load);
             <span class="p">]</span>
             <span class="k">if</span> <span class="n">l</span>
         <span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">connect_layer_notifications</span><span class="p">(</span><span class="n">active_layers</span><span class="p">)</span>
-
-        <span class="c1"># Store output path temporarily or return as tuple if needed</span>
-        <span class="c1"># but for now we only return params. Callers need the path separately.</span>
-        <span class="k">return</span> <span class="n">params</span>
 
 <div class="viewcode-block" id="SecInterp.process_data">
 <a class="viewcode-back" href="../../sec_interp.sec_interp_plugin.html#sec_interp.sec_interp_plugin.SecInterp.process_data">[docs]</a>
@@ -854,103 +893,78 @@ window.addEventListener("load", load);
         <span class="n">max_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Draw enhanced interactive preview using native PyQGIS renderer.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Draw enhanced interactive preview using native PyQGIS renderer.&quot;&quot;&quot;</span>
+        <span class="c1"># 1. State Persistence</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_store_preview_data</span><span class="p">(</span><span class="n">topo_data</span><span class="p">,</span> <span class="n">geol_data</span><span class="p">,</span> <span class="n">struct_data</span><span class="p">,</span> <span class="n">drillhole_data</span><span class="p">)</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            topo_data: List of (dist, elev) tuples for topographic profile</span>
-<span class="sd">            geol_data: Optional list of (dist, elev, geology_name) tuples</span>
-<span class="sd">            struct_data: Optional list of (dist, app_dip) tuples</span>
-<span class="sd">            drillhole_data: Optional list of (hole_id, traces, segments) tuples</span>
-<span class="sd">            max_points (int): Maximum number of points for simplified preview (LOD)</span>
-<span class="sd">            **kwargs: Additional arguments passed to renderer (e.g. preserve_extent)</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;draw_preview called with:&quot;</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;  - topo_data: </span><span class="si">%d</span><span class="s2"> points&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">topo_data</span><span class="p">)</span> <span class="k">if</span> <span class="n">topo_data</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;  - geol_data: </span><span class="si">%d</span><span class="s2"> points&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">geol_data</span><span class="p">)</span> <span class="k">if</span> <span class="n">geol_data</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;  - struct_data: </span><span class="si">%d</span><span class="s2"> points&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">struct_data</span><span class="p">)</span> <span class="k">if</span> <span class="n">struct_data</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;  - drillhole_data: </span><span class="si">%d</span><span class="s2"> holes&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">drillhole_data</span><span class="p">)</span> <span class="k">if</span> <span class="n">drillhole_data</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;  - max_points: </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">max_points</span><span class="p">)</span>
-
-        <span class="c1"># Store data in dialog for re-rendering when checkboxes change</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">current_topo_data</span> <span class="o">=</span> <span class="n">topo_data</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">current_geol_data</span> <span class="o">=</span> <span class="n">geol_data</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">current_struct_data</span> <span class="o">=</span> <span class="n">struct_data</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">current_drillhole_data</span> <span class="o">=</span> <span class="n">drillhole_data</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">current_drillhole_data</span> <span class="o">=</span> <span class="n">drillhole_data</span>
-
-        <span class="c1"># Get preview options from dialog checkboxes</span>
+        <span class="c1"># 2. Parameter Calculation</span>
         <span class="n">options</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">get_preview_options</span><span class="p">()</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Preview options: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
-
-        <span class="c1"># Filter data based on checkbox states</span>
-        <span class="n">filtered_topo</span> <span class="o">=</span> <span class="n">topo_data</span> <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;show_topo&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="n">filtered_geol</span> <span class="o">=</span> <span class="n">geol_data</span> <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;show_geol&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="n">filtered_struct</span> <span class="o">=</span> <span class="n">struct_data</span> <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;show_struct&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="n">filtered_drill</span> <span class="o">=</span> <span class="n">drillhole_data</span> <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;show_drillholes&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="n">filtered_interp</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">interpretations</span> <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;show_interpretations&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="p">)</span>
-
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Filtered data:&quot;</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;  - filtered_topo: </span><span class="si">%d</span><span class="s2"> points&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">filtered_topo</span><span class="p">)</span> <span class="k">if</span> <span class="n">filtered_topo</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;  - filtered_geol: </span><span class="si">%d</span><span class="s2"> points&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">filtered_geol</span><span class="p">)</span> <span class="k">if</span> <span class="n">filtered_geol</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-            <span class="s2">&quot;  - filtered_struct: </span><span class="si">%d</span><span class="s2"> points&quot;</span><span class="p">,</span>
-            <span class="nb">len</span><span class="p">(</span><span class="n">filtered_struct</span><span class="p">)</span> <span class="k">if</span> <span class="n">filtered_struct</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-            <span class="s2">&quot;  - filtered_interp: </span><span class="si">%d</span><span class="s2"> polygons&quot;</span><span class="p">,</span>
-            <span class="nb">len</span><span class="p">(</span><span class="n">filtered_interp</span><span class="p">)</span> <span class="k">if</span> <span class="n">filtered_interp</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="p">)</span>
-
-        <span class="c1"># Get vertical exaggeration from dialog</span>
-
-        <span class="c1"># Use new numeric method or direct accessor from Page</span>
         <span class="n">vert_exag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">page_dem</span><span class="o">.</span><span class="n">vertexag_spin</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+        <span class="n">dip_length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_dip_length</span><span class="p">(</span><span class="n">struct_data</span><span class="p">)</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Vertical exaggeration: </span><span class="si">%.2f</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">vert_exag</span><span class="p">)</span>
+        <span class="c1"># 3. Data Filtering</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_filtered_preview_data</span><span class="p">(</span>
+            <span class="n">topo_data</span><span class="p">,</span> <span class="n">geol_data</span><span class="p">,</span> <span class="n">struct_data</span><span class="p">,</span> <span class="n">drillhole_data</span><span class="p">,</span> <span class="n">options</span>
+        <span class="p">)</span>
 
-        <span class="c1"># Calculate dip line length based on scale factor and raster resolution</span>
-        <span class="n">dip_line_length</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="n">filtered_struct</span><span class="p">:</span>
-            <span class="n">dip_scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">page_struct</span><span class="o">.</span><span class="n">scale_spin</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
-
-            <span class="k">if</span> <span class="n">dip_scale</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">raster_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">page_dem</span><span class="o">.</span><span class="n">raster_combo</span><span class="o">.</span><span class="n">currentLayer</span><span class="p">()</span>
-                <span class="k">if</span> <span class="n">raster_layer</span> <span class="ow">and</span> <span class="n">raster_layer</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
-                    <span class="n">res</span> <span class="o">=</span> <span class="n">raster_layer</span><span class="o">.</span><span class="n">rasterUnitsPerPixelX</span><span class="p">()</span>
-                    <span class="k">if</span> <span class="n">res</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                        <span class="n">dip_line_length</span> <span class="o">=</span> <span class="n">res</span> <span class="o">*</span> <span class="n">dip_scale</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Dip line length: </span><span class="si">%s</span><span class="s2"> (scale: </span><span class="si">%.2f</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="n">dip_line_length</span><span class="p">,</span> <span class="n">dip_scale</span><span class="p">)</span>
-
-        <span class="c1"># Render using native PyQGIS</span>
+        <span class="c1"># 4. Rendering</span>
         <span class="n">canvas</span><span class="p">,</span> <span class="n">layers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preview_renderer</span><span class="o">.</span><span class="n">render</span><span class="p">(</span>
-            <span class="n">topo_data</span><span class="o">=</span><span class="n">filtered_topo</span><span class="p">,</span>
-            <span class="n">geol_data</span><span class="o">=</span><span class="n">filtered_geol</span><span class="p">,</span>
-            <span class="n">struct_data</span><span class="o">=</span><span class="n">filtered_struct</span><span class="p">,</span>
+            <span class="n">topo_data</span><span class="o">=</span><span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;topo&quot;</span><span class="p">],</span>
+            <span class="n">geol_data</span><span class="o">=</span><span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;geol&quot;</span><span class="p">],</span>
+            <span class="n">struct_data</span><span class="o">=</span><span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;struct&quot;</span><span class="p">],</span>
             <span class="n">vert_exag</span><span class="o">=</span><span class="n">vert_exag</span><span class="p">,</span>
-            <span class="n">dip_line_length</span><span class="o">=</span><span class="n">dip_line_length</span><span class="p">,</span>
+            <span class="n">dip_line_length</span><span class="o">=</span><span class="n">dip_length</span><span class="p">,</span>
             <span class="n">max_points</span><span class="o">=</span><span class="n">max_points</span><span class="p">,</span>
             <span class="n">preserve_extent</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;preserve_extent&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
-            <span class="n">drillhole_data</span><span class="o">=</span><span class="n">filtered_drill</span><span class="p">,</span>
-            <span class="n">interp_data</span><span class="o">=</span><span class="n">filtered_interp</span><span class="p">,</span>
+            <span class="n">drillhole_data</span><span class="o">=</span><span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;drill&quot;</span><span class="p">],</span>
+            <span class="n">interp_data</span><span class="o">=</span><span class="n">filtered</span><span class="p">[</span><span class="s2">&quot;interp&quot;</span><span class="p">],</span>
             <span class="n">show_legend</span><span class="o">=</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;show_legend&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>
         <span class="p">)</span>
 
-        <span class="c1"># Store canvas and layers for export</span>
+        <span class="c1"># 5. UI Updates</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">current_canvas</span> <span class="o">=</span> <span class="n">canvas</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">current_layers</span> <span class="o">=</span> <span class="n">layers</span>
 
-        <span class="c1"># Update legend</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="p">,</span> <span class="s2">&quot;legend_widget&quot;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">legend_widget</span><span class="o">.</span><span class="n">update_legend</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">preview_renderer</span><span class="p">,</span> <span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;show_legend&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-            <span class="p">)</span>
+            <span class="p">)</span></div>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Preview rendered with </span><span class="si">%d</span><span class="s2"> layers&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">layers</span><span class="p">)</span> <span class="k">if</span> <span class="n">layers</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span></div>
-</div>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_store_preview_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topo</span><span class="p">,</span> <span class="n">geol</span><span class="p">,</span> <span class="n">struct</span><span class="p">,</span> <span class="n">drill</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Store current data in dialog for re-rendering.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">current_topo_data</span> <span class="o">=</span> <span class="n">topo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">current_geol_data</span> <span class="o">=</span> <span class="n">geol</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">current_struct_data</span> <span class="o">=</span> <span class="n">struct</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">current_drillhole_data</span> <span class="o">=</span> <span class="n">drill</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_filtered_preview_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topo</span><span class="p">,</span> <span class="n">geol</span><span class="p">,</span> <span class="n">struct</span><span class="p">,</span> <span class="n">drill</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Filter data based on visibility options.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;topo&quot;</span><span class="p">:</span> <span class="n">topo</span> <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;show_topo&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">&quot;geol&quot;</span><span class="p">:</span> <span class="n">geol</span> <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;show_geol&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">&quot;struct&quot;</span><span class="p">:</span> <span class="n">struct</span> <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;show_struct&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">&quot;drill&quot;</span><span class="p">:</span> <span class="n">drill</span> <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;show_drillholes&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">&quot;interp&quot;</span><span class="p">:</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">interpretations</span> <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;show_interpretations&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">),</span>
+        <span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_calculate_dip_length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">struct_data</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate dip line length based on scale factor and raster resolution.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">struct_data</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">dip_scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">page_struct</span><span class="o">.</span><span class="n">scale_spin</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">dip_scale</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">raster_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">page_dem</span><span class="o">.</span><span class="n">raster_combo</span><span class="o">.</span><span class="n">currentLayer</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">raster_layer</span> <span class="ow">and</span> <span class="n">raster_layer</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">raster_layer</span><span class="o">.</span><span class="n">rasterUnitsPerPixelX</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">res</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">res</span> <span class="o">*</span> <span class="n">dip_scale</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
 
 </pre></div>
 

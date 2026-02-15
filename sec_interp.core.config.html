@@ -6,16 +6,16 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp.core.config module &mdash; SecInterp 2.7.0 documentation</title>
+  <title>sec_interp.core.config module &mdash; SecInterp 2.9.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=dfec817d"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/documentation_options.js?v=182a64a0"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -95,29 +95,80 @@
              
   <section id="module-sec_interp.core.config">
 <span id="sec-interp-core-config-module"></span><h1>sec_interp.core.config module<a class="headerlink" href="#module-sec_interp.core.config" title="Link to this heading"></a></h1>
+<p>Configuration Service module.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="sec_interp.core.config.ConfigService">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sec_interp.core.config.</span></span><span class="sig-name descname"><span class="pre">ConfigService</span></span><a class="reference internal" href="_modules/sec_interp/core/config.html#ConfigService"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.core.config.ConfigService" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.core.config.</span></span><span class="sig-name descname"><span class="pre">ConfigService</span></span><a class="reference internal" href="_modules/sec_interp/core/config.html#ConfigService"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.core.config.ConfigService" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Service to handle plugin configuration and persistent settings.</p>
 <dl class="py attribute">
+<dt class="sig sig-object py" id="sec_interp.core.config.ConfigService.DEFAULT_BUFFER_DIST">
+<span class="sig-name descname"><span class="pre">DEFAULT_BUFFER_DIST</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">100.0</span></span><a class="headerlink" href="#sec_interp.core.config.ConfigService.DEFAULT_BUFFER_DIST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sec_interp.core.config.ConfigService.DEFAULT_DEM_BAND">
+<span class="sig-name descname"><span class="pre">DEFAULT_DEM_BAND</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></span><a class="headerlink" href="#sec_interp.core.config.ConfigService.DEFAULT_DEM_BAND" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sec_interp.core.config.ConfigService.DEFAULT_DPI">
+<span class="sig-name descname"><span class="pre">DEFAULT_DPI</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">300</span></span><a class="headerlink" href="#sec_interp.core.config.ConfigService.DEFAULT_DPI" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sec_interp.core.config.ConfigService.DEFAULT_EXPORT_QUALITY">
+<span class="sig-name descname"><span class="pre">DEFAULT_EXPORT_QUALITY</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">95</span></span><a class="headerlink" href="#sec_interp.core.config.ConfigService.DEFAULT_EXPORT_QUALITY" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sec_interp.core.config.ConfigService.DEFAULT_MAX_POINTS">
+<span class="sig-name descname"><span class="pre">DEFAULT_MAX_POINTS</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10000</span></span><a class="headerlink" href="#sec_interp.core.config.ConfigService.DEFAULT_MAX_POINTS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sec_interp.core.config.ConfigService.DEFAULT_PREVIEW_HEIGHT">
+<span class="sig-name descname"><span class="pre">DEFAULT_PREVIEW_HEIGHT</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">600</span></span><a class="headerlink" href="#sec_interp.core.config.ConfigService.DEFAULT_PREVIEW_HEIGHT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sec_interp.core.config.ConfigService.DEFAULT_PREVIEW_WIDTH">
+<span class="sig-name descname"><span class="pre">DEFAULT_PREVIEW_WIDTH</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">800</span></span><a class="headerlink" href="#sec_interp.core.config.ConfigService.DEFAULT_PREVIEW_WIDTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sec_interp.core.config.ConfigService.DEFAULT_SAMPLING_INTERVAL">
+<span class="sig-name descname"><span class="pre">DEFAULT_SAMPLING_INTERVAL</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10.0</span></span><a class="headerlink" href="#sec_interp.core.config.ConfigService.DEFAULT_SAMPLING_INTERVAL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sec_interp.core.config.ConfigService.DEFAULT_SCALE">
+<span class="sig-name descname"><span class="pre">DEFAULT_SCALE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">50000.0</span></span><a class="headerlink" href="#sec_interp.core.config.ConfigService.DEFAULT_SCALE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sec_interp.core.config.ConfigService.DEFAULT_VERT_EXAG">
+<span class="sig-name descname"><span class="pre">DEFAULT_VERT_EXAG</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.0</span></span><a class="headerlink" href="#sec_interp.core.config.ConfigService.DEFAULT_VERT_EXAG" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="sec_interp.core.config.ConfigService.PREFIX">
-<span class="sig-name descname"><span class="pre">PREFIX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SecInterp/'</span></em><a class="headerlink" href="#sec_interp.core.config.ConfigService.PREFIX" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">PREFIX</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SecInterp/'</span></span><a class="headerlink" href="#sec_interp.core.config.ConfigService.PREFIX" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="sec_interp.core.config.ConfigService.SUPPORTED_DOCUMENT_FORMATS">
-<span class="sig-name descname"><span class="pre">SUPPORTED_DOCUMENT_FORMATS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['.pdf',</span> <span class="pre">'.svg']</span></em><a class="headerlink" href="#sec_interp.core.config.ConfigService.SUPPORTED_DOCUMENT_FORMATS" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">SUPPORTED_DOCUMENT_FORMATS</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['.pdf',</span> <span class="pre">'.svg']</span></span><a class="headerlink" href="#sec_interp.core.config.ConfigService.SUPPORTED_DOCUMENT_FORMATS" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="sec_interp.core.config.ConfigService.SUPPORTED_IMAGE_FORMATS">
-<span class="sig-name descname"><span class="pre">SUPPORTED_IMAGE_FORMATS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['.png',</span> <span class="pre">'.jpg',</span> <span class="pre">'.jpeg']</span></em><a class="headerlink" href="#sec_interp.core.config.ConfigService.SUPPORTED_IMAGE_FORMATS" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">SUPPORTED_IMAGE_FORMATS</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['.png',</span> <span class="pre">'.jpg',</span> <span class="pre">'.jpeg']</span></span><a class="headerlink" href="#sec_interp.core.config.ConfigService.SUPPORTED_IMAGE_FORMATS" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="sec_interp.core.config.ConfigService.SUPPORTED_VECTOR_FORMATS">
-<span class="sig-name descname"><span class="pre">SUPPORTED_VECTOR_FORMATS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['.shp']</span></em><a class="headerlink" href="#sec_interp.core.config.ConfigService.SUPPORTED_VECTOR_FORMATS" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">SUPPORTED_VECTOR_FORMATS</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['.shp']</span></span><a class="headerlink" href="#sec_interp.core.config.ConfigService.SUPPORTED_VECTOR_FORMATS" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

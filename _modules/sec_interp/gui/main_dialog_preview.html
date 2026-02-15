@@ -5,24 +5,26 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp.gui.main_dialog_preview &mdash; SecInterp 2.7.0 documentation</title>
+  <title>sec_interp.gui.main_dialog_preview &mdash; SecInterp 2.9.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=dfec817d"></script>
-      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs"></script>
-      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script src="../../../_static/documentation_options.js?v=182a64a0"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
       <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
 
-const defaultStyle = document.createElement('style');
-defaultStyle.textContent = `pre.mermaid {
+
+
+
+
+const initStyles = () => {
+    const defaultStyle = document.createElement('style');
+    defaultStyle.textContent = `pre.mermaid {
     /* Same as .mermaid-container > pre */
     display: block;
     width: 100%;
@@ -33,12 +35,11 @@ pre.mermaid > svg {
     height: 500px;
     width: 100%;
     max-width: 100% !important;
-}
-`;
-document.head.appendChild(defaultStyle);
+}`;
+    document.head.appendChild(defaultStyle);
 
-const fullscreenStyle = document.createElement('style');
-fullscreenStyle.textContent = `.mermaid-container {
+    const fullscreenStyle = document.createElement('style');
+    fullscreenStyle.textContent = `.mermaid-container {
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -190,10 +191,32 @@ fullscreenStyle.textContent = `.mermaid-container {
 .mermaid-fullscreen-modal .mermaid-fullscreen-btn {
     display: none !important;
 }`;
-document.head.appendChild(fullscreenStyle);
+    document.head.appendChild(fullscreenStyle);
+}
 
 // Detect if page has dark background
 const isDarkTheme = () => {
+    // We use a set of heuristics:
+    // 1. Check for common dark mode classes or attributes
+    // 2. Check computed background color brightness
+    if (document.documentElement.classList.contains('dark') ||
+        document.documentElement.getAttribute('data-theme') === 'dark' ||
+        document.body.classList.contains('dark') ||
+        document.body.getAttribute('data-theme') === 'dark') {
+        // console.log("Dark theme detected via class/attribute");
+        return true;
+    }
+    if (document.documentElement.classList.contains('light') ||
+        document.documentElement.getAttribute('data-theme') === 'light' ||
+        document.body.classList.contains('light') ||
+        document.body.getAttribute('data-theme') === 'light') {
+        // console.log("Light theme detected via class/attribute");
+        return false;
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // console.log("Dark theme detected via prefers-color-scheme");
+        return true;
+    }
     const bgColor = window.getComputedStyle(document.body).backgroundColor;
     const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
     if (match) {
@@ -201,15 +224,45 @@ const isDarkTheme = () => {
         const g = parseInt(match[2]);
         const b = parseInt(match[3]);
         const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        // console.log("Background color brightness:", brightness);
         return brightness < 128;
     }
+    // console.log("No dark or light theme detected, defaulting to light theme");
     return false;
 };
 
-const load = async () => {
-    await mermaid.run();
+let darkTheme = isDarkTheme();
+let modal = null;
+let modalContent = null;
+let previousScrollOffset = [window.scrollX, window.scrollY];
 
-    const all_mermaids = document.querySelectorAll(".mermaid");
+const runMermaid = async (rerun) => {
+    console.log("Running mermaid diagrams, rerun =", rerun);
+    // clear all existing mermaid charts
+    let all_mermaids = document.querySelectorAll(".mermaid");
+
+    if (rerun) {
+        all_mermaids.forEach((el) => {
+            if(!el.hasAttribute("data-original-code")) {
+                // store original code
+                // console.log(`Storing original code for first run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+            if(el.getAttribute("data-processed") === "true") {
+                // remove and restore original
+                el.removeAttribute("data-processed");
+                // console.log(`Restoring original code for re-run: `, el.getAttribute('data-original-code'));
+                el.innerHTML = el.getAttribute('data-original-code');
+            } else {
+                // store original code
+                // console.log(`Storing original code for re-run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+        });
+        await mermaid.run();
+    }
+
+    all_mermaids = document.querySelectorAll(".mermaid");
     const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
 
     if ("False" === "True") {
@@ -217,10 +270,10 @@ const load = async () => {
         if(mermaids_to_add_zoom > 0) {
             var svgs = d3.selectAll("");
             if(all_mermaids.length !== mermaids_processed.length) {
-                setTimeout(load, 200);
+                setTimeout(() => runMermaid(false), 200);
                 return;
             } else if(svgs.size() !== mermaids_to_add_zoom) {
-                setTimeout(load, 200);
+                setTimeout(() => runMermaid(false), 200);
                 return;
             } else {
                 svgs.each(function() {
@@ -236,16 +289,21 @@ const load = async () => {
         }
     } else if(all_mermaids.length !== mermaids_processed.length) {
         // Wait for mermaid to process all diagrams
-        setTimeout(load, 200);
+        setTimeout(() => runMermaid(false), 200);
         return;
     }
-
-    const darkTheme = isDarkTheme();
 
     // Stop here if not adding fullscreen capability
     if ("True" !== "True") return;
 
-    const modal = document.createElement('div');
+    if (modal !== null ) {
+        // Destroy existing modal
+        modal.remove();
+        modal = null;
+        modalContent = null;
+    }
+
+    modal = document.createElement('div');
     modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
     modal.setAttribute('role', 'dialog');
     modal.setAttribute('aria-modal', 'true');
@@ -256,10 +314,8 @@ const load = async () => {
     `;
     document.body.appendChild(modal);
 
-    const modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    modalContent = modal.querySelector('.mermaid-container-fullscreen');
     const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
-
-    let previousScrollOffset = [window.scrollX, window.scrollY];
 
     const closeModal = () => {
         modal.classList.remove('active');
@@ -278,11 +334,14 @@ const load = async () => {
         }
     });
 
-    const allButtons = [];
-
     document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
         if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
             mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            // Already processed, adjust button class if needed
+            const existingBtn = mermaidDiv.parentNode.querySelector('.mermaid-fullscreen-btn');
+            if (existingBtn) {
+                existingBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+            }
             return;
         }
 
@@ -340,46 +399,57 @@ const load = async () => {
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         });
-
         container.appendChild(fullscreenBtn);
-        allButtons.push(fullscreenBtn);
-    });
-
-    // Update theme classes when theme changes
-    const updateTheme = () => {
-        const dark = isDarkTheme();
-        allButtons.forEach(btn => {
-            if (dark) {
-                btn.classList.add('dark-theme');
-            } else {
-                btn.classList.remove('dark-theme');
-            }
-        });
-        if (dark) {
-            modal.classList.add('dark-theme');
-            modalContent.classList.add('dark-theme');
-            closeBtn.classList.add('dark-theme');
-        } else {
-            modal.classList.remove('dark-theme');
-            modalContent.classList.remove('dark-theme');
-            closeBtn.classList.remove('dark-theme');
-        }
-    };
-
-    // Watch for theme changes
-    const observer = new MutationObserver(updateTheme);
-    observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['class', 'style', 'data-theme']
-    });
-    observer.observe(document.body, {
-        attributes: true,
-        attributeFilter: ['class', 'style']
     });
 };
 
-window.addEventListener("load", load);
-</script>
+const load = async () => {
+    initStyles();
+
+    await runMermaid(true);
+
+    const reRunIfThemeChanges = async () => {
+        const newDarkTheme = isDarkTheme();
+        if (newDarkTheme !== darkTheme) {
+            darkTheme = newDarkTheme;
+            console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
+            await mermaid.initialize(
+                {...JSON.parse(
+                    `{"startOnLoad": false}`
+                ),
+                ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+                }
+            );
+            await runMermaid(true);
+        }
+    };
+
+    // Update theme classes when theme changes
+    const themeObserver = new MutationObserver(reRunIfThemeChanges);
+    themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    themeObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+};
+
+
+
+
+
+console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
+mermaid.initialize(
+    {...JSON.parse(
+        `{"startOnLoad": false}`
+    ),
+    ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+    }
+);
+
+window.addEventListener("load", load);</script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -440,21 +510,23 @@ window.addEventListener("load", load);
            <div itemprop="articleBody">
              
   <h1>Source code for sec_interp.gui.main_dialog_preview</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
-<span class="sd">&quot;&quot;&quot;Preview management module for SecInterp main dialog.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Preview management module for SecInterp main dialog.</span>
 
 <span class="sd">This module handles preview generation, rendering, and updates,</span>
 <span class="sd">separating preview logic from the main dialog class.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">qgis.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">QgsApplication</span><span class="p">,</span> <span class="n">QgsVectorLayer</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">qgis.PyQt.QtCore</span><span class="w"> </span><span class="kn">import</span> <span class="n">QCoreApplication</span><span class="p">,</span> <span class="n">QTimer</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.domain</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">PreviewParams</span><span class="p">,</span>
+    <span class="n">PreviewResult</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProcessingError</span><span class="p">,</span> <span class="n">SecInterpError</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.interfaces.preview_interface</span><span class="w"> </span><span class="kn">import</span> <span class="n">IPreviewService</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.performance_metrics</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
@@ -462,14 +534,13 @@ window.addEventListener("load", load);
     <span class="n">PerformanceTimer</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.services.preview_service</span><span class="w"> </span><span class="kn">import</span> <span class="n">PreviewService</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.types</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">PreviewParams</span><span class="p">,</span>
-    <span class="n">PreviewResult</span><span class="p">,</span>
-<span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.logger_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_logger</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">.lod_calculator</span><span class="w"> </span><span class="kn">import</span> <span class="n">LODCalculator</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.main_dialog_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">DialogConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.preview_param_hasher</span><span class="w"> </span><span class="kn">import</span> <span class="n">PreviewParamHasher</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.preview_reporter</span><span class="w"> </span><span class="kn">import</span> <span class="n">PreviewReporter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.preview_task_orchestrator</span><span class="w"> </span><span class="kn">import</span> <span class="n">PreviewTaskOrchestrator</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.tasks.drillhole_task</span><span class="w"> </span><span class="kn">import</span> <span class="n">DrillholeGenerationTask</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.tasks.geology_task</span><span class="w"> </span><span class="kn">import</span> <span class="n">GeologyGenerationTask</span>
 
@@ -494,34 +565,28 @@ window.addEventListener("load", load);
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">dialog</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
         <span class="n">preview_service</span><span class="p">:</span> <span class="n">IPreviewService</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize preview manager with reference to parent dialog.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            dialog: The parent SecInterpDialog instance.</span>
-<span class="sd">            preview_service: Optional preview service for dependency injection.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize preview manager with specialized components.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span> <span class="o">=</span> <span class="n">dialog</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">preview_service</span> <span class="o">=</span> <span class="n">preview_service</span> <span class="ow">or</span> <span class="n">PreviewService</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">plugin_instance</span><span class="o">.</span><span class="n">controller</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span> <span class="o">=</span> <span class="n">MetricsCollector</span><span class="p">()</span>
+
+        <span class="c1"># Specialized components</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">orchestrator</span> <span class="o">=</span> <span class="n">PreviewTaskOrchestrator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hasher</span> <span class="o">=</span> <span class="n">PreviewParamHasher</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lod_calculator</span> <span class="o">=</span> <span class="n">LODCalculator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">preview_widget</span><span class="o">.</span><span class="n">canvas</span><span class="p">)</span>
+
+        <span class="c1"># Cache &amp; State</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;topo&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
             <span class="s2">&quot;geol&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
             <span class="s2">&quot;struct&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
             <span class="s2">&quot;drillhole&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
         <span class="p">}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">last_params_hash</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_params_hash</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">last_result</span><span class="p">:</span> <span class="n">PreviewResult</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span> <span class="o">=</span> <span class="n">MetricsCollector</span><span class="p">()</span>
-
-        <span class="c1"># Initialize services</span>
-        <span class="c1"># self.async_service removed in favor of QgsTask</span>
-        <span class="c1"># self.async_service removed in favor of QgsTask</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">active_task</span><span class="p">:</span> <span class="n">GeologyGenerationTask</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">active_drill_task</span><span class="p">:</span> <span class="n">DrillholeGenerationTask</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">preview_service</span> <span class="o">=</span> <span class="n">preview_service</span> <span class="ow">or</span> <span class="n">PreviewService</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">plugin_instance</span><span class="o">.</span><span class="n">controller</span>
-        <span class="p">)</span>
 
         <span class="c1"># Initialize zoom debounce timer</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">debounce_timer</span> <span class="o">=</span> <span class="n">QTimer</span><span class="p">()</span>
@@ -536,59 +601,39 @@ window.addEventListener("load", load);
 
 <div class="viewcode-block" id="PreviewManager.cleanup">
 <a class="viewcode-back" href="../../../sec_interp.gui.main_dialog_preview.html#sec_interp.gui.main_dialog_preview.PreviewManager.cleanup">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">cleanup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">cleanup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Clean up resources and stop background tasks.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_task</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">active_task</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">active_task</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_drill_task</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">active_drill_task</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">active_drill_task</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">orchestrator</span><span class="o">.</span><span class="n">cancel_active_tasks</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">debounce_timer</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="PreviewManager.generate_preview">
 <a class="viewcode-back" href="../../../sec_interp.gui.main_dialog_preview.html#sec_interp.gui.main_dialog_preview.PreviewManager.generate_preview">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">generate_preview</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate complete preview with all available data layers.</span>
-
-<span class="sd">        This is the main preview generation method that orchestrates</span>
-<span class="sd">        data generation and rendering.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            Tuple of (success, message)</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate complete preview with all available data layers.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="k">with</span> <span class="n">PerformanceTimer</span><span class="p">(</span><span class="s2">&quot;Total Preview Generation&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="p">):</span>
-                <span class="c1"># 1. Validation &amp; Parameter Collection</span>
                 <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">plugin_instance</span><span class="o">.</span><span class="n">_get_and_validate_inputs</span><span class="p">()</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">params</span><span class="p">:</span>
                     <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">QCoreApplication</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span>
                         <span class="s2">&quot;PreviewManager&quot;</span><span class="p">,</span> <span class="s2">&quot;Invalid configuration&quot;</span>
                     <span class="p">)</span>
 
-                <span class="c1"># 2. Data processing (with caching)</span>
                 <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_preview_data</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
-
-                <span class="c1"># 3. UI Update &amp; Visualization</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_update_crs_label</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">line_layer</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_run_render_pipeline</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-
-                <span class="c1"># 4. Results Reporting</span>
-                <span class="n">result_msg</span> <span class="o">=</span> <span class="n">PreviewReporter</span><span class="o">.</span><span class="n">format_results_message</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">preview_widget</span><span class="o">.</span><span class="n">results_text</span><span class="o">.</span><span class="n">setPlainText</span><span class="p">(</span><span class="n">result_msg</span><span class="p">)</span>
-
-                <span class="k">if</span> <span class="n">DialogConfig</span><span class="o">.</span><span class="n">LOG_DETAILED_METRICS</span><span class="p">:</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Preview Performance: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">get_summary</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_update_ui_state</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
 
         <span class="k">except</span> <span class="n">SecInterpError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">handle_error</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="s2">&quot;Preview Error&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Unexpected UI error during preview generation&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">handle_error</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="s2">&quot;Unexpected Preview Error&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Critical unexpected error in preview generation&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">handle_error</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="s2">&quot;Critical Error&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="n">QCoreApplication</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span>
@@ -596,26 +641,75 @@ window.addEventListener("load", load);
             <span class="p">)</span></div>
 
 
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_ui_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">PreviewParams</span><span class="p">,</span> <span class="n">result</span><span class="p">:</span> <span class="n">PreviewResult</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update UI and trigger render pipeline.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_crs_label</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">line_layer</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_run_render_pipeline</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+        <span class="n">result_msg</span> <span class="o">=</span> <span class="n">PreviewReporter</span><span class="o">.</span><span class="n">format_results_message</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">preview_widget</span><span class="o">.</span><span class="n">results_text</span><span class="o">.</span><span class="n">setPlainText</span><span class="p">(</span><span class="n">result_msg</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">DialogConfig</span><span class="o">.</span><span class="n">LOG_DETAILED_METRICS</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Preview Performance: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">get_summary</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
     <span class="k">def</span><span class="w"> </span><span class="nf">_process_preview_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">PreviewParams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PreviewResult</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Process or retrieve cached preview data.&quot;&quot;&quot;</span>
-        <span class="n">current_hash</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_params_hash</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
-        <span class="n">data_unchanged</span> <span class="o">=</span> <span class="n">current_hash</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_params_hash</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">last_params_hash</span> <span class="o">=</span> <span class="n">current_hash</span>
-
-        <span class="k">if</span> <span class="n">data_unchanged</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_result</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_data_unchanged</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Using cached data (params unchanged)&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_result</span>
 
-        <span class="c1"># Generate fresh data - clear interpretations ONLY if the section geometry has changed</span>
-        <span class="c1"># Changing buffer distance or fields shouldn&#39;t clear digitized polygons.</span>
-        <span class="n">old_geo_params</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_last_geo_params&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="n">line_geom</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="nb">next</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">line_layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">())</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span><span class="o">.</span><span class="n">asWkt</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">params</span><span class="o">.</span><span class="n">line_layer</span>
-            <span class="ow">and</span> <span class="n">params</span><span class="o">.</span><span class="n">line_layer</span><span class="o">.</span><span class="n">isValid</span><span class="p">()</span>
-            <span class="ow">and</span> <span class="nb">next</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">line_layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">(),</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="k">else</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_handle_geometric_changes</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">transform_context</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_transform_context</span><span class="p">()</span>
+
+        <span class="c1"># Skip drillholes in sync generation</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preview_service</span><span class="o">.</span><span class="n">generate_all</span><span class="p">(</span>
+            <span class="n">params</span><span class="p">,</span>
+            <span class="n">transform_context</span><span class="p">,</span>
+            <span class="n">skip_drillholes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_cache_and_metrics</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cancel_active_tasks</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_async_updates</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_result</span> <span class="o">=</span> <span class="n">result</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_transform_context</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Safely retrieve transform context from canvas.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">plugin_instance</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">plugin_instance</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">()</span><span class="o">.</span><span class="n">mapSettings</span><span class="p">()</span><span class="o">.</span><span class="n">transformContext</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_cache_and_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">result</span><span class="p">:</span> <span class="n">PreviewResult</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update local cache and cumulative metrics.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;topo&quot;</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">topo</span><span class="p">,</span>
+                <span class="s2">&quot;struct&quot;</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">struct</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">timings</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">timings</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">counts</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">counts</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_trigger_async_updates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">PreviewParams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Launch background tasks via orchestrator.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">orchestrator</span><span class="o">.</span><span class="n">start_geology_task</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">preview_service</span><span class="o">.</span><span class="n">geology_service</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">orchestrator</span><span class="o">.</span><span class="n">start_drillhole_task</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">preview_service</span><span class="o">.</span><span class="n">drillhole_service</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_is_data_unchanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">PreviewParams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if parameters haven&#39;t changed since last generation.&quot;&quot;&quot;</span>
+        <span class="n">current_hash</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_params_hash</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+        <span class="n">unchanged</span> <span class="o">=</span> <span class="n">current_hash</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_params_hash</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_params_hash</span> <span class="o">=</span> <span class="n">current_hash</span>
+        <span class="k">return</span> <span class="n">unchanged</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_handle_geometric_changes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">PreviewParams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Clear interpretations if the section geometry has changed.&quot;&quot;&quot;</span>
+        <span class="n">old_geo_params</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_last_geo_params&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">line_feat</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">line_layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">(),</span> <span class="kc">None</span><span class="p">)</span> <span class="k">if</span> <span class="n">params</span><span class="o">.</span><span class="n">line_layer</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">line_geom</span> <span class="o">=</span> <span class="n">line_feat</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span><span class="o">.</span><span class="n">asWkt</span><span class="p">()</span> <span class="k">if</span> <span class="n">line_feat</span> <span class="k">else</span> <span class="kc">None</span>
+
         <span class="n">new_geo_params</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">params</span><span class="o">.</span><span class="n">line_layer</span><span class="o">.</span><span class="n">id</span><span class="p">()</span> <span class="k">if</span> <span class="n">params</span><span class="o">.</span><span class="n">line_layer</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">params</span><span class="o">.</span><span class="n">raster_layer</span><span class="o">.</span><span class="n">id</span><span class="p">()</span> <span class="k">if</span> <span class="n">params</span><span class="o">.</span><span class="n">raster_layer</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
@@ -625,65 +719,26 @@ window.addEventListener("load", load);
 
         <span class="k">if</span> <span class="n">old_geo_params</span> <span class="ow">and</span> <span class="n">old_geo_params</span> <span class="o">!=</span> <span class="n">new_geo_params</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="p">,</span> <span class="s2">&quot;interpretations&quot;</span><span class="p">):</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                    <span class="s2">&quot;Clearing interpretations due to geometric change (Orientation or Raster changed)&quot;</span>
-                <span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Geometric change detected: Clearing interpretations.&quot;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">interpretations</span> <span class="o">=</span> <span class="p">[]</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">_save_interpretations</span><span class="p">()</span>
-        <span class="k">elif</span> <span class="ow">not</span> <span class="n">old_geo_params</span><span class="p">:</span>
-            <span class="c1"># First run, don&#39;t clear anything</span>
-            <span class="k">pass</span>
-        <span class="n">transform_context</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">plugin_instance</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">()</span><span class="o">.</span><span class="n">mapSettings</span><span class="p">()</span><span class="o">.</span><span class="n">transformContext</span><span class="p">()</span>
-        <span class="p">)</span>
-        <span class="c1"># Skip drillholes in sync generation</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preview_service</span><span class="o">.</span><span class="n">generate_all</span><span class="p">(</span>
-            <span class="n">params</span><span class="p">,</span>
-            <span class="n">transform_context</span><span class="p">,</span>
-            <span class="n">skip_drillholes</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># Drillholes are now async</span>
-        <span class="p">)</span>
 
-        <span class="c1"># Merge results and metrics</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
-            <span class="p">{</span>
-                <span class="s2">&quot;topo&quot;</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">topo</span><span class="p">,</span>
-                <span class="s2">&quot;struct&quot;</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">struct</span><span class="p">,</span>
-                <span class="c1"># &quot;drillhole&quot;: result.drillhole, # Don&#39;t update drillhole from sync result (it&#39;s None)</span>
-            <span class="p">}</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">timings</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">timings</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">counts</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">counts</span><span class="p">)</span>
-
-        <span class="c1"># Cancel any existing async work before starting new one</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_task</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">active_task</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">active_task</span> <span class="o">=</span> <span class="kc">None</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_drill_task</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">active_drill_task</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">active_drill_task</span> <span class="o">=</span> <span class="kc">None</span>
-
-        <span class="c1"># Start Async Geology if needed</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_geology</span><span class="o">.</span><span class="n">is_complete</span><span class="p">():</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_start_async_geology</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="p">[</span><span class="s2">&quot;geol&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Reset until async finished</span>
-
-        <span class="c1"># Start Async Drillholes if needed</span>
-        <span class="k">if</span> <span class="n">params</span><span class="o">.</span><span class="n">collar_layer</span><span class="p">:</span>  <span class="c1"># params.collar_layer is validated in PreviewParams</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_start_async_drillhole</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="p">[</span><span class="s2">&quot;drillhole&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Reset</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">last_result</span> <span class="o">=</span> <span class="n">result</span>
-        <span class="k">return</span> <span class="n">result</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_cancel_active_tasks</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Cancel any existing async work via orchestrator.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">orchestrator</span><span class="o">.</span><span class="n">cancel_active_tasks</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_run_render_pipeline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">result</span><span class="p">:</span> <span class="n">PreviewResult</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Orchestrate the rendering of generated data.&quot;&quot;&quot;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">plugin_instance</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">plugin_instance</span><span class="p">,</span> <span class="s2">&quot;draw_preview&quot;</span>
-            <span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_handle_invalid_plugin_instance</span><span class="p">()</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Orchestrate the rendering of generated data.</span>
 
+<span class="sd">        Args:</span>
+<span class="sd">            result: The preview data to render.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">plugin_instance</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_handle_invalid_plugin_instance</span><span class="p">()</span>
+            <span class="k">return</span>
+
+        <span class="k">try</span><span class="p">:</span>
             <span class="k">with</span> <span class="n">PerformanceTimer</span><span class="p">(</span><span class="s2">&quot;Rendering&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="p">):</span>
                 <span class="n">opts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">get_preview_options</span><span class="p">()</span>
 
@@ -702,9 +757,12 @@ window.addEventListener("load", load);
                     <span class="n">max_points</span><span class="o">=</span><span class="n">max_points</span><span class="p">,</span>
                     <span class="n">use_adaptive_sampling</span><span class="o">=</span><span class="n">opts</span><span class="p">[</span><span class="s2">&quot;use_adaptive_sampling&quot;</span><span class="p">],</span>
                 <span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error drawing preview: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Rendering error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to render preview: </span><span class="si">{</span><span class="n">e</span><span class="si">!s}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Unexpected rendering pipeline error&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Critical rendering error: </span><span class="si">{</span><span class="n">e</span><span class="si">!s}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
 
 <div class="viewcode-block" id="PreviewManager.update_from_checkboxes">
 <a class="viewcode-back" href="../../../sec_interp.gui.main_dialog_preview.html#sec_interp.gui.main_dialog_preview.PreviewManager.update_from_checkboxes">[docs]</a>
@@ -714,7 +772,7 @@ window.addEventListener("load", load);
 <span class="sd">        This method re-renders the preview using cached data and</span>
 <span class="sd">        current checkbox states without regenerating data.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="p">[</span><span class="s2">&quot;topo&quot;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_result</span><span class="p">:</span>
             <span class="k">return</span>  <span class="c1"># No data to display</span>
 
         <span class="c1"># Get checkbox states</span>
@@ -756,43 +814,15 @@ window.addEventListener("load", load);
                 <span class="n">max_points</span><span class="o">=</span><span class="n">max_points_for_render</span><span class="p">,</span>
                 <span class="n">use_adaptive_sampling</span><span class="o">=</span><span class="n">use_adaptive_sampling</span><span class="p">,</span>
             <span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error updating preview from checkboxes: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;UI Sync error in preview: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Unexpected error updating preview from checkboxes&quot;</span><span class="p">)</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_calculate_params_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">PreviewParams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate a unique hash for preview parameters to check for changes.&quot;&quot;&quot;</span>
-
-        <span class="k">def</span><span class="w"> </span><span class="nf">get_id</span><span class="p">(</span><span class="n">layer</span><span class="p">:</span> <span class="n">QgsVectorLayer</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">            </span><span class="sd">&quot;&quot;&quot;Safe layer ID retrieval.&quot;&quot;&quot;</span>
-            <span class="k">return</span> <span class="n">layer</span><span class="o">.</span><span class="n">id</span><span class="p">()</span> <span class="k">if</span> <span class="n">layer</span> <span class="k">else</span> <span class="s2">&quot;None&quot;</span>
-
-        <span class="n">data_parts</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">get_id</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">raster_layer</span><span class="p">),</span>
-            <span class="n">get_id</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">line_layer</span><span class="p">),</span>
-            <span class="nb">str</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">band_num</span><span class="p">),</span>
-            <span class="nb">str</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">buffer_dist</span><span class="p">),</span>
-            <span class="n">get_id</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">outcrop_layer</span><span class="p">),</span>
-            <span class="nb">str</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">outcrop_name_field</span><span class="p">),</span>
-            <span class="n">get_id</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">struct_layer</span><span class="p">),</span>
-            <span class="nb">str</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">dip_field</span><span class="p">),</span>
-            <span class="nb">str</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">strike_field</span><span class="p">),</span>
-            <span class="n">get_id</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">collar_layer</span><span class="p">),</span>
-            <span class="nb">str</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">collar_id_field</span><span class="p">),</span>
-            <span class="n">get_id</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">survey_layer</span><span class="p">),</span>
-            <span class="n">get_id</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">interval_layer</span><span class="p">),</span>
-        <span class="p">]</span>
-
-        <span class="c1"># Add geometry WKT if available to detect line changes</span>
-        <span class="n">line_feat</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">line_layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">(),</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">line_feat</span><span class="p">:</span>
-            <span class="n">data_parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line_feat</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span><span class="o">.</span><span class="n">asWkt</span><span class="p">())</span>
-
-        <span class="n">hasher</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">data_parts</span><span class="p">:</span>
-            <span class="n">hasher</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">part</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
-
-        <span class="k">return</span> <span class="n">hasher</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Analyze params via hasher.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">hasher</span><span class="o">.</span><span class="n">calculate_hash</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_buffer_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get buffer distance from dialog, with fallback to default.</span>
@@ -803,8 +833,9 @@ window.addEventListener("load", load);
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_section</span><span class="o">.</span><span class="n">buffer_spin</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_on_extents_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_extents_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle map canvas extent changes (zoom/pan).&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debounce_timer</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">DialogConfig</span><span class="o">.</span><span class="n">ZOOM_DEBOUNCE_MS</span><span class="p">)</span>
         <span class="c1"># Only handle if Auto LOD is enabled</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">preview_widget</span><span class="o">.</span><span class="n">chk_auto_lod</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
             <span class="k">return</span>
@@ -812,62 +843,43 @@ window.addEventListener("load", load);
         <span class="c1"># Restart debounce timer</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">debounce_timer</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_update_lod_for_zoom</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update LOD based on current zoom level.&quot;&quot;&quot;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">canvas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">preview_widget</span><span class="o">.</span><span class="n">canvas</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="p">[</span><span class="s2">&quot;topo&quot;</span><span class="p">]:</span>
-                <span class="k">return</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_lod_for_zoom</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update preview detail based on current zoom level.&quot;&quot;&quot;</span>
+        <span class="n">canvas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">preview_widget</span><span class="o">.</span><span class="n">canvas</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">canvas</span><span class="p">:</span>
+            <span class="k">return</span>
 
-            <span class="n">full_extent</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">fullExtent</span><span class="p">()</span>
-            <span class="n">current_extent</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">extent</span><span class="p">()</span>
+        <span class="c1"># Simple zoom ratio estimation: (canvas_width in pixels / extent width)</span>
+        <span class="c1"># For simplicity, we use the method from PreviewService if ratio is not stored</span>
+        <span class="n">ratio</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># Default fallback</span>
 
-            <span class="k">if</span> <span class="n">current_extent</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">full_extent</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="k">return</span>
+        <span class="n">new_max_points</span> <span class="o">=</span> <span class="n">PreviewService</span><span class="o">.</span><span class="n">calculate_max_points</span><span class="p">(</span>
+            <span class="n">canvas_width</span><span class="o">=</span><span class="n">canvas</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="n">ratio</span><span class="o">=</span><span class="n">ratio</span><span class="p">,</span> <span class="n">auto_lod</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
 
-            <span class="c1"># Calculate zoom ratio</span>
-            <span class="n">ratio</span> <span class="o">=</span> <span class="n">full_extent</span><span class="o">.</span><span class="n">width</span><span class="p">()</span> <span class="o">/</span> <span class="n">current_extent</span><span class="o">.</span><span class="n">width</span><span class="p">()</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Zoom LOD update: ratio=</span><span class="si">{</span><span class="n">ratio</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, new_max_points=</span><span class="si">{</span><span class="n">new_max_points</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-            <span class="c1"># If ratio is close to 1, we are at full extent, use standard calculation</span>
-            <span class="k">if</span> <span class="n">ratio</span> <span class="o">&lt;</span> <span class="mf">1.1</span><span class="p">:</span>
-                <span class="c1"># Let the standard update logic handle it or just do nothing if consistent?</span>
-                <span class="c1"># Actually standard logic just uses canvas width.</span>
-                <span class="c1"># If we return here, we might miss resetting to low detail when zooming out.</span>
-                <span class="k">pass</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">plugin_instance</span><span class="p">:</span>
+            <span class="k">return</span>
 
-            <span class="c1"># Calculate max_points via PreviewService</span>
-            <span class="n">new_max_points</span> <span class="o">=</span> <span class="n">PreviewService</span><span class="o">.</span><span class="n">calculate_max_points</span><span class="p">(</span>
-                <span class="n">canvas_width</span><span class="o">=</span><span class="n">canvas</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="n">ratio</span><span class="o">=</span><span class="n">ratio</span><span class="p">,</span> <span class="n">auto_lod</span><span class="o">=</span><span class="kc">True</span>
-            <span class="p">)</span>
+        <span class="n">preview_options</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">get_preview_options</span><span class="p">()</span>
+        <span class="n">use_adaptive_sampling</span> <span class="o">=</span> <span class="n">preview_options</span><span class="p">[</span><span class="s2">&quot;use_adaptive_sampling&quot;</span><span class="p">]</span>
 
-            <span class="c1"># Check if we actually need to update (hysteresis)</span>
-            <span class="c1"># This requires knowing the last used max_points...</span>
-            <span class="c1"># We can just re-render, it handles caching of data, but re-decimation takes time.</span>
+        <span class="c1"># Re-render with preserve_extent=True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">plugin_instance</span><span class="o">.</span><span class="n">draw_preview</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="p">[</span><span class="s2">&quot;topo&quot;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="p">[</span><span class="s2">&quot;geol&quot;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="p">[</span><span class="s2">&quot;struct&quot;</span><span class="p">],</span>
+            <span class="n">drillhole_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="p">[</span><span class="s2">&quot;drillhole&quot;</span><span class="p">],</span>
+            <span class="n">max_points</span><span class="o">=</span><span class="n">new_max_points</span><span class="p">,</span>
+            <span class="n">preserve_extent</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">use_adaptive_sampling</span><span class="o">=</span><span class="n">use_adaptive_sampling</span><span class="p">,</span>
+        <span class="p">)</span>
 
-            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Zoom LOD update: ratio=</span><span class="si">{</span><span class="n">ratio</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, new_max_points=</span><span class="si">{</span><span class="n">new_max_points</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">plugin_instance</span><span class="p">:</span>
-                <span class="k">return</span>
-
-            <span class="n">preview_options</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">get_preview_options</span><span class="p">()</span>
-            <span class="n">use_adaptive_sampling</span> <span class="o">=</span> <span class="n">preview_options</span><span class="p">[</span><span class="s2">&quot;use_adaptive_sampling&quot;</span><span class="p">]</span>
-
-            <span class="c1"># Re-render with preserve_extent=True</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">plugin_instance</span><span class="o">.</span><span class="n">draw_preview</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="p">[</span><span class="s2">&quot;topo&quot;</span><span class="p">],</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="p">[</span><span class="s2">&quot;geol&quot;</span><span class="p">],</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="p">[</span><span class="s2">&quot;struct&quot;</span><span class="p">],</span>
-                <span class="n">drillhole_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="p">[</span><span class="s2">&quot;drillhole&quot;</span><span class="p">],</span>
-                <span class="n">max_points</span><span class="o">=</span><span class="n">new_max_points</span><span class="p">,</span>
-                <span class="n">preserve_extent</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                <span class="n">use_adaptive_sampling</span><span class="o">=</span><span class="n">use_adaptive_sampling</span><span class="p">,</span>
-            <span class="p">)</span>
-
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error in zoom LOD update: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_start_async_geology</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">PreviewParams</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_start_async_geology</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">PreviewParams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Start asynchronous geology generation.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_task</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">active_task</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
         <span class="n">outcrop_layer</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">outcrop_layer</span>
         <span class="n">outcrop_name_field</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">outcrop_name_field</span>
 
@@ -887,8 +899,13 @@ window.addEventListener("load", load);
                 <span class="n">outcrop_name_field</span><span class="p">,</span>
                 <span class="n">params</span><span class="o">.</span><span class="n">band_num</span><span class="p">,</span>
             <span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="n">SecInterpError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to prepare geology task: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_on_geology_error</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">return</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Unexpected error preparing geology task&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_on_geology_error</span><span class="p">(</span><span class="s2">&quot;Internal error during task preparation&quot;</span><span class="p">)</span>
             <span class="k">return</span>
 
         <span class="c1"># 2. Launch Task (Async - Background Thread)</span>
@@ -906,57 +923,38 @@ window.addEventListener("load", load);
         <span class="n">QgsApplication</span><span class="o">.</span><span class="n">taskManager</span><span class="p">()</span><span class="o">.</span><span class="n">addTask</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">active_task</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_on_geology_finished</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">results</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle completion of geology generation task.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            results: List of generated geology segments.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle completion of geology generation task.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">active_task</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="p">[</span><span class="s2">&quot;geol&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">results</span> <span class="k">if</span> <span class="n">results</span> <span class="k">else</span> <span class="kc">None</span>
 
-        <span class="c1"># Results are now a flat list of segments (GeologyData)</span>
-        <span class="n">final_geol_data</span> <span class="o">=</span> <span class="n">results</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Async geology finished: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="mi">0</span><span class="si">}</span><span class="s2"> segments&quot;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="p">[</span><span class="s2">&quot;geol&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">final_geol_data</span> <span class="k">if</span> <span class="n">final_geol_data</span> <span class="k">else</span> <span class="kc">None</span>
-
-        <span class="c1"># Log success</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Async geology finished: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">final_geol_data</span><span class="p">)</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">final_geol_data</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="mi">0</span><span class="si">}</span><span class="s2"> segments&quot;</span>
-        <span class="p">)</span>
-
-        <span class="c1"># Trigger update of preview</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="c1"># We reuse the update logic but need to ensure it uses the new cached data</span>
-            <span class="c1"># Since checkbox logic handles &#39;if show_geol -&gt; use cached&#39;, we just need</span>
-            <span class="c1"># to force redraw</span>
-            <span class="c1"># But first we might want to update the result text to say &quot;Done&quot;</span>
-
-            <span class="c1"># Re-render</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">update_from_checkboxes</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_results_display</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">SecInterpError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error updating UI after async geology: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Unexpected UI error after async geology&quot;</span><span class="p">)</span>
 
-            <span class="c1"># Update results text (we need to regenerate the whole message)</span>
-            <span class="c1"># Note: This requires current state of other layers</span>
-            <span class="n">topo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="p">[</span><span class="s2">&quot;topo&quot;</span><span class="p">]</span>
-            <span class="n">struct</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="p">[</span><span class="s2">&quot;struct&quot;</span><span class="p">]</span>
-            <span class="n">buffer_dist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_buffer_distance</span><span class="p">()</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_results_display</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update results text and status display based on current cache.&quot;&quot;&quot;</span>
+        <span class="n">topo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;topo&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">topo</span><span class="p">:</span>
+            <span class="k">return</span>
 
-            <span class="k">if</span> <span class="n">topo</span><span class="p">:</span>  <span class="c1"># Only valid if we have topo</span>
-                <span class="c1"># Reconstruct a partial result for formatting</span>
-                <span class="n">result</span> <span class="o">=</span> <span class="n">PreviewResult</span><span class="p">(</span>
-                    <span class="n">topo</span><span class="o">=</span><span class="n">topo</span><span class="p">,</span>
-                    <span class="n">geol</span><span class="o">=</span><span class="n">final_geol_data</span><span class="p">,</span>
-                    <span class="n">struct</span><span class="o">=</span><span class="n">struct</span><span class="p">,</span>
-                    <span class="n">drillhole</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;drillhole&quot;</span><span class="p">),</span>
-                    <span class="n">buffer_dist</span><span class="o">=</span><span class="n">buffer_dist</span><span class="p">,</span>
-                <span class="p">)</span>
-                <span class="n">msg</span> <span class="o">=</span> <span class="n">PreviewReporter</span><span class="o">.</span><span class="n">format_results_message</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">preview_widget</span><span class="o">.</span><span class="n">results_text</span><span class="o">.</span><span class="n">setPlainText</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">PreviewResult</span><span class="p">(</span>
+            <span class="n">topo</span><span class="o">=</span><span class="n">topo</span><span class="p">,</span>
+            <span class="n">geol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;geol&quot;</span><span class="p">),</span>
+            <span class="n">struct</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;struct&quot;</span><span class="p">),</span>
+            <span class="n">drillhole</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;drillhole&quot;</span><span class="p">),</span>
+            <span class="n">buffer_dist</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_buffer_distance</span><span class="p">(),</span>
+        <span class="p">)</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">PreviewReporter</span><span class="o">.</span><span class="n">format_results_message</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">preview_widget</span><span class="o">.</span><span class="n">results_text</span><span class="o">.</span><span class="n">setPlainText</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
-                <span class="c1"># CRITICAL: Update last_result so cached renders include geology</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">last_result</span> <span class="o">=</span> <span class="n">result</span>
-
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error updating UI after async geology: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># Sync last_result so checkbox updates work correctly</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_result</span> <span class="o">=</span> <span class="n">result</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_on_geology_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">progress</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle progress updates from parallel service.</span>
@@ -971,9 +969,10 @@ window.addEventListener("load", load);
             <span class="p">)</span>
         <span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_on_geology_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error_msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_geology_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error_msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle error during parallel geology generation.&quot;&quot;&quot;</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Async geology error: </span><span class="si">{</span><span class="n">error_msg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Geology Task Error: </span><span class="si">{</span><span class="n">error_msg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active_task</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="c1"># Map string error to ProcessingError for centralized handling</span>
         <span class="n">error</span> <span class="o">=</span> <span class="n">ProcessingError</span><span class="p">(</span>
             <span class="n">QCoreApplication</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="s2">&quot;PreviewManager&quot;</span><span class="p">,</span> <span class="s2">&quot;Geology processing failed: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
@@ -982,8 +981,21 @@ window.addEventListener("load", load);
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">handle_error</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="s2">&quot;Geology Error&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_start_async_drillhole</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">PreviewParams</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_drillhole_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error_msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle error during parallel drillhole generation.&quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Drillhole Task Error: </span><span class="si">{</span><span class="n">error_msg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active_drill_task</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="n">ProcessingError</span><span class="p">(</span>
+            <span class="n">QCoreApplication</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="s2">&quot;PreviewManager&quot;</span><span class="p">,</span> <span class="s2">&quot;Drillhole processing failed: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">error_msg</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">handle_error</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="s2">&quot;Drillhole Error&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_start_async_drillhole</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">PreviewParams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Start asynchronous drillhole generation.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_drill_task</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">active_drill_task</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">params</span><span class="o">.</span><span class="n">collar_layer</span><span class="p">:</span>
             <span class="k">return</span>
 
@@ -995,37 +1007,7 @@ window.addEventListener("load", load);
 
         <span class="c1"># 1. Prepare Data (Sync)</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="c1"># We need section azimuth which is calculated in preview_service usually</span>
-            <span class="c1"># Re-calc here or pass it? PreviewParams doesn&#39;t store azimuth.</span>
-            <span class="c1"># params.line_layer geometry is available.</span>
-            <span class="n">line_feat</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">line_layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">())</span>
-            <span class="n">line_geom</span> <span class="o">=</span> <span class="n">line_feat</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span>
-            <span class="n">line_start</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="n">line_geom</span><span class="o">.</span><span class="n">asPolyline</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">line_geom</span><span class="o">.</span><span class="n">isMultipart</span><span class="p">()</span>
-                <span class="k">else</span> <span class="n">line_geom</span><span class="o">.</span><span class="n">asMultiPolyline</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-            <span class="p">)</span>
-
-            <span class="c1"># Calculate Azimuth</span>
-            <span class="c1"># Import scu if needed or use simple math if possible, but scu is best.</span>
-            <span class="c1"># Wait, PreviewParams has methods? No.</span>
-            <span class="c1"># Let&#39;s import scu at top if not present? It is imported as &#39;scu&#39; in preview_service but not here.</span>
-            <span class="c1"># Actually, main_dialog_preview imports services.</span>
-            <span class="c1"># To avoid circular imports or messy code, let&#39;s ask DrillholeService to calculate input?</span>
-            <span class="c1"># But prepare_task_input needs arguments.</span>
-
-            <span class="c1"># Easier: Just calculate azimuth here safely.</span>
-            <span class="n">p1</span> <span class="o">=</span> <span class="n">line_start</span>
-            <span class="n">p2_vertex</span> <span class="o">=</span> <span class="n">line_geom</span><span class="o">.</span><span class="n">vertexAt</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-            <span class="c1"># Convert QgsPoint to QgsPointXY for azimuth calculation</span>
-            <span class="kn">from</span><span class="w"> </span><span class="nn">qgis.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">QgsPointXY</span>
-
-            <span class="n">p2</span> <span class="o">=</span> <span class="n">QgsPointXY</span><span class="p">(</span><span class="n">p2_vertex</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">p2_vertex</span><span class="o">.</span><span class="n">y</span><span class="p">())</span>
-            <span class="n">azimuth</span> <span class="o">=</span> <span class="n">p1</span><span class="o">.</span><span class="n">azimuth</span><span class="p">(</span><span class="n">p2</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">azimuth</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">azimuth</span> <span class="o">+=</span> <span class="mi">360</span>
-
-            <span class="c1"># Gather Drillhole Fields maps</span>
+            <span class="c1"># Map simplified fields for the service</span>
             <span class="n">survey_fields</span> <span class="o">=</span> <span class="p">{</span>
                 <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">survey_id_field</span><span class="p">,</span>
                 <span class="s2">&quot;depth&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">survey_depth_field</span><span class="p">,</span>
@@ -1041,10 +1023,7 @@ window.addEventListener("load", load);
 
             <span class="n">task_input</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">plugin_instance</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">drillhole_service</span><span class="o">.</span><span class="n">prepare_task_input</span><span class="p">(</span>
-                    <span class="n">line_geom</span><span class="o">=</span><span class="n">line_geom</span><span class="p">,</span>
-                    <span class="n">line_start</span><span class="o">=</span><span class="n">line_start</span><span class="p">,</span>
-                    <span class="n">line_crs</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">line_layer</span><span class="o">.</span><span class="n">crs</span><span class="p">(),</span>
-                    <span class="n">section_azimuth</span><span class="o">=</span><span class="n">azimuth</span><span class="p">,</span>
+                    <span class="n">line_layer</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">line_layer</span><span class="p">,</span>
                     <span class="n">buffer_width</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">buffer_dist</span><span class="p">,</span>
                     <span class="n">collar_layer</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">collar_layer</span><span class="p">,</span>
                     <span class="n">collar_id_field</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">collar_id_field</span><span class="p">,</span>
@@ -1060,8 +1039,11 @@ window.addEventListener("load", load);
                     <span class="n">dem_layer</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">raster_layer</span><span class="p">,</span>
                 <span class="p">)</span>
             <span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="n">SecInterpError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to prepare drillhole task: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Unexpected error preparing drillhole task&quot;</span><span class="p">)</span>
             <span class="k">return</span>
 
         <span class="c1"># 2. Launch Task</span>
@@ -1077,39 +1059,24 @@ window.addEventListener("load", load);
     <span class="k">def</span><span class="w"> </span><span class="nf">_on_drillhole_finished</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">result</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle completion of drillhole task.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">active_drill_task</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
+            <span class="k">return</span>
 
         <span class="c1"># result is (geol_data, drillhole_data)</span>
         <span class="n">_</span><span class="p">,</span> <span class="n">drill_part</span> <span class="o">=</span> <span class="n">result</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="p">[</span><span class="s2">&quot;drillhole&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">drill_part</span>
-
-        <span class="c1"># If drillholes generated geology segments (legacy &#39;process_intervals&#39; behavior),</span>
-        <span class="c1"># we might want to merge them?</span>
-        <span class="c1"># Currently, &#39;geol&#39; cache is from GeologyService (Surface geology).</span>
-        <span class="c1"># &#39;drillhole&#39; cache contains (hid, ..., ..., ..., segments).</span>
-        <span class="c1"># The renderer handles drawing these segments stored inside drillhole data.</span>
-        <span class="c1"># So we just store drill_part.</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Async Drillholes finished: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">drill_part</span><span class="p">)</span><span class="si">}</span><span class="s2"> holes&quot;</span><span class="p">)</span>
 
-        <span class="c1"># Trigger update</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">update_from_checkboxes</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_from_checkboxes</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_results_display</span><span class="p">()</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="n">SecInterpError</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Error syncing UI after async drillhole&quot;</span><span class="p">)</span>
 
-        <span class="c1"># Update text</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="p">[</span><span class="s2">&quot;topo&quot;</span><span class="p">]:</span>
-            <span class="c1"># Re-construct status message</span>
-            <span class="n">res_obj</span> <span class="o">=</span> <span class="n">PreviewResult</span><span class="p">(</span>
-                <span class="n">topo</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="p">[</span><span class="s2">&quot;topo&quot;</span><span class="p">],</span>
-                <span class="n">geol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="p">[</span><span class="s2">&quot;geol&quot;</span><span class="p">],</span>
-                <span class="n">struct</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="p">[</span><span class="s2">&quot;struct&quot;</span><span class="p">],</span>
-                <span class="n">drillhole</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cached_data</span><span class="p">[</span><span class="s2">&quot;drillhole&quot;</span><span class="p">],</span>
-                <span class="n">buffer_dist</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_buffer_distance</span><span class="p">(),</span>
-            <span class="p">)</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="n">PreviewReporter</span><span class="o">.</span><span class="n">format_results_message</span><span class="p">(</span><span class="n">res_obj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">preview_widget</span><span class="o">.</span><span class="n">results_text</span><span class="o">.</span><span class="n">setPlainText</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_handle_invalid_plugin_instance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_handle_invalid_plugin_instance</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle case where plugin instance is not available for rendering.&quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Plugin instance not available in PreviewManager&quot;</span><span class="p">)</span>
         <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;Plugin instance or draw_preview method not available&quot;</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_update_crs_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer</span><span class="p">:</span> <span class="n">QgsVectorLayer</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -1119,6 +1086,9 @@ window.addEventListener("load", load);
 <span class="sd">            layer: The reference layer to get CRS from.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">layer</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">layer</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="k">return</span>
+
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">layer</span><span class="p">:</span>
                 <span class="n">auth_id</span> <span class="o">=</span> <span class="n">layer</span><span class="o">.</span><span class="n">crs</span><span class="p">()</span><span class="o">.</span><span class="n">authid</span><span class="p">()</span>
@@ -1129,10 +1099,12 @@ window.addEventListener("load", load);
                 <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">preview_widget</span><span class="o">.</span><span class="n">lbl_crs</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span>
                     <span class="n">QCoreApplication</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="s2">&quot;PreviewManager&quot;</span><span class="p">,</span> <span class="s2">&quot;CRS: None&quot;</span><span class="p">)</span>
                 <span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">preview_widget</span><span class="o">.</span><span class="n">lbl_crs</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span>
                 <span class="n">QCoreApplication</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="s2">&quot;PreviewManager&quot;</span><span class="p">,</span> <span class="s2">&quot;CRS: Unknown&quot;</span><span class="p">)</span>
-            <span class="p">)</span></div>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Unexpected error updating CRS label&quot;</span><span class="p">)</span></div>
 
 </pre></div>
 

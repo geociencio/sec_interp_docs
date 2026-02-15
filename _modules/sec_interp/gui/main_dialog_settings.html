@@ -5,24 +5,26 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp.gui.main_dialog_settings &mdash; SecInterp 2.7.0 documentation</title>
+  <title>sec_interp.gui.main_dialog_settings &mdash; SecInterp 2.9.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=dfec817d"></script>
-      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs"></script>
-      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script src="../../../_static/documentation_options.js?v=182a64a0"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
       <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
 
-const defaultStyle = document.createElement('style');
-defaultStyle.textContent = `pre.mermaid {
+
+
+
+
+const initStyles = () => {
+    const defaultStyle = document.createElement('style');
+    defaultStyle.textContent = `pre.mermaid {
     /* Same as .mermaid-container > pre */
     display: block;
     width: 100%;
@@ -33,12 +35,11 @@ pre.mermaid > svg {
     height: 500px;
     width: 100%;
     max-width: 100% !important;
-}
-`;
-document.head.appendChild(defaultStyle);
+}`;
+    document.head.appendChild(defaultStyle);
 
-const fullscreenStyle = document.createElement('style');
-fullscreenStyle.textContent = `.mermaid-container {
+    const fullscreenStyle = document.createElement('style');
+    fullscreenStyle.textContent = `.mermaid-container {
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -190,10 +191,32 @@ fullscreenStyle.textContent = `.mermaid-container {
 .mermaid-fullscreen-modal .mermaid-fullscreen-btn {
     display: none !important;
 }`;
-document.head.appendChild(fullscreenStyle);
+    document.head.appendChild(fullscreenStyle);
+}
 
 // Detect if page has dark background
 const isDarkTheme = () => {
+    // We use a set of heuristics:
+    // 1. Check for common dark mode classes or attributes
+    // 2. Check computed background color brightness
+    if (document.documentElement.classList.contains('dark') ||
+        document.documentElement.getAttribute('data-theme') === 'dark' ||
+        document.body.classList.contains('dark') ||
+        document.body.getAttribute('data-theme') === 'dark') {
+        // console.log("Dark theme detected via class/attribute");
+        return true;
+    }
+    if (document.documentElement.classList.contains('light') ||
+        document.documentElement.getAttribute('data-theme') === 'light' ||
+        document.body.classList.contains('light') ||
+        document.body.getAttribute('data-theme') === 'light') {
+        // console.log("Light theme detected via class/attribute");
+        return false;
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // console.log("Dark theme detected via prefers-color-scheme");
+        return true;
+    }
     const bgColor = window.getComputedStyle(document.body).backgroundColor;
     const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
     if (match) {
@@ -201,15 +224,45 @@ const isDarkTheme = () => {
         const g = parseInt(match[2]);
         const b = parseInt(match[3]);
         const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        // console.log("Background color brightness:", brightness);
         return brightness < 128;
     }
+    // console.log("No dark or light theme detected, defaulting to light theme");
     return false;
 };
 
-const load = async () => {
-    await mermaid.run();
+let darkTheme = isDarkTheme();
+let modal = null;
+let modalContent = null;
+let previousScrollOffset = [window.scrollX, window.scrollY];
 
-    const all_mermaids = document.querySelectorAll(".mermaid");
+const runMermaid = async (rerun) => {
+    console.log("Running mermaid diagrams, rerun =", rerun);
+    // clear all existing mermaid charts
+    let all_mermaids = document.querySelectorAll(".mermaid");
+
+    if (rerun) {
+        all_mermaids.forEach((el) => {
+            if(!el.hasAttribute("data-original-code")) {
+                // store original code
+                // console.log(`Storing original code for first run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+            if(el.getAttribute("data-processed") === "true") {
+                // remove and restore original
+                el.removeAttribute("data-processed");
+                // console.log(`Restoring original code for re-run: `, el.getAttribute('data-original-code'));
+                el.innerHTML = el.getAttribute('data-original-code');
+            } else {
+                // store original code
+                // console.log(`Storing original code for re-run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+        });
+        await mermaid.run();
+    }
+
+    all_mermaids = document.querySelectorAll(".mermaid");
     const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
 
     if ("False" === "True") {
@@ -217,10 +270,10 @@ const load = async () => {
         if(mermaids_to_add_zoom > 0) {
             var svgs = d3.selectAll("");
             if(all_mermaids.length !== mermaids_processed.length) {
-                setTimeout(load, 200);
+                setTimeout(() => runMermaid(false), 200);
                 return;
             } else if(svgs.size() !== mermaids_to_add_zoom) {
-                setTimeout(load, 200);
+                setTimeout(() => runMermaid(false), 200);
                 return;
             } else {
                 svgs.each(function() {
@@ -236,16 +289,21 @@ const load = async () => {
         }
     } else if(all_mermaids.length !== mermaids_processed.length) {
         // Wait for mermaid to process all diagrams
-        setTimeout(load, 200);
+        setTimeout(() => runMermaid(false), 200);
         return;
     }
-
-    const darkTheme = isDarkTheme();
 
     // Stop here if not adding fullscreen capability
     if ("True" !== "True") return;
 
-    const modal = document.createElement('div');
+    if (modal !== null ) {
+        // Destroy existing modal
+        modal.remove();
+        modal = null;
+        modalContent = null;
+    }
+
+    modal = document.createElement('div');
     modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
     modal.setAttribute('role', 'dialog');
     modal.setAttribute('aria-modal', 'true');
@@ -256,10 +314,8 @@ const load = async () => {
     `;
     document.body.appendChild(modal);
 
-    const modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    modalContent = modal.querySelector('.mermaid-container-fullscreen');
     const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
-
-    let previousScrollOffset = [window.scrollX, window.scrollY];
 
     const closeModal = () => {
         modal.classList.remove('active');
@@ -278,11 +334,14 @@ const load = async () => {
         }
     });
 
-    const allButtons = [];
-
     document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
         if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
             mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            // Already processed, adjust button class if needed
+            const existingBtn = mermaidDiv.parentNode.querySelector('.mermaid-fullscreen-btn');
+            if (existingBtn) {
+                existingBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+            }
             return;
         }
 
@@ -340,46 +399,57 @@ const load = async () => {
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         });
-
         container.appendChild(fullscreenBtn);
-        allButtons.push(fullscreenBtn);
-    });
-
-    // Update theme classes when theme changes
-    const updateTheme = () => {
-        const dark = isDarkTheme();
-        allButtons.forEach(btn => {
-            if (dark) {
-                btn.classList.add('dark-theme');
-            } else {
-                btn.classList.remove('dark-theme');
-            }
-        });
-        if (dark) {
-            modal.classList.add('dark-theme');
-            modalContent.classList.add('dark-theme');
-            closeBtn.classList.add('dark-theme');
-        } else {
-            modal.classList.remove('dark-theme');
-            modalContent.classList.remove('dark-theme');
-            closeBtn.classList.remove('dark-theme');
-        }
-    };
-
-    // Watch for theme changes
-    const observer = new MutationObserver(updateTheme);
-    observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['class', 'style', 'data-theme']
-    });
-    observer.observe(document.body, {
-        attributes: true,
-        attributeFilter: ['class', 'style']
     });
 };
 
-window.addEventListener("load", load);
-</script>
+const load = async () => {
+    initStyles();
+
+    await runMermaid(true);
+
+    const reRunIfThemeChanges = async () => {
+        const newDarkTheme = isDarkTheme();
+        if (newDarkTheme !== darkTheme) {
+            darkTheme = newDarkTheme;
+            console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
+            await mermaid.initialize(
+                {...JSON.parse(
+                    `{"startOnLoad": false}`
+                ),
+                ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+                }
+            );
+            await runMermaid(true);
+        }
+    };
+
+    // Update theme classes when theme changes
+    const themeObserver = new MutationObserver(reRunIfThemeChanges);
+    themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    themeObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+};
+
+
+
+
+
+console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
+mermaid.initialize(
+    {...JSON.parse(
+        `{"startOnLoad": false}`
+    ),
+    ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+    }
+);
+
+window.addEventListener("load", load);</script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -440,13 +510,14 @@ window.addEventListener("load", load);
            <div itemprop="articleBody">
              
   <h1>Source code for sec_interp.gui.main_dialog_settings</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
-<span class="sd">&quot;&quot;&quot;Settings management module for SecInterp main dialog.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Settings management module for SecInterp main dialog.</span>
 
 <span class="sd">This module handles persistence of user settings between sessions.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.logger_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_logger</span>
@@ -454,7 +525,7 @@ window.addEventListener("load", load);
 <span class="kn">from</span><span class="w"> </span><span class="nn">.main_dialog_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">DialogDefaults</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="k">pass</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.gui.main_dialog</span><span class="w"> </span><span class="kn">import</span> <span class="n">SecInterpDialog</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -466,16 +537,14 @@ window.addEventListener("load", load);
 
 <div class="viewcode-block" id="DialogSettingsManager.__init__">
 <a class="viewcode-back" href="../../../sec_interp.gui.main_dialog_settings.html#sec_interp.gui.main_dialog_settings.DialogSettingsManager.__init__">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dialog</span><span class="p">:</span> <span class="s2">&quot;sec_interp.gui.main_dialog.SecInterpDialog&quot;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dialog</span><span class="p">:</span> <span class="n">SecInterpDialog</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize settings manager with reference to parent dialog.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            dialog: The :class:`sec_interp.gui.main_dialog.SecInterpDialog` instance</span>
+<span class="sd">            dialog: The main dialog instance.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span> <span class="o">=</span> <span class="n">dialog</span>
-        <span class="c1"># Access config service through the plugin instance controller</span>
-        <span class="c1"># Safety check for tests where plugin_instance might be mock or None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="p">,</span> <span class="s2">&quot;plugin_instance&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">plugin_instance</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">plugin_instance</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">config_service</span></div>
@@ -608,8 +677,6 @@ window.addEventListener("load", load);
         <span class="n">custom_fields_json</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_setting</span><span class="p">(</span><span class="s2">&quot;interp_custom_fields&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">custom_fields_json</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
-
                 <span class="n">fields</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">custom_fields_json</span><span class="p">)</span>
                 <span class="n">p_interp</span><span class="o">.</span><span class="n">fields_table</span><span class="o">.</span><span class="n">setRowCount</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">:</span>
@@ -618,7 +685,7 @@ window.addEventListener("load", load);
                     <span class="n">p_interp</span><span class="o">.</span><span class="n">fields_table</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
                     <span class="n">p_interp</span><span class="o">.</span><span class="n">fields_table</span><span class="o">.</span><span class="n">cellWidget</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">setCurrentText</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="s2">&quot;String&quot;</span><span class="p">))</span>
                     <span class="n">p_interp</span><span class="o">.</span><span class="n">fields_table</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;default&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
-            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">except</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to restore custom fields: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_load_preview_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -710,8 +777,6 @@ window.addEventListener("load", load);
         <span class="bp">self</span><span class="o">.</span><span class="n">_save_check</span><span class="p">(</span><span class="n">p_interp</span><span class="o">.</span><span class="n">chk_inherit_geol</span><span class="p">,</span> <span class="s2">&quot;interp_inherit_geol&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_save_check</span><span class="p">(</span><span class="n">p_interp</span><span class="o">.</span><span class="n">chk_inherit_drill</span><span class="p">,</span> <span class="s2">&quot;interp_inherit_drill&quot;</span><span class="p">)</span>
 
-        <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
-
         <span class="n">custom_fields</span> <span class="o">=</span> <span class="n">p_interp</span><span class="o">.</span><span class="n">get_data</span><span class="p">()[</span><span class="s2">&quot;custom_fields&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_set_setting</span><span class="p">(</span><span class="s2">&quot;interp_custom_fields&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">custom_fields</span><span class="p">))</span>
 
@@ -732,81 +797,94 @@ window.addEventListener("load", load);
 <a class="viewcode-back" href="../../../sec_interp.gui.main_dialog_settings.html#sec_interp.gui.main_dialog_settings.DialogSettingsManager.reset_to_defaults">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">reset_to_defaults</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset all dialog inputs to their default values.&quot;&quot;&quot;</span>
-        <span class="c1"># --- Section Page ---</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_section</span><span class="o">.</span><span class="n">line_combo</span><span class="o">.</span><span class="n">setLayer</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_section</span><span class="o">.</span><span class="n">buffer_spin</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">DialogDefaults</span><span class="o">.</span><span class="n">BUFFER_DISTANCE</span><span class="p">))</span>
-
-        <span class="c1"># --- DEM Page ---</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_dem</span><span class="o">.</span><span class="n">raster_combo</span><span class="o">.</span><span class="n">setLayer</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_dem</span><span class="o">.</span><span class="n">band_combo</span><span class="o">.</span><span class="n">setBand</span><span class="p">(</span><span class="n">DialogDefaults</span><span class="o">.</span><span class="n">DEFAULT_BAND</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_dem</span><span class="o">.</span><span class="n">scale_spin</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">DialogDefaults</span><span class="o">.</span><span class="n">SCALE</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_dem</span><span class="o">.</span><span class="n">vertexag_spin</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">DialogDefaults</span><span class="o">.</span><span class="n">VERTICAL_EXAGGERATION</span><span class="p">))</span>
-
-        <span class="c1"># --- Geology Page ---</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_geology</span><span class="o">.</span><span class="n">layer_combo</span><span class="o">.</span><span class="n">setLayer</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_geology</span><span class="o">.</span><span class="n">field_combo</span><span class="o">.</span><span class="n">setField</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-
-        <span class="c1"># --- Structure Page ---</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_struct</span><span class="o">.</span><span class="n">layer_combo</span><span class="o">.</span><span class="n">setLayer</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_struct</span><span class="o">.</span><span class="n">dip_combo</span><span class="o">.</span><span class="n">setField</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_struct</span><span class="o">.</span><span class="n">strike_combo</span><span class="o">.</span><span class="n">setField</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_struct</span><span class="o">.</span><span class="n">scale_spin</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">DialogDefaults</span><span class="o">.</span><span class="n">DIP_SCALE_FACTOR</span><span class="p">))</span>
-
-        <span class="c1"># --- Drillhole Page ---</span>
-        <span class="n">dpage</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_drillhole</span>
-        <span class="n">dpage</span><span class="o">.</span><span class="n">c_layer</span><span class="o">.</span><span class="n">setLayer</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-        <span class="n">dpage</span><span class="o">.</span><span class="n">c_id</span><span class="o">.</span><span class="n">setField</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-        <span class="n">dpage</span><span class="o">.</span><span class="n">chk_use_geom</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">dpage</span><span class="o">.</span><span class="n">c_x</span><span class="o">.</span><span class="n">setField</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-        <span class="n">dpage</span><span class="o">.</span><span class="n">c_y</span><span class="o">.</span><span class="n">setField</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-        <span class="n">dpage</span><span class="o">.</span><span class="n">c_z</span><span class="o">.</span><span class="n">setField</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-        <span class="n">dpage</span><span class="o">.</span><span class="n">c_depth</span><span class="o">.</span><span class="n">setField</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-
-        <span class="n">dpage</span><span class="o">.</span><span class="n">s_layer</span><span class="o">.</span><span class="n">setLayer</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-        <span class="n">dpage</span><span class="o">.</span><span class="n">s_id</span><span class="o">.</span><span class="n">setField</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-        <span class="n">dpage</span><span class="o">.</span><span class="n">s_depth</span><span class="o">.</span><span class="n">setField</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-        <span class="n">dpage</span><span class="o">.</span><span class="n">s_azim</span><span class="o">.</span><span class="n">setField</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-        <span class="n">dpage</span><span class="o">.</span><span class="n">s_incl</span><span class="o">.</span><span class="n">setField</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-
-        <span class="n">dpage</span><span class="o">.</span><span class="n">i_layer</span><span class="o">.</span><span class="n">setLayer</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-        <span class="n">dpage</span><span class="o">.</span><span class="n">i_id</span><span class="o">.</span><span class="n">setField</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-        <span class="n">dpage</span><span class="o">.</span><span class="n">i_from</span><span class="o">.</span><span class="n">setField</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-        <span class="n">dpage</span><span class="o">.</span><span class="n">i_to</span><span class="o">.</span><span class="n">setField</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-        <span class="n">dpage</span><span class="o">.</span><span class="n">i_lith</span><span class="o">.</span><span class="n">setField</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-
-        <span class="c1"># Output folder</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">output_widget</span><span class="o">.</span><span class="n">setFilePath</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-
-        <span class="c1"># --- Interpretation Page ---</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_interpretation</span><span class="o">.</span><span class="n">fields_table</span><span class="o">.</span><span class="n">setRowCount</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_interpretation</span><span class="o">.</span><span class="n">chk_inherit_geol</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_interpretation</span><span class="o">.</span><span class="n">chk_inherit_drill</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-
-        <span class="c1"># --- Preview Widget ---</span>
-        <span class="n">pw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">preview_widget</span>
-        <span class="n">pw</span><span class="o">.</span><span class="n">chk_topo</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">pw</span><span class="o">.</span><span class="n">chk_geol</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">pw</span><span class="o">.</span><span class="n">chk_struct</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">pw</span><span class="o">.</span><span class="n">chk_drillholes</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">pw</span><span class="o">.</span><span class="n">chk_interpretations</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">pw</span><span class="o">.</span><span class="n">chk_legend</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">pw</span><span class="o">.</span><span class="n">chk_auto_lod</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-        <span class="n">pw</span><span class="o">.</span><span class="n">chk_adaptive_sampling</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">pw</span><span class="o">.</span><span class="n">spin_max_points</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
-
-        <span class="c1"># Clear interpretations</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="p">,</span> <span class="s2">&quot;interpretations&quot;</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">interpretations</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="c1"># Persist empty state to project</span>
-            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="p">,</span> <span class="s2">&quot;_save_interpretations&quot;</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">_save_interpretations</span><span class="p">()</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Persistent interpretations cleared by reset&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reset_pages</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reset_preview</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reset_tools</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">preview_widget</span><span class="o">.</span><span class="n">results_text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s2">&quot;✓ Form reset to default values&quot;</span><span class="p">)</span>
         <span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Dialog reset to defaults by user&quot;</span><span class="p">)</span></div>
 
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_reset_pages</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset main input pages.&quot;&quot;&quot;</span>
+        <span class="c1"># Section Page</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_section</span><span class="o">.</span><span class="n">line_combo</span><span class="o">.</span><span class="n">setLayer</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_section</span><span class="o">.</span><span class="n">buffer_spin</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">DialogDefaults</span><span class="o">.</span><span class="n">BUFFER_DISTANCE</span><span class="p">))</span>
+
+        <span class="c1"># DEM Page</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_dem</span><span class="o">.</span><span class="n">raster_combo</span><span class="o">.</span><span class="n">setLayer</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_dem</span><span class="o">.</span><span class="n">band_combo</span><span class="o">.</span><span class="n">setBand</span><span class="p">(</span><span class="n">DialogDefaults</span><span class="o">.</span><span class="n">DEFAULT_BAND</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_dem</span><span class="o">.</span><span class="n">scale_spin</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">DialogDefaults</span><span class="o">.</span><span class="n">SCALE</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_dem</span><span class="o">.</span><span class="n">vertexag_spin</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">DialogDefaults</span><span class="o">.</span><span class="n">VERTICAL_EXAGGERATION</span><span class="p">))</span>
+
+        <span class="c1"># Geology Page</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_geology</span><span class="o">.</span><span class="n">layer_combo</span><span class="o">.</span><span class="n">setLayer</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_geology</span><span class="o">.</span><span class="n">field_combo</span><span class="o">.</span><span class="n">setField</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Structure Page</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_struct</span><span class="o">.</span><span class="n">layer_combo</span><span class="o">.</span><span class="n">setLayer</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_struct</span><span class="o">.</span><span class="n">dip_combo</span><span class="o">.</span><span class="n">setField</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_struct</span><span class="o">.</span><span class="n">strike_combo</span><span class="o">.</span><span class="n">setField</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_struct</span><span class="o">.</span><span class="n">scale_spin</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">DialogDefaults</span><span class="o">.</span><span class="n">DIP_SCALE_FACTOR</span><span class="p">))</span>
+
+        <span class="c1"># Drillhole Page</span>
+        <span class="n">dpage</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_drillhole</span>
+        <span class="k">for</span> <span class="n">combo</span> <span class="ow">in</span> <span class="p">[</span><span class="n">dpage</span><span class="o">.</span><span class="n">c_layer</span><span class="p">,</span> <span class="n">dpage</span><span class="o">.</span><span class="n">s_layer</span><span class="p">,</span> <span class="n">dpage</span><span class="o">.</span><span class="n">i_layer</span><span class="p">]:</span>
+            <span class="n">combo</span><span class="o">.</span><span class="n">setLayer</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="p">[</span>
+            <span class="n">dpage</span><span class="o">.</span><span class="n">c_id</span><span class="p">,</span>
+            <span class="n">dpage</span><span class="o">.</span><span class="n">c_x</span><span class="p">,</span>
+            <span class="n">dpage</span><span class="o">.</span><span class="n">c_y</span><span class="p">,</span>
+            <span class="n">dpage</span><span class="o">.</span><span class="n">c_z</span><span class="p">,</span>
+            <span class="n">dpage</span><span class="o">.</span><span class="n">c_depth</span><span class="p">,</span>
+            <span class="n">dpage</span><span class="o">.</span><span class="n">s_id</span><span class="p">,</span>
+            <span class="n">dpage</span><span class="o">.</span><span class="n">s_depth</span><span class="p">,</span>
+            <span class="n">dpage</span><span class="o">.</span><span class="n">s_azim</span><span class="p">,</span>
+            <span class="n">dpage</span><span class="o">.</span><span class="n">s_incl</span><span class="p">,</span>
+            <span class="n">dpage</span><span class="o">.</span><span class="n">i_id</span><span class="p">,</span>
+            <span class="n">dpage</span><span class="o">.</span><span class="n">i_from</span><span class="p">,</span>
+            <span class="n">dpage</span><span class="o">.</span><span class="n">i_to</span><span class="p">,</span>
+            <span class="n">dpage</span><span class="o">.</span><span class="n">i_lith</span><span class="p">,</span>
+        <span class="p">]:</span>
+            <span class="n">field</span><span class="o">.</span><span class="n">setField</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">dpage</span><span class="o">.</span><span class="n">chk_use_geom</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Output folder</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">output_widget</span><span class="o">.</span><span class="n">setFilePath</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Interpretation Page</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_interpretation</span><span class="o">.</span><span class="n">fields_table</span><span class="o">.</span><span class="n">setRowCount</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_interpretation</span><span class="o">.</span><span class="n">chk_inherit_geol</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">page_interpretation</span><span class="o">.</span><span class="n">chk_inherit_drill</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_reset_preview</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset preview widget settings.&quot;&quot;&quot;</span>
+        <span class="n">pw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">preview_widget</span>
+        <span class="k">for</span> <span class="n">chk</span> <span class="ow">in</span> <span class="p">[</span>
+            <span class="n">pw</span><span class="o">.</span><span class="n">chk_topo</span><span class="p">,</span>
+            <span class="n">pw</span><span class="o">.</span><span class="n">chk_geol</span><span class="p">,</span>
+            <span class="n">pw</span><span class="o">.</span><span class="n">chk_struct</span><span class="p">,</span>
+            <span class="n">pw</span><span class="o">.</span><span class="n">chk_drillholes</span><span class="p">,</span>
+            <span class="n">pw</span><span class="o">.</span><span class="n">chk_interpretations</span><span class="p">,</span>
+            <span class="n">pw</span><span class="o">.</span><span class="n">chk_legend</span><span class="p">,</span>
+            <span class="n">pw</span><span class="o">.</span><span class="n">chk_adaptive_sampling</span><span class="p">,</span>
+        <span class="p">]:</span>
+            <span class="n">chk</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">pw</span><span class="o">.</span><span class="n">chk_auto_lod</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">pw</span><span class="o">.</span><span class="n">spin_max_points</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_reset_tools</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset interaction tools and internal data.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="p">,</span> <span class="s2">&quot;tool_manager&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">tool_manager</span><span class="o">.</span><span class="n">measure_tool</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="p">,</span> <span class="s2">&quot;interpretations&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">interpretations</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="p">,</span> <span class="s2">&quot;_save_interpretations&quot;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">_save_interpretations</span><span class="p">()</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Persistent interpretations cleared by reset&quot;</span><span class="p">)</span>
 
     <span class="c1"># --- Helper Methods ---</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_parse_setting_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
@@ -824,11 +902,20 @@ window.addEventListener("load", load);
             <span class="k">if</span> <span class="s2">&quot;.&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
                 <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
             <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">val</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_setting</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get setting from Project (multiple scopes) first, then Global config.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get setting from Project (multiple scopes) first, then Global config.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key: Setting key.</span>
+<span class="sd">            default: Default value if not found.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The setting value parsed to its original type.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># 1. Try Project (New Scope)</span>
         <span class="n">val</span><span class="p">,</span> <span class="n">ok</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">project</span><span class="o">.</span><span class="n">readEntry</span><span class="p">(</span><span class="s2">&quot;SecInterp&quot;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span> <span class="ow">or</span> <span class="n">val</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="s2">&quot;NULL&quot;</span><span class="p">):</span>
@@ -843,11 +930,14 @@ window.addEventListener("load", load);
 
         <span class="c1"># 2. Try Global fallback</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
-            <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span>
-            <span class="n">parsed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_setting_value</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">parsed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Global setting fallback: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">parsed</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-                <span class="k">return</span> <span class="n">parsed</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span>
+                <span class="n">parsed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_setting_value</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">parsed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Global setting fallback: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">parsed</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="n">parsed</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Global config access failed for </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">default</span>
 

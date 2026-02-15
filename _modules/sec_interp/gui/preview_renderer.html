@@ -5,24 +5,26 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp.gui.preview_renderer &mdash; SecInterp 2.7.0 documentation</title>
+  <title>sec_interp.gui.preview_renderer &mdash; SecInterp 2.9.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=dfec817d"></script>
-      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs"></script>
-      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script src="../../../_static/documentation_options.js?v=182a64a0"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
       <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
 
-const defaultStyle = document.createElement('style');
-defaultStyle.textContent = `pre.mermaid {
+
+
+
+
+const initStyles = () => {
+    const defaultStyle = document.createElement('style');
+    defaultStyle.textContent = `pre.mermaid {
     /* Same as .mermaid-container > pre */
     display: block;
     width: 100%;
@@ -33,12 +35,11 @@ pre.mermaid > svg {
     height: 500px;
     width: 100%;
     max-width: 100% !important;
-}
-`;
-document.head.appendChild(defaultStyle);
+}`;
+    document.head.appendChild(defaultStyle);
 
-const fullscreenStyle = document.createElement('style');
-fullscreenStyle.textContent = `.mermaid-container {
+    const fullscreenStyle = document.createElement('style');
+    fullscreenStyle.textContent = `.mermaid-container {
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -190,10 +191,32 @@ fullscreenStyle.textContent = `.mermaid-container {
 .mermaid-fullscreen-modal .mermaid-fullscreen-btn {
     display: none !important;
 }`;
-document.head.appendChild(fullscreenStyle);
+    document.head.appendChild(fullscreenStyle);
+}
 
 // Detect if page has dark background
 const isDarkTheme = () => {
+    // We use a set of heuristics:
+    // 1. Check for common dark mode classes or attributes
+    // 2. Check computed background color brightness
+    if (document.documentElement.classList.contains('dark') ||
+        document.documentElement.getAttribute('data-theme') === 'dark' ||
+        document.body.classList.contains('dark') ||
+        document.body.getAttribute('data-theme') === 'dark') {
+        // console.log("Dark theme detected via class/attribute");
+        return true;
+    }
+    if (document.documentElement.classList.contains('light') ||
+        document.documentElement.getAttribute('data-theme') === 'light' ||
+        document.body.classList.contains('light') ||
+        document.body.getAttribute('data-theme') === 'light') {
+        // console.log("Light theme detected via class/attribute");
+        return false;
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // console.log("Dark theme detected via prefers-color-scheme");
+        return true;
+    }
     const bgColor = window.getComputedStyle(document.body).backgroundColor;
     const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
     if (match) {
@@ -201,15 +224,45 @@ const isDarkTheme = () => {
         const g = parseInt(match[2]);
         const b = parseInt(match[3]);
         const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        // console.log("Background color brightness:", brightness);
         return brightness < 128;
     }
+    // console.log("No dark or light theme detected, defaulting to light theme");
     return false;
 };
 
-const load = async () => {
-    await mermaid.run();
+let darkTheme = isDarkTheme();
+let modal = null;
+let modalContent = null;
+let previousScrollOffset = [window.scrollX, window.scrollY];
 
-    const all_mermaids = document.querySelectorAll(".mermaid");
+const runMermaid = async (rerun) => {
+    console.log("Running mermaid diagrams, rerun =", rerun);
+    // clear all existing mermaid charts
+    let all_mermaids = document.querySelectorAll(".mermaid");
+
+    if (rerun) {
+        all_mermaids.forEach((el) => {
+            if(!el.hasAttribute("data-original-code")) {
+                // store original code
+                // console.log(`Storing original code for first run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+            if(el.getAttribute("data-processed") === "true") {
+                // remove and restore original
+                el.removeAttribute("data-processed");
+                // console.log(`Restoring original code for re-run: `, el.getAttribute('data-original-code'));
+                el.innerHTML = el.getAttribute('data-original-code');
+            } else {
+                // store original code
+                // console.log(`Storing original code for re-run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+        });
+        await mermaid.run();
+    }
+
+    all_mermaids = document.querySelectorAll(".mermaid");
     const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
 
     if ("False" === "True") {
@@ -217,10 +270,10 @@ const load = async () => {
         if(mermaids_to_add_zoom > 0) {
             var svgs = d3.selectAll("");
             if(all_mermaids.length !== mermaids_processed.length) {
-                setTimeout(load, 200);
+                setTimeout(() => runMermaid(false), 200);
                 return;
             } else if(svgs.size() !== mermaids_to_add_zoom) {
-                setTimeout(load, 200);
+                setTimeout(() => runMermaid(false), 200);
                 return;
             } else {
                 svgs.each(function() {
@@ -236,16 +289,21 @@ const load = async () => {
         }
     } else if(all_mermaids.length !== mermaids_processed.length) {
         // Wait for mermaid to process all diagrams
-        setTimeout(load, 200);
+        setTimeout(() => runMermaid(false), 200);
         return;
     }
-
-    const darkTheme = isDarkTheme();
 
     // Stop here if not adding fullscreen capability
     if ("True" !== "True") return;
 
-    const modal = document.createElement('div');
+    if (modal !== null ) {
+        // Destroy existing modal
+        modal.remove();
+        modal = null;
+        modalContent = null;
+    }
+
+    modal = document.createElement('div');
     modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
     modal.setAttribute('role', 'dialog');
     modal.setAttribute('aria-modal', 'true');
@@ -256,10 +314,8 @@ const load = async () => {
     `;
     document.body.appendChild(modal);
 
-    const modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    modalContent = modal.querySelector('.mermaid-container-fullscreen');
     const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
-
-    let previousScrollOffset = [window.scrollX, window.scrollY];
 
     const closeModal = () => {
         modal.classList.remove('active');
@@ -278,11 +334,14 @@ const load = async () => {
         }
     });
 
-    const allButtons = [];
-
     document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
         if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
             mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            // Already processed, adjust button class if needed
+            const existingBtn = mermaidDiv.parentNode.querySelector('.mermaid-fullscreen-btn');
+            if (existingBtn) {
+                existingBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+            }
             return;
         }
 
@@ -340,46 +399,57 @@ const load = async () => {
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         });
-
         container.appendChild(fullscreenBtn);
-        allButtons.push(fullscreenBtn);
-    });
-
-    // Update theme classes when theme changes
-    const updateTheme = () => {
-        const dark = isDarkTheme();
-        allButtons.forEach(btn => {
-            if (dark) {
-                btn.classList.add('dark-theme');
-            } else {
-                btn.classList.remove('dark-theme');
-            }
-        });
-        if (dark) {
-            modal.classList.add('dark-theme');
-            modalContent.classList.add('dark-theme');
-            closeBtn.classList.add('dark-theme');
-        } else {
-            modal.classList.remove('dark-theme');
-            modalContent.classList.remove('dark-theme');
-            closeBtn.classList.remove('dark-theme');
-        }
-    };
-
-    // Watch for theme changes
-    const observer = new MutationObserver(updateTheme);
-    observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['class', 'style', 'data-theme']
-    });
-    observer.observe(document.body, {
-        attributes: true,
-        attributeFilter: ['class', 'style']
     });
 };
 
-window.addEventListener("load", load);
-</script>
+const load = async () => {
+    initStyles();
+
+    await runMermaid(true);
+
+    const reRunIfThemeChanges = async () => {
+        const newDarkTheme = isDarkTheme();
+        if (newDarkTheme !== darkTheme) {
+            darkTheme = newDarkTheme;
+            console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
+            await mermaid.initialize(
+                {...JSON.parse(
+                    `{"startOnLoad": false}`
+                ),
+                ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+                }
+            );
+            await runMermaid(true);
+        }
+    };
+
+    // Update theme classes when theme changes
+    const themeObserver = new MutationObserver(reRunIfThemeChanges);
+    themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    themeObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+};
+
+
+
+
+
+console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
+mermaid.initialize(
+    {...JSON.parse(
+        `{"startOnLoad": false}`
+    ),
+    ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+    }
+);
+
+window.addEventListener("load", load);</script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -440,14 +510,13 @@ window.addEventListener("load", load);
            <div itemprop="articleBody">
              
   <h1>Source code for sec_interp.gui.preview_renderer</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
-<span class="sd">&quot;&quot;&quot;Preview Renderer Module (PyQGIS Native).</span>
+<span></span><span class="sd">&quot;&quot;&quot;Preview Renderer Module (PyQGIS Native).</span>
 
 <span class="sd">Handles rendering of interactive previews using native QGIS resources.</span>
 <span class="sd">This module has been refactored to delegate specialized tasks to modular components.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">contextlib</span>
 
@@ -463,7 +532,7 @@ window.addEventListener("load", load);
 <span class="kn">from</span><span class="w"> </span><span class="nn">qgis.PyQt.QtCore</span><span class="w"> </span><span class="kn">import</span> <span class="n">QRectF</span><span class="p">,</span> <span class="n">QSize</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">qgis.PyQt.QtGui</span><span class="w"> </span><span class="kn">import</span> <span class="n">QColor</span><span class="p">,</span> <span class="n">QImage</span><span class="p">,</span> <span class="n">QPainter</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.types</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.domain</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">GeologyData</span><span class="p">,</span>
     <span class="n">InterpretationPolygon</span><span class="p">,</span>
     <span class="n">ProfileData</span><span class="p">,</span>
@@ -543,65 +612,101 @@ window.addEventListener("load", load);
         <span class="bp">self</span><span class="o">.</span><span class="n">has_topography</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">has_structures</span> <span class="o">=</span> <span class="kc">False</span>
 
-        <span class="c1"># 2. Create data layers via LayerFactory</span>
-        <span class="n">topo_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_factory</span><span class="o">.</span><span class="n">create_topo_layer</span><span class="p">(</span>
-            <span class="n">topo_data</span><span class="p">,</span> <span class="n">vert_exag</span><span class="p">,</span> <span class="n">max_points</span><span class="p">,</span> <span class="n">use_adaptive_sampling</span>
+        <span class="c1"># 2. Create data layers via internal orchestrator</span>
+        <span class="n">data_layers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collect_data_layers</span><span class="p">(</span>
+            <span class="n">topo_data</span><span class="p">,</span>
+            <span class="n">geol_data</span><span class="p">,</span>
+            <span class="n">struct_data</span><span class="p">,</span>
+            <span class="n">vert_exag</span><span class="p">,</span>
+            <span class="n">max_points</span><span class="p">,</span>
+            <span class="n">use_adaptive_sampling</span><span class="p">,</span>
+            <span class="n">dip_line_length</span><span class="p">,</span>
+            <span class="n">drillhole_data</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="n">topo_layer</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">has_topography</span> <span class="o">=</span> <span class="kc">True</span>
-
-        <span class="n">topo_fill_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_factory</span><span class="o">.</span><span class="n">create_topo_fill_layer</span><span class="p">(</span>
-            <span class="n">topo_data</span><span class="p">,</span> <span class="n">vert_exag</span><span class="p">,</span> <span class="n">max_points</span>
-        <span class="p">)</span>
-
-        <span class="n">geol_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_factory</span><span class="o">.</span><span class="n">create_geol_layer</span><span class="p">(</span><span class="n">geol_data</span><span class="p">,</span> <span class="n">vert_exag</span><span class="p">,</span> <span class="n">max_points</span><span class="p">)</span>
-
-        <span class="c1"># ... rest of data layers ...</span>
-        <span class="c1"># For structural layer, use topo or geol as reference</span>
-        <span class="n">reference_data</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">topo_data</span>
-            <span class="k">if</span> <span class="n">topo_data</span>
-            <span class="k">else</span> <span class="p">([</span><span class="n">p</span> <span class="k">for</span> <span class="n">seg</span> <span class="ow">in</span> <span class="n">geol_data</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">seg</span><span class="o">.</span><span class="n">points</span><span class="p">]</span> <span class="k">if</span> <span class="n">geol_data</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="p">)</span>
-        <span class="n">struct_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_factory</span><span class="o">.</span><span class="n">create_struct_layer</span><span class="p">(</span>
-            <span class="n">struct_data</span><span class="p">,</span> <span class="n">reference_data</span><span class="p">,</span> <span class="n">vert_exag</span><span class="p">,</span> <span class="n">dip_line_length</span>
-        <span class="p">)</span>
-        <span class="k">if</span> <span class="n">struct_layer</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">has_structures</span> <span class="o">=</span> <span class="kc">True</span>
-
-        <span class="c1"># Drillhole layers</span>
-        <span class="n">drillhole_layers</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">if</span> <span class="n">drillhole_data</span><span class="p">:</span>
-            <span class="n">trace_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_factory</span><span class="o">.</span><span class="n">create_drillhole_trace_layer</span><span class="p">(</span><span class="n">drillhole_data</span><span class="p">,</span> <span class="n">vert_exag</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">trace_layer</span><span class="p">:</span>
-                <span class="n">drillhole_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">trace_layer</span><span class="p">)</span>
-            <span class="n">interval_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_factory</span><span class="o">.</span><span class="n">create_drillhole_interval_layer</span><span class="p">(</span>
-                <span class="n">drillhole_data</span><span class="p">,</span> <span class="n">vert_exag</span>
-            <span class="p">)</span>
-            <span class="k">if</span> <span class="n">interval_layer</span><span class="p">:</span>
-                <span class="n">drillhole_layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">interval_layer</span><span class="p">)</span>
 
         <span class="c1"># 2.5 Render interpretations (using rubber bands)</span>
         <span class="k">if</span> <span class="n">interp_data</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_render_interpretations</span><span class="p">(</span><span class="n">interp_data</span><span class="p">,</span> <span class="n">vert_exag</span><span class="p">)</span>
 
-        <span class="c1"># 3. Collect valid data layers</span>
-        <span class="c1"># Order: Structures on top, then Geology, then Topography line, then Fill, then Drillholes</span>
-        <span class="n">data_layers</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">layer</span>
-            <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="p">[</span>
-                <span class="n">struct_layer</span><span class="p">,</span>
-                <span class="n">geol_layer</span><span class="p">,</span>
-                <span class="n">topo_layer</span><span class="p">,</span>
-                <span class="n">topo_fill_layer</span><span class="p">,</span>
-                <span class="o">*</span><span class="n">drillhole_layers</span><span class="p">,</span>
-            <span class="p">]</span>
-            <span class="k">if</span> <span class="n">layer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-        <span class="p">]</span>
-
         <span class="k">if</span> <span class="ow">not</span> <span class="n">data_layers</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;No valid layers to render&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;No valid data layers to render yet&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="p">[]</span>
+
+        <span class="c1"># 4. Axes and Labels</span>
+        <span class="n">extent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_extent</span><span class="p">(</span><span class="n">data_layers</span><span class="p">)</span>
+        <span class="n">axes_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">create_axes_layer</span><span class="p">(</span><span class="n">extent</span><span class="p">,</span> <span class="n">vert_exag</span><span class="p">)</span>
+        <span class="n">labels_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes_manager</span><span class="o">.</span><span class="n">create_axes_labels_layer</span><span class="p">(</span><span class="n">extent</span><span class="p">,</span> <span class="n">vert_exag</span><span class="p">)</span>
+
+        <span class="c1"># 5. Finalize layers list</span>
+        <span class="n">layers</span> <span class="o">=</span> <span class="p">[</span><span class="n">labels_layer</span><span class="p">,</span> <span class="o">*</span><span class="n">data_layers</span><span class="p">,</span> <span class="n">axes_layer</span><span class="p">]</span>
+        <span class="n">layers</span> <span class="o">=</span> <span class="p">[</span><span class="n">layer</span> <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">layers</span> <span class="k">if</span> <span class="n">layer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layers</span> <span class="o">=</span> <span class="n">layers</span>
+
+        <span class="c1"># 6. Configure canvas</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span> <span class="ow">and</span> <span class="n">extent</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">setLayers</span><span class="p">(</span><span class="n">layers</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">preserve_extent</span><span class="p">:</span>
+                <span class="n">padded_extent</span> <span class="o">=</span> <span class="n">extent</span>
+                <span class="n">padded_extent</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="mf">1.1</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">setExtent</span><span class="p">(</span><span class="n">padded_extent</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">,</span> <span class="n">layers</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_collect_data_layers</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">topo_data</span><span class="p">,</span>
+        <span class="n">geol_data</span><span class="p">,</span>
+        <span class="n">struct_data</span><span class="p">,</span>
+        <span class="n">vert_exag</span><span class="p">,</span>
+        <span class="n">max_points</span><span class="p">,</span>
+        <span class="n">use_adaptive</span><span class="p">,</span>
+        <span class="n">dip_len</span><span class="p">,</span>
+        <span class="n">drill_data</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Collect all data layers in order.&quot;&quot;&quot;</span>
+        <span class="c1"># Topography &amp; Geology</span>
+        <span class="n">topo_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_factory</span><span class="o">.</span><span class="n">create_topo_layer</span><span class="p">(</span>
+            <span class="n">topo_data</span><span class="p">,</span> <span class="n">vert_exag</span><span class="p">,</span> <span class="n">max_points</span><span class="p">,</span> <span class="n">use_adaptive</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">topo_layer</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">has_topography</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="n">topo_fill</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_factory</span><span class="o">.</span><span class="n">create_topo_fill_layer</span><span class="p">(</span><span class="n">topo_data</span><span class="p">,</span> <span class="n">vert_exag</span><span class="p">,</span> <span class="n">max_points</span><span class="p">)</span>
+        <span class="n">geol_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_factory</span><span class="o">.</span><span class="n">create_geol_layer</span><span class="p">(</span><span class="n">geol_data</span><span class="p">,</span> <span class="n">vert_exag</span><span class="p">,</span> <span class="n">max_points</span><span class="p">)</span>
+
+        <span class="c1"># Specialized layers</span>
+        <span class="n">struct_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_struct_layer</span><span class="p">(</span><span class="n">struct_data</span><span class="p">,</span> <span class="n">topo_data</span><span class="p">,</span> <span class="n">geol_data</span><span class="p">,</span> <span class="n">vert_exag</span><span class="p">,</span> <span class="n">dip_len</span><span class="p">)</span>
+        <span class="n">drill_layers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_drillhole_layers</span><span class="p">(</span><span class="n">drill_data</span><span class="p">,</span> <span class="n">vert_exag</span><span class="p">)</span>
+
+        <span class="c1"># Combine in Z-order (top to bottom)</span>
+        <span class="n">candidates</span> <span class="o">=</span> <span class="p">[</span><span class="n">struct_layer</span><span class="p">,</span> <span class="n">geol_layer</span><span class="p">,</span> <span class="n">topo_layer</span><span class="p">,</span> <span class="n">topo_fill</span><span class="p">,</span> <span class="o">*</span><span class="n">drill_layers</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">L</span> <span class="k">for</span> <span class="n">L</span> <span class="ow">in</span> <span class="n">candidates</span> <span class="k">if</span> <span class="n">L</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_add_struct_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">topo</span><span class="p">,</span> <span class="n">geol</span><span class="p">,</span> <span class="n">exag</span><span class="p">,</span> <span class="n">dip_len</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create structural layer if data exists.&quot;&quot;&quot;</span>
+        <span class="n">ref</span> <span class="o">=</span> <span class="n">topo</span> <span class="k">if</span> <span class="n">topo</span> <span class="k">else</span> <span class="p">([</span><span class="n">p</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">geol</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">points</span><span class="p">]</span> <span class="k">if</span> <span class="n">geol</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_factory</span><span class="o">.</span><span class="n">create_struct_layer</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">exag</span><span class="p">,</span> <span class="n">dip_len</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">layer</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">has_structures</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="n">layer</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_add_drillhole_layers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">exag</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create drillhole layers if data exists.&quot;&quot;&quot;</span>
+        <span class="n">layers</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">layers</span>
+
+        <span class="n">t_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_factory</span><span class="o">.</span><span class="n">create_drillhole_trace_layer</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">exag</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">t_layer</span><span class="p">:</span>
+            <span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t_layer</span><span class="p">)</span>
+
+        <span class="n">i_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_factory</span><span class="o">.</span><span class="n">create_drillhole_interval_layer</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">exag</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i_layer</span><span class="p">:</span>
+            <span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i_layer</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">layers</span>
 
         <span class="c1"># 4. Axes and Labels</span>
         <span class="n">extent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_extent</span><span class="p">(</span><span class="n">data_layers</span><span class="p">)</span>
@@ -623,8 +728,7 @@ window.addEventListener("load", load);
                 <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">setExtent</span><span class="p">(</span><span class="n">padded_extent</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">,</span> <span class="n">layers</span></div>
-
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">,</span> <span class="n">layers</span>
 
 <div class="viewcode-block" id="PreviewRenderer.draw_legend">
 <a class="viewcode-back" href="../../../sec_interp.gui.preview_renderer.html#sec_interp.gui.PreviewRenderer.draw_legend">[docs]</a>
@@ -645,6 +749,7 @@ window.addEventListener("load", load);
         <span class="n">height</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">output_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">dpi</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">300</span><span class="p">,</span>
+        <span class="n">show_legend</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Export preview to image file. Maintains same logic but orchestrated.&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
@@ -700,8 +805,9 @@ window.addEventListener("load", load);
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">:</span>
             <span class="k">return</span>
 
+        <span class="n">MIN_INTERP_VERTICES</span> <span class="o">=</span> <span class="mi">3</span>
         <span class="k">for</span> <span class="n">interp</span> <span class="ow">in</span> <span class="n">interp_data</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">interp</span><span class="o">.</span><span class="n">vertices_2d</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">interp</span><span class="o">.</span><span class="n">vertices_2d</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">interp</span><span class="o">.</span><span class="n">vertices_2d</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">interp</span><span class="o">.</span><span class="n">vertices_2d</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">MIN_INTERP_VERTICES</span><span class="p">:</span>
                 <span class="k">continue</span>
 
             <span class="c1"># Create rubber band</span>

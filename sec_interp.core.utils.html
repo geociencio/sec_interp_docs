@@ -6,16 +6,16 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp.core.utils package &mdash; SecInterp 2.7.0 documentation</title>
+  <title>sec_interp.core.utils package &mdash; SecInterp 2.9.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=dfec817d"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/documentation_options.js?v=182a64a0"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -127,7 +127,7 @@ might occur depending on quadrant but are typically normalized.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="sec_interp.core.utils.calculate_bounds">
-<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">calculate_bounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topo_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geol_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="sec_interp.core.types.html#sec_interp.core.types.GeologySegment" title="sec_interp.core.types.GeologySegment"><span class="pre">GeologySegment</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/sec_interp/core/utils/rendering.html#calculate_bounds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.core.utils.calculate_bounds" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">calculate_bounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topo_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geol_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.GeologySegment" title="sec_interp.core.domain.entities.GeologySegment"><span class="pre">GeologySegment</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/sec_interp/core/utils/rendering.html#calculate_bounds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.core.utils.calculate_bounds" title="Link to this definition"></a></dt>
 <dd><p>Calculate the bounding box for all profile data with padding.</p>
 <p>Calculates the minimum and maximum distance and elevation across topography
 and optional geological segments.</p>
@@ -146,33 +146,23 @@ and optional geological segments.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="sec_interp.core.utils.calculate_drillhole_trajectory">
-<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">calculate_drillhole_trajectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collar_point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsPointXY</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collar_z</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">survey_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section_azimuth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">densify_step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_depth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/sec_interp/core/utils/drillhole.html#calculate_drillhole_trajectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.core.utils.calculate_drillhole_trajectory" title="Link to this definition"></a></dt>
-<dd><p>Calculate 3D trajectory of a drillhole using survey data.</p>
-<p>Uses the tangential method for trajectory calculation with densification
-to generate intermediate points for continuous interval projection.</p>
+<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">calculate_drillhole_trajectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collar_point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collar_z</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">survey_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">section_azimuth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">densify_step</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_depth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/sec_interp/core/utils/drillhole.html#calculate_drillhole_trajectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.core.utils.calculate_drillhole_trajectory" title="Link to this definition"></a></dt>
+<dd><p>Calculate the 3D trajectory of a drillhole using survey data.</p>
+<p>Calculates X, Y, Z positions along the hole using minimum curvature or
+tangential approximation based on survey readings (depth, azimuth, dip).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>collar_point</strong> – QgsPointXY of collar location (X, Y).</p></li>
-<li><p><strong>collar_z</strong> – Elevation of collar (Z).</p></li>
-<li><p><strong>survey_data</strong> – List of tuples (depth, azimuth, inclination) sorted by depth.</p></li>
-<li><p><strong>section_azimuth</strong> – Azimuth of the section line in degrees.</p></li>
-<li><p><strong>densify_step</strong> – Distance in meters between interpolated points (default 1.0m).</p></li>
-<li><p><strong>total_depth</strong> – Optional total depth. If greater than last survey depth,
-trajectory will be extrapolated using last orientation.</p></li>
+<li><p><strong>collar_point</strong> – Starting point (QgsPointXY or tuple).</p></li>
+<li><p><strong>collar_z</strong> – Starting elevation.</p></li>
+<li><p><strong>survey_data</strong> – List of (depth, azimuth, inclination) tuples.</p></li>
+<li><p><strong>section_azimuth</strong> – Azimuth of the section line (for relative calcs).</p></li>
+<li><p><strong>densify_step</strong> – Distance between interpolated points in meters.</p></li>
+<li><p><strong>total_depth</strong> – Total depth of the hole.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p>depth: Depth along the hole.</p></li>
-<li><p>x, y, z: 3D coordinates.</p></li>
-<li><p>dist_along_section: Distance along the section line (initially 0.0).</p></li>
-<li><p>offset_from_section: Perpendicular distance from section line (initially 0.0).</p></li>
-</ul>
-</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A list of tuples (depth, x, y, z, dist_along_section, offset_from_section)</p>
+<dd class="field-even"><p>List of (depth, x, y, z, 0.0, 0.0) trajectory points.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -348,15 +338,30 @@ and associated ellipsoid for geodesic calculations.</p>
 <dt class="sig sig-object py" id="sec_interp.core.utils.densify_line_by_interval">
 <span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">densify_line_by_interval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsGeometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qgis.core.QgsGeometry</span></span></span><a class="reference internal" href="_modules/sec_interp/core/utils/geometry_utils/processing.html#densify_line_by_interval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.core.utils.densify_line_by_interval" title="Link to this definition"></a></dt>
 <dd><p>Densify a line geometry by a specific distance interval.</p>
+<p>Adds intermediate vertices to ensure segments are no longer than the interval.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>geometry</strong> – Line geometry to densify.</p></li>
-<li><p><strong>interval</strong> – Maximum distance between vertices.</p></li>
+<li><p><strong>interval</strong> – Maximum distance between vertices (in CRS units).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The densified geometry.</p>
+<dd class="field-even"><p>The densified QgsGeometry.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sec_interp.core.utils.extract_feature_attributes">
+<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">extract_feature_attributes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/sec_interp/core/utils/parsing.html#extract_feature_attributes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.core.utils.extract_feature_attributes" title="Link to this definition"></a></dt>
+<dd><p>Extract attributes from a QgsFeature into a pure Python dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>feature</strong> – The QgsFeature object.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary mapping field names to attribute values.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -414,16 +419,17 @@ and associated ellipsoid for geodesic calculations.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="sec_interp.core.utils.interpolate_elevation">
 <span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">interpolate_elevation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topo_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/sec_interp/core/utils/sampling.html#interpolate_elevation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.core.utils.interpolate_elevation" title="Link to this definition"></a></dt>
-<dd><p>Interpolate elevation at given distance.</p>
+<dd><p>Interpolate elevation at a given distance along the topography profile.</p>
+<p>Uses linear interpolation between the two nearest sampled points.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>topo_data</strong> – List of (distance, elevation) tuples.</p></li>
-<li><p><strong>distance</strong> – Distance at which to interpolate elevation.</p></li>
+<li><p><strong>distance</strong> – Horizontal distance along the section.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The interpolated elevation value.</p>
+<dd class="field-even"><p>The interpolated elevation value (Z) at that distance.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -514,28 +520,21 @@ parsing fails.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="sec_interp.core.utils.project_trajectory_to_section">
-<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">project_trajectory_to_section</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajectory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_geom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsGeometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsPointXY</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsDistanceArea</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/sec_interp/core/utils/drillhole.html#project_trajectory_to_section"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.core.utils.project_trajectory_to_section" title="Link to this definition"></a></dt>
-<dd><p>Project drillhole trajectory points onto section line.</p>
+<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">project_trajectory_to_section</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajectory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_geom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsGeometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsDistanceArea</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/sec_interp/core/utils/drillhole.html#project_trajectory_to_section"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.core.utils.project_trajectory_to_section" title="Link to this definition"></a></dt>
+<dd><p>Project drillhole trajectory points onto the section line.</p>
+<p>Calculates the 2D projection (distance along section) and the offset
+(distance from section) for each point in a 3D trajectory.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>trajectory</strong> – List of (depth, x, y, z, _, _) from <cite>calculate_drillhole_trajectory</cite>.</p></li>
-<li><p><strong>line_geom</strong> – QgsGeometry of the section line.</p></li>
-<li><p><strong>line_start</strong> – QgsPointXY of the section line start.</p></li>
-<li><p><strong>distance_area</strong> – QgsDistanceArea for geodesic measurements.</p></li>
+<li><p><strong>trajectory</strong> – List of 3D trajectory points (depth, x, y, z, …).</p></li>
+<li><p><strong>line_geom</strong> – Section line geometry.</p></li>
+<li><p><strong>line_start</strong> – Reference start point for distance calculation.</p></li>
+<li><p><strong>distance_area</strong> – Distance calculation utility.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p>depth: Original depth.</p></li>
-<li><p>x, y, z: Original 3D coordinates.</p></li>
-<li><p>dist_along: Projected distance along the section line.</p></li>
-<li><p>offset: Perpendicular offset from the section line.</p></li>
-</ul>
-</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of tuples (depth, x, y, z, dist_along, offset)</p>
+<dd class="field-even"><p>List of (depth, x, y, z, dist_along, offset, proj_x, proj_y) tuples.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -562,6 +561,24 @@ parsing fails.</p>
 </dl>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="sec_interp.core.utils.sample_point_elevation">
+<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">sample_point_elevation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raster_layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsRasterLayer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsPointXY</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">band_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/sec_interp/core/utils/sampling.html#sample_point_elevation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.core.utils.sample_point_elevation" title="Link to this definition"></a></dt>
+<dd><p>Sample elevation from a raster layer at a specific 2D coordinate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>raster_layer</strong> – The DEM raster layer.</p></li>
+<li><p><strong>point</strong> – The coordinate point (X, Y) to sample.</p></li>
+<li><p><strong>band_number</strong> – The raster band index (default 1).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The sampled elevation value (Z) or 0.0 if the point is out of bounds.</p>
+</dd>
+</dl>
+</dd></dl>
+
 <section id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
@@ -570,6 +587,7 @@ parsing fails.</p>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.html#submodules">Submodules</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.extraction.html">sec_interp.core.utils.geometry_utils.extraction module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.extraction.html#sec_interp.core.utils.geometry_utils.extraction.extract_all_vertices"><code class="docutils literal notranslate"><span class="pre">extract_all_vertices()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.extraction.html#sec_interp.core.utils.geometry_utils.extraction.extract_lines_from_geometry"><code class="docutils literal notranslate"><span class="pre">extract_lines_from_geometry()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.extraction.html#sec_interp.core.utils.geometry_utils.extraction.get_line_vertices"><code class="docutils literal notranslate"><span class="pre">get_line_vertices()</span></code></a></li>
 </ul>
 </li>
@@ -586,9 +604,11 @@ parsing fails.</p>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.processing.html">sec_interp.core.utils.geometry_utils.processing module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.processing.html#sec_interp.core.utils.geometry_utils.processing.calculate_segment_range"><code class="docutils literal notranslate"><span class="pre">calculate_segment_range()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.processing.html#sec_interp.core.utils.geometry_utils.processing.create_buffer_geometry"><code class="docutils literal notranslate"><span class="pre">create_buffer_geometry()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.processing.html#sec_interp.core.utils.geometry_utils.processing.create_memory_layer"><code class="docutils literal notranslate"><span class="pre">create_memory_layer()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.processing.html#sec_interp.core.utils.geometry_utils.processing.densify_line_by_interval"><code class="docutils literal notranslate"><span class="pre">densify_line_by_interval()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.processing.html#sec_interp.core.utils.geometry_utils.processing.interpolate_segment_points"><code class="docutils literal notranslate"><span class="pre">interpolate_segment_points()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.processing.html#sec_interp.core.utils.geometry_utils.processing.run_geometry_operation"><code class="docutils literal notranslate"><span class="pre">run_geometry_operation()</span></code></a></li>
 </ul>
 </li>
@@ -627,8 +647,14 @@ parsing fails.</p>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.io.html#sec_interp.core.utils.io.create_shapefile_writer"><code class="docutils literal notranslate"><span class="pre">create_shapefile_writer()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.core.utils.metadata_reader.html">sec_interp.core.utils.metadata_reader module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.metadata_reader.html#sec_interp.core.utils.metadata_reader.clear_metadata_cache"><code class="docutils literal notranslate"><span class="pre">clear_metadata_cache()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.metadata_reader.html#sec_interp.core.utils.metadata_reader.read_plugin_metadata"><code class="docutils literal notranslate"><span class="pre">read_plugin_metadata()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.core.utils.parsing.html">sec_interp.core.utils.parsing module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.parsing.html#sec_interp.core.utils.parsing.cardinal_to_azimuth"><code class="docutils literal notranslate"><span class="pre">cardinal_to_azimuth()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.parsing.html#sec_interp.core.utils.parsing.extract_feature_attributes"><code class="docutils literal notranslate"><span class="pre">extract_feature_attributes()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.parsing.html#sec_interp.core.utils.parsing.parse_dip"><code class="docutils literal notranslate"><span class="pre">parse_dip()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.parsing.html#sec_interp.core.utils.parsing.parse_strike"><code class="docutils literal notranslate"><span class="pre">parse_strike()</span></code></a></li>
 </ul>
@@ -652,6 +678,7 @@ parsing fails.</p>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.sampling.html#sec_interp.core.utils.sampling.interpolate_elevation"><code class="docutils literal notranslate"><span class="pre">interpolate_elevation()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.sampling.html#sec_interp.core.utils.sampling.prepare_profile_context"><code class="docutils literal notranslate"><span class="pre">prepare_profile_context()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.sampling.html#sec_interp.core.utils.sampling.sample_elevation_along_line"><code class="docutils literal notranslate"><span class="pre">sample_elevation_along_line()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.sampling.html#sec_interp.core.utils.sampling.sample_point_elevation"><code class="docutils literal notranslate"><span class="pre">sample_point_elevation()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.core.utils.spatial.html">sec_interp.core.utils.spatial module</a><ul>

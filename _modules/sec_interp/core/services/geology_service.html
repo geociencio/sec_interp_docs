@@ -5,24 +5,26 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp.core.services.geology_service &mdash; SecInterp 2.7.0 documentation</title>
+  <title>sec_interp.core.services.geology_service &mdash; SecInterp 2.9.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../../_static/documentation_options.js?v=dfec817d"></script>
-      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs"></script>
-      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script src="../../../../_static/documentation_options.js?v=182a64a0"></script>
+      <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
       <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
 
-const defaultStyle = document.createElement('style');
-defaultStyle.textContent = `pre.mermaid {
+
+
+
+
+const initStyles = () => {
+    const defaultStyle = document.createElement('style');
+    defaultStyle.textContent = `pre.mermaid {
     /* Same as .mermaid-container > pre */
     display: block;
     width: 100%;
@@ -33,12 +35,11 @@ pre.mermaid > svg {
     height: 500px;
     width: 100%;
     max-width: 100% !important;
-}
-`;
-document.head.appendChild(defaultStyle);
+}`;
+    document.head.appendChild(defaultStyle);
 
-const fullscreenStyle = document.createElement('style');
-fullscreenStyle.textContent = `.mermaid-container {
+    const fullscreenStyle = document.createElement('style');
+    fullscreenStyle.textContent = `.mermaid-container {
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -190,10 +191,32 @@ fullscreenStyle.textContent = `.mermaid-container {
 .mermaid-fullscreen-modal .mermaid-fullscreen-btn {
     display: none !important;
 }`;
-document.head.appendChild(fullscreenStyle);
+    document.head.appendChild(fullscreenStyle);
+}
 
 // Detect if page has dark background
 const isDarkTheme = () => {
+    // We use a set of heuristics:
+    // 1. Check for common dark mode classes or attributes
+    // 2. Check computed background color brightness
+    if (document.documentElement.classList.contains('dark') ||
+        document.documentElement.getAttribute('data-theme') === 'dark' ||
+        document.body.classList.contains('dark') ||
+        document.body.getAttribute('data-theme') === 'dark') {
+        // console.log("Dark theme detected via class/attribute");
+        return true;
+    }
+    if (document.documentElement.classList.contains('light') ||
+        document.documentElement.getAttribute('data-theme') === 'light' ||
+        document.body.classList.contains('light') ||
+        document.body.getAttribute('data-theme') === 'light') {
+        // console.log("Light theme detected via class/attribute");
+        return false;
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // console.log("Dark theme detected via prefers-color-scheme");
+        return true;
+    }
     const bgColor = window.getComputedStyle(document.body).backgroundColor;
     const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
     if (match) {
@@ -201,15 +224,45 @@ const isDarkTheme = () => {
         const g = parseInt(match[2]);
         const b = parseInt(match[3]);
         const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        // console.log("Background color brightness:", brightness);
         return brightness < 128;
     }
+    // console.log("No dark or light theme detected, defaulting to light theme");
     return false;
 };
 
-const load = async () => {
-    await mermaid.run();
+let darkTheme = isDarkTheme();
+let modal = null;
+let modalContent = null;
+let previousScrollOffset = [window.scrollX, window.scrollY];
 
-    const all_mermaids = document.querySelectorAll(".mermaid");
+const runMermaid = async (rerun) => {
+    console.log("Running mermaid diagrams, rerun =", rerun);
+    // clear all existing mermaid charts
+    let all_mermaids = document.querySelectorAll(".mermaid");
+
+    if (rerun) {
+        all_mermaids.forEach((el) => {
+            if(!el.hasAttribute("data-original-code")) {
+                // store original code
+                // console.log(`Storing original code for first run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+            if(el.getAttribute("data-processed") === "true") {
+                // remove and restore original
+                el.removeAttribute("data-processed");
+                // console.log(`Restoring original code for re-run: `, el.getAttribute('data-original-code'));
+                el.innerHTML = el.getAttribute('data-original-code');
+            } else {
+                // store original code
+                // console.log(`Storing original code for re-run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+        });
+        await mermaid.run();
+    }
+
+    all_mermaids = document.querySelectorAll(".mermaid");
     const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
 
     if ("False" === "True") {
@@ -217,10 +270,10 @@ const load = async () => {
         if(mermaids_to_add_zoom > 0) {
             var svgs = d3.selectAll("");
             if(all_mermaids.length !== mermaids_processed.length) {
-                setTimeout(load, 200);
+                setTimeout(() => runMermaid(false), 200);
                 return;
             } else if(svgs.size() !== mermaids_to_add_zoom) {
-                setTimeout(load, 200);
+                setTimeout(() => runMermaid(false), 200);
                 return;
             } else {
                 svgs.each(function() {
@@ -236,16 +289,21 @@ const load = async () => {
         }
     } else if(all_mermaids.length !== mermaids_processed.length) {
         // Wait for mermaid to process all diagrams
-        setTimeout(load, 200);
+        setTimeout(() => runMermaid(false), 200);
         return;
     }
-
-    const darkTheme = isDarkTheme();
 
     // Stop here if not adding fullscreen capability
     if ("True" !== "True") return;
 
-    const modal = document.createElement('div');
+    if (modal !== null ) {
+        // Destroy existing modal
+        modal.remove();
+        modal = null;
+        modalContent = null;
+    }
+
+    modal = document.createElement('div');
     modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
     modal.setAttribute('role', 'dialog');
     modal.setAttribute('aria-modal', 'true');
@@ -256,10 +314,8 @@ const load = async () => {
     `;
     document.body.appendChild(modal);
 
-    const modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    modalContent = modal.querySelector('.mermaid-container-fullscreen');
     const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
-
-    let previousScrollOffset = [window.scrollX, window.scrollY];
 
     const closeModal = () => {
         modal.classList.remove('active');
@@ -278,11 +334,14 @@ const load = async () => {
         }
     });
 
-    const allButtons = [];
-
     document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
         if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
             mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            // Already processed, adjust button class if needed
+            const existingBtn = mermaidDiv.parentNode.querySelector('.mermaid-fullscreen-btn');
+            if (existingBtn) {
+                existingBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+            }
             return;
         }
 
@@ -340,46 +399,57 @@ const load = async () => {
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         });
-
         container.appendChild(fullscreenBtn);
-        allButtons.push(fullscreenBtn);
-    });
-
-    // Update theme classes when theme changes
-    const updateTheme = () => {
-        const dark = isDarkTheme();
-        allButtons.forEach(btn => {
-            if (dark) {
-                btn.classList.add('dark-theme');
-            } else {
-                btn.classList.remove('dark-theme');
-            }
-        });
-        if (dark) {
-            modal.classList.add('dark-theme');
-            modalContent.classList.add('dark-theme');
-            closeBtn.classList.add('dark-theme');
-        } else {
-            modal.classList.remove('dark-theme');
-            modalContent.classList.remove('dark-theme');
-            closeBtn.classList.remove('dark-theme');
-        }
-    };
-
-    // Watch for theme changes
-    const observer = new MutationObserver(updateTheme);
-    observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['class', 'style', 'data-theme']
-    });
-    observer.observe(document.body, {
-        attributes: true,
-        attributeFilter: ['class', 'style']
     });
 };
 
-window.addEventListener("load", load);
-</script>
+const load = async () => {
+    initStyles();
+
+    await runMermaid(true);
+
+    const reRunIfThemeChanges = async () => {
+        const newDarkTheme = isDarkTheme();
+        if (newDarkTheme !== darkTheme) {
+            darkTheme = newDarkTheme;
+            console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
+            await mermaid.initialize(
+                {...JSON.parse(
+                    `{"startOnLoad": false}`
+                ),
+                ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+                }
+            );
+            await runMermaid(true);
+        }
+    };
+
+    // Update theme classes when theme changes
+    const themeObserver = new MutationObserver(reRunIfThemeChanges);
+    themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    themeObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+};
+
+
+
+
+
+console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
+mermaid.initialize(
+    {...JSON.parse(
+        `{"startOnLoad": false}`
+    ),
+    ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+    }
+);
+
+window.addEventListener("load", load);</script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
@@ -440,8 +510,7 @@ window.addEventListener("load", load);
            <div itemprop="articleBody">
              
   <h1>Source code for sec_interp.core.services.geology_service</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
-<span class="sd">&quot;&quot;&quot;Geology Data Processing Service.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Geology Data Processing Service.</span>
 
 <span class="sd">This module handles the extraction and projection of geological boundaries</span>
 <span class="sd">and unit segments from map layers to the cross-section plane.</span>
@@ -466,27 +535,26 @@ window.addEventListener("load", load);
 <span class="c1">#  *                                                                         *</span>
 <span class="c1">#  ***************************************************************************/</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">qgis.core</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">QgsCoordinateReferenceSystem</span><span class="p">,</span>
     <span class="n">QgsDistanceArea</span><span class="p">,</span>
-    <span class="n">QgsFeature</span><span class="p">,</span>
-    <span class="n">QgsFeatureRequest</span><span class="p">,</span>
     <span class="n">QgsGeometry</span><span class="p">,</span>
     <span class="n">QgsPointXY</span><span class="p">,</span>
     <span class="n">QgsRasterLayer</span><span class="p">,</span>
     <span class="n">QgsVectorLayer</span><span class="p">,</span>
-    <span class="n">QgsWkbTypes</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span> <span class="k">as</span> <span class="n">scu</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.domain</span><span class="w"> </span><span class="kn">import</span> <span class="n">GeologyData</span><span class="p">,</span> <span class="n">GeologySegment</span><span class="p">,</span> <span class="n">GeologyTaskInput</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataMissingError</span><span class="p">,</span> <span class="n">GeometryError</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.interfaces.geology_interface</span><span class="w"> </span><span class="kn">import</span> <span class="n">IGeologyService</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.performance_metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">performance_monitor</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">GeologyData</span><span class="p">,</span> <span class="n">GeologySegment</span><span class="p">,</span> <span class="n">GeologyTaskInput</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.utils.sampling</span><span class="w"> </span><span class="kn">import</span> <span class="n">interpolate_elevation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.services.geology.outcrop_processor</span><span class="w"> </span><span class="kn">import</span> <span class="n">OutcropProcessor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.services.geology.profile_sampler</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProfileSampler</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.logger_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_logger</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -495,11 +563,19 @@ window.addEventListener("load", load);
 <div class="viewcode-block" id="GeologyService">
 <a class="viewcode-back" href="../../../../sec_interp.core.services.geology_service.html#sec_interp.core.services.GeologyService">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">GeologyService</span><span class="p">(</span><span class="n">IGeologyService</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Service for generating geological profiles.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Service for generating geological profiles.&quot;&quot;&quot;</span>
 
-<span class="sd">    This service handles the extraction of geological unit intersections</span>
-<span class="sd">    along a cross-section line.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="GeologyService.__init__">
+<a class="viewcode-back" href="../../../../sec_interp.core.services.geology_service.html#sec_interp.core.services.GeologyService.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize service with specialized processors.</span>
+
+<span class="sd">        The service delegates the heavy lifting of elevation sampling and</span>
+<span class="sd">        outcrop extraction to specialized sub-components.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">profile_sampler</span> <span class="o">=</span> <span class="n">ProfileSampler</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outcrop_processor</span> <span class="o">=</span> <span class="n">OutcropProcessor</span><span class="p">()</span></div>
+
 
 <div class="viewcode-block" id="GeologyService.generate_geological_profile">
 <a class="viewcode-back" href="../../../../sec_interp.core.services.geology_service.html#sec_interp.core.services.GeologyService.generate_geological_profile">[docs]</a>
@@ -549,74 +625,47 @@ window.addEventListener("load", load);
         <span class="n">outcrop_name_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">band_number</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GeologyTaskInput</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Prepare detached data input for background task.&quot;&quot;&quot;</span>
-        <span class="c1"># --- Level 3 Validation: Domain Guards ---</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataMissingError</span><span class="p">,</span> <span class="n">ValidationError</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.validation.validators</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate_positive</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Prepare detached domain data for background task execution.</span>
 
-        <span class="c1"># 1. Layer Validity</span>
-        <span class="k">for</span> <span class="n">lyr</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span>
-            <span class="p">(</span><span class="n">line_lyr</span><span class="p">,</span> <span class="s2">&quot;Line layer&quot;</span><span class="p">),</span>
-            <span class="p">(</span><span class="n">raster_lyr</span><span class="p">,</span> <span class="s2">&quot;Raster layer&quot;</span><span class="p">),</span>
-            <span class="p">(</span><span class="n">outcrop_lyr</span><span class="p">,</span> <span class="s2">&quot;Outcrop layer&quot;</span><span class="p">),</span>
-        <span class="p">]:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">lyr</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">lyr</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
-                <span class="k">raise</span> <span class="n">DataMissingError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;Invalid layer: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">. Please check input layers.&quot;</span><span class="p">,</span>
-                    <span class="p">{</span><span class="s2">&quot;layer&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">},</span>
-                <span class="p">)</span>
+<span class="sd">        Extracts all necessary geometric and attribute data from QGIS layers</span>
+<span class="sd">        to create a serializable input for asynchronous processing.</span>
 
-        <span class="c1"># 2. Band Validation</span>
-        <span class="n">validate_positive</span><span class="p">(</span><span class="s2">&quot;Band number&quot;</span><span class="p">)(</span><span class="n">band_number</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">band_number</span> <span class="o">&gt;</span> <span class="n">raster_lyr</span><span class="o">.</span><span class="n">bandCount</span><span class="p">():</span>
-            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Band number </span><span class="si">{</span><span class="n">band_number</span><span class="si">}</span><span class="s2"> exceeds raster band count (</span><span class="si">{</span><span class="n">raster_lyr</span><span class="o">.</span><span class="n">bandCount</span><span class="p">()</span><span class="si">}</span><span class="s2">).&quot;</span>
-            <span class="p">)</span>
+<span class="sd">        Args:</span>
+<span class="sd">            line_lyr: The cross-section line vector layer.</span>
+<span class="sd">            raster_lyr: The elevation raster layer.</span>
+<span class="sd">            outcrop_lyr: The geological outcrop vector layer.</span>
+<span class="sd">            outcrop_name_field: Field name for geological units.</span>
+<span class="sd">            band_number: Raster band for elevation sampling.</span>
 
-        <span class="c1"># 3. Field Validation</span>
-        <span class="n">idx</span> <span class="o">=</span> <span class="n">outcrop_lyr</span><span class="o">.</span><span class="n">fields</span><span class="p">()</span><span class="o">.</span><span class="n">indexFromName</span><span class="p">(</span><span class="n">outcrop_name_field</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">idx</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Field &#39;</span><span class="si">{</span><span class="n">outcrop_name_field</span><span class="si">}</span><span class="s2">&#39; not found in outcrop layer.&quot;</span><span class="p">)</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            GeologyTaskInput: Detached data ready for processing.</span>
 
-        <span class="c1"># --- End Validation ---</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_inputs</span><span class="p">(</span><span class="n">line_lyr</span><span class="p">,</span> <span class="n">raster_lyr</span><span class="p">,</span> <span class="n">outcrop_lyr</span><span class="p">,</span> <span class="n">outcrop_name_field</span><span class="p">,</span> <span class="n">band_number</span><span class="p">)</span>
 
         <span class="n">line_geom</span><span class="p">,</span> <span class="n">line_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_line_info</span><span class="p">(</span><span class="n">line_lyr</span><span class="p">)</span>
         <span class="n">crs</span> <span class="o">=</span> <span class="n">line_lyr</span><span class="o">.</span><span class="n">crs</span><span class="p">()</span>
         <span class="n">da</span> <span class="o">=</span> <span class="n">scu</span><span class="o">.</span><span class="n">create_distance_area</span><span class="p">(</span><span class="n">crs</span><span class="p">)</span>
 
         <span class="c1"># 1. Generate Master Profile Data (needs Raster access)</span>
-        <span class="n">master_profile_data</span><span class="p">,</span> <span class="n">master_grid_dists</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_master_profile_data</span><span class="p">(</span>
+        <span class="n">master_profile_data</span><span class="p">,</span> <span class="n">master_grid_dists_raw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_sampler</span><span class="o">.</span><span class="n">generate_master_profile</span><span class="p">(</span>
             <span class="n">line_geom</span><span class="p">,</span> <span class="n">raster_lyr</span><span class="p">,</span> <span class="n">band_number</span><span class="p">,</span> <span class="n">da</span><span class="p">,</span> <span class="n">line_start</span>
         <span class="p">)</span>
 
+        <span class="c1"># Convert master_grid_dists to domain types (dist, (x, y), elev)</span>
+        <span class="n">master_grid_dists</span> <span class="o">=</span> <span class="p">[(</span><span class="n">d</span><span class="p">,</span> <span class="p">(</span><span class="n">pt</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">pt</span><span class="o">.</span><span class="n">y</span><span class="p">()),</span> <span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">pt</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">master_grid_dists_raw</span><span class="p">]</span>
+
         <span class="c1"># 2. Extract Outcrop Data (needs Vector access)</span>
         <span class="n">outcrop_data</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">line_bbox</span> <span class="o">=</span> <span class="n">line_geom</span><span class="o">.</span><span class="n">boundingBox</span><span class="p">()</span>
-        <span class="n">request</span> <span class="o">=</span> <span class="n">QgsFeatureRequest</span><span class="p">()</span><span class="o">.</span><span class="n">setFilterRect</span><span class="p">(</span><span class="n">line_bbox</span><span class="p">)</span>
-
-        <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">outcrop_lyr</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">feature</span><span class="o">.</span><span class="n">hasGeometry</span><span class="p">():</span>
-                <span class="k">continue</span>
-
-            <span class="c1"># Copy attributes and geometry to detached structures</span>
-            <span class="n">attrs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">feature</span><span class="o">.</span><span class="n">fields</span><span class="p">()</span><span class="o">.</span><span class="n">names</span><span class="p">(),</span> <span class="n">feature</span><span class="o">.</span><span class="n">attributes</span><span class="p">(),</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="c1"># Ensure we handle potential attribute read errors safely</span>
-                <span class="n">unit_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">feature</span><span class="p">[</span><span class="n">outcrop_name_field</span><span class="p">])</span>
-            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-                <span class="n">unit_name</span> <span class="o">=</span> <span class="s2">&quot;Unknown&quot;</span>
-
-            <span class="n">outcrop_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                <span class="p">{</span>
-                    <span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="n">QgsGeometry</span><span class="p">(</span><span class="n">feature</span><span class="o">.</span><span class="n">geometry</span><span class="p">()),</span>  <span class="c1"># Deep copy geometry</span>
-                    <span class="s2">&quot;attributes&quot;</span><span class="p">:</span> <span class="n">attrs</span><span class="p">,</span>
-                    <span class="s2">&quot;unit_name&quot;</span><span class="p">:</span> <span class="n">unit_name</span><span class="p">,</span>
-                <span class="p">}</span>
+        <span class="k">if</span> <span class="n">outcrop_lyr</span><span class="p">:</span>
+            <span class="n">outcrop_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">outcrop_processor</span><span class="o">.</span><span class="n">extract_outcrop_data</span><span class="p">(</span>
+                <span class="n">line_geom</span><span class="p">,</span> <span class="n">outcrop_lyr</span><span class="p">,</span> <span class="n">outcrop_name_field</span>
             <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">GeologyTaskInput</span><span class="p">(</span>
-            <span class="n">line_geometry</span><span class="o">=</span><span class="n">QgsGeometry</span><span class="p">(</span><span class="n">line_geom</span><span class="p">),</span>
-            <span class="n">line_start</span><span class="o">=</span><span class="n">QgsPointXY</span><span class="p">(</span><span class="n">line_start</span><span class="p">),</span>
+            <span class="n">line_geometry_wkt</span><span class="o">=</span><span class="n">line_geom</span><span class="o">.</span><span class="n">asWkt</span><span class="p">(),</span>
+            <span class="n">line_start_x</span><span class="o">=</span><span class="n">line_start</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span>
+            <span class="n">line_start_y</span><span class="o">=</span><span class="n">line_start</span><span class="o">.</span><span class="n">y</span><span class="p">(),</span>
             <span class="n">crs_authid</span><span class="o">=</span><span class="n">crs</span><span class="o">.</span><span class="n">authid</span><span class="p">(),</span>
             <span class="n">master_profile_data</span><span class="o">=</span><span class="n">master_profile_data</span><span class="p">,</span>
             <span class="n">master_grid_dists</span><span class="o">=</span><span class="n">master_grid_dists</span><span class="p">,</span>
@@ -625,14 +674,87 @@ window.addEventListener("load", load);
         <span class="p">)</span></div>
 
 
+    <span class="k">def</span><span class="w"> </span><span class="nf">_validate_inputs</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">line_lyr</span><span class="p">:</span> <span class="n">QgsVectorLayer</span><span class="p">,</span>
+        <span class="n">raster_lyr</span><span class="p">:</span> <span class="n">QgsRasterLayer</span><span class="p">,</span>
+        <span class="n">outcrop_lyr</span><span class="p">:</span> <span class="n">QgsVectorLayer</span><span class="p">,</span>
+        <span class="n">outcrop_name_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">band_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validate input layers and parameters for correctness.</span>
+
+<span class="sd">        Checks layer validity, raster band range, and field existence.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            line_lyr: Section line layer.</span>
+<span class="sd">            raster_lyr: Raster layer.</span>
+<span class="sd">            outcrop_lyr: Outcrop layer.</span>
+<span class="sd">            outcrop_name_field: Unit field name.</span>
+<span class="sd">            band_number: Targeted raster band.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            DataMissingError: If a layer is invalid.</span>
+<span class="sd">            ValidationError: If parameters are out of range or missing.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">ValidationError</span>
+
+        <span class="c1"># 1. Layer Validity</span>
+        <span class="k">for</span> <span class="n">lyr</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span>
+            <span class="p">(</span><span class="n">line_lyr</span><span class="p">,</span> <span class="s2">&quot;Line layer&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="n">raster_lyr</span><span class="p">,</span> <span class="s2">&quot;Raster layer&quot;</span><span class="p">),</span>
+        <span class="p">]:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">lyr</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">lyr</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="n">DataMissingError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Invalid layer: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">. Please check input layers.&quot;</span><span class="p">,</span>
+                    <span class="p">{</span><span class="s2">&quot;layer&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">},</span>
+                <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">outcrop_lyr</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">outcrop_lyr</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="n">DataMissingError</span><span class="p">(</span>
+                <span class="s2">&quot;Invalid layer: Outcrop layer. Please check input layers.&quot;</span><span class="p">,</span>
+                <span class="p">{</span><span class="s2">&quot;layer&quot;</span><span class="p">:</span> <span class="s2">&quot;Outcrop layer&quot;</span><span class="p">},</span>
+            <span class="p">)</span>
+
+        <span class="c1"># 2. Band Validation</span>
+        <span class="k">if</span> <span class="n">band_number</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;Band number must be positive.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">band_number</span> <span class="o">&gt;</span> <span class="n">raster_lyr</span><span class="o">.</span><span class="n">bandCount</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Band number </span><span class="si">{</span><span class="n">band_number</span><span class="si">}</span><span class="s2"> exceeds raster band count (</span><span class="si">{</span><span class="n">raster_lyr</span><span class="o">.</span><span class="n">bandCount</span><span class="p">()</span><span class="si">}</span><span class="s2">).&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># 3. Field Validation</span>
+        <span class="k">if</span> <span class="n">outcrop_lyr</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">outcrop_lyr</span><span class="o">.</span><span class="n">fields</span><span class="p">()</span><span class="o">.</span><span class="n">indexFromName</span><span class="p">(</span><span class="n">outcrop_name_field</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">idx</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Field &#39;</span><span class="si">{</span><span class="n">outcrop_name_field</span><span class="si">}</span><span class="s2">&#39; not found in outcrop layer.&quot;</span><span class="p">)</span>
+
 <div class="viewcode-block" id="GeologyService.process_task_data">
 <a class="viewcode-back" href="../../../../sec_interp.core.services.geology_service.html#sec_interp.core.services.GeologyService.process_task_data">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">process_task_data</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">task_input</span><span class="p">:</span> <span class="n">GeologyTaskInput</span><span class="p">,</span> <span class="n">feedback</span><span class="p">:</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GeologyData</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Process geological data in a thread-safe way (Pure Computation).&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Process geological data in a thread-safe way (Domain-Pure logic).</span>
+
+<span class="sd">        Intersects the section line with detached outcrop geometries and</span>
+<span class="sd">        assigns elevations sampled from the master profile.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            task_input: Detached data for processing.</span>
+<span class="sd">            feedback: Optional QgsFeedback for progress tracking.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            GeologyData: Sorted list of geological segments.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Reconstruct necessary tools from IDs/Strings</span>
         <span class="n">crs</span> <span class="o">=</span> <span class="n">QgsCoordinateReferenceSystem</span><span class="p">(</span><span class="n">task_input</span><span class="o">.</span><span class="n">crs_authid</span><span class="p">)</span>
         <span class="n">da</span> <span class="o">=</span> <span class="n">scu</span><span class="o">.</span><span class="n">create_distance_area</span><span class="p">(</span><span class="n">crs</span><span class="p">)</span>
+        <span class="n">line_geom</span> <span class="o">=</span> <span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromWkt</span><span class="p">(</span><span class="n">task_input</span><span class="o">.</span><span class="n">line_geometry_wkt</span><span class="p">)</span>
+        <span class="n">line_start</span> <span class="o">=</span> <span class="n">QgsPointXY</span><span class="p">(</span><span class="n">task_input</span><span class="o">.</span><span class="n">line_start_x</span><span class="p">,</span> <span class="n">task_input</span><span class="o">.</span><span class="n">line_start_y</span><span class="p">)</span>
 
         <span class="n">segments</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">task_input</span><span class="o">.</span><span class="n">outcrop_data</span><span class="p">)</span>
@@ -641,34 +763,7 @@ window.addEventListener("load", load);
             <span class="k">if</span> <span class="n">feedback</span> <span class="ow">and</span> <span class="n">feedback</span><span class="o">.</span><span class="n">isCanceled</span><span class="p">():</span>
                 <span class="k">return</span> <span class="p">[]</span>
 
-            <span class="n">outcrop_geom</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;geometry&quot;</span><span class="p">]</span>
-            <span class="n">intersection</span> <span class="o">=</span> <span class="n">task_input</span><span class="o">.</span><span class="n">line_geometry</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">outcrop_geom</span><span class="p">)</span>
-
-            <span class="k">if</span> <span class="n">intersection</span><span class="o">.</span><span class="n">isEmpty</span><span class="p">():</span>
-                <span class="k">continue</span>
-
-            <span class="c1"># Process intersection</span>
-            <span class="c1"># We need to adapt _process_intersection_geometry to work with detached data</span>
-            <span class="c1"># Or create a helper. Since _process_intersection_geometry uses QgsFeature mainly for attributes</span>
-            <span class="c1"># we should adapt/reuse it.</span>
-
-            <span class="c1"># Helper to mimic feature behavior for _process_intersection_geometry</span>
-            <span class="c1"># Actually, let&#39;s just refactor _process_intersection_geometry to take dict or make a specialized one</span>
-            <span class="c1"># For minimal change, we&#39;ll inline the logic or adapt _process_intersection_geometry</span>
-
-            <span class="c1"># Let&#39;s adapt _process_intersection_geometry to be more flexible?</span>
-            <span class="c1"># Or simplified here since we have explicit data.</span>
-
-            <span class="n">new_segments</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_detached_intersection</span><span class="p">(</span>
-                <span class="n">intersection</span><span class="p">,</span>
-                <span class="n">item</span><span class="p">[</span><span class="s2">&quot;attributes&quot;</span><span class="p">],</span>
-                <span class="n">item</span><span class="p">[</span><span class="s2">&quot;unit_name&quot;</span><span class="p">],</span>
-                <span class="n">task_input</span><span class="o">.</span><span class="n">line_start</span><span class="p">,</span>
-                <span class="n">da</span><span class="p">,</span>
-                <span class="n">task_input</span><span class="o">.</span><span class="n">master_grid_dists</span><span class="p">,</span>
-                <span class="n">task_input</span><span class="o">.</span><span class="n">master_profile_data</span><span class="p">,</span>
-                <span class="n">task_input</span><span class="o">.</span><span class="n">tolerance</span><span class="p">,</span>
-            <span class="p">)</span>
+            <span class="n">new_segments</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_single_outcrop</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">line_geom</span><span class="p">,</span> <span class="n">line_start</span><span class="p">,</span> <span class="n">da</span><span class="p">,</span> <span class="n">task_input</span><span class="p">)</span>
             <span class="n">segments</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">new_segments</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="n">feedback</span><span class="p">:</span>
@@ -682,7 +777,7 @@ window.addEventListener("load", load);
     <span class="k">def</span><span class="w"> </span><span class="nf">_process_detached_intersection</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">geom</span><span class="p">:</span> <span class="n">QgsGeometry</span><span class="p">,</span>
-        <span class="n">attributes</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+        <span class="n">attrs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
         <span class="n">unit_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">line_start</span><span class="p">:</span> <span class="n">QgsPointXY</span><span class="p">,</span>
         <span class="n">da</span><span class="p">:</span> <span class="n">QgsDistanceArea</span><span class="p">,</span>
@@ -690,242 +785,77 @@ window.addEventListener("load", load);
         <span class="n">master_profile_data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
         <span class="n">tolerance</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">GeologySegment</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Variant of _process_intersection_geometry for detached data.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">geom</span> <span class="ow">or</span> <span class="n">geom</span><span class="o">.</span><span class="n">isNull</span><span class="p">():</span>
-            <span class="k">return</span> <span class="p">[]</span>
-
-        <span class="n">geometries</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">if</span> <span class="n">geom</span><span class="o">.</span><span class="n">wkbType</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="n">QgsWkbTypes</span><span class="o">.</span><span class="n">LineString</span><span class="p">,</span> <span class="n">QgsWkbTypes</span><span class="o">.</span><span class="n">LineString25D</span><span class="p">]:</span>
-            <span class="n">geometries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">geom</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">geom</span><span class="o">.</span><span class="n">wkbType</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span>
-            <span class="n">QgsWkbTypes</span><span class="o">.</span><span class="n">MultiLineString</span><span class="p">,</span>
-            <span class="n">QgsWkbTypes</span><span class="o">.</span><span class="n">MultiLineString25D</span><span class="p">,</span>
-        <span class="p">]:</span>
-            <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">geom</span><span class="o">.</span><span class="n">asMultiPolyline</span><span class="p">():</span>
-                <span class="n">geometries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromPolylineXY</span><span class="p">(</span><span class="n">part</span><span class="p">))</span>
-
-        <span class="n">segments</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">seg_geom</span> <span class="ow">in</span> <span class="n">geometries</span><span class="p">:</span>
-            <span class="c1"># We call _create_segment_from_geometry, but it expects QgsFeature</span>
-            <span class="c1"># We need to refactor _create_segment_from_geometry to take attributes dict</span>
-            <span class="c1"># Refactoring _create_segment_from_geometry to be detached-friendly</span>
-
-            <span class="n">segment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_segment_from_detached</span><span class="p">(</span>
-                <span class="n">seg_geom</span><span class="p">,</span>
-                <span class="n">attributes</span><span class="p">,</span>
-                <span class="n">unit_name</span><span class="p">,</span>
-                <span class="n">line_start</span><span class="p">,</span>
-                <span class="n">da</span><span class="p">,</span>
-                <span class="n">master_grid_dists</span><span class="p">,</span>
-                <span class="n">master_profile_data</span><span class="p">,</span>
-                <span class="n">tolerance</span><span class="p">,</span>
-            <span class="p">)</span>
-            <span class="k">if</span> <span class="n">segment</span><span class="p">:</span>
-                <span class="n">segments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">segment</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">segments</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_create_segment_from_detached</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">seg_geom</span><span class="p">:</span> <span class="n">QgsGeometry</span><span class="p">,</span>
-        <span class="n">attributes</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
-        <span class="n">glg_val</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">line_start</span><span class="p">:</span> <span class="n">QgsPointXY</span><span class="p">,</span>
-        <span class="n">da</span><span class="p">:</span> <span class="n">QgsDistanceArea</span><span class="p">,</span>
-        <span class="n">master_grid_dists</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">QgsPointXY</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
-        <span class="n">master_profile_data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
-        <span class="n">tolerance</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GeologySegment</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create segment from detached data.&quot;&quot;&quot;</span>
-        <span class="n">verts</span> <span class="o">=</span> <span class="n">scu</span><span class="o">.</span><span class="n">get_line_vertices</span><span class="p">(</span><span class="n">seg_geom</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">verts</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
-
-        <span class="n">start_pt</span><span class="p">,</span> <span class="n">end_pt</span> <span class="o">=</span> <span class="n">verts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">verts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">dist_start</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">measureLine</span><span class="p">(</span><span class="n">line_start</span><span class="p">,</span> <span class="n">start_pt</span><span class="p">)</span>
-        <span class="n">dist_end</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">measureLine</span><span class="p">(</span><span class="n">line_start</span><span class="p">,</span> <span class="n">end_pt</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">dist_start</span> <span class="o">&gt;</span> <span class="n">dist_end</span><span class="p">:</span>
-            <span class="n">dist_start</span><span class="p">,</span> <span class="n">dist_end</span> <span class="o">=</span> <span class="n">dist_end</span><span class="p">,</span> <span class="n">dist_start</span>
-
-        <span class="n">segment_points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_to_segment_points</span><span class="p">(</span>
-            <span class="n">dist_start</span><span class="p">,</span> <span class="n">dist_end</span><span class="p">,</span> <span class="n">master_grid_dists</span><span class="p">,</span> <span class="n">master_profile_data</span><span class="p">,</span> <span class="n">tolerance</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Process a detached intersection geometry to extract geology segments.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">outcrop_processor</span><span class="o">.</span><span class="n">process_detached_intersection</span><span class="p">(</span>
+            <span class="n">geom</span><span class="p">,</span>
+            <span class="n">attrs</span><span class="p">,</span>
+            <span class="n">unit_name</span><span class="p">,</span>
+            <span class="n">line_start</span><span class="p">,</span>
+            <span class="n">da</span><span class="p">,</span>
+            <span class="n">master_grid_dists</span><span class="p">,</span>
+            <span class="n">master_profile_data</span><span class="p">,</span>
+            <span class="n">tolerance</span><span class="p">,</span>
         <span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">GeologySegment</span><span class="p">(</span>
-            <span class="n">unit_name</span><span class="o">=</span><span class="n">glg_val</span><span class="p">,</span>
-            <span class="n">geometry</span><span class="o">=</span><span class="n">seg_geom</span><span class="p">,</span>
-            <span class="n">attributes</span><span class="o">=</span><span class="n">attributes</span><span class="p">,</span>
-            <span class="n">points</span><span class="o">=</span><span class="p">[(</span><span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">segment_points</span><span class="p">],</span>
-        <span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_generate_master_profile_data</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_process_single_outcrop</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
+        <span class="n">item</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
         <span class="n">line_geom</span><span class="p">:</span> <span class="n">QgsGeometry</span><span class="p">,</span>
-        <span class="n">raster_lyr</span><span class="p">:</span> <span class="n">QgsRasterLayer</span><span class="p">,</span>
-        <span class="n">band_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-        <span class="n">da</span><span class="p">:</span> <span class="n">QgsDistanceArea</span><span class="p">,</span>
-        <span class="n">line_start</span><span class="p">:</span> <span class="n">QgsPointXY</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">QgsPointXY</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate the master profile data (grid points and elevations).</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            line_geom: The geometry of the cross-section line.</span>
-<span class="sd">            raster_lyr: The DEM raster layer for elevation.</span>
-<span class="sd">            band_number: The raster band to sample.</span>
-<span class="sd">            da: The distance calculation object.</span>
-<span class="sd">            line_start: The start point of the section line.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            A tuple containing:</span>
-<span class="sd">                - master_profile_data: List of (distance, elevation) tuples.</span>
-<span class="sd">                - master_grid_dists: List of (distance, point, elevation) tuples.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">interval</span> <span class="o">=</span> <span class="n">raster_lyr</span><span class="o">.</span><span class="n">rasterUnitsPerPixelX</span><span class="p">()</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generating master profile with interval=</span><span class="si">{</span><span class="n">interval</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">master_densified</span> <span class="o">=</span> <span class="n">scu</span><span class="o">.</span><span class="n">densify_line_by_interval</span><span class="p">(</span><span class="n">line_geom</span><span class="p">,</span> <span class="n">interval</span><span class="p">)</span>
-            <span class="n">master_grid_points</span> <span class="o">=</span> <span class="n">scu</span><span class="o">.</span><span class="n">get_line_vertices</span><span class="p">(</span><span class="n">master_densified</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to generate master grid: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">master_grid_points</span> <span class="o">=</span> <span class="n">scu</span><span class="o">.</span><span class="n">get_line_vertices</span><span class="p">(</span><span class="n">line_geom</span><span class="p">)</span>
-
-        <span class="n">master_profile_data</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">master_grid_dists</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">current_dist</span> <span class="o">=</span> <span class="mf">0.0</span>
-
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">pt</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">master_grid_points</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">segment_len</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">measureLine</span><span class="p">(</span><span class="n">master_grid_points</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">pt</span><span class="p">)</span>
-                <span class="n">current_dist</span> <span class="o">+=</span> <span class="n">segment_len</span>
-
-            <span class="c1"># Use sample() for faster single band access</span>
-            <span class="n">val</span><span class="p">,</span> <span class="n">ok</span> <span class="o">=</span> <span class="n">raster_lyr</span><span class="o">.</span><span class="n">dataProvider</span><span class="p">()</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">pt</span><span class="p">,</span> <span class="n">band_number</span><span class="p">)</span>
-            <span class="n">elev</span> <span class="o">=</span> <span class="n">val</span> <span class="k">if</span> <span class="n">ok</span> <span class="k">else</span> <span class="mf">0.0</span>
-
-            <span class="n">master_profile_data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">current_dist</span><span class="p">,</span> <span class="n">elev</span><span class="p">))</span>
-            <span class="n">master_grid_dists</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">current_dist</span><span class="p">,</span> <span class="n">pt</span><span class="p">,</span> <span class="n">elev</span><span class="p">))</span>
-
-        <span class="k">return</span> <span class="n">master_profile_data</span><span class="p">,</span> <span class="n">master_grid_dists</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_process_intersection_geometry</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">geom</span><span class="p">:</span> <span class="n">QgsGeometry</span><span class="p">,</span>
-        <span class="n">feature</span><span class="p">:</span> <span class="n">QgsFeature</span><span class="p">,</span>
-        <span class="n">outcrop_name_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">line_start</span><span class="p">:</span> <span class="n">QgsPointXY</span><span class="p">,</span>
         <span class="n">da</span><span class="p">:</span> <span class="n">QgsDistanceArea</span><span class="p">,</span>
-        <span class="n">master_grid_dists</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">QgsPointXY</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
-        <span class="n">master_profile_data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
-        <span class="n">tolerance</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">task_input</span><span class="p">:</span> <span class="n">GeologyTaskInput</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">GeologySegment</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Process an intersection geometry to extract geology segments.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Process a single outcrop feature intersection.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            geom: The intersection geometry (LineString or MultiLineString).</span>
-<span class="sd">            feature: The original feature (for attributes).</span>
-<span class="sd">            outcrop_name_field: The field name for geological unit names.</span>
-<span class="sd">            line_start: Start point of the section line.</span>
-<span class="sd">            da: Geodesic distance calculation object.</span>
-<span class="sd">            master_grid_dists: Master grid elevation data for sampling.</span>
-<span class="sd">            master_profile_data: Master profile data for boundary interpolation.</span>
-<span class="sd">            tolerance: Small distance tolerance for grid point inclusion.</span>
+<span class="sd">            item: Detached outcrop dictionary (wkt, attrs, unit_name).</span>
+<span class="sd">            line_geom: Master section geometry.</span>
+<span class="sd">            line_start: Section start point.</span>
+<span class="sd">            da: Distance calculator.</span>
+<span class="sd">            task_input: Full task input for context.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            A list of GeologySegment objects.</span>
+<span class="sd">            List of GeologySegment objects for this feature.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">geom</span> <span class="ow">or</span> <span class="n">geom</span><span class="o">.</span><span class="n">isNull</span><span class="p">():</span>
+        <span class="n">outcrop_geom</span> <span class="o">=</span> <span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromWkt</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;wkt&quot;</span><span class="p">])</span>
+        <span class="n">intersection</span> <span class="o">=</span> <span class="n">line_geom</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">outcrop_geom</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">intersection</span><span class="o">.</span><span class="n">isEmpty</span><span class="p">():</span>
             <span class="k">return</span> <span class="p">[]</span>
 
-        <span class="n">geometries</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">if</span> <span class="n">geom</span><span class="o">.</span><span class="n">wkbType</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="n">QgsWkbTypes</span><span class="o">.</span><span class="n">LineString</span><span class="p">,</span> <span class="n">QgsWkbTypes</span><span class="o">.</span><span class="n">LineString25D</span><span class="p">]:</span>
-            <span class="n">geometries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">geom</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">geom</span><span class="o">.</span><span class="n">wkbType</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span>
-            <span class="n">QgsWkbTypes</span><span class="o">.</span><span class="n">MultiLineString</span><span class="p">,</span>
-            <span class="n">QgsWkbTypes</span><span class="o">.</span><span class="n">MultiLineString25D</span><span class="p">,</span>
-        <span class="p">]:</span>
-            <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">geom</span><span class="o">.</span><span class="n">asMultiPolyline</span><span class="p">():</span>
-                <span class="n">geometries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromPolylineXY</span><span class="p">(</span><span class="n">part</span><span class="p">))</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># Handle GeometryCollection if needed, or other types</span>
-            <span class="k">return</span> <span class="p">[]</span>
-
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">glg_val</span> <span class="o">=</span> <span class="n">feature</span><span class="p">[</span><span class="n">outcrop_name_field</span><span class="p">]</span>
-        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-            <span class="n">glg_val</span> <span class="o">=</span> <span class="s2">&quot;Unknown&quot;</span>
-
-        <span class="n">segments</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">seg_geom</span> <span class="ow">in</span> <span class="n">geometries</span><span class="p">:</span>
-            <span class="n">segment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_segment_from_geometry</span><span class="p">(</span>
-                <span class="n">seg_geom</span><span class="p">,</span>
-                <span class="n">feature</span><span class="p">,</span>
-                <span class="nb">str</span><span class="p">(</span><span class="n">glg_val</span><span class="p">),</span>
-                <span class="n">line_start</span><span class="p">,</span>
-                <span class="n">da</span><span class="p">,</span>
-                <span class="n">master_grid_dists</span><span class="p">,</span>
-                <span class="n">master_profile_data</span><span class="p">,</span>
-                <span class="n">tolerance</span><span class="p">,</span>
-            <span class="p">)</span>
-            <span class="k">if</span> <span class="n">segment</span><span class="p">:</span>
-                <span class="n">segments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">segment</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">segments</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_detached_intersection</span><span class="p">(</span>
+            <span class="n">intersection</span><span class="p">,</span>
+            <span class="n">item</span><span class="p">[</span><span class="s2">&quot;attrs&quot;</span><span class="p">],</span>
+            <span class="n">item</span><span class="p">[</span><span class="s2">&quot;unit_name&quot;</span><span class="p">],</span>
+            <span class="n">line_start</span><span class="p">,</span>
+            <span class="n">da</span><span class="p">,</span>
+            <span class="n">task_input</span><span class="o">.</span><span class="n">master_grid_dists</span><span class="p">,</span>
+            <span class="n">task_input</span><span class="o">.</span><span class="n">master_profile_data</span><span class="p">,</span>
+            <span class="n">task_input</span><span class="o">.</span><span class="n">tolerance</span><span class="p">,</span>
+        <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_create_segment_from_geometry</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">seg_geom</span><span class="p">:</span> <span class="n">QgsGeometry</span><span class="p">,</span>
-        <span class="n">feature</span><span class="p">:</span> <span class="n">QgsFeature</span><span class="p">,</span>
-        <span class="n">glg_val</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">attributes</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+        <span class="n">unit_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">line_start</span><span class="p">:</span> <span class="n">QgsPointXY</span><span class="p">,</span>
         <span class="n">da</span><span class="p">:</span> <span class="n">QgsDistanceArea</span><span class="p">,</span>
         <span class="n">master_grid_dists</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">QgsPointXY</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
         <span class="n">master_profile_data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
         <span class="n">tolerance</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GeologySegment</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a GeologySegment from a geometry part by sampling elevations.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            seg_geom: The part geometry to process.</span>
-<span class="sd">            feature: Original source feature for attribute extraction.</span>
-<span class="sd">            glg_val: The geology unit name for this segment.</span>
-<span class="sd">            line_start: Start point of the section line.</span>
-<span class="sd">            da: Geodesic distance calculation object.</span>
-<span class="sd">            master_grid_dists: Master grid elevation data.</span>
-<span class="sd">            master_profile_data: Master profile topography data.</span>
-<span class="sd">            tolerance: Geometrical distance tolerance.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            A new GeologySegment object, or None if the geometry has no vertices.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">verts</span> <span class="o">=</span> <span class="n">scu</span><span class="o">.</span><span class="n">get_line_vertices</span><span class="p">(</span><span class="n">seg_geom</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">verts</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
-
-        <span class="c1"># Get start/end distances</span>
-        <span class="n">start_pt</span><span class="p">,</span> <span class="n">end_pt</span> <span class="o">=</span> <span class="n">verts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">verts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">dist_start</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">measureLine</span><span class="p">(</span><span class="n">line_start</span><span class="p">,</span> <span class="n">start_pt</span><span class="p">)</span>
-        <span class="n">dist_end</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">measureLine</span><span class="p">(</span><span class="n">line_start</span><span class="p">,</span> <span class="n">end_pt</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">dist_start</span> <span class="o">&gt;</span> <span class="n">dist_end</span><span class="p">:</span>
-            <span class="n">dist_start</span><span class="p">,</span> <span class="n">dist_end</span> <span class="o">=</span> <span class="n">dist_end</span><span class="p">,</span> <span class="n">dist_start</span>
-
-        <span class="c1"># Convert to points</span>
-        <span class="n">segment_points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_to_segment_points</span><span class="p">(</span>
-            <span class="n">dist_start</span><span class="p">,</span> <span class="n">dist_end</span><span class="p">,</span> <span class="n">master_grid_dists</span><span class="p">,</span> <span class="n">master_profile_data</span><span class="p">,</span> <span class="n">tolerance</span>
-        <span class="p">)</span>
-
-        <span class="c1"># Attributes from original feature</span>
-        <span class="n">attrs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">feature</span><span class="o">.</span><span class="n">fields</span><span class="p">()</span><span class="o">.</span><span class="n">names</span><span class="p">(),</span> <span class="n">feature</span><span class="o">.</span><span class="n">attributes</span><span class="p">(),</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
-
-        <span class="k">return</span> <span class="n">GeologySegment</span><span class="p">(</span>
-            <span class="n">unit_name</span><span class="o">=</span><span class="n">glg_val</span><span class="p">,</span>
-            <span class="n">geometry</span><span class="o">=</span><span class="n">seg_geom</span><span class="p">,</span>
-            <span class="n">attributes</span><span class="o">=</span><span class="n">attrs</span><span class="p">,</span>
-            <span class="n">points</span><span class="o">=</span><span class="p">[(</span><span class="nb">round</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="nb">round</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">segment_points</span><span class="p">],</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a GeologySegment from a geometry part by sampling elevations.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">outcrop_processor</span><span class="o">.</span><span class="n">create_segment_from_geometry</span><span class="p">(</span>
+            <span class="n">seg_geom</span><span class="p">,</span>
+            <span class="n">attributes</span><span class="p">,</span>
+            <span class="n">unit_name</span><span class="p">,</span>
+            <span class="n">line_start</span><span class="p">,</span>
+            <span class="n">da</span><span class="p">,</span>
+            <span class="n">master_grid_dists</span><span class="p">,</span>
+            <span class="n">master_profile_data</span><span class="p">,</span>
+            <span class="n">tolerance</span><span class="p">,</span>
         <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_extract_line_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line_lyr</span><span class="p">:</span> <span class="n">QgsVectorLayer</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">QgsGeometry</span><span class="p">,</span> <span class="n">QgsPointXY</span><span class="p">]:</span>
@@ -955,41 +885,7 @@ window.addEventListener("load", load);
         <span class="k">else</span><span class="p">:</span>
             <span class="n">line_start</span> <span class="o">=</span> <span class="n">line_geom</span><span class="o">.</span><span class="n">asPolyline</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
 
-        <span class="k">return</span> <span class="n">line_geom</span><span class="p">,</span> <span class="n">line_start</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_convert_to_segment_points</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">dist_start</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">dist_end</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">master_grid_dists</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">QgsPointXY</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
-        <span class="n">master_profile_data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
-        <span class="n">tolerance</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert start/end distances to a list of segment points with elevations.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            dist_start: Start distance of the segment.</span>
-<span class="sd">            dist_end: End distance of the segment.</span>
-<span class="sd">            master_grid_dists: Master grid elevation data.</span>
-<span class="sd">            master_profile_data: Master profile topography data.</span>
-<span class="sd">            tolerance: Tolerance for grid point inclusion.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            List of (distance, elevation) tuples.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Get Inner Grid Points</span>
-        <span class="n">inner_points</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">master_grid_dists</span>
-            <span class="k">if</span> <span class="n">dist_start</span> <span class="o">+</span> <span class="n">tolerance</span> <span class="o">&lt;</span> <span class="n">d</span> <span class="o">&lt;</span> <span class="n">dist_end</span> <span class="o">-</span> <span class="n">tolerance</span>
-        <span class="p">]</span>
-
-        <span class="c1"># Interpolate Boundary Elevations</span>
-        <span class="n">elev_start</span> <span class="o">=</span> <span class="n">interpolate_elevation</span><span class="p">(</span><span class="n">master_profile_data</span><span class="p">,</span> <span class="n">dist_start</span><span class="p">)</span>
-        <span class="n">elev_end</span> <span class="o">=</span> <span class="n">interpolate_elevation</span><span class="p">(</span><span class="n">master_profile_data</span><span class="p">,</span> <span class="n">dist_end</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="p">[(</span><span class="n">dist_start</span><span class="p">,</span> <span class="n">elev_start</span><span class="p">),</span> <span class="o">*</span><span class="n">inner_points</span><span class="p">,</span> <span class="p">(</span><span class="n">dist_end</span><span class="p">,</span> <span class="n">elev_end</span><span class="p">)]</span></div>
+        <span class="k">return</span> <span class="n">line_geom</span><span class="p">,</span> <span class="n">line_start</span></div>
 
 </pre></div>
 

@@ -5,24 +5,26 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp.core.services.preview_service &mdash; SecInterp 2.7.0 documentation</title>
+  <title>sec_interp.core.services.preview_service &mdash; SecInterp 2.9.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../../_static/documentation_options.js?v=dfec817d"></script>
-      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs"></script>
-      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script src="../../../../_static/documentation_options.js?v=182a64a0"></script>
+      <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
       <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
 
-const defaultStyle = document.createElement('style');
-defaultStyle.textContent = `pre.mermaid {
+
+
+
+
+const initStyles = () => {
+    const defaultStyle = document.createElement('style');
+    defaultStyle.textContent = `pre.mermaid {
     /* Same as .mermaid-container > pre */
     display: block;
     width: 100%;
@@ -33,12 +35,11 @@ pre.mermaid > svg {
     height: 500px;
     width: 100%;
     max-width: 100% !important;
-}
-`;
-document.head.appendChild(defaultStyle);
+}`;
+    document.head.appendChild(defaultStyle);
 
-const fullscreenStyle = document.createElement('style');
-fullscreenStyle.textContent = `.mermaid-container {
+    const fullscreenStyle = document.createElement('style');
+    fullscreenStyle.textContent = `.mermaid-container {
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -190,10 +191,32 @@ fullscreenStyle.textContent = `.mermaid-container {
 .mermaid-fullscreen-modal .mermaid-fullscreen-btn {
     display: none !important;
 }`;
-document.head.appendChild(fullscreenStyle);
+    document.head.appendChild(fullscreenStyle);
+}
 
 // Detect if page has dark background
 const isDarkTheme = () => {
+    // We use a set of heuristics:
+    // 1. Check for common dark mode classes or attributes
+    // 2. Check computed background color brightness
+    if (document.documentElement.classList.contains('dark') ||
+        document.documentElement.getAttribute('data-theme') === 'dark' ||
+        document.body.classList.contains('dark') ||
+        document.body.getAttribute('data-theme') === 'dark') {
+        // console.log("Dark theme detected via class/attribute");
+        return true;
+    }
+    if (document.documentElement.classList.contains('light') ||
+        document.documentElement.getAttribute('data-theme') === 'light' ||
+        document.body.classList.contains('light') ||
+        document.body.getAttribute('data-theme') === 'light') {
+        // console.log("Light theme detected via class/attribute");
+        return false;
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // console.log("Dark theme detected via prefers-color-scheme");
+        return true;
+    }
     const bgColor = window.getComputedStyle(document.body).backgroundColor;
     const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
     if (match) {
@@ -201,15 +224,45 @@ const isDarkTheme = () => {
         const g = parseInt(match[2]);
         const b = parseInt(match[3]);
         const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        // console.log("Background color brightness:", brightness);
         return brightness < 128;
     }
+    // console.log("No dark or light theme detected, defaulting to light theme");
     return false;
 };
 
-const load = async () => {
-    await mermaid.run();
+let darkTheme = isDarkTheme();
+let modal = null;
+let modalContent = null;
+let previousScrollOffset = [window.scrollX, window.scrollY];
 
-    const all_mermaids = document.querySelectorAll(".mermaid");
+const runMermaid = async (rerun) => {
+    console.log("Running mermaid diagrams, rerun =", rerun);
+    // clear all existing mermaid charts
+    let all_mermaids = document.querySelectorAll(".mermaid");
+
+    if (rerun) {
+        all_mermaids.forEach((el) => {
+            if(!el.hasAttribute("data-original-code")) {
+                // store original code
+                // console.log(`Storing original code for first run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+            if(el.getAttribute("data-processed") === "true") {
+                // remove and restore original
+                el.removeAttribute("data-processed");
+                // console.log(`Restoring original code for re-run: `, el.getAttribute('data-original-code'));
+                el.innerHTML = el.getAttribute('data-original-code');
+            } else {
+                // store original code
+                // console.log(`Storing original code for re-run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+        });
+        await mermaid.run();
+    }
+
+    all_mermaids = document.querySelectorAll(".mermaid");
     const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
 
     if ("False" === "True") {
@@ -217,10 +270,10 @@ const load = async () => {
         if(mermaids_to_add_zoom > 0) {
             var svgs = d3.selectAll("");
             if(all_mermaids.length !== mermaids_processed.length) {
-                setTimeout(load, 200);
+                setTimeout(() => runMermaid(false), 200);
                 return;
             } else if(svgs.size() !== mermaids_to_add_zoom) {
-                setTimeout(load, 200);
+                setTimeout(() => runMermaid(false), 200);
                 return;
             } else {
                 svgs.each(function() {
@@ -236,16 +289,21 @@ const load = async () => {
         }
     } else if(all_mermaids.length !== mermaids_processed.length) {
         // Wait for mermaid to process all diagrams
-        setTimeout(load, 200);
+        setTimeout(() => runMermaid(false), 200);
         return;
     }
-
-    const darkTheme = isDarkTheme();
 
     // Stop here if not adding fullscreen capability
     if ("True" !== "True") return;
 
-    const modal = document.createElement('div');
+    if (modal !== null ) {
+        // Destroy existing modal
+        modal.remove();
+        modal = null;
+        modalContent = null;
+    }
+
+    modal = document.createElement('div');
     modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
     modal.setAttribute('role', 'dialog');
     modal.setAttribute('aria-modal', 'true');
@@ -256,10 +314,8 @@ const load = async () => {
     `;
     document.body.appendChild(modal);
 
-    const modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    modalContent = modal.querySelector('.mermaid-container-fullscreen');
     const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
-
-    let previousScrollOffset = [window.scrollX, window.scrollY];
 
     const closeModal = () => {
         modal.classList.remove('active');
@@ -278,11 +334,14 @@ const load = async () => {
         }
     });
 
-    const allButtons = [];
-
     document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
         if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
             mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            // Already processed, adjust button class if needed
+            const existingBtn = mermaidDiv.parentNode.querySelector('.mermaid-fullscreen-btn');
+            if (existingBtn) {
+                existingBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+            }
             return;
         }
 
@@ -340,46 +399,57 @@ const load = async () => {
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         });
-
         container.appendChild(fullscreenBtn);
-        allButtons.push(fullscreenBtn);
-    });
-
-    // Update theme classes when theme changes
-    const updateTheme = () => {
-        const dark = isDarkTheme();
-        allButtons.forEach(btn => {
-            if (dark) {
-                btn.classList.add('dark-theme');
-            } else {
-                btn.classList.remove('dark-theme');
-            }
-        });
-        if (dark) {
-            modal.classList.add('dark-theme');
-            modalContent.classList.add('dark-theme');
-            closeBtn.classList.add('dark-theme');
-        } else {
-            modal.classList.remove('dark-theme');
-            modalContent.classList.remove('dark-theme');
-            closeBtn.classList.remove('dark-theme');
-        }
-    };
-
-    // Watch for theme changes
-    const observer = new MutationObserver(updateTheme);
-    observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['class', 'style', 'data-theme']
-    });
-    observer.observe(document.body, {
-        attributes: true,
-        attributeFilter: ['class', 'style']
     });
 };
 
-window.addEventListener("load", load);
-</script>
+const load = async () => {
+    initStyles();
+
+    await runMermaid(true);
+
+    const reRunIfThemeChanges = async () => {
+        const newDarkTheme = isDarkTheme();
+        if (newDarkTheme !== darkTheme) {
+            darkTheme = newDarkTheme;
+            console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
+            await mermaid.initialize(
+                {...JSON.parse(
+                    `{"startOnLoad": false}`
+                ),
+                ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+                }
+            );
+            await runMermaid(true);
+        }
+    };
+
+    // Update theme classes when theme changes
+    const themeObserver = new MutationObserver(reRunIfThemeChanges);
+    themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    themeObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+};
+
+
+
+
+
+console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
+mermaid.initialize(
+    {...JSON.parse(
+        `{"startOnLoad": false}`
+    ),
+    ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+    }
+);
+
+window.addEventListener("load", load);</script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
@@ -440,29 +510,30 @@ window.addEventListener("load", load);
            <div itemprop="articleBody">
              
   <h1>Source code for sec_interp.core.services.preview_service</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
-<span class="sd">&quot;&quot;&quot;Preview service for SecInterp.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Service for managing preview generation and rendering.</span>
 
 <span class="sd">This module provides a service to orchestrate the generation of all</span>
 <span class="sd">preview components, including topography, structures, and drillholes.</span>
 <span class="sd">It remains decoupled from the GUI layer.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">qgis.core</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">QgsDistanceArea</span><span class="p">,</span>
-<span class="p">)</span>
-
 <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span> <span class="k">as</span> <span class="n">scu</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">GeometryError</span><span class="p">,</span> <span class="n">ProcessingError</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.performance_metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">PerformanceTimer</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.types</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.domain</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">PreviewParams</span><span class="p">,</span>
     <span class="n">PreviewResult</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ProcessingError</span><span class="p">,</span>
+    <span class="n">SecInterpError</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.performance_metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">PerformanceTimer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.utils.sampling</span><span class="w"> </span><span class="kn">import</span> <span class="n">prepare_profile_context</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.utils.spatial</span><span class="w"> </span><span class="kn">import</span> <span class="n">calculate_line_azimuth</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.logger_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_logger</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -484,6 +555,16 @@ window.addEventListener("load", load);
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">=</span> <span class="n">controller</span></div>
 
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">geology_service</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Expose geology service from controller.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">geology_service</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">drillhole_service</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Expose drillhole service from controller.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">drillhole_service</span>
 
 <div class="viewcode-block" id="PreviewService.calculate_max_points">
 <a class="viewcode-back" href="../../../../sec_interp.core.services.preview_service.html#sec_interp.core.services.preview_service.PreviewService.calculate_max_points">[docs]</a>
@@ -511,7 +592,8 @@ window.addEventListener("load", load);
             <span class="n">base_points</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">canvas_width</span> <span class="o">*</span> <span class="mi">2</span><span class="p">))</span>
 
             <span class="c1"># Apply zoom boost if ratio is significant</span>
-            <span class="k">if</span> <span class="n">ratio</span> <span class="o">&gt;</span> <span class="mf">1.1</span><span class="p">:</span>
+            <span class="n">ZOOM_DETAIL_BOOST_THRESHOLD</span> <span class="o">=</span> <span class="mf">1.1</span>
+            <span class="k">if</span> <span class="n">ratio</span> <span class="o">&gt;</span> <span class="n">ZOOM_DETAIL_BOOST_THRESHOLD</span><span class="p">:</span>
                 <span class="c1"># Slight detail boost as we zoom in</span>
                 <span class="n">detail_boost</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">ratio</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">)</span>
                 <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">base_points</span> <span class="o">*</span> <span class="n">detail_boost</span><span class="p">)</span>
@@ -545,20 +627,15 @@ window.addEventListener("load", load);
         <span class="n">result</span> <span class="o">=</span> <span class="n">PreviewResult</span><span class="p">(</span><span class="n">buffer_dist</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">buffer_dist</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">transform_context</span> <span class="o">=</span> <span class="n">transform_context</span>
 
-        <span class="c1"># 1. Topography</span>
+        <span class="c1"># 1. Topography &amp; Context Extraction</span>
         <span class="k">with</span> <span class="n">PerformanceTimer</span><span class="p">(</span><span class="s2">&quot;Topography Generation&quot;</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">metrics</span><span class="p">):</span>
+            <span class="n">line_geom</span><span class="p">,</span> <span class="n">line_start</span><span class="p">,</span> <span class="n">distance_area</span> <span class="o">=</span> <span class="n">prepare_profile_context</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">line_layer</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">distance_area</span> <span class="o">=</span> <span class="n">distance_area</span>  <span class="c1"># Store for other layers</span>
+
             <span class="c1"># Calculate LOD interval</span>
             <span class="n">interval</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">if</span> <span class="n">params</span><span class="o">.</span><span class="n">auto_lod</span><span class="p">:</span>
-                <span class="c1"># Get line length</span>
-                <span class="n">line_feat</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">line_layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">(),</span> <span class="kc">None</span><span class="p">)</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">line_feat</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="n">GeometryError</span><span class="p">(</span>
-                        <span class="s2">&quot;Section line layer has no features&quot;</span><span class="p">,</span>
-                        <span class="p">{</span><span class="s2">&quot;layer&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">line_layer</span><span class="o">.</span><span class="n">name</span><span class="p">()},</span>
-                    <span class="p">)</span>
-
-                <span class="n">line_len</span> <span class="o">=</span> <span class="n">line_feat</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span><span class="o">.</span><span class="n">length</span><span class="p">()</span>
+                <span class="n">line_len</span> <span class="o">=</span> <span class="n">line_geom</span><span class="o">.</span><span class="n">length</span><span class="p">()</span>
                 <span class="n">max_pts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_max_points</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">canvas_width</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">max_points</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
                 <span class="n">interval</span> <span class="o">=</span> <span class="n">line_len</span> <span class="o">/</span> <span class="n">max_pts</span> <span class="k">if</span> <span class="n">max_pts</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
 
@@ -571,26 +648,31 @@ window.addEventListener("load", load);
             <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">topo</span><span class="p">:</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">record_count</span><span class="p">(</span><span class="s2">&quot;Topography Points&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">topo</span><span class="p">))</span>
 
-        <span class="c1"># 2. Structures</span>
+        <span class="c1"># 2. Structures (Now using detached flow)</span>
         <span class="k">if</span> <span class="n">params</span><span class="o">.</span><span class="n">struct_layer</span> <span class="ow">and</span> <span class="n">params</span><span class="o">.</span><span class="n">dip_field</span> <span class="ow">and</span> <span class="n">params</span><span class="o">.</span><span class="n">strike_field</span><span class="p">:</span>
             <span class="k">with</span> <span class="n">PerformanceTimer</span><span class="p">(</span><span class="s2">&quot;Structure Generation&quot;</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">metrics</span><span class="p">):</span>
-                <span class="n">line_feat</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">line_layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">(),</span> <span class="kc">None</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">line_feat</span><span class="p">:</span>
-                    <span class="n">line_geom</span> <span class="o">=</span> <span class="n">line_feat</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span>
-                    <span class="n">line_azimuth</span> <span class="o">=</span> <span class="n">scu</span><span class="o">.</span><span class="n">calculate_line_azimuth</span><span class="p">(</span><span class="n">line_geom</span><span class="p">)</span>
+                <span class="n">line_azimuth</span> <span class="o">=</span> <span class="n">calculate_line_azimuth</span><span class="p">(</span><span class="n">line_geom</span><span class="p">)</span>
 
-                    <span class="n">result</span><span class="o">.</span><span class="n">struct</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">structure_service</span><span class="o">.</span><span class="n">project_structures</span><span class="p">(</span>
-                        <span class="n">line_lyr</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">line_layer</span><span class="p">,</span>
-                        <span class="n">raster_lyr</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">raster_layer</span><span class="p">,</span>
-                        <span class="n">struct_lyr</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">struct_layer</span><span class="p">,</span>
-                        <span class="n">buffer_m</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">buffer_dist</span><span class="p">,</span>
-                        <span class="n">line_az</span><span class="o">=</span><span class="n">line_azimuth</span><span class="p">,</span>
-                        <span class="n">dip_field</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">dip_field</span><span class="p">,</span>
-                        <span class="n">strike_field</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">strike_field</span><span class="p">,</span>
-                        <span class="n">band_number</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">band_num</span><span class="p">,</span>
-                    <span class="p">)</span>
-                    <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">struct</span><span class="p">:</span>
-                        <span class="n">result</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">record_count</span><span class="p">(</span><span class="s2">&quot;Structure Points&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">struct</span><span class="p">))</span>
+                <span class="c1"># Detach</span>
+                <span class="n">struct_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">structure_service</span><span class="o">.</span><span class="n">detach_structures</span><span class="p">(</span>
+                    <span class="n">params</span><span class="o">.</span><span class="n">struct_layer</span><span class="p">,</span> <span class="n">line_geom</span><span class="p">,</span> <span class="n">params</span><span class="o">.</span><span class="n">buffer_dist</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Project</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">struct</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">structure_service</span><span class="o">.</span><span class="n">project_structures</span><span class="p">(</span>
+                    <span class="n">line_geom</span><span class="o">=</span><span class="n">line_geom</span><span class="p">,</span>
+                    <span class="n">line_start</span><span class="o">=</span><span class="n">line_start</span><span class="p">,</span>
+                    <span class="n">da</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">distance_area</span><span class="p">,</span>
+                    <span class="n">raster_lyr</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">raster_layer</span><span class="p">,</span>
+                    <span class="n">struct_data</span><span class="o">=</span><span class="n">struct_data</span><span class="p">,</span>
+                    <span class="n">buffer_m</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">buffer_dist</span><span class="p">,</span>
+                    <span class="n">line_az</span><span class="o">=</span><span class="n">line_azimuth</span><span class="p">,</span>
+                    <span class="n">dip_field</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">dip_field</span><span class="p">,</span>
+                    <span class="n">strike_field</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">strike_field</span><span class="p">,</span>
+                    <span class="n">band_number</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">band_num</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">struct</span><span class="p">:</span>
+                    <span class="n">result</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">record_count</span><span class="p">(</span><span class="s2">&quot;Structure Points&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">struct</span><span class="p">))</span>
 
         <span class="c1"># 3. Drillholes</span>
         <span class="k">if</span> <span class="n">params</span><span class="o">.</span><span class="n">collar_layer</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">skip_drillholes</span><span class="p">:</span>
@@ -603,48 +685,38 @@ window.addEventListener("load", load);
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_generate_drillholes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">PreviewParams</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate drillhole trace and interval data.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            params: Preview parameters containing drillhole layer and fields.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            A list of drillhole data tuples, or None if no collars found or skipped.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">line_feat</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">line_layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">(),</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">line_feat</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">GeometryError</span><span class="p">(</span>
-                <span class="s2">&quot;Section line layer has no features&quot;</span><span class="p">,</span>
-                <span class="p">{</span><span class="s2">&quot;layer&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">line_layer</span><span class="o">.</span><span class="n">name</span><span class="p">()},</span>
-            <span class="p">)</span>
-
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate drillhole trace and interval data.&quot;&quot;&quot;</span>
         <span class="c1"># Validation: Ensure critical drillhole fields are selected</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">params</span><span class="o">.</span><span class="n">collar_id_field</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Drillhole preview skipped: No Collar ID field selected.&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="n">line_geom</span> <span class="o">=</span> <span class="n">line_feat</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">line_geom</span><span class="o">.</span><span class="n">isMultipart</span><span class="p">():</span>
-            <span class="n">lines</span> <span class="o">=</span> <span class="n">line_geom</span><span class="o">.</span><span class="n">asMultiPolyline</span><span class="p">()</span>
-            <span class="n">points</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">lines</span> <span class="k">else</span> <span class="p">[]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">points</span> <span class="o">=</span> <span class="n">line_geom</span><span class="o">.</span><span class="n">asPolyline</span><span class="p">()</span>
+        <span class="n">line_geom</span><span class="p">,</span> <span class="n">line_start</span><span class="p">,</span> <span class="n">distance_area</span> <span class="o">=</span> <span class="n">prepare_profile_context</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">line_layer</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">points</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">GeometryError</span><span class="p">(</span><span class="s2">&quot;Section line has no vertices&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;layer&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">line_layer</span><span class="o">.</span><span class="n">name</span><span class="p">()})</span>
+        <span class="c1"># 1. Detach Data</span>
+        <span class="n">collar_ids</span><span class="p">,</span> <span class="n">collar_data</span><span class="p">,</span> <span class="n">pre_sampled_z</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">drillhole_service</span><span class="o">.</span><span class="n">collar_processor</span><span class="o">.</span><span class="n">detach_features</span><span class="p">(</span>
+                <span class="n">params</span><span class="o">.</span><span class="n">collar_layer</span><span class="p">,</span>
+                <span class="n">line_geom</span><span class="p">,</span>
+                <span class="n">params</span><span class="o">.</span><span class="n">buffer_dist</span><span class="p">,</span>
+                <span class="n">params</span><span class="o">.</span><span class="n">collar_id_field</span><span class="p">,</span>
+                <span class="n">params</span><span class="o">.</span><span class="n">collar_use_geometry</span><span class="p">,</span>
+                <span class="n">params</span><span class="o">.</span><span class="n">collar_x_field</span><span class="p">,</span>
+                <span class="n">params</span><span class="o">.</span><span class="n">collar_y_field</span><span class="p">,</span>
+                <span class="n">params</span><span class="o">.</span><span class="n">collar_z_field</span><span class="p">,</span>
+                <span class="n">params</span><span class="o">.</span><span class="n">raster_layer</span><span class="p">,</span>
+                <span class="n">target_crs</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">line_layer</span><span class="o">.</span><span class="n">crs</span><span class="p">(),</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
 
-        <span class="n">line_start</span> <span class="o">=</span> <span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">collar_data</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="c1"># Setup distance area</span>
-        <span class="n">distance_area</span> <span class="o">=</span> <span class="n">QgsDistanceArea</span><span class="p">()</span>
-        <span class="n">distance_area</span><span class="o">.</span><span class="n">setSourceCrs</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">line_layer</span><span class="o">.</span><span class="n">crs</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform_context</span><span class="p">)</span>
-
+        <span class="c1"># 2. Project Collars</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">projected_collars</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">drillhole_service</span><span class="o">.</span><span class="n">project_collars</span><span class="p">(</span>
-                <span class="n">collar_layer</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">collar_layer</span><span class="p">,</span>
-                <span class="n">line_geom</span><span class="o">=</span><span class="n">line_geom</span><span class="p">,</span>
-                <span class="n">line_start</span><span class="o">=</span><span class="n">line_start</span><span class="p">,</span>
+                <span class="n">collar_data</span><span class="o">=</span><span class="n">collar_data</span><span class="p">,</span>
+                <span class="n">line_data</span><span class="o">=</span><span class="n">line_geom</span><span class="p">,</span>
                 <span class="n">distance_area</span><span class="o">=</span><span class="n">distance_area</span><span class="p">,</span>
                 <span class="n">buffer_width</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">buffer_dist</span><span class="p">,</span>
                 <span class="n">collar_id_field</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">collar_id_field</span><span class="p">,</span>
@@ -653,38 +725,43 @@ window.addEventListener("load", load);
                 <span class="n">collar_y_field</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">collar_y_field</span><span class="p">,</span>
                 <span class="n">collar_z_field</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">collar_z_field</span><span class="p">,</span>
                 <span class="n">collar_depth_field</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">collar_depth_field</span><span class="p">,</span>
-                <span class="n">dem_layer</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">raster_layer</span><span class="p">,</span>
-                <span class="n">line_crs</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">line_layer</span><span class="o">.</span><span class="n">crs</span><span class="p">(),</span>
+                <span class="n">pre_sampled_z</span><span class="o">=</span><span class="n">pre_sampled_z</span><span class="p">,</span>
             <span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ProcessingError</span><span class="p">(</span>
-                <span class="s2">&quot;Failed to project drillhole collars&quot;</span><span class="p">,</span>
-                <span class="p">{</span><span class="s2">&quot;hole_id_field&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">collar_id_field</span><span class="p">},</span>
-            <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="n">SecInterpError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ProcessingError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to project drillhole collars: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">projected_collars</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="n">survey_fields</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">survey_id_field</span><span class="p">,</span>
-            <span class="s2">&quot;depth&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">survey_depth_field</span><span class="p">,</span>
-            <span class="s2">&quot;azim&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">survey_azim_field</span><span class="p">,</span>
-            <span class="s2">&quot;incl&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">survey_incl_field</span><span class="p">,</span>
-        <span class="p">}</span>
+        <span class="c1"># 3. Fetch Child Data</span>
+        <span class="n">survey_map</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">drillhole_service</span><span class="o">.</span><span class="n">_fetch_bulk_data</span><span class="p">(</span>
+            <span class="n">params</span><span class="o">.</span><span class="n">survey_layer</span><span class="p">,</span>
+            <span class="n">collar_ids</span><span class="p">,</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">survey_id_field</span><span class="p">,</span>
+                <span class="s2">&quot;depth&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">survey_depth_field</span><span class="p">,</span>
+                <span class="s2">&quot;azim&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">survey_azim_field</span><span class="p">,</span>
+                <span class="s2">&quot;incl&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">survey_incl_field</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+        <span class="n">interval_map</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">drillhole_service</span><span class="o">.</span><span class="n">_fetch_bulk_data</span><span class="p">(</span>
+            <span class="n">params</span><span class="o">.</span><span class="n">interval_layer</span><span class="p">,</span>
+            <span class="n">collar_ids</span><span class="p">,</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">interval_id_field</span><span class="p">,</span>
+                <span class="s2">&quot;from&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">interval_from_field</span><span class="p">,</span>
+                <span class="s2">&quot;to&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">interval_to_field</span><span class="p">,</span>
+                <span class="s2">&quot;lith&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">interval_lith_field</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
 
-        <span class="n">interval_fields</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">interval_id_field</span><span class="p">,</span>
-            <span class="s2">&quot;from&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">interval_from_field</span><span class="p">,</span>
-            <span class="s2">&quot;to&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">interval_to_field</span><span class="p">,</span>
-            <span class="s2">&quot;lith&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">interval_lith_field</span><span class="p">,</span>
-        <span class="p">}</span>
-
+        <span class="c1"># 4. Process Intervals</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">_</span><span class="p">,</span> <span class="n">drillhole_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">drillhole_service</span><span class="o">.</span><span class="n">process_intervals</span><span class="p">(</span>
                 <span class="n">collar_points</span><span class="o">=</span><span class="n">projected_collars</span><span class="p">,</span>
-                <span class="n">collar_layer</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">collar_layer</span><span class="p">,</span>
-                <span class="n">survey_layer</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">survey_layer</span><span class="p">,</span>
-                <span class="n">interval_layer</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">interval_layer</span><span class="p">,</span>
+                <span class="n">collar_data</span><span class="o">=</span><span class="n">collar_data</span><span class="p">,</span>
+                <span class="n">survey_data</span><span class="o">=</span><span class="n">survey_map</span><span class="p">,</span>
+                <span class="n">interval_data</span><span class="o">=</span><span class="n">interval_map</span><span class="p">,</span>
                 <span class="n">collar_id_field</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">collar_id_field</span><span class="p">,</span>
                 <span class="n">use_geometry</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">collar_use_geometry</span><span class="p">,</span>
                 <span class="n">collar_x_field</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">collar_x_field</span><span class="p">,</span>
@@ -694,15 +771,15 @@ window.addEventListener("load", load);
                 <span class="n">distance_area</span><span class="o">=</span><span class="n">distance_area</span><span class="p">,</span>
                 <span class="n">buffer_width</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">buffer_dist</span><span class="p">,</span>
                 <span class="n">section_azimuth</span><span class="o">=</span><span class="n">scu</span><span class="o">.</span><span class="n">calculate_line_azimuth</span><span class="p">(</span><span class="n">line_geom</span><span class="p">),</span>
-                <span class="n">survey_fields</span><span class="o">=</span><span class="n">survey_fields</span><span class="p">,</span>
-                <span class="n">interval_fields</span><span class="o">=</span><span class="n">interval_fields</span><span class="p">,</span>
+                <span class="n">survey_fields</span><span class="o">=</span><span class="p">{},</span>
+                <span class="n">interval_fields</span><span class="o">=</span><span class="p">{},</span>
             <span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="n">SecInterpError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to process drillhole intervals: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ProcessingError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to process drillhole intervals: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to process drillhole intervals: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
-
-            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
-            <span class="k">raise</span> <span class="n">ProcessingError</span><span class="p">(</span><span class="s2">&quot;Failed to process drillhole intervals&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Unexpected error during drillhole processing&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ProcessingError</span><span class="p">(</span><span class="s2">&quot;Unexpected error during drillhole processing&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generated </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">drillhole_data</span><span class="p">)</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">drillhole_data</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="mi">0</span><span class="si">}</span><span class="s2"> drillhole traces&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">drillhole_data</span></div>

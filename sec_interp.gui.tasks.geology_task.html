@@ -6,16 +6,16 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp.gui.tasks.geology_task module &mdash; SecInterp 2.7.0 documentation</title>
+  <title>sec_interp.gui.tasks.geology_task module &mdash; SecInterp 2.9.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=dfec817d"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/documentation_options.js?v=182a64a0"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -96,27 +96,34 @@
              
   <section id="module-sec_interp.gui.tasks.geology_task">
 <span id="sec-interp-gui-tasks-geology-task-module"></span><h1>sec_interp.gui.tasks.geology_task module<a class="headerlink" href="#module-sec_interp.gui.tasks.geology_task" title="Link to this heading"></a></h1>
+<p>Task for async geology generation.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="sec_interp.gui.tasks.geology_task.GeologyGenerationTask">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sec_interp.gui.tasks.geology_task.</span></span><span class="sig-name descname"><span class="pre">GeologyGenerationTask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sec_interp/gui/tasks/geology_task.html#GeologyGenerationTask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.gui.tasks.geology_task.GeologyGenerationTask" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.gui.tasks.geology_task.</span></span><span class="sig-name descname"><span class="pre">GeologyGenerationTask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sec_interp/gui/tasks/geology_task.html#GeologyGenerationTask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.gui.tasks.geology_task.GeologyGenerationTask" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QgsTask</span></code></p>
 <p>Background task for generating geological profiles.</p>
 <p>This task executes the geometric intersection logic in a separate thread,
 using only detached data (DTOs) to ensure thread safety.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.gui.tasks.geology_task.GeologyGenerationTask.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.core.services.html#sec_interp.core.services.GeologyService" title="sec_interp.core.services.GeologyService"><span class="pre">GeologyService</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.core.types.html#sec_interp.core.types.GeologyTaskInput" title="sec_interp.core.types.GeologyTaskInput"><span class="pre">GeologyTaskInput</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_finished</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">GeologyData</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">on_error</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sec_interp/gui/tasks/geology_task.html#GeologyGenerationTask.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.gui.tasks.geology_task.GeologyGenerationTask.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.core.domain.html#sec_interp.core.domain.GeologyTaskInput" title="sec_interp.core.domain.GeologyTaskInput"><span class="pre">GeologyTaskInput</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.core.services.html#sec_interp.core.services.GeologyService" title="sec_interp.core.services.GeologyService"><span class="pre">GeologyService</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sec_interp/gui/tasks/geology_task.html#GeologyGenerationTask.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.gui.tasks.geology_task.GeologyGenerationTask.__init__" title="Link to this definition"></a></dt>
 <dd><p>Initialize the task.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>service</strong> – The GeologyService instance (stateless logic).</p></li>
+<li><p><strong>description</strong> – Description of the task.</p></li>
 <li><p><strong>task_input</strong> – The detached data input DTO.</p></li>
-<li><p><strong>on_finished</strong> – Callback function to receive results (list of segments).</p></li>
-<li><p><strong>on_error</strong> – Optional callback for error handling.</p></li>
+<li><p><strong>service</strong> – The GeologyService instance (stateless logic).</p></li>
+<li><p><strong>params</strong> – Original params for context (backward compatibility).</p></li>
 </ul>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sec_interp.gui.tasks.geology_task.GeologyGenerationTask.error_occurred">
+<span class="sig-name descname"><span class="pre">error_occurred</span></span><a class="headerlink" href="#sec_interp.gui.tasks.geology_task.GeologyGenerationTask.error_occurred" title="Link to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
 </dd></dl>
 
 <dl class="py method">
@@ -125,10 +132,28 @@ using only detached data (DTOs) to ensure thread safety.</p>
 <dd><p>Handle task completion on Main Thread.</p>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sec_interp.gui.tasks.geology_task.GeologyGenerationTask.finished_with_results">
+<span class="sig-name descname"><span class="pre">finished_with_results</span></span><a class="headerlink" href="#sec_interp.gui.tasks.geology_task.GeologyGenerationTask.finished_with_results" title="Link to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sec_interp.gui.tasks.geology_task.GeologyGenerationTask.progress_changed">
+<span class="sig-name descname"><span class="pre">progress_changed</span></span><a class="headerlink" href="#sec_interp.gui.tasks.geology_task.GeologyGenerationTask.progress_changed" title="Link to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.gui.tasks.geology_task.GeologyGenerationTask.run">
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/sec_interp/gui/tasks/geology_task.html#GeologyGenerationTask.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.gui.tasks.geology_task.GeologyGenerationTask.run" title="Link to this definition"></a></dt>
 <dd><p>Execute the task in background thread.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sec_interp.gui.tasks.geology_task.GeologyGenerationTask.setProgress">
+<span class="sig-name descname"><span class="pre">setProgress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">progress</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sec_interp/gui/tasks/geology_task.html#GeologyGenerationTask.setProgress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sec_interp.gui.tasks.geology_task.GeologyGenerationTask.setProgress" title="Link to this definition"></a></dt>
+<dd><p>Override to emit signal.</p>
 </dd></dl>
 
 </dd></dl>

@@ -4,8 +4,27 @@ This document serves as the central record for project history, release procedur
 
 ---
 
-### [v2.8.0 Plan - Phase 1] - 2026-01-20
-- **Legend Visibility**: Implemented `show_legend` in `PreviewSettings` with project persistence. Added UI toggle in Preview page and ensured all image/vector exporters (PNG, PDF, SVG) respect the setting. Fixed interactive canvas visibility logic.
+### [v2.10.0 Plan - Phase 1] - 2026-02-01
+- **Focus**: Quality Score > 60, QGIS 4.x Prep (PyQt5 cleanup), ExportService Refactor.
+- **Goals**: Eliminate technical debt in resources.py and reduce cyclomatic complexity in 3D exporters.
+
+### [Phase Closure v2.9.0] - ARCHITECTURAL CONSOLIDATION
+- **Date**: 2026-02-01
+- **Focus**: Core Domain Migration, Drillhole Service Decomposition, v2.9.0 Release Stabilization.
+- **Outcome**: 199 Tests Passing (100%). Quality Score: 54.3/100 (+9 pts). Official release published.
+- **Reference**: [Phase Closure Document](../maintenance/phase_closure_v2.9.0.md) | [Technical Analysis](../research/v2.9.0_technical_analysis.md)
+
+---
+
+### [Phase Closure v2.8.0] - DEBT REDUCTION & UI IMPROVEMENTS
+- **Date**: 2026-01-25
+- **Focus**: Core Decoupling, Async Safety, Legend Visibility.
+- **Outcome**: 359 Tests Passing, Core-QGIS Decoupling finalized with WKT/DTO pattern.
+- **Reference**: [Phase Closure Document](../maintenance/phase_closure_v2.8.0.md)
+
+---
+
+### [v2.8.0 Plan - Phase 2] - 2026-01-24
 
 ### [v2.7.0 Plan - Phase 1] - 2026-01-15
 - **Mock Infrastructure Overhaul**: Implemented `ModuleProxy` and `MockSignal` to stabilize the QGIS test environment. Resolved attribute errors and reference loss during mock resets. Added `indexFromName` to `MockQgsFields` for better API parity.
@@ -21,7 +40,8 @@ Follow these steps to prepare and release a new version of **SecInterp**.
 
 ### 1. Preparation
 - **Update Metadata**: Increment `version` in `metadata.txt`.
-- **Sync Project Brain**: Update `.ai-context/project_brain.md`.
+- **Sync AI Context**: Update `AI_CONTEXT.md` and `project_context.json`.
+
 - **Update Changelog**: Add the new version to the top of the [Project History](#-project-history) section below.
 - **Update User Guide**: Ensure screenshots and feature descriptions in `docs/USER_GUIDE.md` are current.
 
@@ -145,6 +165,13 @@ For detailed information on past major refactoring sessions, refer to the follow
 
 > > **Refactoring 2025-12-21**: Significant reduction of `main_dialog.py` size (from 1k to ~300 lines) by moving logic to managers and core services.
 > > See `docs/docsec/archive/` for original walkthroughs if deep historical context is needed.
+
+### [Phase Closure v3.0.0] - RELEASE & INTERNATIONALIZATION
+- **Date**: 2026-02-14
+- **Focus**: Internationalization (i18n), Modular Services, Release Optimization.
+- **Outcome**: 8 Languages Supported, Package Size Reduced 99.6% (218KB), 361 Tests Passing.
+- **Key Infra**: `.qgisignore`, GitHub Actions Security Scan (100/100).
+- **Reference**: [Phase Closure Document](../maintenance/phase_closure_v3.0.0.md)
 
 ### [Phase Closure v2.7.0] - REFACTOR & STABILIZATION
 - **Date**: 2026-01-18

@@ -5,24 +5,26 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp.core.services.drillhole_service &mdash; SecInterp 2.7.0 documentation</title>
+  <title>sec_interp.core.services.drillhole_service &mdash; SecInterp 2.9.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
 
   
       <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../../_static/documentation_options.js?v=dfec817d"></script>
-      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs"></script>
-      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+      <script src="../../../../_static/documentation_options.js?v=182a64a0"></script>
+      <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
       <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
 
-const defaultStyle = document.createElement('style');
-defaultStyle.textContent = `pre.mermaid {
+
+
+
+
+const initStyles = () => {
+    const defaultStyle = document.createElement('style');
+    defaultStyle.textContent = `pre.mermaid {
     /* Same as .mermaid-container > pre */
     display: block;
     width: 100%;
@@ -33,12 +35,11 @@ pre.mermaid > svg {
     height: 500px;
     width: 100%;
     max-width: 100% !important;
-}
-`;
-document.head.appendChild(defaultStyle);
+}`;
+    document.head.appendChild(defaultStyle);
 
-const fullscreenStyle = document.createElement('style');
-fullscreenStyle.textContent = `.mermaid-container {
+    const fullscreenStyle = document.createElement('style');
+    fullscreenStyle.textContent = `.mermaid-container {
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -190,10 +191,32 @@ fullscreenStyle.textContent = `.mermaid-container {
 .mermaid-fullscreen-modal .mermaid-fullscreen-btn {
     display: none !important;
 }`;
-document.head.appendChild(fullscreenStyle);
+    document.head.appendChild(fullscreenStyle);
+}
 
 // Detect if page has dark background
 const isDarkTheme = () => {
+    // We use a set of heuristics:
+    // 1. Check for common dark mode classes or attributes
+    // 2. Check computed background color brightness
+    if (document.documentElement.classList.contains('dark') ||
+        document.documentElement.getAttribute('data-theme') === 'dark' ||
+        document.body.classList.contains('dark') ||
+        document.body.getAttribute('data-theme') === 'dark') {
+        // console.log("Dark theme detected via class/attribute");
+        return true;
+    }
+    if (document.documentElement.classList.contains('light') ||
+        document.documentElement.getAttribute('data-theme') === 'light' ||
+        document.body.classList.contains('light') ||
+        document.body.getAttribute('data-theme') === 'light') {
+        // console.log("Light theme detected via class/attribute");
+        return false;
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // console.log("Dark theme detected via prefers-color-scheme");
+        return true;
+    }
     const bgColor = window.getComputedStyle(document.body).backgroundColor;
     const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
     if (match) {
@@ -201,15 +224,45 @@ const isDarkTheme = () => {
         const g = parseInt(match[2]);
         const b = parseInt(match[3]);
         const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        // console.log("Background color brightness:", brightness);
         return brightness < 128;
     }
+    // console.log("No dark or light theme detected, defaulting to light theme");
     return false;
 };
 
-const load = async () => {
-    await mermaid.run();
+let darkTheme = isDarkTheme();
+let modal = null;
+let modalContent = null;
+let previousScrollOffset = [window.scrollX, window.scrollY];
 
-    const all_mermaids = document.querySelectorAll(".mermaid");
+const runMermaid = async (rerun) => {
+    console.log("Running mermaid diagrams, rerun =", rerun);
+    // clear all existing mermaid charts
+    let all_mermaids = document.querySelectorAll(".mermaid");
+
+    if (rerun) {
+        all_mermaids.forEach((el) => {
+            if(!el.hasAttribute("data-original-code")) {
+                // store original code
+                // console.log(`Storing original code for first run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+            if(el.getAttribute("data-processed") === "true") {
+                // remove and restore original
+                el.removeAttribute("data-processed");
+                // console.log(`Restoring original code for re-run: `, el.getAttribute('data-original-code'));
+                el.innerHTML = el.getAttribute('data-original-code');
+            } else {
+                // store original code
+                // console.log(`Storing original code for re-run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+        });
+        await mermaid.run();
+    }
+
+    all_mermaids = document.querySelectorAll(".mermaid");
     const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
 
     if ("False" === "True") {
@@ -217,10 +270,10 @@ const load = async () => {
         if(mermaids_to_add_zoom > 0) {
             var svgs = d3.selectAll("");
             if(all_mermaids.length !== mermaids_processed.length) {
-                setTimeout(load, 200);
+                setTimeout(() => runMermaid(false), 200);
                 return;
             } else if(svgs.size() !== mermaids_to_add_zoom) {
-                setTimeout(load, 200);
+                setTimeout(() => runMermaid(false), 200);
                 return;
             } else {
                 svgs.each(function() {
@@ -236,16 +289,21 @@ const load = async () => {
         }
     } else if(all_mermaids.length !== mermaids_processed.length) {
         // Wait for mermaid to process all diagrams
-        setTimeout(load, 200);
+        setTimeout(() => runMermaid(false), 200);
         return;
     }
-
-    const darkTheme = isDarkTheme();
 
     // Stop here if not adding fullscreen capability
     if ("True" !== "True") return;
 
-    const modal = document.createElement('div');
+    if (modal !== null ) {
+        // Destroy existing modal
+        modal.remove();
+        modal = null;
+        modalContent = null;
+    }
+
+    modal = document.createElement('div');
     modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
     modal.setAttribute('role', 'dialog');
     modal.setAttribute('aria-modal', 'true');
@@ -256,10 +314,8 @@ const load = async () => {
     `;
     document.body.appendChild(modal);
 
-    const modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    modalContent = modal.querySelector('.mermaid-container-fullscreen');
     const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
-
-    let previousScrollOffset = [window.scrollX, window.scrollY];
 
     const closeModal = () => {
         modal.classList.remove('active');
@@ -278,11 +334,14 @@ const load = async () => {
         }
     });
 
-    const allButtons = [];
-
     document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
         if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
             mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            // Already processed, adjust button class if needed
+            const existingBtn = mermaidDiv.parentNode.querySelector('.mermaid-fullscreen-btn');
+            if (existingBtn) {
+                existingBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+            }
             return;
         }
 
@@ -340,46 +399,57 @@ const load = async () => {
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         });
-
         container.appendChild(fullscreenBtn);
-        allButtons.push(fullscreenBtn);
-    });
-
-    // Update theme classes when theme changes
-    const updateTheme = () => {
-        const dark = isDarkTheme();
-        allButtons.forEach(btn => {
-            if (dark) {
-                btn.classList.add('dark-theme');
-            } else {
-                btn.classList.remove('dark-theme');
-            }
-        });
-        if (dark) {
-            modal.classList.add('dark-theme');
-            modalContent.classList.add('dark-theme');
-            closeBtn.classList.add('dark-theme');
-        } else {
-            modal.classList.remove('dark-theme');
-            modalContent.classList.remove('dark-theme');
-            closeBtn.classList.remove('dark-theme');
-        }
-    };
-
-    // Watch for theme changes
-    const observer = new MutationObserver(updateTheme);
-    observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['class', 'style', 'data-theme']
-    });
-    observer.observe(document.body, {
-        attributes: true,
-        attributeFilter: ['class', 'style']
     });
 };
 
-window.addEventListener("load", load);
-</script>
+const load = async () => {
+    initStyles();
+
+    await runMermaid(true);
+
+    const reRunIfThemeChanges = async () => {
+        const newDarkTheme = isDarkTheme();
+        if (newDarkTheme !== darkTheme) {
+            darkTheme = newDarkTheme;
+            console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
+            await mermaid.initialize(
+                {...JSON.parse(
+                    `{"startOnLoad": false}`
+                ),
+                ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+                }
+            );
+            await runMermaid(true);
+        }
+    };
+
+    // Update theme classes when theme changes
+    const themeObserver = new MutationObserver(reRunIfThemeChanges);
+    themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    themeObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+};
+
+
+
+
+
+console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
+mermaid.initialize(
+    {...JSON.parse(
+        `{"startOnLoad": false}`
+    ),
+    ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+    }
+);
+
+window.addEventListener("load", load);</script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
@@ -440,33 +510,37 @@ window.addEventListener("load", load);
            <div itemprop="articleBody">
              
   <h1>Source code for sec_interp.core.services.drillhole_service</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
-<span class="sd">&quot;&quot;&quot;Drillhole Data Processing Service.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Drillhole Data Processing Service.</span>
 
 <span class="sd">This module provides services for processing and projecting drillhole data,</span>
 <span class="sd">including collar projection, trajectory calculation, and interval interpolation.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">contextlib</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">qgis.core</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">QgsCoordinateReferenceSystem</span><span class="p">,</span>
     <span class="n">QgsDistanceArea</span><span class="p">,</span>
-    <span class="n">QgsFeature</span><span class="p">,</span>
-    <span class="n">QgsFeatureRequest</span><span class="p">,</span>
     <span class="n">QgsGeometry</span><span class="p">,</span>
     <span class="n">QgsPointXY</span><span class="p">,</span>
-    <span class="n">QgsRaster</span><span class="p">,</span>
     <span class="n">QgsRasterLayer</span><span class="p">,</span>
     <span class="n">QgsVectorLayer</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span> <span class="k">as</span> <span class="n">scu</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataMissingError</span><span class="p">,</span> <span class="n">GeometryError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.domain</span><span class="w"> </span><span class="kn">import</span> <span class="n">DrillholeTaskInput</span><span class="p">,</span> <span class="n">GeologySegment</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">SecInterpError</span><span class="p">,</span>
+    <span class="n">ValidationError</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.interfaces.drillhole_interface</span><span class="w"> </span><span class="kn">import</span> <span class="n">IDrillholeService</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">DrillholeTaskInput</span><span class="p">,</span> <span class="n">GeologySegment</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.services.drillhole.collar_processor</span><span class="w"> </span><span class="kn">import</span> <span class="n">CollarProcessor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.services.drillhole.data_fetcher</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataFetcher</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.services.drillhole.interval_processor</span><span class="w"> </span><span class="kn">import</span> <span class="n">IntervalProcessor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.services.drillhole.survey_processor</span><span class="w"> </span><span class="kn">import</span> <span class="n">SurveyProcessor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.services.drillhole.trajectory_engine</span><span class="w"> </span><span class="kn">import</span> <span class="n">TrajectoryEngine</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.logger_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_logger</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -475,15 +549,31 @@ window.addEventListener("load", load);
 <div class="viewcode-block" id="DrillholeService">
 <a class="viewcode-back" href="../../../../sec_interp.core.services.drillhole_service.html#sec_interp.core.services.DrillholeService">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">DrillholeService</span><span class="p">(</span><span class="n">IDrillholeService</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Service for processing drillhole data.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Service for processing and orchestrating drillhole data.</span>
+
+<span class="sd">    This service handles the projection of collars onto a 2D section line,</span>
+<span class="sd">    the calculation of 3D trajectories from survey data, and the interpolation</span>
+<span class="sd">    of geological intervals along those trajectories. It leverages specialized</span>
+<span class="sd">    processors to maintain a clean separation of concerns.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DrillholeService.__init__">
+<a class="viewcode-back" href="../../../../sec_interp.core.services.drillhole_service.html#sec_interp.core.services.DrillholeService.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the service with specialized processors.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">collar_processor</span> <span class="o">=</span> <span class="n">CollarProcessor</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">survey_processor</span> <span class="o">=</span> <span class="n">SurveyProcessor</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">interval_processor</span> <span class="o">=</span> <span class="n">IntervalProcessor</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_fetcher</span> <span class="o">=</span> <span class="n">DataFetcher</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trajectory_engine</span> <span class="o">=</span> <span class="n">TrajectoryEngine</span><span class="p">()</span></div>
+
 
 <div class="viewcode-block" id="DrillholeService.project_collars">
 <a class="viewcode-back" href="../../../../sec_interp.core.services.drillhole_service.html#sec_interp.core.services.DrillholeService.project_collars">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">project_collars</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">collar_layer</span><span class="p">:</span> <span class="n">QgsVectorLayer</span><span class="p">,</span>
-        <span class="n">line_geom</span><span class="p">:</span> <span class="n">QgsGeometry</span><span class="p">,</span>
-        <span class="n">line_start</span><span class="p">:</span> <span class="n">QgsPointXY</span><span class="p">,</span>
+        <span class="n">collar_data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+        <span class="n">line_data</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
         <span class="n">distance_area</span><span class="p">:</span> <span class="n">QgsDistanceArea</span><span class="p">,</span>
         <span class="n">buffer_width</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">collar_id_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -492,72 +582,49 @@ window.addEventListener("load", load);
         <span class="n">collar_y_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">collar_z_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">collar_depth_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">dem_layer</span><span class="p">:</span> <span class="n">QgsRasterLayer</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">line_crs</span><span class="p">:</span> <span class="n">QgsCoordinateReferenceSystem</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Project collar points onto section line using spatial optimization.</span>
+        <span class="n">pre_sampled_z</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Project collar points onto section line using detached domain data.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            collar_layer: Vector layer containing drillhole collars.</span>
-<span class="sd">            line_geom: Geometry of the cross-section line.</span>
-<span class="sd">            line_start: Start point of the section line.</span>
-<span class="sd">            distance_area: Distance calculation object.</span>
-<span class="sd">            buffer_width: Search buffer distance in meters.</span>
-<span class="sd">            collar_id_field: Field name for unique drillhole ID.</span>
-<span class="sd">            use_geometry: Whether to use feature geometry for X/Y coordinates.</span>
+<span class="sd">            collar_data: List of detached collar dictionaries.</span>
+<span class="sd">            line_data: Section line geometry or feature.</span>
+<span class="sd">            distance_area: QgsDistanceArea for measurements.</span>
+<span class="sd">            buffer_width: Maximum distance from section for projection.</span>
+<span class="sd">            collar_id_field: Name of the ID field.</span>
+<span class="sd">            use_geometry: Whether to use geometric data for projection.</span>
 <span class="sd">            collar_x_field: Field name for X coordinate (if not using geometry).</span>
 <span class="sd">            collar_y_field: Field name for Y coordinate (if not using geometry).</span>
-<span class="sd">            collar_z_field: Field name for collar elevation.</span>
-<span class="sd">            collar_depth_field: Field name for total drillhole depth.</span>
-<span class="sd">            dem_layer: Optional DEM layer for elevation if Z field is missing/zero.</span>
-<span class="sd">            line_crs: CRS of the section line for spatial filtering.</span>
+<span class="sd">            collar_z_field: Field name for Z coordinate.</span>
+<span class="sd">            collar_depth_field: Field name for total depth.</span>
+<span class="sd">            pre_sampled_z: Optional dict of pre-sampled elevations.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            A list of tuples (hole_id, dist_along, z, offset, total_depth).</span>
+<span class="sd">            List of projection tuples: (hole_id, dist_along, z, offset, total_depth).</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValidationError: If parameters are invalid.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">collar_layer</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">DataMissingError</span><span class="p">(</span><span class="s2">&quot;Collar layer is not provided&quot;</span><span class="p">)</span>
-
-        <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">ValidationError</span>
-
+        <span class="c1"># Simple parameter validation</span>
         <span class="k">if</span> <span class="n">buffer_width</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Buffer width must be positive, got </span><span class="si">{</span><span class="n">buffer_width</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-        <span class="c1"># Validate Fields</span>
-        <span class="k">if</span> <span class="n">collar_id_field</span> <span class="ow">and</span> <span class="n">collar_layer</span><span class="o">.</span><span class="n">fields</span><span class="p">()</span><span class="o">.</span><span class="n">indexFromName</span><span class="p">(</span><span class="n">collar_id_field</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Field &#39;</span><span class="si">{</span><span class="n">collar_id_field</span><span class="si">}</span><span class="s2">&#39; not found in collar layer.&quot;</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">use_geometry</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">f_name</span> <span class="ow">in</span> <span class="p">[</span><span class="n">collar_x_field</span><span class="p">,</span> <span class="n">collar_y_field</span><span class="p">]:</span>
-                <span class="k">if</span> <span class="n">f_name</span> <span class="ow">and</span> <span class="n">collar_layer</span><span class="o">.</span><span class="n">fields</span><span class="p">()</span><span class="o">.</span><span class="n">indexFromName</span><span class="p">(</span><span class="n">f_name</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Field &#39;</span><span class="si">{</span><span class="n">f_name</span><span class="si">}</span><span class="s2">&#39; not found in collar layer.&quot;</span><span class="p">)</span>
-
-        <span class="n">projected_collars</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Projecting collars from </span><span class="si">{</span><span class="n">collar_layer</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">}</span><span class="s2"> with buffer </span><span class="si">{</span><span class="n">buffer_width</span><span class="si">}</span><span class="s2">m&quot;</span><span class="p">)</span>
-
-        <span class="c1"># 1. Spatial Filtering</span>
-        <span class="c1"># Create buffer zone around section line</span>
+        <span class="n">da</span> <span class="o">=</span> <span class="n">distance_area</span>
+        <span class="n">line_geom</span> <span class="o">=</span> <span class="n">line_data</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">line_data</span><span class="p">,</span> <span class="s2">&quot;geometry&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="n">line_data</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">line_buffer</span> <span class="o">=</span> <span class="n">line_geom</span><span class="o">.</span><span class="n">buffer</span><span class="p">(</span><span class="n">buffer_width</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">GeometryError</span><span class="p">(</span>
-                <span class="s2">&quot;Failed to create section line buffer&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;buffer_width&quot;</span><span class="p">:</span> <span class="n">buffer_width</span><span class="p">}</span>
-            <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+            <span class="n">line_start</span> <span class="o">=</span> <span class="n">scu</span><span class="o">.</span><span class="n">get_line_start_point</span><span class="p">(</span><span class="n">line_geom</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="n">SecInterpError</span><span class="p">):</span>
+            <span class="n">line_start</span> <span class="o">=</span> <span class="n">QgsPointXY</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># Fallback</span>
 
-        <span class="c1"># Use centralized filtering utility which handles CRS transformation</span>
-        <span class="n">candidate_features</span> <span class="o">=</span> <span class="n">scu</span><span class="o">.</span><span class="n">filter_features_by_buffer</span><span class="p">(</span><span class="n">collar_layer</span><span class="p">,</span> <span class="n">line_buffer</span><span class="p">,</span> <span class="n">line_crs</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">candidate_features</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;No collars found within buffer area.&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="p">[]</span>
-
-        <span class="k">for</span> <span class="n">collar_feat</span> <span class="ow">in</span> <span class="n">candidate_features</span><span class="p">:</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_project_single_collar</span><span class="p">(</span>
-                <span class="n">collar_feat</span><span class="p">,</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">c_item</span> <span class="ow">in</span> <span class="n">collar_data</span><span class="p">:</span>
+            <span class="c1"># Delegate to CollarProcessor</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">collar_processor</span><span class="o">.</span><span class="n">extract_and_project_detached</span><span class="p">(</span>
+                <span class="n">c_item</span><span class="p">,</span>
                 <span class="n">line_geom</span><span class="p">,</span>
                 <span class="n">line_start</span><span class="p">,</span>
-                <span class="n">distance_area</span><span class="p">,</span>
+                <span class="n">da</span><span class="p">,</span>
                 <span class="n">buffer_width</span><span class="p">,</span>
                 <span class="n">collar_id_field</span><span class="p">,</span>
                 <span class="n">use_geometry</span><span class="p">,</span>
@@ -565,25 +632,19 @@ window.addEventListener("load", load);
                 <span class="n">collar_y_field</span><span class="p">,</span>
                 <span class="n">collar_z_field</span><span class="p">,</span>
                 <span class="n">collar_depth_field</span><span class="p">,</span>
-                <span class="n">dem_layer</span><span class="p">,</span>
+                <span class="n">pre_sampled_z</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
-                <span class="n">projected_collars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">res</span><span class="p">:</span>
+                <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;DrillholeService.project_collars END: Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">projected_collars</span><span class="p">)</span><span class="si">}</span><span class="s2"> collars.&quot;</span>
-        <span class="p">)</span>
-        <span class="k">return</span> <span class="n">projected_collars</span></div>
+        <span class="k">return</span> <span class="n">results</span></div>
 
 
 <div class="viewcode-block" id="DrillholeService.prepare_task_input">
 <a class="viewcode-back" href="../../../../sec_interp.core.services.drillhole_service.html#sec_interp.core.services.DrillholeService.prepare_task_input">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">prepare_task_input</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">line_geom</span><span class="p">:</span> <span class="n">QgsGeometry</span><span class="p">,</span>
-        <span class="n">line_start</span><span class="p">:</span> <span class="n">QgsPointXY</span><span class="p">,</span>
-        <span class="n">line_crs</span><span class="p">:</span> <span class="n">QgsCoordinateReferenceSystem</span><span class="p">,</span>
-        <span class="n">section_azimuth</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">line_layer</span><span class="p">:</span> <span class="n">QgsVectorLayer</span><span class="p">,</span>
         <span class="n">buffer_width</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="c1"># Collar Params</span>
         <span class="n">collar_layer</span><span class="p">:</span> <span class="n">QgsVectorLayer</span><span class="p">,</span>
@@ -600,101 +661,86 @@ window.addEventListener("load", load);
         <span class="n">interval_fields</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
         <span class="c1"># Optional</span>
         <span class="n">dem_layer</span><span class="p">:</span> <span class="n">QgsRasterLayer</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">band_num</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DrillholeTaskInput</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Prepare detached data for async processing.&quot;&quot;&quot;</span>
-        <span class="c1"># --- Level 3 Validation: Domain Guards ---</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">ValidationError</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.validation.validators</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-            <span class="n">validate_positive</span><span class="p">,</span>
-            <span class="n">validate_range</span><span class="p">,</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Prepare detached domain data for asynchronous processing.</span>
+
+<span class="sd">        This method extracts and detaches all necessary data from QGIS layers</span>
+<span class="sd">        to create a serializable task input.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            line_layer: The section line vector layer.</span>
+<span class="sd">            buffer_width: Projection buffer distance.</span>
+<span class="sd">            collar_layer: The drillhole collars vector layer.</span>
+<span class="sd">            collar_id_field: Name of the identifier field.</span>
+<span class="sd">            use_geometry: Whether to extract coordinates from geometry.</span>
+<span class="sd">            collar_x_field: Field name for X coordinate.</span>
+<span class="sd">            collar_y_field: Field name for Y coordinate.</span>
+<span class="sd">            collar_z_field: Field name for Z coordinate.</span>
+<span class="sd">            collar_depth_field: Field name for hole depth.</span>
+<span class="sd">            survey_layer: Vector layer containing survey data.</span>
+<span class="sd">            survey_fields: Mapping of logical fields to layer field names.</span>
+<span class="sd">            interval_layer: Vector layer containing interval/geology data.</span>
+<span class="sd">            interval_fields: Mapping of logical fields to layer field names.</span>
+<span class="sd">            dem_layer: Optional raster layer for elevation sampling.</span>
+<span class="sd">            band_num: Raster band number to sample.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A DrillholeTaskInput object containing serialized data.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">line_geom</span><span class="p">,</span> <span class="n">line_crs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_line_data</span><span class="p">(</span><span class="n">line_layer</span><span class="p">)</span>
+        <span class="n">line_start</span><span class="p">,</span> <span class="n">section_azimuth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_line_orientation</span><span class="p">(</span><span class="n">line_geom</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_prepare_task_params</span><span class="p">(</span>
+            <span class="n">buffer_width</span><span class="p">,</span>
+            <span class="n">section_azimuth</span><span class="p">,</span>
+            <span class="n">collar_layer</span><span class="p">,</span>
+            <span class="n">collar_id_field</span><span class="p">,</span>
+            <span class="n">use_geometry</span><span class="p">,</span>
+            <span class="n">collar_x_field</span><span class="p">,</span>
+            <span class="n">collar_y_field</span><span class="p">,</span>
         <span class="p">)</span>
 
-        <span class="c1"># 1. Parameter Validation</span>
-        <span class="n">validate_positive</span><span class="p">(</span><span class="s2">&quot;Buffer width&quot;</span><span class="p">)(</span><span class="n">buffer_width</span><span class="p">)</span>
-        <span class="n">validate_range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="s2">&quot;Section azimuth&quot;</span><span class="p">)(</span><span class="n">section_azimuth</span><span class="p">)</span>
-
-        <span class="c1"># 2. Field Existence Validation</span>
-        <span class="c1"># Helper to check fields in a layer</span>
-        <span class="k">def</span><span class="w"> </span><span class="nf">check_field</span><span class="p">(</span><span class="n">layer</span><span class="p">:</span> <span class="n">QgsVectorLayer</span><span class="p">,</span> <span class="n">field_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">layer_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">field_name</span><span class="p">:</span>
-                <span class="k">return</span>  <span class="c1"># Optional or handled elsewhere?</span>
-            <span class="k">if</span> <span class="n">layer</span><span class="o">.</span><span class="n">fields</span><span class="p">()</span><span class="o">.</span><span class="n">indexFromName</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Field &#39;</span><span class="si">{</span><span class="n">field_name</span><span class="si">}</span><span class="s2">&#39; not found in </span><span class="si">{</span><span class="n">layer_name</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">collar_id_field</span><span class="p">:</span>
-            <span class="n">check_field</span><span class="p">(</span><span class="n">collar_layer</span><span class="p">,</span> <span class="n">collar_id_field</span><span class="p">,</span> <span class="s2">&quot;collar layer&quot;</span><span class="p">)</span>
-
-        <span class="c1"># We don&#39;t strictly validate X/Y/Z/Depth here because they might be optional or mapped differently</span>
-        <span class="c1"># But if provided, they should exist.</span>
-        <span class="k">if</span> <span class="n">use_geometry</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="n">check_field</span><span class="p">(</span><span class="n">collar_layer</span><span class="p">,</span> <span class="n">collar_x_field</span><span class="p">,</span> <span class="s2">&quot;collar layer&quot;</span><span class="p">)</span>
-            <span class="n">check_field</span><span class="p">(</span><span class="n">collar_layer</span><span class="p">,</span> <span class="n">collar_y_field</span><span class="p">,</span> <span class="s2">&quot;collar layer&quot;</span><span class="p">)</span>
-
-        <span class="c1"># --- End Validation ---</span>
-
-        <span class="c1"># 1. Filter Collars (Spatial)</span>
-        <span class="c1"># Use buffer to limit feature fetching</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">line_buffer</span> <span class="o">=</span> <span class="n">line_geom</span><span class="o">.</span><span class="n">buffer</span><span class="p">(</span><span class="n">buffer_width</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-            <span class="c1"># Fallback to no spatial filter or bbox</span>
-            <span class="n">line_buffer</span> <span class="o">=</span> <span class="kc">None</span>
-
-        <span class="n">collar_bbox</span> <span class="o">=</span> <span class="n">line_buffer</span><span class="o">.</span><span class="n">boundingBox</span><span class="p">()</span> <span class="k">if</span> <span class="n">line_buffer</span> <span class="k">else</span> <span class="n">line_geom</span><span class="o">.</span><span class="n">boundingBox</span><span class="p">()</span>
-
-        <span class="c1"># Prepare Request</span>
-        <span class="c1"># We need attrs+geometry</span>
-        <span class="n">req</span> <span class="o">=</span> <span class="n">QgsFeatureRequest</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">line_buffer</span><span class="p">:</span>
-            <span class="n">req</span><span class="o">.</span><span class="n">setFilterRect</span><span class="p">(</span><span class="n">collar_bbox</span><span class="p">)</span>  <span class="c1"># Optimization</span>
-
+        <span class="c1"># 1. Filter and Detach Collars</span>
+        <span class="n">collar_ids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="n">collar_data</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">pre_sampled_z</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">processed_ids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-
-        <span class="c1"># Iterate collars and detach</span>
-        <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="n">collar_layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
-            <span class="c1"># Check rigorous spatial intersection if buffer exists</span>
-            <span class="k">if</span> <span class="n">line_buffer</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">feat</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span><span class="o">.</span><span class="n">intersects</span><span class="p">(</span><span class="n">line_buffer</span><span class="p">):</span>
-                <span class="k">continue</span>
-
-            <span class="n">hid</span> <span class="o">=</span> <span class="n">feat</span><span class="p">[</span><span class="n">collar_id_field</span><span class="p">]</span>
-            <span class="n">processed_ids</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">hid</span><span class="p">)</span>
-
-            <span class="c1"># Detach geometry</span>
-            <span class="n">geom_copy</span> <span class="o">=</span> <span class="n">QgsGeometry</span><span class="p">(</span><span class="n">feat</span><span class="o">.</span><span class="n">geometry</span><span class="p">())</span> <span class="k">if</span> <span class="n">feat</span><span class="o">.</span><span class="n">hasGeometry</span><span class="p">()</span> <span class="k">else</span> <span class="kc">None</span>
-
-            <span class="c1"># Detach attributes</span>
-            <span class="n">attrs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">feat</span><span class="o">.</span><span class="n">fields</span><span class="p">()</span><span class="o">.</span><span class="n">names</span><span class="p">(),</span> <span class="n">feat</span><span class="o">.</span><span class="n">attributes</span><span class="p">(),</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
-
-            <span class="n">collar_data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;geometry&quot;</span><span class="p">:</span> <span class="n">geom_copy</span><span class="p">,</span> <span class="s2">&quot;attributes&quot;</span><span class="p">:</span> <span class="n">attrs</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">hid</span><span class="p">})</span>
-
-            <span class="c1"># Pre-sample Z if DEM provided (Thread safety fix)</span>
-            <span class="k">if</span> <span class="n">dem_layer</span><span class="p">:</span>
-                <span class="n">pt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_point</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">use_geometry</span><span class="p">,</span> <span class="n">collar_x_field</span><span class="p">,</span> <span class="n">collar_y_field</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">pt</span><span class="p">:</span>
-                    <span class="c1"># Check if Z is in attributes first? Logic mirrors _get_collar_info</span>
-                    <span class="n">z_val</span> <span class="o">=</span> <span class="mf">0.0</span>
-                    <span class="k">try</span><span class="p">:</span>
-                        <span class="k">if</span> <span class="n">collar_z_field</span><span class="p">:</span>
-                            <span class="n">z_val</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">feat</span><span class="p">[</span><span class="n">collar_z_field</span><span class="p">]</span> <span class="ow">or</span> <span class="mf">0.0</span><span class="p">)</span>
-                    <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
-                        <span class="n">z_val</span> <span class="o">=</span> <span class="mf">0.0</span>
-
-                    <span class="k">if</span> <span class="n">z_val</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
-                        <span class="n">sampled</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sample_dem</span><span class="p">(</span><span class="n">dem_layer</span><span class="p">,</span> <span class="n">pt</span><span class="p">)</span>
-                        <span class="n">pre_sampled_z</span><span class="p">[</span><span class="n">hid</span><span class="p">]</span> <span class="o">=</span> <span class="n">sampled</span>
+        <span class="k">if</span> <span class="n">collar_layer</span><span class="p">:</span>
+            <span class="p">(</span>
+                <span class="n">collar_ids</span><span class="p">,</span>
+                <span class="n">collar_data</span><span class="p">,</span>
+                <span class="n">pre_sampled_z</span><span class="p">,</span>
+            <span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">collar_processor</span><span class="o">.</span><span class="n">detach_features</span><span class="p">(</span>
+                <span class="n">collar_layer</span><span class="p">,</span>
+                <span class="n">line_geom</span><span class="p">,</span>
+                <span class="n">buffer_width</span><span class="p">,</span>
+                <span class="n">collar_id_field</span><span class="p">,</span>
+                <span class="n">use_geometry</span><span class="p">,</span>
+                <span class="n">collar_x_field</span><span class="p">,</span>
+                <span class="n">collar_y_field</span><span class="p">,</span>
+                <span class="n">collar_z_field</span><span class="p">,</span>
+                <span class="n">dem_layer</span><span class="p">,</span>
+                <span class="n">target_crs</span><span class="o">=</span><span class="n">line_crs</span><span class="p">,</span>
+            <span class="p">)</span>
 
         <span class="c1"># 2. Bulk Fetch Child Data (Sync)</span>
-        <span class="c1"># We fetch ALL data for the identified collars</span>
-        <span class="n">survey_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fetch_bulk_data_detached</span><span class="p">(</span><span class="n">survey_layer</span><span class="p">,</span> <span class="n">processed_ids</span><span class="p">,</span> <span class="n">survey_fields</span><span class="p">)</span>
-        <span class="n">interval_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fetch_bulk_data_detached</span><span class="p">(</span>
-            <span class="n">interval_layer</span><span class="p">,</span> <span class="n">processed_ids</span><span class="p">,</span> <span class="n">interval_fields</span>
-        <span class="p">)</span>
+        <span class="n">survey_map</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">interval_map</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">collar_ids</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">survey_layer</span><span class="p">:</span>
+                <span class="n">survey_map</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_fetcher</span><span class="o">.</span><span class="n">fetch_bulk_data</span><span class="p">(</span>
+                    <span class="n">survey_layer</span><span class="p">,</span> <span class="n">collar_ids</span><span class="p">,</span> <span class="n">survey_fields</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="n">interval_layer</span><span class="p">:</span>
+                <span class="n">interval_map</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_fetcher</span><span class="o">.</span><span class="n">fetch_bulk_data</span><span class="p">(</span>
+                    <span class="n">interval_layer</span><span class="p">,</span> <span class="n">collar_ids</span><span class="p">,</span> <span class="n">interval_fields</span>
+                <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">DrillholeTaskInput</span><span class="p">(</span>
-            <span class="n">line_geometry</span><span class="o">=</span><span class="n">QgsGeometry</span><span class="p">(</span><span class="n">line_geom</span><span class="p">),</span>
-            <span class="n">line_start</span><span class="o">=</span><span class="n">QgsPointXY</span><span class="p">(</span><span class="n">line_start</span><span class="p">),</span>
+            <span class="n">line_geometry_wkt</span><span class="o">=</span><span class="n">line_geom</span><span class="o">.</span><span class="n">asWkt</span><span class="p">(),</span>
+            <span class="n">line_start_x</span><span class="o">=</span><span class="n">line_start</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span>
+            <span class="n">line_start_y</span><span class="o">=</span><span class="n">line_start</span><span class="o">.</span><span class="n">y</span><span class="p">(),</span>
             <span class="n">line_crs_authid</span><span class="o">=</span><span class="n">line_crs</span><span class="o">.</span><span class="n">authid</span><span class="p">(),</span>
             <span class="n">section_azimuth</span><span class="o">=</span><span class="n">section_azimuth</span><span class="p">,</span>
             <span class="n">buffer_width</span><span class="o">=</span><span class="n">buffer_width</span><span class="p">,</span>
@@ -705,19 +751,119 @@ window.addEventListener("load", load);
             <span class="n">collar_z_field</span><span class="o">=</span><span class="n">collar_z_field</span><span class="p">,</span>
             <span class="n">collar_depth_field</span><span class="o">=</span><span class="n">collar_depth_field</span><span class="p">,</span>
             <span class="n">collar_data</span><span class="o">=</span><span class="n">collar_data</span><span class="p">,</span>
-            <span class="n">survey_data</span><span class="o">=</span><span class="n">survey_data</span><span class="p">,</span>
-            <span class="n">interval_data</span><span class="o">=</span><span class="n">interval_data</span><span class="p">,</span>
+            <span class="n">survey_data</span><span class="o">=</span><span class="n">survey_map</span><span class="p">,</span>
+            <span class="n">interval_data</span><span class="o">=</span><span class="n">interval_map</span><span class="p">,</span>
             <span class="n">pre_sampled_z</span><span class="o">=</span><span class="n">pre_sampled_z</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 
+    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_line_data</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">line_layer</span><span class="p">:</span> <span class="n">QgsVectorLayer</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">QgsGeometry</span><span class="p">,</span> <span class="n">QgsCoordinateReferenceSystem</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Extract line geometry and CRS from the layer.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            line_layer: The vector layer to extract data from.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple containing the line geometry and its CRS.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            DataMissingError: If the layer has no features.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">line_feat</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">line_layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">(),</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">line_feat</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataMissingError</span>
+
+            <span class="k">raise</span> <span class="n">DataMissingError</span><span class="p">(</span><span class="s2">&quot;Line layer has no features&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">line_feat</span><span class="o">.</span><span class="n">geometry</span><span class="p">(),</span> <span class="n">line_layer</span><span class="o">.</span><span class="n">crs</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_calculate_line_orientation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line_geom</span><span class="p">:</span> <span class="n">QgsGeometry</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">QgsPointXY</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate line start point and section azimuth.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            line_geom: The section line geometry.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple with (start_point, azimuth_in_degrees).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">line_start</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">line_geom</span><span class="o">.</span><span class="n">asPolyline</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">line_geom</span><span class="o">.</span><span class="n">isMultipart</span><span class="p">()</span>
+            <span class="k">else</span> <span class="n">line_geom</span><span class="o">.</span><span class="n">asMultiPolyline</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">p2_vertex</span> <span class="o">=</span> <span class="n">line_geom</span><span class="o">.</span><span class="n">vertexAt</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">p2</span> <span class="o">=</span> <span class="n">QgsPointXY</span><span class="p">(</span><span class="n">p2_vertex</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">p2_vertex</span><span class="o">.</span><span class="n">y</span><span class="p">())</span>
+        <span class="n">azimuth</span> <span class="o">=</span> <span class="n">line_start</span><span class="o">.</span><span class="n">azimuth</span><span class="p">(</span><span class="n">p2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">azimuth</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">azimuth</span> <span class="o">+=</span> <span class="mi">360</span>
+        <span class="k">return</span> <span class="n">line_start</span><span class="p">,</span> <span class="n">azimuth</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_validate_prepare_task_params</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">buffer_width</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">section_azimuth</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">collar_layer</span><span class="p">:</span> <span class="n">QgsVectorLayer</span><span class="p">,</span>
+        <span class="n">id_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">use_geom</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+        <span class="n">x_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">y_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validate parameters for prepare_task_input.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            buffer_width: Buffer distance.</span>
+<span class="sd">            section_azimuth: Section orientation.</span>
+<span class="sd">            collar_layer: Layer to check.</span>
+<span class="sd">            id_field: ID field name.</span>
+<span class="sd">            use_geom: Whether geometric extraction is active.</span>
+<span class="sd">            x_field: X field for fallback.</span>
+<span class="sd">            y_field: Y field for fallback.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValidationError: If any constraint fails.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core.validation.validators</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+            <span class="n">validate_positive</span><span class="p">,</span>
+            <span class="n">validate_range</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">validate_positive</span><span class="p">(</span><span class="s2">&quot;Buffer width&quot;</span><span class="p">)(</span><span class="n">buffer_width</span><span class="p">)</span>
+        <span class="n">validate_range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="s2">&quot;Section azimuth&quot;</span><span class="p">)(</span><span class="n">section_azimuth</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">collar_layer</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">fields</span> <span class="o">=</span> <span class="n">collar_layer</span><span class="o">.</span><span class="n">fields</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">id_field</span> <span class="ow">and</span> <span class="n">fields</span><span class="o">.</span><span class="n">indexFromName</span><span class="p">(</span><span class="n">id_field</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Collar ID field &#39;</span><span class="si">{</span><span class="n">id_field</span><span class="si">}</span><span class="s2">&#39; not found.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">use_geom</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="p">[</span><span class="n">x_field</span><span class="p">,</span> <span class="n">y_field</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">f</span> <span class="ow">and</span> <span class="n">fields</span><span class="o">.</span><span class="n">indexFromName</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Field &#39;</span><span class="si">{</span><span class="n">f</span><span class="si">}</span><span class="s2">&#39; not found for coordinate extraction.&quot;</span><span class="p">)</span>
+
 <div class="viewcode-block" id="DrillholeService.process_task_data">
 <a class="viewcode-back" href="../../../../sec_interp.core.services.drillhole_service.html#sec_interp.core.services.DrillholeService.process_task_data">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">process_task_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task_input</span><span class="p">:</span> <span class="n">DrillholeTaskInput</span><span class="p">,</span> <span class="n">feedback</span><span class="p">:</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Process drillholes using detached data (Thread-Safe).&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Process drillholes using detached domain data (Thread-Safe).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            task_input: The serialized data for processing.</span>
+<span class="sd">            feedback: Optional QgsFeedback for progress and cancellation.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple (geol_data_all, drillhole_data_all) or None if canceled.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Reconstruct Objects</span>
         <span class="n">line_crs</span> <span class="o">=</span> <span class="n">QgsCoordinateReferenceSystem</span><span class="p">(</span><span class="n">task_input</span><span class="o">.</span><span class="n">line_crs_authid</span><span class="p">)</span>
         <span class="n">da</span> <span class="o">=</span> <span class="n">scu</span><span class="o">.</span><span class="n">create_distance_area</span><span class="p">(</span><span class="n">line_crs</span><span class="p">)</span>
+        <span class="n">line_geom</span> <span class="o">=</span> <span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromWkt</span><span class="p">(</span><span class="n">task_input</span><span class="o">.</span><span class="n">line_geometry_wkt</span><span class="p">)</span>
+        <span class="n">line_start</span> <span class="o">=</span> <span class="n">QgsPointXY</span><span class="p">(</span><span class="n">task_input</span><span class="o">.</span><span class="n">line_start_x</span><span class="p">,</span> <span class="n">task_input</span><span class="o">.</span><span class="n">line_start_y</span><span class="p">)</span>
 
         <span class="n">geol_data_all</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">drillhole_data_all</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># (hid, trace2d, trace3d, proj3d, geologic_segments)</span>
@@ -728,92 +874,89 @@ window.addEventListener("load", load);
             <span class="k">if</span> <span class="n">feedback</span> <span class="ow">and</span> <span class="n">feedback</span><span class="o">.</span><span class="n">isCanceled</span><span class="p">():</span>
                 <span class="k">return</span> <span class="kc">None</span>
 
-            <span class="c1"># Build logical feature from detached data to reuse existing logic?</span>
-            <span class="c1"># Or refactor _get_collar_info to work with dicts.</span>
-            <span class="c1"># Adaptation: Inline/Refactor _get_collar_info logic for dicts</span>
-
-            <span class="n">hid</span> <span class="o">=</span> <span class="n">c_item</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
-            <span class="n">attrs</span> <span class="o">=</span> <span class="n">c_item</span><span class="p">[</span><span class="s2">&quot;attributes&quot;</span><span class="p">]</span>
-            <span class="n">geom</span> <span class="o">=</span> <span class="n">c_item</span><span class="p">[</span><span class="s2">&quot;geometry&quot;</span><span class="p">]</span>
-
-            <span class="c1"># --- Extract Point ---</span>
-            <span class="n">pt</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">if</span> <span class="n">task_input</span><span class="o">.</span><span class="n">use_geometry</span> <span class="ow">and</span> <span class="n">geom</span><span class="p">:</span>
-                <span class="n">pt</span> <span class="o">=</span> <span class="n">geom</span><span class="o">.</span><span class="n">asPoint</span><span class="p">()</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">task_input</span><span class="o">.</span><span class="n">collar_x_field</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span>
-                    <span class="n">y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">task_input</span><span class="o">.</span><span class="n">collar_y_field</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span>
-                    <span class="n">pt</span> <span class="o">=</span> <span class="n">QgsPointXY</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-                <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
-                    <span class="k">pass</span>
-
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">pt</span><span class="p">:</span>
-                <span class="k">continue</span>
-
-            <span class="c1"># --- Extract Z/Depth ---</span>
-            <span class="n">z</span> <span class="o">=</span> <span class="mf">0.0</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">z</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">task_input</span><span class="o">.</span><span class="n">collar_z_field</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span>
-            <span class="k">except</span><span class="p">:</span>
-                <span class="n">z</span> <span class="o">=</span> <span class="mf">0.0</span>
-
-            <span class="c1"># Fallback Z</span>
-            <span class="k">if</span> <span class="n">z</span> <span class="o">==</span> <span class="mf">0.0</span> <span class="ow">and</span> <span class="n">hid</span> <span class="ow">in</span> <span class="n">task_input</span><span class="o">.</span><span class="n">pre_sampled_z</span><span class="p">:</span>
-                <span class="n">z</span> <span class="o">=</span> <span class="n">task_input</span><span class="o">.</span><span class="n">pre_sampled_z</span><span class="p">[</span><span class="n">hid</span><span class="p">]</span>
-
-            <span class="n">depth</span> <span class="o">=</span> <span class="mf">0.0</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">depth</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">task_input</span><span class="o">.</span><span class="n">collar_depth_field</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span>
-            <span class="k">except</span><span class="p">:</span>
-                <span class="n">depth</span> <span class="o">=</span> <span class="mf">0.0</span>
-
-            <span class="c1"># --- Project ---</span>
-            <span class="c1"># Logic from _project_single_collar</span>
-            <span class="n">collar_geom_pt</span> <span class="o">=</span> <span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromPointXY</span><span class="p">(</span><span class="n">pt</span><span class="p">)</span>
-            <span class="n">nearest_point</span> <span class="o">=</span> <span class="n">task_input</span><span class="o">.</span><span class="n">line_geometry</span><span class="o">.</span><span class="n">nearestPoint</span><span class="p">(</span><span class="n">collar_geom_pt</span><span class="p">)</span><span class="o">.</span><span class="n">asPoint</span><span class="p">()</span>
-
-            <span class="n">offset</span> <span class="o">=</span> <span class="n">da</span><span class="o">.</span><span class="n">measureLine</span><span class="p">(</span><span class="n">pt</span><span class="p">,</span> <span class="n">nearest_point</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">offset</span> <span class="o">&gt;</span> <span class="n">task_input</span><span class="o">.</span><span class="n">buffer_width</span><span class="p">:</span>
-                <span class="k">continue</span>
-
-            <span class="c1"># --- Full Processing ---</span>
-            <span class="n">surveys</span> <span class="o">=</span> <span class="n">task_input</span><span class="o">.</span><span class="n">survey_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">hid</span><span class="p">,</span> <span class="p">[])</span>
-            <span class="n">intervals</span> <span class="o">=</span> <span class="n">task_input</span><span class="o">.</span><span class="n">interval_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">hid</span><span class="p">,</span> <span class="p">[])</span>
-
-            <span class="n">hole_geol</span><span class="p">,</span> <span class="n">hole_tuple</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_single_hole</span><span class="p">(</span>
-                <span class="n">hole_id</span><span class="o">=</span><span class="n">hid</span><span class="p">,</span>
-                <span class="n">collar_point</span><span class="o">=</span><span class="n">pt</span><span class="p">,</span>
-                <span class="n">collar_z</span><span class="o">=</span><span class="n">z</span><span class="p">,</span>
-                <span class="n">given_depth</span><span class="o">=</span><span class="n">depth</span><span class="p">,</span>
-                <span class="n">survey_data</span><span class="o">=</span><span class="n">surveys</span><span class="p">,</span>
-                <span class="n">intervals</span><span class="o">=</span><span class="n">intervals</span><span class="p">,</span>
-                <span class="n">line_geom</span><span class="o">=</span><span class="n">task_input</span><span class="o">.</span><span class="n">line_geometry</span><span class="p">,</span>
-                <span class="n">line_start</span><span class="o">=</span><span class="n">task_input</span><span class="o">.</span><span class="n">line_start</span><span class="p">,</span>
-                <span class="n">distance_area</span><span class="o">=</span><span class="n">da</span><span class="p">,</span>
-                <span class="n">buffer_width</span><span class="o">=</span><span class="n">task_input</span><span class="o">.</span><span class="n">buffer_width</span><span class="p">,</span>
-                <span class="n">section_azimuth</span><span class="o">=</span><span class="n">task_input</span><span class="o">.</span><span class="n">section_azimuth</span><span class="p">,</span>
+            <span class="c1"># Process each collar and its associated data</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_detached_collar_item</span><span class="p">(</span>
+                <span class="n">c_item</span><span class="p">,</span> <span class="n">task_input</span><span class="p">,</span> <span class="n">da</span><span class="p">,</span> <span class="n">line_geom</span><span class="p">,</span> <span class="n">line_start</span>
             <span class="p">)</span>
-
-            <span class="k">if</span> <span class="n">hole_geol</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+                <span class="n">hole_geol</span><span class="p">,</span> <span class="n">hole_tuple</span> <span class="o">=</span> <span class="n">result</span>
                 <span class="n">geol_data_all</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">hole_geol</span><span class="p">)</span>
-            <span class="n">drillhole_data_all</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hole_tuple</span><span class="p">)</span>
+                <span class="n">drillhole_data_all</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hole_tuple</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="n">feedback</span><span class="p">:</span>
                 <span class="n">feedback</span><span class="o">.</span><span class="n">setProgress</span><span class="p">((</span><span class="n">i</span> <span class="o">/</span> <span class="n">total</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
 
-        <span class="c1"># Result Structure matches DrillholeService.process_intervals return</span>
         <span class="k">return</span> <span class="n">geol_data_all</span><span class="p">,</span> <span class="n">drillhole_data_all</span></div>
 
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_process_detached_collar_item</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">c_item</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+        <span class="n">task_input</span><span class="p">:</span> <span class="n">DrillholeTaskInput</span><span class="p">,</span>
+        <span class="n">da</span><span class="p">:</span> <span class="n">QgsDistanceArea</span><span class="p">,</span>
+        <span class="n">line_geom</span><span class="p">:</span> <span class="n">QgsGeometry</span><span class="p">,</span>
+        <span class="n">line_start</span><span class="p">:</span> <span class="n">QgsPointXY</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">GeologySegment</span><span class="p">],</span> <span class="nb">tuple</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Process a single detached collar item.&quot;&quot;&quot;</span>
+        <span class="c1"># 1. Project collar using CollarProcessor</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">collar_processor</span><span class="o">.</span><span class="n">extract_and_project_detached</span><span class="p">(</span>
+            <span class="n">c_item</span><span class="p">,</span>
+            <span class="n">line_geom</span><span class="p">,</span>
+            <span class="n">line_start</span><span class="p">,</span>
+            <span class="n">da</span><span class="p">,</span>
+            <span class="n">task_input</span><span class="o">.</span><span class="n">buffer_width</span><span class="p">,</span>
+            <span class="n">task_input</span><span class="o">.</span><span class="n">collar_id_field</span><span class="p">,</span>
+            <span class="n">task_input</span><span class="o">.</span><span class="n">use_geometry</span><span class="p">,</span>
+            <span class="n">task_input</span><span class="o">.</span><span class="n">collar_x_field</span><span class="p">,</span>
+            <span class="n">task_input</span><span class="o">.</span><span class="n">collar_y_field</span><span class="p">,</span>
+            <span class="n">task_input</span><span class="o">.</span><span class="n">collar_z_field</span><span class="p">,</span>
+            <span class="n">task_input</span><span class="o">.</span><span class="n">collar_depth_field</span><span class="p">,</span>
+            <span class="n">task_input</span><span class="o">.</span><span class="n">pre_sampled_z</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">hole_id</span><span class="p">,</span> <span class="n">_dist</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">_offset</span><span class="p">,</span> <span class="n">depth</span> <span class="o">=</span> <span class="n">result</span>
+
+        <span class="c1"># 2. Extract point for single hole processing</span>
+        <span class="n">pt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">collar_processor</span><span class="o">.</span><span class="n">extract_point_agnostic</span><span class="p">(</span>
+            <span class="n">c_item</span><span class="p">,</span>
+            <span class="kc">True</span><span class="p">,</span>  <span class="c1"># it&#39;s a dict</span>
+            <span class="n">task_input</span><span class="o">.</span><span class="n">use_geometry</span><span class="p">,</span>
+            <span class="n">task_input</span><span class="o">.</span><span class="n">collar_x_field</span><span class="p">,</span>
+            <span class="n">task_input</span><span class="o">.</span><span class="n">collar_y_field</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">pt</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># 3. Full Processing</span>
+        <span class="n">surveys</span> <span class="o">=</span> <span class="n">task_input</span><span class="o">.</span><span class="n">survey_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">hole_id</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">intervals</span> <span class="o">=</span> <span class="n">task_input</span><span class="o">.</span><span class="n">interval_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">hole_id</span><span class="p">,</span> <span class="p">[])</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_single_hole</span><span class="p">(</span>
+            <span class="n">hole_id</span><span class="o">=</span><span class="n">hole_id</span><span class="p">,</span>
+            <span class="n">collar_point</span><span class="o">=</span><span class="n">pt</span><span class="p">,</span>
+            <span class="n">collar_z</span><span class="o">=</span><span class="n">z</span><span class="p">,</span>
+            <span class="n">given_depth</span><span class="o">=</span><span class="n">depth</span><span class="p">,</span>
+            <span class="n">survey_data</span><span class="o">=</span><span class="n">surveys</span><span class="p">,</span>
+            <span class="n">intervals</span><span class="o">=</span><span class="n">intervals</span><span class="p">,</span>
+            <span class="n">line_geom</span><span class="o">=</span><span class="n">line_geom</span><span class="p">,</span>
+            <span class="n">line_start</span><span class="o">=</span><span class="n">line_start</span><span class="p">,</span>
+            <span class="n">distance_area</span><span class="o">=</span><span class="n">da</span><span class="p">,</span>
+            <span class="n">buffer_width</span><span class="o">=</span><span class="n">task_input</span><span class="o">.</span><span class="n">buffer_width</span><span class="p">,</span>
+            <span class="n">section_azimuth</span><span class="o">=</span><span class="n">task_input</span><span class="o">.</span><span class="n">section_azimuth</span><span class="p">,</span>
+        <span class="p">)</span>
 
 <div class="viewcode-block" id="DrillholeService.process_intervals">
 <a class="viewcode-back" href="../../../../sec_interp.core.services.drillhole_service.html#sec_interp.core.services.DrillholeService.process_intervals">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">process_intervals</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">collar_points</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">],</span>
-        <span class="n">collar_layer</span><span class="p">:</span> <span class="n">QgsVectorLayer</span><span class="p">,</span>
-        <span class="n">survey_layer</span><span class="p">:</span> <span class="n">QgsVectorLayer</span><span class="p">,</span>
-        <span class="n">interval_layer</span><span class="p">:</span> <span class="n">QgsVectorLayer</span><span class="p">,</span>
+        <span class="n">collar_data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+        <span class="n">survey_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]],</span>
+        <span class="n">interval_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]],</span>
         <span class="n">collar_id_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">use_geometry</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
         <span class="n">collar_x_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -825,53 +968,90 @@ window.addEventListener("load", load);
         <span class="n">section_azimuth</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">survey_fields</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
         <span class="n">interval_fields</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span>
-        <span class="nb">list</span><span class="p">[</span><span class="n">GeologySegment</span><span class="p">],</span>
-        <span class="nb">list</span><span class="p">[</span>
-            <span class="nb">tuple</span><span class="p">[</span>
-                <span class="n">Any</span><span class="p">,</span>
-                <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
-                <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
-                <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
-                <span class="nb">list</span><span class="p">[</span><span class="n">GeologySegment</span><span class="p">],</span>
-            <span class="p">]</span>
-        <span class="p">],</span>
-    <span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate drillhole trace and interval data and project onto the section.</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">GeologySegment</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Process drillhole interval data using detached structures.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            collar_points: List of projected collar tuples from `project_collars`.</span>
-<span class="sd">            collar_layer: The collar vector layer.</span>
-<span class="sd">            survey_layer: The survey vector layer.</span>
-<span class="sd">            interval_layer: The interval/geology vector layer.</span>
-<span class="sd">            collar_id_field: Field name for hole ID in collar layer.</span>
-<span class="sd">            use_geometry: Use geometry for collar coordinates.</span>
-<span class="sd">            collar_x_field: Field name for X in collar layer.</span>
-<span class="sd">            collar_y_field: Field name for Y in collar layer.</span>
-<span class="sd">            line_geom: Section line geometry.</span>
-<span class="sd">            line_start: Section line start point.</span>
-<span class="sd">            distance_area: Distance calculation object.</span>
-<span class="sd">            buffer_width: Section buffer width in meters.</span>
-<span class="sd">            section_azimuth: Azimuth of the section line.</span>
-<span class="sd">            survey_fields: Mapping of survey field roles to field names.</span>
-<span class="sd">            interval_fields: Mapping of interval field roles to field names.</span>
+<span class="sd">            collar_points: Projected collar results.</span>
+<span class="sd">            collar_data: Original detached collar data.</span>
+<span class="sd">            survey_data: Map of hole IDs to survey tuples.</span>
+<span class="sd">            interval_data: Map of hole IDs to interval tuples.</span>
+<span class="sd">            collar_id_field: ID field name.</span>
+<span class="sd">            use_geometry: Whether geometry was used.</span>
+<span class="sd">            collar_x_field: X field name.</span>
+<span class="sd">            collar_y_field: Y field name.</span>
+<span class="sd">            line_geom: Section geometry.</span>
+<span class="sd">            line_start: Section start point.</span>
+<span class="sd">            distance_area: Distance measurer.</span>
+<span class="sd">            buffer_width: Buffer width.</span>
+<span class="sd">            section_azimuth: Section orientation.</span>
+<span class="sd">            survey_fields: Survey field mapping.</span>
+<span class="sd">            interval_fields: Interval field mapping.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            A tuple of (geol_data, drillhole_data).</span>
+<span class="sd">            Tuple of (geology_segments, drillhole_results).</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">geol_data</span><span class="p">,</span> <span class="n">drillhole_data</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="n">geol_data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">GeologySegment</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">drillhole_data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
-        <span class="c1"># 1. Build collar coordinate map</span>
-        <span class="n">collar_coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_collar_coord_map</span><span class="p">(</span>
-            <span class="n">collar_layer</span><span class="p">,</span> <span class="n">collar_id_field</span><span class="p">,</span> <span class="n">use_geometry</span><span class="p">,</span> <span class="n">collar_x_field</span><span class="p">,</span> <span class="n">collar_y_field</span>
+        <span class="c1"># 1. Build collar coordinate map from detached data</span>
+        <span class="n">collar_coords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_collar_coordinate_map</span><span class="p">(</span>
+            <span class="n">collar_data</span><span class="p">,</span> <span class="n">use_geometry</span><span class="p">,</span> <span class="n">collar_x_field</span><span class="p">,</span> <span class="n">collar_y_field</span>
         <span class="p">)</span>
 
-        <span class="c1"># 2. Bulk fetch survey and interval data for all relevant holes</span>
-        <span class="n">hole_ids</span> <span class="o">=</span> <span class="p">{</span><span class="n">cp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">cp</span> <span class="ow">in</span> <span class="n">collar_points</span><span class="p">}</span>
-        <span class="n">surveys_map</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fetch_bulk_data</span><span class="p">(</span><span class="n">survey_layer</span><span class="p">,</span> <span class="n">hole_ids</span><span class="p">,</span> <span class="n">survey_fields</span><span class="p">)</span>
-        <span class="n">intervals_map</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fetch_bulk_data</span><span class="p">(</span><span class="n">interval_layer</span><span class="p">,</span> <span class="n">hole_ids</span><span class="p">,</span> <span class="n">interval_fields</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_process_hole_batch</span><span class="p">(</span>
+            <span class="n">collar_points</span><span class="p">,</span>
+            <span class="n">collar_coords</span><span class="p">,</span>
+            <span class="n">survey_data</span><span class="p">,</span>
+            <span class="n">interval_data</span><span class="p">,</span>
+            <span class="n">line_geom</span><span class="p">,</span>
+            <span class="n">line_start</span><span class="p">,</span>
+            <span class="n">distance_area</span><span class="p">,</span>
+            <span class="n">buffer_width</span><span class="p">,</span>
+            <span class="n">section_azimuth</span><span class="p">,</span>
+            <span class="n">geol_data</span><span class="p">,</span>
+            <span class="n">drillhole_data</span><span class="p">,</span>
+        <span class="p">)</span>
 
+        <span class="k">return</span> <span class="n">geol_data</span><span class="p">,</span> <span class="n">drillhole_data</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_collar_coordinate_map</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">collar_data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+        <span class="n">use_geometry</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+        <span class="n">collar_x_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">collar_y_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">QgsPointXY</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build a mapping of hole IDs to collar coordinates.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">collar_processor</span><span class="o">.</span><span class="n">build_coordinate_map</span><span class="p">(</span>
+            <span class="n">collar_data</span><span class="p">,</span> <span class="n">use_geometry</span><span class="p">,</span> <span class="n">collar_x_field</span><span class="p">,</span> <span class="n">collar_y_field</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_point_from_attrs</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">attrs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">x_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">y_field</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QgsPointXY</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Safely extract a point from attribute dictionary.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">collar_processor</span><span class="o">.</span><span class="n">extract_point_agnostic</span><span class="p">(</span>
+            <span class="p">{</span><span class="s2">&quot;attributes&quot;</span><span class="p">:</span> <span class="n">attrs</span><span class="p">},</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">x_field</span><span class="p">,</span> <span class="n">y_field</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_process_hole_batch</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">collar_points</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">],</span>
+        <span class="n">collar_coords</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">QgsPointXY</span><span class="p">],</span>
+        <span class="n">survey_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]],</span>
+        <span class="n">interval_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]],</span>
+        <span class="n">line_geom</span><span class="p">:</span> <span class="n">QgsGeometry</span><span class="p">,</span>
+        <span class="n">line_start</span><span class="p">:</span> <span class="n">QgsPointXY</span><span class="p">,</span>
+        <span class="n">distance_area</span><span class="p">:</span> <span class="n">QgsDistanceArea</span><span class="p">,</span>
+        <span class="n">buffer_width</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">section_azimuth</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">geol_data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">GeologySegment</span><span class="p">],</span>
+        <span class="n">drillhole_data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Process a batch of holes sequentially.&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">hole_id</span><span class="p">,</span> <span class="n">_dist</span><span class="p">,</span> <span class="n">collar_z</span><span class="p">,</span> <span class="n">_off</span><span class="p">,</span> <span class="n">given_depth</span> <span class="ow">in</span> <span class="n">collar_points</span><span class="p">:</span>
             <span class="n">collar_point</span> <span class="o">=</span> <span class="n">collar_coords</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">hole_id</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">collar_point</span><span class="p">:</span>
@@ -882,8 +1062,8 @@ window.addEventListener("load", load);
                 <span class="n">collar_point</span><span class="p">,</span>
                 <span class="n">collar_z</span><span class="p">,</span>
                 <span class="n">given_depth</span><span class="p">,</span>
-                <span class="n">surveys_map</span><span class="p">,</span>
-                <span class="n">intervals_map</span><span class="p">,</span>
+                <span class="n">survey_data</span><span class="p">,</span>
+                <span class="n">interval_data</span><span class="p">,</span>
                 <span class="n">line_geom</span><span class="p">,</span>
                 <span class="n">line_start</span><span class="p">,</span>
                 <span class="n">distance_area</span><span class="p">,</span>
@@ -893,58 +1073,11 @@ window.addEventListener("load", load);
                 <span class="n">drillhole_data</span><span class="p">,</span>
             <span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">geol_data</span><span class="p">,</span> <span class="n">drillhole_data</span></div>
-
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_fetch_bulk_data</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">layer</span><span class="p">:</span> <span class="n">QgsVectorLayer</span><span class="p">,</span> <span class="n">hole_ids</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">fields</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="o">...</span><span class="p">]]]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fetch data for multiple holes in a single pass.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">layer</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">layer</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
-            <span class="k">return</span> <span class="p">{}</span>
-
-        <span class="n">id_f</span> <span class="o">=</span> <span class="n">fields</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">id_f</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{}</span>
-
-        <span class="n">is_survey</span> <span class="o">=</span> <span class="s2">&quot;depth&quot;</span> <span class="ow">in</span> <span class="n">fields</span>
-        <span class="n">required</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;depth&quot;</span><span class="p">,</span> <span class="s2">&quot;azim&quot;</span><span class="p">,</span> <span class="s2">&quot;incl&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">is_survey</span> <span class="k">else</span> <span class="p">[</span><span class="s2">&quot;from&quot;</span><span class="p">,</span> <span class="s2">&quot;to&quot;</span><span class="p">,</span> <span class="s2">&quot;lith&quot;</span><span class="p">]</span>
-
-        <span class="c1"># Validate fields</span>
-        <span class="k">for</span> <span class="n">field_key</span> <span class="ow">in</span> <span class="n">required</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">fields</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field_key</span><span class="p">):</span>
-                <span class="k">return</span> <span class="p">{}</span>
-
-        <span class="n">result_map</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">hole_ids</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{}</span>
-
-        <span class="n">ids_str</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">hid</span><span class="si">!s}</span><span class="s2">&#39;&quot;</span> <span class="k">for</span> <span class="n">hid</span> <span class="ow">in</span> <span class="n">hole_ids</span><span class="p">])</span>
-        <span class="n">request</span> <span class="o">=</span> <span class="n">QgsFeatureRequest</span><span class="p">()</span><span class="o">.</span><span class="n">setFilterExpression</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">id_f</span><span class="si">}</span><span class="s1">&quot; IN (</span><span class="si">{</span><span class="n">ids_str</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
-
-        <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-            <span class="n">hole_id</span> <span class="o">=</span> <span class="n">feat</span><span class="p">[</span><span class="n">id_f</span><span class="p">]</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_data_tuple</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">is_survey</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">hole_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">result_map</span><span class="p">:</span>
-                    <span class="n">result_map</span><span class="p">[</span><span class="n">hole_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-                <span class="n">result_map</span><span class="p">[</span><span class="n">hole_id</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-
-        <span class="c1"># Sort surveys by depth</span>
-        <span class="k">if</span> <span class="n">is_survey</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">h_id</span> <span class="ow">in</span> <span class="n">result_map</span><span class="p">:</span>
-                <span class="n">result_map</span><span class="p">[</span><span class="n">h_id</span><span class="p">]</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-
-        <span class="k">return</span> <span class="n">result_map</span>
-
     <span class="k">def</span><span class="w"> </span><span class="nf">_fetch_bulk_data_detached</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">layer</span><span class="p">:</span> <span class="n">QgsVectorLayer</span><span class="p">,</span> <span class="n">hole_ids</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="n">fields</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Fetch data into pure python structures (no QgsFeature dependency).&quot;&quot;&quot;</span>
-        <span class="c1"># This is essentially the same as _fetch_bulk_data but guarantees primitive types</span>
-        <span class="c1"># in the returned list, which _extract_data_tuple already does.</span>
-        <span class="c1"># So we can reuse the logic but ensures it runs on Main Thread in prepare()</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fetch_bulk_data</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="n">hole_ids</span><span class="p">,</span> <span class="n">fields</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_fetcher</span><span class="o">.</span><span class="n">fetch_bulk_data</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="n">hole_ids</span><span class="p">,</span> <span class="n">fields</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_process_single_hole</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -959,297 +1092,32 @@ window.addEventListener("load", load);
         <span class="n">distance_area</span><span class="p">:</span> <span class="n">QgsDistanceArea</span><span class="p">,</span>
         <span class="n">buffer_width</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">section_azimuth</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span>
-        <span class="nb">list</span><span class="p">[</span><span class="n">GeologySegment</span><span class="p">],</span>
-        <span class="nb">tuple</span><span class="p">[</span>
-            <span class="n">Any</span><span class="p">,</span>
-            <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
-            <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
-            <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
-            <span class="nb">list</span><span class="p">[</span><span class="n">GeologySegment</span><span class="p">],</span>
-        <span class="p">],</span>
-    <span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Process a single drillhole&#39;s trajectory and intervals.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            A tuple of (hole_geol_data, drillhole_tuple).</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># 1. Determine Final Depth</span>
-        <span class="n">max_s_depth</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">survey_data</span><span class="p">])</span> <span class="k">if</span> <span class="n">survey_data</span> <span class="k">else</span> <span class="mf">0.0</span>
-        <span class="n">max_i_depth</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">intervals</span><span class="p">])</span> <span class="k">if</span> <span class="n">intervals</span> <span class="k">else</span> <span class="mf">0.0</span>
-        <span class="n">final_depth</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">given_depth</span><span class="p">,</span> <span class="n">max_s_depth</span><span class="p">,</span> <span class="n">max_i_depth</span><span class="p">)</span>
-
-        <span class="c1"># 2. Trajectory and Projection</span>
-        <span class="n">trajectory</span> <span class="o">=</span> <span class="n">scu</span><span class="o">.</span><span class="n">calculate_drillhole_trajectory</span><span class="p">(</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">GeologySegment</span><span class="p">],</span> <span class="nb">tuple</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Process a single drillhole&#39;s trajectory and intervals.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajectory_engine</span><span class="o">.</span><span class="n">process_single_hole</span><span class="p">(</span>
+            <span class="n">hole_id</span><span class="p">,</span>
             <span class="n">collar_point</span><span class="p">,</span>
             <span class="n">collar_z</span><span class="p">,</span>
+            <span class="n">given_depth</span><span class="p">,</span>
             <span class="n">survey_data</span><span class="p">,</span>
+            <span class="n">intervals</span><span class="p">,</span>
+            <span class="n">line_geom</span><span class="p">,</span>
+            <span class="n">line_start</span><span class="p">,</span>
+            <span class="n">distance_area</span><span class="p">,</span>
+            <span class="n">buffer_width</span><span class="p">,</span>
             <span class="n">section_azimuth</span><span class="p">,</span>
-            <span class="n">total_depth</span><span class="o">=</span><span class="n">final_depth</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">projected_traj</span> <span class="o">=</span> <span class="n">scu</span><span class="o">.</span><span class="n">project_trajectory_to_section</span><span class="p">(</span>
-            <span class="n">trajectory</span><span class="p">,</span> <span class="n">line_geom</span><span class="p">,</span> <span class="n">line_start</span><span class="p">,</span> <span class="n">distance_area</span>
         <span class="p">)</span>
 
-        <span class="c1"># 3. Interpolate Intervals</span>
-        <span class="n">hole_geol_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interpolate_hole_intervals</span><span class="p">(</span><span class="n">projected_traj</span><span class="p">,</span> <span class="n">intervals</span><span class="p">,</span> <span class="n">buffer_width</span><span class="p">)</span>
-
-        <span class="c1"># 4. Store trace (2D and 3D)</span>
-        <span class="n">traj_points_2d</span> <span class="o">=</span> <span class="p">[(</span><span class="n">p</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">projected_traj</span><span class="p">]</span>
-        <span class="n">traj_points_3d</span> <span class="o">=</span> <span class="p">[(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">projected_traj</span><span class="p">]</span>
-        <span class="n">traj_points_3d_proj</span> <span class="o">=</span> <span class="p">[(</span><span class="n">p</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">projected_traj</span><span class="p">]</span>
-
-        <span class="k">return</span> <span class="n">hole_geol_data</span><span class="p">,</span> <span class="p">(</span>
-            <span class="n">hole_id</span><span class="p">,</span>
-            <span class="n">traj_points_2d</span><span class="p">,</span>
-            <span class="n">traj_points_3d</span><span class="p">,</span>
-            <span class="n">traj_points_3d_proj</span><span class="p">,</span>
-            <span class="n">hole_geol_data</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_drillhole_result_tuple</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">hole_id</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+        <span class="n">projected_traj</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">],</span>
+        <span class="n">hole_geol_data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">GeologySegment</span><span class="p">],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the final result tuple for a drillhole using SpatialMeta.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trajectory_engine</span><span class="o">.</span><span class="n">create_drillhole_result_tuple</span><span class="p">(</span>
+            <span class="n">hole_id</span><span class="p">,</span> <span class="n">projected_traj</span><span class="p">,</span> <span class="n">hole_geol_data</span>
         <span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_build_collar_coord_map</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">layer</span><span class="p">:</span> <span class="n">QgsVectorLayer</span><span class="p">,</span>
-        <span class="n">id_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">use_geom</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-        <span class="n">x_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">y_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">QgsPointXY</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build a lookup map for collar coordinates.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            layer: The collar vector layer.</span>
-<span class="sd">            id_field: Field name for hole ID.</span>
-<span class="sd">            use_geom: Whether to use feature geometry.</span>
-<span class="sd">            x_field: Field name for X.</span>
-<span class="sd">            y_field: Field name for Y.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            A dictionary mapping hole_id to QgsPointXY.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">layer</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">id_field</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{}</span>
-        <span class="n">coords</span> <span class="o">=</span> <span class="p">{}</span>
-
-        <span class="c1"># Fetch only necessary attributes and geometry</span>
-        <span class="k">if</span> <span class="n">use_geom</span><span class="p">:</span>
-            <span class="c1"># Need geometry and id_field only</span>
-            <span class="n">request</span> <span class="o">=</span> <span class="n">QgsFeatureRequest</span><span class="p">()</span><span class="o">.</span><span class="n">setSubsetOfAttributes</span><span class="p">([</span><span class="n">id_field</span><span class="p">],</span> <span class="n">layer</span><span class="o">.</span><span class="n">fields</span><span class="p">())</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># Need id_field, x_field, y_field but no geometry</span>
-            <span class="n">request</span> <span class="o">=</span> <span class="n">QgsFeatureRequest</span><span class="p">()</span><span class="o">.</span><span class="n">setSubsetOfAttributes</span><span class="p">(</span>
-                <span class="p">[</span><span class="n">id_field</span><span class="p">,</span> <span class="n">x_field</span><span class="p">,</span> <span class="n">y_field</span><span class="p">],</span> <span class="n">layer</span><span class="o">.</span><span class="n">fields</span><span class="p">()</span>
-            <span class="p">)</span>
-            <span class="n">request</span><span class="o">.</span><span class="n">setFlags</span><span class="p">(</span><span class="n">QgsFeatureRequest</span><span class="o">.</span><span class="n">NoGeometry</span><span class="p">)</span>
-
-        <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-            <span class="n">hole_id</span> <span class="o">=</span> <span class="n">feat</span><span class="p">[</span><span class="n">id_field</span><span class="p">]</span>
-            <span class="n">pt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_point</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">use_geom</span><span class="p">,</span> <span class="n">x_field</span><span class="p">,</span> <span class="n">y_field</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">pt</span><span class="p">:</span>
-                <span class="n">coords</span><span class="p">[</span><span class="n">hole_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">pt</span>
-        <span class="k">return</span> <span class="n">coords</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_point</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">feat</span><span class="p">:</span> <span class="n">QgsFeature</span><span class="p">,</span> <span class="n">use_geom</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">x_f</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">y_f</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">QgsPointXY</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Extract point from feature geometry or fields.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">use_geom</span><span class="p">:</span>
-            <span class="n">geom</span> <span class="o">=</span> <span class="n">feat</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">geom</span><span class="p">:</span>
-                <span class="n">pt</span> <span class="o">=</span> <span class="n">geom</span><span class="o">.</span><span class="n">asPoint</span><span class="p">()</span>
-                <span class="k">if</span> <span class="n">pt</span><span class="o">.</span><span class="n">x</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">pt</span><span class="o">.</span><span class="n">y</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="n">pt</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">feat</span><span class="p">[</span><span class="n">x_f</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">feat</span><span class="p">[</span><span class="n">y_f</span><span class="p">])</span>
-                <span class="k">if</span> <span class="n">x</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">y</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="n">QgsPointXY</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-            <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">):</span>
-                <span class="k">pass</span>
-        <span class="k">return</span> <span class="kc">None</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_get_survey_data</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">layer</span><span class="p">:</span> <span class="n">QgsVectorLayer</span><span class="p">,</span> <span class="n">hole_id</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">fields</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="o">...</span><span class="p">]]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Legacy support - redirected to bulk fetch if needed.&quot;&quot;&quot;</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fetch_bulk_data</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="p">{</span><span class="n">hole_id</span><span class="p">},</span> <span class="n">fields</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">hole_id</span><span class="p">,</span> <span class="p">[])</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_get_interval_data</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">layer</span><span class="p">:</span> <span class="n">QgsVectorLayer</span><span class="p">,</span> <span class="n">hole_id</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">fields</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="o">...</span><span class="p">]]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Legacy support - redirected to bulk fetch if needed.&quot;&quot;&quot;</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fetch_bulk_data</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="p">{</span><span class="n">hole_id</span><span class="p">},</span> <span class="n">fields</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">hole_id</span><span class="p">,</span> <span class="p">[])</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_interpolate_hole_intervals</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">traj</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span>
-        <span class="n">intervals</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span>
-        <span class="n">buffer_width</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">GeologySegment</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Interpolate intervals along a trajectory and return GeologySegments.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            traj: The projected trajectory tuples.</span>
-<span class="sd">            intervals: List of (from, to, lith) tuples.</span>
-<span class="sd">            buffer_width: Section buffer width.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            A list of GeologySegment objects.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">intervals</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">[]</span>
-
-        <span class="n">rich_intervals</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">td</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;unit&quot;</span><span class="p">:</span> <span class="n">lith</span><span class="p">,</span> <span class="s2">&quot;from&quot;</span><span class="p">:</span> <span class="n">fd</span><span class="p">,</span> <span class="s2">&quot;to&quot;</span><span class="p">:</span> <span class="n">td</span><span class="p">})</span> <span class="k">for</span> <span class="n">fd</span><span class="p">,</span> <span class="n">td</span><span class="p">,</span> <span class="n">lith</span> <span class="ow">in</span> <span class="n">intervals</span>
-        <span class="p">]</span>
-        <span class="c1"># Scu returns (attr, points_2d, points_3d, points_3d_proj)</span>
-        <span class="n">tuples</span> <span class="o">=</span> <span class="n">scu</span><span class="o">.</span><span class="n">interpolate_intervals_on_trajectory</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">rich_intervals</span><span class="p">,</span> <span class="n">buffer_width</span><span class="p">)</span>
-
-        <span class="n">segments</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">attr</span><span class="p">,</span> <span class="n">points_2d</span><span class="p">,</span> <span class="n">points_3d</span><span class="p">,</span> <span class="n">points_3d_proj</span> <span class="ow">in</span> <span class="n">tuples</span><span class="p">:</span>
-            <span class="n">segments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                <span class="n">GeologySegment</span><span class="p">(</span>
-                    <span class="n">unit_name</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">attr</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;unit&quot;</span><span class="p">,</span> <span class="s2">&quot;Unknown&quot;</span><span class="p">)),</span>
-                    <span class="n">geometry</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                    <span class="n">attributes</span><span class="o">=</span><span class="n">attr</span><span class="p">,</span>
-                    <span class="n">points</span><span class="o">=</span><span class="n">points_2d</span><span class="p">,</span>
-                    <span class="n">points_3d</span><span class="o">=</span><span class="n">points_3d</span><span class="p">,</span>
-                    <span class="n">points_3d_projected</span><span class="o">=</span><span class="n">points_3d_proj</span><span class="p">,</span>
-                <span class="p">)</span>
-            <span class="p">)</span>
-        <span class="k">return</span> <span class="n">segments</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_project_single_collar</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">collar_feat</span><span class="p">:</span> <span class="n">QgsFeature</span><span class="p">,</span>
-        <span class="n">line_geom</span><span class="p">:</span> <span class="n">QgsGeometry</span><span class="p">,</span>
-        <span class="n">line_start</span><span class="p">:</span> <span class="n">QgsPointXY</span><span class="p">,</span>
-        <span class="n">distance_area</span><span class="p">:</span> <span class="n">QgsDistanceArea</span><span class="p">,</span>
-        <span class="n">buffer_width</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">collar_id_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">use_geometry</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-        <span class="n">collar_x_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">collar_y_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">collar_z_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">collar_depth_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">dem_layer</span><span class="p">:</span> <span class="n">QgsRasterLayer</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Process and project a single collar feature.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            collar_feat: The collar feature to process.</span>
-<span class="sd">            line_geom: Section line geometry.</span>
-<span class="sd">            line_start: Start point of the section line.</span>
-<span class="sd">            distance_area: Distance calculation object.</span>
-<span class="sd">            buffer_width: Buffer width for filtering.</span>
-<span class="sd">            collar_id_field: Field for ID.</span>
-<span class="sd">            use_geometry: Whether to use geometry for coords.</span>
-<span class="sd">            collar_x_field: Field for X.</span>
-<span class="sd">            collar_y_field: Field for Y.</span>
-<span class="sd">            collar_z_field: Field for Z.</span>
-<span class="sd">            collar_depth_field: Field for depth.</span>
-<span class="sd">            dem_layer: Optional DEM layer.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            Tuple of (hole_id, dist_along, z, offset, total_depth) or None.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># 1. Get Collar Info</span>
-        <span class="n">collar_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_collar_info</span><span class="p">(</span>
-            <span class="n">collar_feat</span><span class="p">,</span>
-            <span class="n">collar_id_field</span><span class="p">,</span>
-            <span class="n">use_geometry</span><span class="p">,</span>
-            <span class="n">collar_x_field</span><span class="p">,</span>
-            <span class="n">collar_y_field</span><span class="p">,</span>
-            <span class="n">collar_z_field</span><span class="p">,</span>
-            <span class="n">collar_depth_field</span><span class="p">,</span>
-            <span class="n">dem_layer</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">collar_info</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
-
-        <span class="n">hole_id</span><span class="p">,</span> <span class="n">collar_point</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">depth</span> <span class="o">=</span> <span class="n">collar_info</span>
-
-        <span class="c1"># 2. Project to section line</span>
-        <span class="n">collar_geom_pt</span> <span class="o">=</span> <span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromPointXY</span><span class="p">(</span><span class="n">collar_point</span><span class="p">)</span>
-        <span class="n">nearest_point</span> <span class="o">=</span> <span class="n">line_geom</span><span class="o">.</span><span class="n">nearestPoint</span><span class="p">(</span><span class="n">collar_geom_pt</span><span class="p">)</span><span class="o">.</span><span class="n">asPoint</span><span class="p">()</span>
-
-        <span class="c1"># Calculate distances</span>
-        <span class="n">dist_along</span> <span class="o">=</span> <span class="n">distance_area</span><span class="o">.</span><span class="n">measureLine</span><span class="p">(</span><span class="n">line_start</span><span class="p">,</span> <span class="n">nearest_point</span><span class="p">)</span>
-        <span class="n">offset</span> <span class="o">=</span> <span class="n">distance_area</span><span class="o">.</span><span class="n">measureLine</span><span class="p">(</span><span class="n">collar_point</span><span class="p">,</span> <span class="n">nearest_point</span><span class="p">)</span>
-
-        <span class="c1"># Check if within buffer</span>
-        <span class="k">if</span> <span class="n">offset</span> <span class="o">&lt;=</span> <span class="n">buffer_width</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">(</span><span class="n">hole_id</span><span class="p">,</span> <span class="n">dist_along</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">depth</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="kc">None</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_get_collar_info</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">feat</span><span class="p">:</span> <span class="n">QgsFeature</span><span class="p">,</span>
-        <span class="n">id_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">use_geom</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-        <span class="n">x_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">y_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">z_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">depth_field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">dem_layer</span><span class="p">:</span> <span class="n">QgsRasterLayer</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">QgsPointXY</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Extract collar ID, coordinate, Z and depth from a feature.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            feat: The collar feature to parse.</span>
-<span class="sd">            id_field: Field name for hole ID.</span>
-<span class="sd">            use_geom: Whether to use geometry for coordinates.</span>
-<span class="sd">            x_field: Field name for X coordinate.</span>
-<span class="sd">            y_field: Field name for Y coordinate.</span>
-<span class="sd">            z_field: Field name for Z coordinate.</span>
-<span class="sd">            depth_field: Field name for total depth.</span>
-<span class="sd">            dem_layer: Optional DEM layer for fallback elevation.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            A tuple of (hole_id, point, elevation, total_depth) or None if invalid.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">id_field</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
-        <span class="n">hole_id</span> <span class="o">=</span> <span class="n">feat</span><span class="p">[</span><span class="n">id_field</span><span class="p">]</span>
-
-        <span class="c1"># Point extraction</span>
-        <span class="n">pt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_point</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">use_geom</span><span class="p">,</span> <span class="n">x_field</span><span class="p">,</span> <span class="n">y_field</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">pt</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
-
-        <span class="c1"># Z logic</span>
-        <span class="n">z</span> <span class="o">=</span> <span class="mf">0.0</span>
-        <span class="k">if</span> <span class="n">z_field</span><span class="p">:</span>
-            <span class="k">with</span> <span class="n">contextlib</span><span class="o">.</span><span class="n">suppress</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
-                <span class="n">z</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">feat</span><span class="p">[</span><span class="n">z_field</span><span class="p">])</span>
-
-        <span class="k">if</span> <span class="n">z</span> <span class="o">==</span> <span class="mf">0.0</span> <span class="ow">and</span> <span class="n">dem_layer</span><span class="p">:</span>
-            <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sample_dem</span><span class="p">(</span><span class="n">dem_layer</span><span class="p">,</span> <span class="n">pt</span><span class="p">)</span>
-
-        <span class="c1"># Depth</span>
-        <span class="n">depth</span> <span class="o">=</span> <span class="mf">0.0</span>
-        <span class="k">if</span> <span class="n">depth_field</span><span class="p">:</span>
-            <span class="k">with</span> <span class="n">contextlib</span><span class="o">.</span><span class="n">suppress</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
-                <span class="n">depth</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">feat</span><span class="p">[</span><span class="n">depth_field</span><span class="p">])</span>
-
-        <span class="k">return</span> <span class="n">hole_id</span><span class="p">,</span> <span class="n">pt</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">depth</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_sample_dem</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dem_layer</span><span class="p">:</span> <span class="n">QgsRasterLayer</span><span class="p">,</span> <span class="n">pt</span><span class="p">:</span> <span class="n">QgsPointXY</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sample elevation at point from DEM.&quot;&quot;&quot;</span>
-        <span class="n">ident</span> <span class="o">=</span> <span class="n">dem_layer</span><span class="o">.</span><span class="n">dataProvider</span><span class="p">()</span><span class="o">.</span><span class="n">identify</span><span class="p">(</span><span class="n">pt</span><span class="p">,</span> <span class="n">QgsRaster</span><span class="o">.</span><span class="n">IdentifyFormatValue</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">ident</span><span class="o">.</span><span class="n">isValid</span><span class="p">():</span>
-            <span class="n">val</span> <span class="o">=</span> <span class="n">ident</span><span class="o">.</span><span class="n">results</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
-        <span class="k">return</span> <span class="mf">0.0</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_safe_process_single_hole</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -1286,32 +1154,121 @@ window.addEventListener("load", load);
             <span class="k">if</span> <span class="n">hole_geol</span><span class="p">:</span>
                 <span class="n">geol_data</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">hole_geol</span><span class="p">)</span>
             <span class="n">drillhole_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hole_drill</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to process hole </span><span class="si">{</span><span class="n">hole_id</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
-
-            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Data error in hole </span><span class="si">{</span><span class="n">hole_id</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">SecInterpError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Processing error in hole </span><span class="si">{</span><span class="n">hole_id</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">RuntimeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Runtime or attribute error processing hole </span><span class="si">{</span><span class="n">hole_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">SecInterpError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unexpected processing error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Critical unexpected error processing hole </span><span class="si">{</span><span class="n">hole_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">raise</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_data_tuple</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">feat</span><span class="p">:</span> <span class="n">QgsFeature</span><span class="p">,</span> <span class="n">fields</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">is_survey</span><span class="p">:</span> <span class="nb">bool</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Extract a data tuple from a feature based on its role.&quot;&quot;&quot;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">is_survey</span><span class="p">:</span>
-                <span class="k">return</span> <span class="p">(</span>
-                    <span class="nb">float</span><span class="p">(</span><span class="n">feat</span><span class="p">[</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;depth&quot;</span><span class="p">]]),</span>
-                    <span class="nb">float</span><span class="p">(</span><span class="n">feat</span><span class="p">[</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;azim&quot;</span><span class="p">]]),</span>
-                    <span class="nb">float</span><span class="p">(</span><span class="n">feat</span><span class="p">[</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;incl&quot;</span><span class="p">]]),</span>
-                <span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">return</span> <span class="p">(</span>
-                    <span class="nb">float</span><span class="p">(</span><span class="n">feat</span><span class="p">[</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;from&quot;</span><span class="p">]]),</span>
-                    <span class="nb">float</span><span class="p">(</span><span class="n">feat</span><span class="p">[</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;to&quot;</span><span class="p">]]),</span>
-                    <span class="nb">str</span><span class="p">(</span><span class="n">feat</span><span class="p">[</span><span class="n">fields</span><span class="p">[</span><span class="s2">&quot;lith&quot;</span><span class="p">]]),</span>
-                <span class="p">)</span>
-        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">):</span>
-            <span class="k">return</span> <span class="kc">None</span></div>
+<div class="viewcode-block" id="DrillholeService.generate_drillhole_data">
+<a class="viewcode-back" href="../../../../sec_interp.core.services.drillhole_service.html#sec_interp.core.services.DrillholeService.generate_drillhole_data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_drillhole_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Orchestrate the generation of drillhole traces and intervals.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            params: Configuration object (PreviewParams).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of drillhole data tuples or None if failed.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">line_feat</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">line_layer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">(),</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">line_feat</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">section_geom</span> <span class="o">=</span> <span class="n">line_feat</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sec_interp.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">utils</span> <span class="k">as</span> <span class="n">scu</span>
+
+        <span class="n">vertices</span> <span class="o">=</span> <span class="n">scu</span><span class="o">.</span><span class="n">get_line_vertices</span><span class="p">(</span><span class="n">section_geom</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">vertices</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">section_start</span> <span class="o">=</span> <span class="n">vertices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">distance_area</span> <span class="o">=</span> <span class="n">scu</span><span class="o">.</span><span class="n">create_distance_area</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">line_layer</span><span class="o">.</span><span class="n">crs</span><span class="p">())</span>
+
+        <span class="c1"># 1. Detach Collar Data</span>
+        <span class="n">collar_ids</span><span class="p">,</span> <span class="n">collar_data</span><span class="p">,</span> <span class="n">pre_sampled_z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">collar_processor</span><span class="o">.</span><span class="n">detach_features</span><span class="p">(</span>
+            <span class="n">params</span><span class="o">.</span><span class="n">collar_layer</span><span class="p">,</span>
+            <span class="n">section_geom</span><span class="p">,</span>
+            <span class="n">params</span><span class="o">.</span><span class="n">buffer_dist</span><span class="p">,</span>
+            <span class="n">params</span><span class="o">.</span><span class="n">collar_id_field</span><span class="p">,</span>
+            <span class="n">params</span><span class="o">.</span><span class="n">collar_use_geometry</span><span class="p">,</span>
+            <span class="n">params</span><span class="o">.</span><span class="n">collar_x_field</span><span class="p">,</span>
+            <span class="n">params</span><span class="o">.</span><span class="n">collar_y_field</span><span class="p">,</span>
+            <span class="n">params</span><span class="o">.</span><span class="n">collar_z_field</span><span class="p">,</span>
+            <span class="n">params</span><span class="o">.</span><span class="n">raster_layer</span><span class="p">,</span>
+            <span class="n">target_crs</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">line_layer</span><span class="o">.</span><span class="n">crs</span><span class="p">(),</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">collar_data</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># 2. Project Collars (Detached)</span>
+        <span class="n">collars_projected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">project_collars</span><span class="p">(</span>
+            <span class="n">collar_data</span><span class="o">=</span><span class="n">collar_data</span><span class="p">,</span>
+            <span class="n">line_data</span><span class="o">=</span><span class="n">section_geom</span><span class="p">,</span>
+            <span class="n">distance_area</span><span class="o">=</span><span class="n">distance_area</span><span class="p">,</span>
+            <span class="n">buffer_width</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">buffer_dist</span><span class="p">,</span>
+            <span class="n">collar_id_field</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">collar_id_field</span><span class="p">,</span>
+            <span class="n">use_geometry</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">collar_use_geometry</span><span class="p">,</span>
+            <span class="n">collar_x_field</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">collar_x_field</span><span class="p">,</span>
+            <span class="n">collar_y_field</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">collar_y_field</span><span class="p">,</span>
+            <span class="n">collar_z_field</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">collar_z_field</span><span class="p">,</span>
+            <span class="n">collar_depth_field</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">collar_depth_field</span><span class="p">,</span>
+            <span class="n">pre_sampled_z</span><span class="o">=</span><span class="n">pre_sampled_z</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">collars_projected</span> <span class="ow">and</span> <span class="n">params</span><span class="o">.</span><span class="n">survey_layer</span> <span class="ow">and</span> <span class="n">params</span><span class="o">.</span><span class="n">interval_layer</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># 3. Extract Detached Data for Child Layers</span>
+        <span class="n">survey_map</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_fetcher</span><span class="o">.</span><span class="n">fetch_bulk_data</span><span class="p">(</span>
+            <span class="n">params</span><span class="o">.</span><span class="n">survey_layer</span><span class="p">,</span>
+            <span class="n">collar_ids</span><span class="p">,</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">survey_id_field</span><span class="p">,</span>
+                <span class="s2">&quot;depth&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">survey_depth_field</span><span class="p">,</span>
+                <span class="s2">&quot;azim&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">survey_azim_field</span><span class="p">,</span>
+                <span class="s2">&quot;incl&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">survey_incl_field</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+        <span class="n">interval_map</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_fetcher</span><span class="o">.</span><span class="n">fetch_bulk_data</span><span class="p">(</span>
+            <span class="n">params</span><span class="o">.</span><span class="n">interval_layer</span><span class="p">,</span>
+            <span class="n">collar_ids</span><span class="p">,</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">interval_id_field</span><span class="p">,</span>
+                <span class="s2">&quot;from&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">interval_from_field</span><span class="p">,</span>
+                <span class="s2">&quot;to&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">interval_to_field</span><span class="p">,</span>
+                <span class="s2">&quot;lith&quot;</span><span class="p">:</span> <span class="n">params</span><span class="o">.</span><span class="n">interval_lith_field</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+
+        <span class="n">section_azimuth</span> <span class="o">=</span> <span class="n">scu</span><span class="o">.</span><span class="n">calculate_line_azimuth</span><span class="p">(</span><span class="n">section_geom</span><span class="p">)</span>
+
+        <span class="c1"># 4. Process Intervals (Detached)</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">drillhole_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">process_intervals</span><span class="p">(</span>
+            <span class="n">collar_points</span><span class="o">=</span><span class="n">collars_projected</span><span class="p">,</span>
+            <span class="n">collar_data</span><span class="o">=</span><span class="n">collar_data</span><span class="p">,</span>
+            <span class="n">survey_data</span><span class="o">=</span><span class="n">survey_map</span><span class="p">,</span>
+            <span class="n">interval_data</span><span class="o">=</span><span class="n">interval_map</span><span class="p">,</span>
+            <span class="n">collar_id_field</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">collar_id_field</span><span class="p">,</span>
+            <span class="n">use_geometry</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">collar_use_geometry</span><span class="p">,</span>
+            <span class="n">collar_x_field</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">collar_x_field</span><span class="p">,</span>
+            <span class="n">collar_y_field</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">collar_y_field</span><span class="p">,</span>
+            <span class="n">line_geom</span><span class="o">=</span><span class="n">section_geom</span><span class="p">,</span>
+            <span class="n">line_start</span><span class="o">=</span><span class="n">section_start</span><span class="p">,</span>
+            <span class="n">distance_area</span><span class="o">=</span><span class="n">distance_area</span><span class="p">,</span>
+            <span class="n">buffer_width</span><span class="o">=</span><span class="n">params</span><span class="o">.</span><span class="n">buffer_dist</span><span class="p">,</span>
+            <span class="n">section_azimuth</span><span class="o">=</span><span class="n">section_azimuth</span><span class="p">,</span>
+            <span class="n">survey_fields</span><span class="o">=</span><span class="p">{},</span>
+            <span class="n">interval_fields</span><span class="o">=</span><span class="p">{},</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">drillhole_data</span></div>
+</div>
 
 </pre></div>
 
