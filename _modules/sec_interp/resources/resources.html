@@ -518,7 +518,7 @@ window.addEventListener("load", load);</script>
 <span class="c1">#</span>
 <span class="c1"># WARNING! All changes made in this file will be lost!</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">PyQt5</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtCore</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qgis.PyQt</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtCore</span>
 
 <span class="n">qt_resource_data</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="se">\</span>
 <span class="se">\x00\x00\x06\x97\</span>
@@ -664,7 +664,7 @@ window.addEventListener("load", load);</script>
 <span class="se">\x00\x00\x01\x9b\x1e\x90\xab\x79\</span>
 <span class="s2">&quot;</span>
 
-<span class="n">qt_version</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">qVersion</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)]</span>
+<span class="n">qt_version</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">qVersion</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)]</span>
 <span class="k">if</span> <span class="n">qt_version</span> <span class="o">&lt;</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">]:</span>
     <span class="n">rcc_version</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">qt_resource_struct</span> <span class="o">=</span> <span class="n">qt_resource_struct_v1</span>
@@ -672,23 +672,16 @@ window.addEventListener("load", load);</script>
     <span class="n">rcc_version</span> <span class="o">=</span> <span class="mi">2</span>
     <span class="n">qt_resource_struct</span> <span class="o">=</span> <span class="n">qt_resource_struct_v2</span>
 
-
 <div class="viewcode-block" id="qInitResources">
 <a class="viewcode-back" href="../../../sec_interp.resources.resources.html#sec_interp.resources.resources.qInitResources">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">qInitResources</span><span class="p">():</span>
-    <span class="n">QtCore</span><span class="o">.</span><span class="n">qRegisterResourceData</span><span class="p">(</span>
-        <span class="n">rcc_version</span><span class="p">,</span> <span class="n">qt_resource_struct</span><span class="p">,</span> <span class="n">qt_resource_name</span><span class="p">,</span> <span class="n">qt_resource_data</span>
-    <span class="p">)</span></div>
-
+    <span class="n">QtCore</span><span class="o">.</span><span class="n">qRegisterResourceData</span><span class="p">(</span><span class="n">rcc_version</span><span class="p">,</span> <span class="n">qt_resource_struct</span><span class="p">,</span> <span class="n">qt_resource_name</span><span class="p">,</span> <span class="n">qt_resource_data</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="qCleanupResources">
 <a class="viewcode-back" href="../../../sec_interp.resources.resources.html#sec_interp.resources.resources.qCleanupResources">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">qCleanupResources</span><span class="p">():</span>
-    <span class="n">QtCore</span><span class="o">.</span><span class="n">qUnregisterResourceData</span><span class="p">(</span>
-        <span class="n">rcc_version</span><span class="p">,</span> <span class="n">qt_resource_struct</span><span class="p">,</span> <span class="n">qt_resource_name</span><span class="p">,</span> <span class="n">qt_resource_data</span>
-    <span class="p">)</span></div>
-
+    <span class="n">QtCore</span><span class="o">.</span><span class="n">qUnregisterResourceData</span><span class="p">(</span><span class="n">rcc_version</span><span class="p">,</span> <span class="n">qt_resource_struct</span><span class="p">,</span> <span class="n">qt_resource_name</span><span class="p">,</span> <span class="n">qt_resource_data</span><span class="p">)</span></div>
 
 
 <span class="n">qInitResources</span><span class="p">()</span>
