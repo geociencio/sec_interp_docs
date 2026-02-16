@@ -158,7 +158,9 @@
 <section id="drillholeservice">
 <h4><code class="docutils literal notranslate"><span class="pre">DrillholeService</span></code><a class="headerlink" href="#drillholeservice" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">project_collars()</span></code></strong> &amp; <strong><code class="docutils literal notranslate"><span class="pre">process_intervals()</span></code></strong>: Handle full 3D→2D pipeline for drillholes.</p></li>
+<li><p><strong>Architecture</strong>: Decomposed into specialized processors (<code class="docutils literal notranslate"><span class="pre">CollarProcessor</span></code>, <code class="docutils literal notranslate"><span class="pre">SurveyProcessor</span></code>, <code class="docutils literal notranslate"><span class="pre">IntervalProcessor</span></code>).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">project_collars()</span></code></strong>: Projects collar points 3D-&gt;2D.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">process_intervals()</span></code></strong>: Handles full pipeline for trace and interval generation.</p></li>
 </ul>
 </section>
 </section>
