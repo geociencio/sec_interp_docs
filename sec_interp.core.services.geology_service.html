@@ -101,15 +101,21 @@
 and unit segments from map layers to the cross-section plane.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="sec_interp.core.services.geology_service.GeologyService">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.core.services.geology_service.</span></span><span class="sig-name descname"><span class="pre">GeologyService</span></span><a class="headerlink" href="#sec_interp.core.services.geology_service.GeologyService" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.core.services.geology_service.</span></span><span class="sig-name descname"><span class="pre">GeologyService</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile_sampler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ProfileSampler</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outcrop_processor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">OutcropProcessor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.core.services.geology_service.GeologyService" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="sec_interp.core.interfaces.geology_interface.html#sec_interp.core.interfaces.geology_interface.IGeologyService" title="sec_interp.core.interfaces.geology_interface.IGeologyService"><code class="xref py py-class docutils literal notranslate"><span class="pre">IGeologyService</span></code></a></p>
 <p>Service for generating geological profiles.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.core.services.geology_service.GeologyService.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.core.services.geology_service.GeologyService.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile_sampler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ProfileSampler</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outcrop_processor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">OutcropProcessor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.core.services.geology_service.GeologyService.__init__" title="Link to this definition"></a></dt>
 <dd><p>Initialize service with specialized processors.</p>
-<p>The service delegates the heavy lifting of elevation sampling and
-outcrop extraction to specialized sub-components.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>profile_sampler</strong> – Optional profile sampler.</p></li>
+<li><p><strong>outcrop_processor</strong> – Optional outcrop processor.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">

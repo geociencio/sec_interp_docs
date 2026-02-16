@@ -18,9 +18,7 @@
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="sec_interp.gui.preview_axes_manager module" href="sec_interp.gui.preview_axes_manager.html" />
-    <link rel="prev" title="sec_interp.gui.main_dialog_utils module" href="sec_interp.gui.main_dialog_utils.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -43,27 +41,13 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="USER_GUIDE.html">SecInterp User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">sec_interp</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="sec_interp.html">sec_interp package</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.html#sec_interp.classFactory"><code class="docutils literal notranslate"><span class="pre">classFactory()</span></code></a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="sec_interp.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.html">sec_interp.core package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.html">sec_interp.exporters package</a></li>
-<li class="toctree-l4 current"><a class="reference internal" href="sec_interp.gui.html">sec_interp.gui package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.resources.html">sec_interp.resources package</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.html#submodules">Submodules</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">sec_interp</a></li>
 </ul>
 
         </div>
@@ -80,9 +64,6 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="modules.html">sec_interp</a></li>
-          <li class="breadcrumb-item"><a href="sec_interp.html">sec_interp package</a></li>
-          <li class="breadcrumb-item"><a href="sec_interp.gui.html">sec_interp.gui package</a></li>
       <li class="breadcrumb-item active">sec_interp.gui.main_dialog_validation_manager module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/sec_interp.gui.main_dialog_validation_manager.rst.txt" rel="nofollow"> View page source</a>
@@ -93,110 +74,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-sec_interp.gui.main_dialog_validation_manager">
-<span id="sec-interp-gui-main-dialog-validation-manager-module"></span><h1>sec_interp.gui.main_dialog_validation_manager module<a class="headerlink" href="#module-sec_interp.gui.main_dialog_validation_manager" title="Link to this heading"></a></h1>
-<p>Validation manager for SecInterp main dialog.</p>
-<p>This module provides a declarative way to define and execute validation rules
-for the main dialog UI, separating UI logic from core business rules.</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="sec_interp.gui.main_dialog_validation_manager.DialogValidationManager">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.gui.main_dialog_validation_manager.</span></span><span class="sig-name descname"><span class="pre">DialogValidationManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dialog</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog" title="sec_interp.gui.SecInterpDialog"><span class="pre">SecInterpDialog</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.gui.main_dialog_validation_manager.DialogValidationManager" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Manages UI-level validation rules and state.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="sec_interp.gui.main_dialog_validation_manager.DialogValidationManager.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dialog</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog" title="sec_interp.gui.SecInterpDialog"><span class="pre">SecInterpDialog</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.main_dialog_validation_manager.DialogValidationManager.__init__" title="Link to this definition"></a></dt>
-<dd><p>Initialize validation manager.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>dialog</strong> – The main dialog instance.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="sec_interp.gui.main_dialog_validation_manager.DialogValidationManager.can_export">
-<span class="sig-name descname"><span class="pre">can_export</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.gui.main_dialog_validation_manager.DialogValidationManager.can_export" title="Link to this definition"></a></dt>
-<dd><p>Check if requirements for export/save are met.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>True if export is possible.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="sec_interp.gui.main_dialog_validation_manager.DialogValidationManager.can_preview">
-<span class="sig-name descname"><span class="pre">can_preview</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.gui.main_dialog_validation_manager.DialogValidationManager.can_preview" title="Link to this definition"></a></dt>
-<dd><p>Check if basic requirements for preview are met.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>True if preview is possible.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="sec_interp.gui.main_dialog_validation_manager.DialogValidationManager.get_section_error">
-<span class="sig-name descname"><span class="pre">get_section_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#sec_interp.gui.main_dialog_validation_manager.DialogValidationManager.get_section_error" title="Link to this definition"></a></dt>
-<dd><p>Get error message for a section if invalid.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>section</strong> – The section key.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Error message or empty string.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="sec_interp.gui.main_dialog_validation_manager.DialogValidationManager.is_section_valid">
-<span class="sig-name descname"><span class="pre">is_section_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.gui.main_dialog_validation_manager.DialogValidationManager.is_section_valid" title="Link to this definition"></a></dt>
-<dd><p>Check if a specific section is valid based on declarative rules.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>section</strong> – The section key (e.g., ‘dem’, ‘section’).</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>True if valid.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="sec_interp.gui.main_dialog_validation_manager.DialogValidationManager.validate_inputs">
-<span class="sig-name descname"><span class="pre">validate_inputs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.gui.main_dialog_validation_manager.DialogValidationManager.validate_inputs" title="Link to this definition"></a></dt>
-<dd><p>Validate all dialog inputs by delegating to core.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A tuple containing (is_valid, error_message).</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="sec_interp.gui.main_dialog_validation_manager.DialogValidationManager.validate_preview_requirements">
-<span class="sig-name descname"><span class="pre">validate_preview_requirements</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.gui.main_dialog_validation_manager.DialogValidationManager.validate_preview_requirements" title="Link to this definition"></a></dt>
-<dd><p>Validate minimum requirements for preview.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A tuple containing (is_valid, error_message).</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
+  <section id="sec-interp-gui-main-dialog-validation-manager-module">
+<h1>sec_interp.gui.main_dialog_validation_manager module<a class="headerlink" href="#sec-interp-gui-main-dialog-validation-manager-module" title="Link to this heading"></a></h1>
 </section>
 
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="sec_interp.gui.main_dialog_utils.html" class="btn btn-neutral float-left" title="sec_interp.gui.main_dialog_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="sec_interp.gui.preview_axes_manager.html" class="btn btn-neutral float-right" title="sec_interp.gui.preview_axes_manager module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 

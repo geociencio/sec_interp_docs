@@ -200,7 +200,7 @@ plugin instance for interaction with the host application.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.gui.SecInterpDialog.clear_cache_handler">
 <span class="sig-name descname"><span class="pre">clear_cache_handler</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.SecInterpDialog.clear_cache_handler" title="Link to this definition"></a></dt>
-<dd><p>Clear cached data via CacheHandler.</p>
+<dd><p>Clear cached data and notify user.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -298,6 +298,22 @@ plugin instance for interaction with the host application.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="sec_interp.gui.SecInterpDialog.push_message">
+<span class="sig-name descname"><span class="pre">push_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">qgis.core.Qgis.Info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.SecInterpDialog.push_message" title="Link to this definition"></a></dt>
+<dd><p>Push a message to the QGIS message bar.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>title</strong> – Message title.</p></li>
+<li><p><strong>message</strong> – Message content.</p></li>
+<li><p><strong>level</strong> – Qgis message level (Info, Warning, Critical, Success).</p></li>
+<li><p><strong>duration</strong> – Visibility duration in seconds.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.gui.SecInterpDialog.reject_handler">
 <span class="sig-name descname"><span class="pre">reject_handler</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.SecInterpDialog.reject_handler" title="Link to this definition"></a></dt>
 <dd><p>Handle the reject button click event.</p>
@@ -306,7 +322,22 @@ plugin instance for interaction with the host application.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.gui.SecInterpDialog.reset_defaults_handler">
 <span class="sig-name descname"><span class="pre">reset_defaults_handler</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.SecInterpDialog.reset_defaults_handler" title="Link to this definition"></a></dt>
-<dd><p>Reset all dialog inputs via settings_manager.</p>
+<dd><p>Reset all dialog inputs via state_manager.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sec_interp.gui.SecInterpDialog.show_dialog">
+<span class="sig-name descname"><span class="pre">show_dialog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'info'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#sec_interp.gui.SecInterpDialog.show_dialog" title="Link to this definition"></a></dt>
+<dd><p>Show a message box dialog.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>title</strong> – Dialog title.</p></li>
+<li><p><strong>message</strong> – Dialog content.</p></li>
+<li><p><strong>level</strong> – Message level (“info”, “warning”, “critical”, “question”).</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -324,7 +355,7 @@ plugin instance for interaction with the host application.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.gui.SecInterpDialog.update_button_state">
 <span class="sig-name descname"><span class="pre">update_button_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.SecInterpDialog.update_button_state" title="Link to this definition"></a></dt>
-<dd><p>Enable or disable buttons via status_manager.</p>
+<dd><p>Enable or disable buttons via state_manager.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -336,7 +367,7 @@ plugin instance for interaction with the host application.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.gui.SecInterpDialog.update_preview_checkbox_states">
 <span class="sig-name descname"><span class="pre">update_preview_checkbox_states</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.SecInterpDialog.update_preview_checkbox_states" title="Link to this definition"></a></dt>
-<dd><p>Enable or disable preview checkboxes via status_manager.</p>
+<dd><p>Enable or disable preview checkboxes via state_manager.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -350,7 +381,7 @@ plugin instance for interaction with the host application.</p>
 <dt class="sig sig-object py" id="sec_interp.gui.SecInterpDialog.validate_inputs">
 <span class="sig-name descname"><span class="pre">validate_inputs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.gui.SecInterpDialog.validate_inputs" title="Link to this definition"></a></dt>
 <dd><p>Validate the inputs from the dialog.</p>
-<p>This method delegates to DialogValidationManager for input validation.</p>
+<p>This method delegates to DialogInputManager for input validation.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -455,6 +486,37 @@ plugin instance for interaction with the host application.</p>
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.dialog_input_manager.html">sec_interp.gui.dialog_input_manager module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.dialog_input_manager.html#sec_interp.gui.dialog_input_manager.DialogInputManager"><code class="docutils literal notranslate"><span class="pre">DialogInputManager</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_input_manager.html#sec_interp.gui.dialog_input_manager.DialogInputManager.__init__"><code class="docutils literal notranslate"><span class="pre">DialogInputManager.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_input_manager.html#sec_interp.gui.dialog_input_manager.DialogInputManager.can_export"><code class="docutils literal notranslate"><span class="pre">DialogInputManager.can_export()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_input_manager.html#sec_interp.gui.dialog_input_manager.DialogInputManager.can_preview"><code class="docutils literal notranslate"><span class="pre">DialogInputManager.can_preview()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_input_manager.html#sec_interp.gui.dialog_input_manager.DialogInputManager.get_all_values"><code class="docutils literal notranslate"><span class="pre">DialogInputManager.get_all_values()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_input_manager.html#sec_interp.gui.dialog_input_manager.DialogInputManager.get_section_error"><code class="docutils literal notranslate"><span class="pre">DialogInputManager.get_section_error()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_input_manager.html#sec_interp.gui.dialog_input_manager.DialogInputManager.get_validation_params"><code class="docutils literal notranslate"><span class="pre">DialogInputManager.get_validation_params()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_input_manager.html#sec_interp.gui.dialog_input_manager.DialogInputManager.is_section_valid"><code class="docutils literal notranslate"><span class="pre">DialogInputManager.is_section_valid()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_input_manager.html#sec_interp.gui.dialog_input_manager.DialogInputManager.validate_inputs"><code class="docutils literal notranslate"><span class="pre">DialogInputManager.validate_inputs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_input_manager.html#sec_interp.gui.dialog_input_manager.DialogInputManager.validate_preview_requirements"><code class="docutils literal notranslate"><span class="pre">DialogInputManager.validate_preview_requirements()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.dialog_state_manager.html">sec_interp.gui.dialog_state_manager module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.dialog_state_manager.html#sec_interp.gui.dialog_state_manager.DialogStateManager"><code class="docutils literal notranslate"><span class="pre">DialogStateManager</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_state_manager.html#sec_interp.gui.dialog_state_manager.DialogStateManager.__init__"><code class="docutils literal notranslate"><span class="pre">DialogStateManager.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_state_manager.html#sec_interp.gui.dialog_state_manager.DialogStateManager.load_settings"><code class="docutils literal notranslate"><span class="pre">DialogStateManager.load_settings()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_state_manager.html#sec_interp.gui.dialog_state_manager.DialogStateManager.reset_to_defaults"><code class="docutils literal notranslate"><span class="pre">DialogStateManager.reset_to_defaults()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_state_manager.html#sec_interp.gui.dialog_state_manager.DialogStateManager.save_settings"><code class="docutils literal notranslate"><span class="pre">DialogStateManager.save_settings()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_state_manager.html#sec_interp.gui.dialog_state_manager.DialogStateManager.setup_indicators"><code class="docutils literal notranslate"><span class="pre">DialogStateManager.setup_indicators()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_state_manager.html#sec_interp.gui.dialog_state_manager.DialogStateManager.update_all"><code class="docutils literal notranslate"><span class="pre">DialogStateManager.update_all()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_state_manager.html#sec_interp.gui.dialog_state_manager.DialogStateManager.update_button_state"><code class="docutils literal notranslate"><span class="pre">DialogStateManager.update_button_state()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_state_manager.html#sec_interp.gui.dialog_state_manager.DialogStateManager.update_preview_checkbox_states"><code class="docutils literal notranslate"><span class="pre">DialogStateManager.update_preview_checkbox_states()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_state_manager.html#sec_interp.gui.dialog_state_manager.DialogStateManager.update_raster_status"><code class="docutils literal notranslate"><span class="pre">DialogStateManager.update_raster_status()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_state_manager.html#sec_interp.gui.dialog_state_manager.DialogStateManager.update_section_status"><code class="docutils literal notranslate"><span class="pre">DialogStateManager.update_section_status()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.legend_widget.html">sec_interp.gui.legend_widget module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.legend_widget.html#sec_interp.gui.legend_widget.LegendWidget"><code class="docutils literal notranslate"><span class="pre">LegendWidget</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.legend_widget.html#sec_interp.gui.legend_widget.LegendWidget.__init__"><code class="docutils literal notranslate"><span class="pre">LegendWidget.__init__()</span></code></a></li>
@@ -493,8 +555,10 @@ plugin instance for interaction with the host application.</p>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog.html#sec_interp.gui.main_dialog.SecInterpDialog.on_interpretation_finished"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.on_interpretation_finished()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog.html#sec_interp.gui.main_dialog.SecInterpDialog.open_help"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.open_help()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog.html#sec_interp.gui.main_dialog.SecInterpDialog.preview_profile_handler"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.preview_profile_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog.html#sec_interp.gui.main_dialog.SecInterpDialog.push_message"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.push_message()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog.html#sec_interp.gui.main_dialog.SecInterpDialog.reject_handler"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.reject_handler()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog.html#sec_interp.gui.main_dialog.SecInterpDialog.reset_defaults_handler"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.reset_defaults_handler()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog.html#sec_interp.gui.main_dialog.SecInterpDialog.show_dialog"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.show_dialog()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog.html#sec_interp.gui.main_dialog.SecInterpDialog.toggle_interpretation_tool"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.toggle_interpretation_tool()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog.html#sec_interp.gui.main_dialog.SecInterpDialog.toggle_measure_tool"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.toggle_measure_tool()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog.html#sec_interp.gui.main_dialog.SecInterpDialog.update_button_state"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.update_button_state()</span></code></a></li>
@@ -503,14 +567,6 @@ plugin instance for interaction with the host application.</p>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog.html#sec_interp.gui.main_dialog.SecInterpDialog.update_preview_from_checkboxes"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.update_preview_from_checkboxes()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog.html#sec_interp.gui.main_dialog.SecInterpDialog.validate_inputs"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.validate_inputs()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog.html#sec_interp.gui.main_dialog.SecInterpDialog.wheelEvent"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.wheelEvent()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.main_dialog_cache_handler.html">sec_interp.gui.main_dialog_cache_handler module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.main_dialog_cache_handler.html#sec_interp.gui.main_dialog_cache_handler.CacheHandler"><code class="docutils literal notranslate"><span class="pre">CacheHandler</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_cache_handler.html#sec_interp.gui.main_dialog_cache_handler.CacheHandler.__init__"><code class="docutils literal notranslate"><span class="pre">CacheHandler.__init__()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_cache_handler.html#sec_interp.gui.main_dialog_cache_handler.CacheHandler.clear_cache"><code class="docutils literal notranslate"><span class="pre">CacheHandler.clear_cache()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -596,15 +652,6 @@ plugin instance for interaction with the host application.</p>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.main_dialog_data.html">sec_interp.gui.main_dialog_data module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.main_dialog_data.html#sec_interp.gui.main_dialog_data.DialogDataAggregator"><code class="docutils literal notranslate"><span class="pre">DialogDataAggregator</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_data.html#sec_interp.gui.main_dialog_data.DialogDataAggregator.__init__"><code class="docutils literal notranslate"><span class="pre">DialogDataAggregator.__init__()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_data.html#sec_interp.gui.main_dialog_data.DialogDataAggregator.get_all_values"><code class="docutils literal notranslate"><span class="pre">DialogDataAggregator.get_all_values()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_data.html#sec_interp.gui.main_dialog_data.DialogDataAggregator.get_validation_params"><code class="docutils literal notranslate"><span class="pre">DialogDataAggregator.get_validation_params()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.main_dialog_export.html">sec_interp.gui.main_dialog_export module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.main_dialog_export.html#sec_interp.gui.main_dialog_export.ExportManager"><code class="docutils literal notranslate"><span class="pre">ExportManager</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_export.html#sec_interp.gui.main_dialog_export.ExportManager.__init__"><code class="docutils literal notranslate"><span class="pre">ExportManager.__init__()</span></code></a></li>
@@ -625,16 +672,6 @@ plugin instance for interaction with the host application.</p>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.main_dialog_messages.html">sec_interp.gui.main_dialog_messages module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.main_dialog_messages.html#sec_interp.gui.main_dialog_messages.MessageManager"><code class="docutils literal notranslate"><span class="pre">MessageManager</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_messages.html#sec_interp.gui.main_dialog_messages.MessageManager.__init__"><code class="docutils literal notranslate"><span class="pre">MessageManager.__init__()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_messages.html#sec_interp.gui.main_dialog_messages.MessageManager.handle_error"><code class="docutils literal notranslate"><span class="pre">MessageManager.handle_error()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_messages.html#sec_interp.gui.main_dialog_messages.MessageManager.push_message"><code class="docutils literal notranslate"><span class="pre">MessageManager.push_message()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_messages.html#sec_interp.gui.main_dialog_messages.MessageManager.show_dialog"><code class="docutils literal notranslate"><span class="pre">MessageManager.show_dialog()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.main_dialog_preview.html">sec_interp.gui.main_dialog_preview module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.main_dialog_preview.html#sec_interp.gui.main_dialog_preview.PreviewManager"><code class="docutils literal notranslate"><span class="pre">PreviewManager</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_preview.html#sec_interp.gui.main_dialog_preview.PreviewManager.__init__"><code class="docutils literal notranslate"><span class="pre">PreviewManager.__init__()</span></code></a></li>
@@ -645,34 +682,11 @@ plugin instance for interaction with the host application.</p>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.main_dialog_settings.html">sec_interp.gui.main_dialog_settings module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.main_dialog_settings.html#sec_interp.gui.main_dialog_settings.DialogSettingsManager"><code class="docutils literal notranslate"><span class="pre">DialogSettingsManager</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_settings.html#sec_interp.gui.main_dialog_settings.DialogSettingsManager.__init__"><code class="docutils literal notranslate"><span class="pre">DialogSettingsManager.__init__()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_settings.html#sec_interp.gui.main_dialog_settings.DialogSettingsManager.load_settings"><code class="docutils literal notranslate"><span class="pre">DialogSettingsManager.load_settings()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_settings.html#sec_interp.gui.main_dialog_settings.DialogSettingsManager.reset_to_defaults"><code class="docutils literal notranslate"><span class="pre">DialogSettingsManager.reset_to_defaults()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_settings.html#sec_interp.gui.main_dialog_settings.DialogSettingsManager.save_settings"><code class="docutils literal notranslate"><span class="pre">DialogSettingsManager.save_settings()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.main_dialog_signals.html">sec_interp.gui.main_dialog_signals module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.main_dialog_signals.html#sec_interp.gui.main_dialog_signals.DialogSignalManager"><code class="docutils literal notranslate"><span class="pre">DialogSignalManager</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_signals.html#sec_interp.gui.main_dialog_signals.DialogSignalManager.__init__"><code class="docutils literal notranslate"><span class="pre">DialogSignalManager.__init__()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_signals.html#sec_interp.gui.main_dialog_signals.DialogSignalManager.connect_all"><code class="docutils literal notranslate"><span class="pre">DialogSignalManager.connect_all()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_signals.html#sec_interp.gui.main_dialog_signals.DialogSignalManager.disconnect_all"><code class="docutils literal notranslate"><span class="pre">DialogSignalManager.disconnect_all()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.main_dialog_status.html">sec_interp.gui.main_dialog_status module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.main_dialog_status.html#sec_interp.gui.main_dialog_status.DialogStatusManager"><code class="docutils literal notranslate"><span class="pre">DialogStatusManager</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_status.html#sec_interp.gui.main_dialog_status.DialogStatusManager.__init__"><code class="docutils literal notranslate"><span class="pre">DialogStatusManager.__init__()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_status.html#sec_interp.gui.main_dialog_status.DialogStatusManager.setup_indicators"><code class="docutils literal notranslate"><span class="pre">DialogStatusManager.setup_indicators()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_status.html#sec_interp.gui.main_dialog_status.DialogStatusManager.update_all"><code class="docutils literal notranslate"><span class="pre">DialogStatusManager.update_all()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_status.html#sec_interp.gui.main_dialog_status.DialogStatusManager.update_button_state"><code class="docutils literal notranslate"><span class="pre">DialogStatusManager.update_button_state()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_status.html#sec_interp.gui.main_dialog_status.DialogStatusManager.update_preview_checkbox_states"><code class="docutils literal notranslate"><span class="pre">DialogStatusManager.update_preview_checkbox_states()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_status.html#sec_interp.gui.main_dialog_status.DialogStatusManager.update_raster_status"><code class="docutils literal notranslate"><span class="pre">DialogStatusManager.update_raster_status()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_status.html#sec_interp.gui.main_dialog_status.DialogStatusManager.update_section_status"><code class="docutils literal notranslate"><span class="pre">DialogStatusManager.update_section_status()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -701,19 +715,6 @@ plugin instance for interaction with the host application.</p>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_utils.html#sec_interp.gui.main_dialog_utils.DialogEntityManager.get_layer_names_by_type"><code class="docutils literal notranslate"><span class="pre">DialogEntityManager.get_layer_names_by_type()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_utils.html#sec_interp.gui.main_dialog_utils.DialogEntityManager.get_theme_icon"><code class="docutils literal notranslate"><span class="pre">DialogEntityManager.get_theme_icon()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_utils.html#sec_interp.gui.main_dialog_utils.DialogEntityManager.populate_field_combobox"><code class="docutils literal notranslate"><span class="pre">DialogEntityManager.populate_field_combobox()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.main_dialog_validation_manager.html">sec_interp.gui.main_dialog_validation_manager module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.main_dialog_validation_manager.html#sec_interp.gui.main_dialog_validation_manager.DialogValidationManager"><code class="docutils literal notranslate"><span class="pre">DialogValidationManager</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_validation_manager.html#sec_interp.gui.main_dialog_validation_manager.DialogValidationManager.__init__"><code class="docutils literal notranslate"><span class="pre">DialogValidationManager.__init__()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_validation_manager.html#sec_interp.gui.main_dialog_validation_manager.DialogValidationManager.can_export"><code class="docutils literal notranslate"><span class="pre">DialogValidationManager.can_export()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_validation_manager.html#sec_interp.gui.main_dialog_validation_manager.DialogValidationManager.can_preview"><code class="docutils literal notranslate"><span class="pre">DialogValidationManager.can_preview()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_validation_manager.html#sec_interp.gui.main_dialog_validation_manager.DialogValidationManager.get_section_error"><code class="docutils literal notranslate"><span class="pre">DialogValidationManager.get_section_error()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_validation_manager.html#sec_interp.gui.main_dialog_validation_manager.DialogValidationManager.is_section_valid"><code class="docutils literal notranslate"><span class="pre">DialogValidationManager.is_section_valid()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_validation_manager.html#sec_interp.gui.main_dialog_validation_manager.DialogValidationManager.validate_inputs"><code class="docutils literal notranslate"><span class="pre">DialogValidationManager.validate_inputs()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_validation_manager.html#sec_interp.gui.main_dialog_validation_manager.DialogValidationManager.validate_preview_requirements"><code class="docutils literal notranslate"><span class="pre">DialogValidationManager.validate_preview_requirements()</span></code></a></li>
 </ul>
 </li>
 </ul>
