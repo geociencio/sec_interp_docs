@@ -94,8 +94,39 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="sec-interp-core-interfaces-i-renderer-3d-module">
-<h1>sec_interp.core.interfaces.i_renderer_3d module<a class="headerlink" href="#sec-interp-core-interfaces-i-renderer-3d-module" title="Link to this heading"></a></h1>
+  <section id="module-sec_interp.core.interfaces.i_renderer_3d">
+<span id="sec-interp-core-interfaces-i-renderer-3d-module"></span><h1>sec_interp.core.interfaces.i_renderer_3d module<a class="headerlink" href="#module-sec_interp.core.interfaces.i_renderer_3d" title="Link to this heading"></a></h1>
+<p>Interface for 3D Rendering Engines.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="sec_interp.core.interfaces.i_renderer_3d.IRenderer3D">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.core.interfaces.i_renderer_3d.</span></span><span class="sig-name descname"><span class="pre">IRenderer3D</span></span><a class="headerlink" href="#sec_interp.core.interfaces.i_renderer_3d.IRenderer3D" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Interface for engines that can render profile data in 3D space.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="sec_interp.core.interfaces.i_renderer_3d.IRenderer3D.clear">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.core.interfaces.i_renderer_3d.IRenderer3D.clear" title="Link to this definition"></a></dt>
+<dd><p>Clear the 3D scene.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sec_interp.core.interfaces.i_renderer_3d.IRenderer3D.render_3d">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">render_3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewResult" title="sec_interp.core.domain.dtos.PreviewResult"><span class="pre">PreviewResult</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.core.interfaces.i_renderer_3d.IRenderer3D.render_3d" title="Link to this definition"></a></dt>
+<dd><p>Render the provided data in a 3D context.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – The processed profile data containing SpatialMeta.</p></li>
+<li><p><strong>**kwargs</strong> – Implementation specific rendering options.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if rendering was successful.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 
