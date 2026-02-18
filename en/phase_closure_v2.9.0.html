@@ -18,7 +18,9 @@
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Cierre de Fase - SecInterp v3.0.0" href="phase_closure_v3.0.0.html" />
+    <link rel="prev" title="Cierre de Fase - SecInterp v2.8.0" href="phase_closure_v2.8.0.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,8 +48,76 @@
 <li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Guía de Distinción de Componentes “Core”</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE_EN.html">Core Components Distinction Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">sec_interp</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Project Archive</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Cierre de Fase - SecInterp v2.7.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.8.0.html">Cierre de Fase - SecInterp v2.8.0</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Cierre de Fase - SecInterp v2.9.0</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#documento-de-cierre-formal-de-fase-de-desarrollo">Documento de Cierre Formal de Fase de Desarrollo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#resumen-ejecutivo">1. Resumen Ejecutivo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#logros-principales">2. Logros Principales</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#arquitectura-y-refactorizacion">2.1 Arquitectura y Refactorización</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#descomposicion-de-drillholeservice-srp">Descomposición de DrillholeService (SRP)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#migracion-core-types-core-domain">Migración core/types → core/domain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#centralizacion-de-contexto-de-perfil">Centralización de Contexto de Perfil</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#calidad-y-testing">2.2 Calidad y Testing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#estabilizacion-de-tests-docker">Estabilización de Tests Docker</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#metricas-de-codigo">Métricas de Código</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#infraestructura-y-devops">2.3 Infraestructura y DevOps</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#sistema-agentico-mejorado">Sistema Agéntico Mejorado</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#proceso-de-release-robusto">Proceso de Release Robusto</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#limpieza-de-seguridad">Limpieza de Seguridad</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#documentacion">2.4 Documentación</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#documentos-creados-actualizados">Documentos Creados/Actualizados</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#desafios-enfrentados-y-soluciones">3. Desafíos Enfrentados y Soluciones</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#error-de-parseo-en-portal-qgis">3.1 Error de Parseo en Portal QGIS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fallo-en-compilacion-de-traducciones">3.2 Fallo en Compilación de Traducciones</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#falsos-positivos-de-seguridad-229-issues">3.3 Falsos Positivos de Seguridad (229 issues)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#deuda-tecnica-acumulada">4. Deuda Técnica Acumulada</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#critica-bloqueante-para-qgis-4-x">🔴 Crítica (Bloqueante para QGIS 4.x)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#moderada-mejoras-de-calidad">🟡 Moderada (Mejoras de Calidad)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#menor-mantenibilidad">🟢 Menor (Mantenibilidad)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#metricas-del-proyecto">5. Métricas del Proyecto</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#calidad-de-codigo">Calidad de Código</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#complejidad">Complejidad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cobertura">Cobertura</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#compliance-qgis">Compliance QGIS</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#conclusion-y-recomendaciones">6. Conclusión y Recomendaciones</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#conclusion">Conclusión</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#recomendaciones-para-v2-10-0">Recomendaciones para v2.10.0</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#prioridad-alta">Prioridad Alta</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#prioridad-media">Prioridad Media</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#prioridad-baja">Prioridad Baja</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#proximos-pasos-inmediatos">Próximos Pasos Inmediatos</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="phase_closure_v3.0.0.html">Cierre de Fase - SecInterp v3.0.0</a></li>
 </ul>
 
         </div>
@@ -418,7 +488,10 @@ Plugin Metadata:       ✅ Válido
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="phase_closure_v2.8.0.html" class="btn btn-neutral float-left" title="Cierre de Fase - SecInterp v2.8.0" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="phase_closure_v3.0.0.html" class="btn btn-neutral float-right" title="Cierre de Fase - SecInterp v3.0.0" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 

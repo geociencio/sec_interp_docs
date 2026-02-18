@@ -19,7 +19,9 @@
       <script src="_static/translations.js?v=2827c288"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Indeks" href="genindex.html" />
-    <link rel="search" title="Szukaj" href="search.html" /> 
+    <link rel="search" title="Szukaj" href="search.html" />
+    <link rel="next" title="sec_interp" href="modules.html" />
+    <link rel="prev" title="SecInterp - Maintenance &amp; Release Log" href="MAINTENANCE_LOG.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -42,13 +44,33 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="USER_GUIDE.html">SecInterp User Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Guía de Distinción de Componentes „Core”</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE_EN.html">Core Components Distinction Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Análisis Técnico Avanzado: SecInterp v2.9.0</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#innovaciones-arquitectonicas">🏛️ Innovaciones Arquitectónicas</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#descomposicion-de-servicios-patron-facade-procesadores">1. Descomposición de Servicios (Patrón Facade + Procesadores)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#capa-de-dominio-semantica-core-domain">2. Capa de Dominio Semántica (<code class="docutils literal notranslate"><span class="pre">core/domain</span></code>)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#patron-domain-pure-logic-desacoplamiento-qgis">🚀 Patrón „Domain-Pure Logic” (Desacoplamiento QGIS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#estabilidad-y-calidad-de-codigo">🧪 Estabilidad y Calidad de Código</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#conclusion">📈 Conclusión</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">sec_interp</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Project Archive</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Cierre de Fase - SecInterp v2.7.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.8.0.html">Cierre de Fase - SecInterp v2.8.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.9.0.html">Cierre de Fase - SecInterp v2.9.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase_closure_v3.0.0.html">Cierre de Fase - SecInterp v3.0.0</a></li>
 </ul>
 
         </div>
@@ -151,7 +173,10 @@
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="MAINTENANCE_LOG.html" class="btn btn-neutral float-left" title="SecInterp - Maintenance &amp; Release Log" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Poprzedni</a>
+        <a href="modules.html" class="btn btn-neutral float-right" title="sec_interp" accesskey="n" rel="next">Następny <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 
