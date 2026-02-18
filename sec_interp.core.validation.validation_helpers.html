@@ -233,6 +233,23 @@ before presenting them to the user.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="sec_interp.core.validation.validation_helpers.resolve_layer">
+<span class="sig-prename descclassname"><span class="pre">sec_interp.core.validation.validation_helpers.</span></span><span class="sig-name descname"><span class="pre">resolve_layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer_ref</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#sec_interp.core.validation.validation_helpers.resolve_layer" title="Link to this definition"></a></dt>
+<dd><p>Resolve a layer reference (ID string or QgsMapLayer) to a QgsMapLayer.</p>
+<p>This is a free function extracted from <code class="docutils literal notranslate"><span class="pre">ProjectValidator._resolve_layer</span></code>
+to avoid circular imports between <code class="docutils literal notranslate"><span class="pre">project_validator</span></code> and
+<code class="docutils literal notranslate"><span class="pre">project_validators</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>layer_ref</strong> – A <code class="docutils literal notranslate"><span class="pre">QgsMapLayer</span></code> instance or a layer ID string.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The resolved <code class="docutils literal notranslate"><span class="pre">QgsMapLayer</span></code>, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if not found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="sec_interp.core.validation.validation_helpers.validate_dependencies">
 <span class="sig-prename descclassname"><span class="pre">sec_interp.core.validation.validation_helpers.</span></span><span class="sig-name descname"><span class="pre">validate_dependencies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rules</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#sec_interp.core.validation.validation_helpers.DependencyRule" title="sec_interp.core.validation.validation_helpers.DependencyRule"><span class="pre">DependencyRule</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#sec_interp.core.validation.validation_helpers.ValidationContext" title="sec_interp.core.validation.validation_helpers.ValidationContext"><span class="pre">ValidationContext</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.core.validation.validation_helpers.validate_dependencies" title="Link to this definition"></a></dt>
 <dd><p>Batch validate a list of dependency rules.</p>
