@@ -49,13 +49,16 @@
 <li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">SecInterp - Maintenance &amp; Release Log</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#v3-0-0-release-i18n-expansion-drillhole-refactor">[v3.0.0 Release] - i18n Expansion &amp; Drillhole Refactor</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#v2-10-0-plan-phase-1-2026-02-01">[v2.10.0 Plan - Phase 1] - 2026-02-01</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#estabilizacion-v3-0-x-gui-exportacion">[Estabilización v3.0.x] - GUI &amp; EXPORTACION</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#phase-closure-v2-9-0-architectural-consolidation">[Phase Closure v2.9.0] - ARCHITECTURAL CONSOLIDATION</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#phase-closure-v2-8-0-debt-reduction-ui-improvements">[Phase Closure v2.8.0] - DEBT REDUCTION &amp; UI IMPROVEMENTS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#v2-8-0-plan-phase-2-2026-01-24">[v2.8.0 Plan - Phase 2] - 2026-01-24</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#v2-7-0-plan-phase-1-2026-01-15">[v2.7.0 Plan - Phase 1] - 2026-01-15</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#signal-management-i18n-infrastructure">[2026-02-17] Signal Management &amp; i18n Infrastructure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#v3-0-0-release-i18n-expansion-drillhole-refactor">[v3.0.0 Release] - i18n Expansion &amp; Drillhole Refactor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#v2-10-0-plan-phase-1-2026-02-01">[v2.10.0 Plan - Phase 1] - 2026-02-01</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#estabilizacion-v3-0-x-gui-exportacion">[Estabilización v3.0.x] - GUI &amp; EXPORTACION</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#phase-closure-v2-9-0-architectural-consolidation">[Phase Closure v2.9.0] - ARCHITECTURAL CONSOLIDATION</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#phase-closure-v2-8-0-debt-reduction-ui-improvements">[Phase Closure v2.8.0] - DEBT REDUCTION &amp; UI IMPROVEMENTS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#v2-8-0-plan-phase-2-2026-01-24">[v2.8.0 Plan - Phase 2] - 2026-01-24</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#v2-7-0-plan-phase-1-2026-01-15">[v2.7.0 Plan - Phase 1] - 2026-01-15</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#release-process">🚀 Release Process</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#unreleased">[Unreleased]</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#preparation">1. Preparation</a></li>
@@ -112,63 +115,71 @@
   <section id="secinterp-maintenance-release-log">
 <h1>SecInterp - Maintenance &amp; Release Log<a class="headerlink" href="#secinterp-maintenance-release-log" title="Link to this heading"></a></h1>
 <p>This document serves as the central record for project history, release procedures, and past refactoring analysis.</p>
+<section id="signal-management-i18n-infrastructure">
+<h2>[2026-02-17] Signal Management &amp; i18n Infrastructure<a class="headerlink" href="#signal-management-i18n-infrastructure" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Signals</strong>: Transitioned from dynamic connection loops to explicit unrolled connections in <code class="docutils literal notranslate"><span class="pre">SignalManager</span></code>.</p></li>
+<li><p><strong>i18n</strong>: Migrated translation system to Master Data JSON to support rapid expansion (11 languages now).</p></li>
+<li><p><strong>Build</strong>: Enhanced <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> package logic with <code class="docutils literal notranslate"><span class="pre">.qgisignore</span></code> support.</p></li>
+</ul>
 <section id="v3-0-0-release-i18n-expansion-drillhole-refactor">
-<h2>[v3.0.0 Release] - i18n Expansion &amp; Drillhole Refactor<a class="headerlink" href="#v3-0-0-release-i18n-expansion-drillhole-refactor" title="Link to this heading"></a></h2>
+<h3>[v3.0.0 Release] - i18n Expansion &amp; Drillhole Refactor<a class="headerlink" href="#v3-0-0-release-i18n-expansion-drillhole-refactor" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Date</strong>: 2026-02-16</p></li>
 <li><p><strong>Focus</strong>: Global i18n (10 languages), Facade Removal, Drillhole Service Decomposition.</p></li>
 <li><p><strong>Outcome</strong>: Added Hindi/Japanese support. Verified 3D Export stability. Updated Architecture documentation.</p></li>
 <li><p><strong>Reference</strong>: <a class="reference internal" href="#/home/jmbernales/.gemini/antigravity/brain/ad157467-1590-4579-b78f-b53dc0c8b054/task.md"><span class="xref myst">Task Log</span></a></p></li>
 </ul>
-<hr class="docutils" />
 </section>
+<hr class="docutils" />
 <section id="v2-10-0-plan-phase-1-2026-02-01">
-<h2>[v2.10.0 Plan - Phase 1] - 2026-02-01<a class="headerlink" href="#v2-10-0-plan-phase-1-2026-02-01" title="Link to this heading"></a></h2>
+<h3>[v2.10.0 Plan - Phase 1] - 2026-02-01<a class="headerlink" href="#v2-10-0-plan-phase-1-2026-02-01" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Focus</strong>: Quality Score &gt; 60, QGIS 4.x Prep (PyQt5 cleanup), ExportService Refactor.</p></li>
 <li><p><strong>Goals</strong>: Eliminate technical debt in resources.py and reduce cyclomatic complexity in 3D exporters.</p></li>
 </ul>
 </section>
 <section id="estabilizacion-v3-0-x-gui-exportacion">
-<h2>[Estabilización v3.0.x] - GUI &amp; EXPORTACION<a class="headerlink" href="#estabilizacion-v3-0-x-gui-exportacion" title="Link to this heading"></a></h2>
+<h3>[Estabilización v3.0.x] - GUI &amp; EXPORTACION<a class="headerlink" href="#estabilizacion-v3-0-x-gui-exportacion" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Date</strong>: 2026-02-15</p></li>
 <li><p><strong>Focus</strong>: ExportService Layer Resolution, Facade Removal.</p></li>
 <li><p><strong>Outcome</strong>: 100% Tests Passing, Export functionality restored.</p></li>
 <li><p><strong>Reference</strong>: <a class="reference internal" href="#sesion_2026-02-15_stabilization_gui_export.md"><span class="xref myst">Session Log</span></a></p></li>
 </ul>
-<hr class="docutils" />
 </section>
+<hr class="docutils" />
 <section id="phase-closure-v2-9-0-architectural-consolidation">
-<h2>[Phase Closure v2.9.0] - ARCHITECTURAL CONSOLIDATION<a class="headerlink" href="#phase-closure-v2-9-0-architectural-consolidation" title="Link to this heading"></a></h2>
+<h3>[Phase Closure v2.9.0] - ARCHITECTURAL CONSOLIDATION<a class="headerlink" href="#phase-closure-v2-9-0-architectural-consolidation" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Date</strong>: 2026-02-01</p></li>
 <li><p><strong>Focus</strong>: Core Domain Migration, Drillhole Service Decomposition, v2.9.0 Release Stabilization.</p></li>
 <li><p><strong>Outcome</strong>: 199 Tests Passing (100%). Quality Score: 54.3/100 (+9 pts). Official release published.</p></li>
 <li><p><strong>Reference</strong>: <a class="reference internal" href="phase_closure_v2.9.0.html"><span class="std std-doc">Phase Closure Document</span></a> | <a class="reference internal" href="v2.9.0_technical_analysis.html"><span class="std std-doc">Technical Analysis</span></a></p></li>
 </ul>
-<hr class="docutils" />
 </section>
+<hr class="docutils" />
 <section id="phase-closure-v2-8-0-debt-reduction-ui-improvements">
-<h2>[Phase Closure v2.8.0] - DEBT REDUCTION &amp; UI IMPROVEMENTS<a class="headerlink" href="#phase-closure-v2-8-0-debt-reduction-ui-improvements" title="Link to this heading"></a></h2>
+<h3>[Phase Closure v2.8.0] - DEBT REDUCTION &amp; UI IMPROVEMENTS<a class="headerlink" href="#phase-closure-v2-8-0-debt-reduction-ui-improvements" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Date</strong>: 2026-01-25</p></li>
 <li><p><strong>Focus</strong>: Core Decoupling, Async Safety, Legend Visibility.</p></li>
 <li><p><strong>Outcome</strong>: 359 Tests Passing, Core-QGIS Decoupling finalized with WKT/DTO pattern.</p></li>
 <li><p><strong>Reference</strong>: <a class="reference internal" href="phase_closure_v2.8.0.html"><span class="std std-doc">Phase Closure Document</span></a></p></li>
 </ul>
-<hr class="docutils" />
 </section>
+<hr class="docutils" />
 <section id="v2-8-0-plan-phase-2-2026-01-24">
-<h2>[v2.8.0 Plan - Phase 2] - 2026-01-24<a class="headerlink" href="#v2-8-0-plan-phase-2-2026-01-24" title="Link to this heading"></a></h2>
+<h3>[v2.8.0 Plan - Phase 2] - 2026-01-24<a class="headerlink" href="#v2-8-0-plan-phase-2-2026-01-24" title="Link to this heading"></a></h3>
 </section>
 <section id="v2-7-0-plan-phase-1-2026-01-15">
-<h2>[v2.7.0 Plan - Phase 1] - 2026-01-15<a class="headerlink" href="#v2-7-0-plan-phase-1-2026-01-15" title="Link to this heading"></a></h2>
+<h3>[v2.7.0 Plan - Phase 1] - 2026-01-15<a class="headerlink" href="#v2-7-0-plan-phase-1-2026-01-15" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Mock Infrastructure Overhaul</strong>: Implemented <code class="docutils literal notranslate"><span class="pre">ModuleProxy</span></code> and <code class="docutils literal notranslate"><span class="pre">MockSignal</span></code> to stabilize the QGIS test environment. Resolved attribute errors and reference loss during mock resets. Added <code class="docutils literal notranslate"><span class="pre">indexFromName</span></code> to <code class="docutils literal notranslate"><span class="pre">MockQgsFields</span></code> for better API parity.</p></li>
 <li><p><strong>Config Fix</strong>: Completed missing <code class="docutils literal notranslate"><span class="pre">reset_defaults()</span></code> logic in <code class="docutils literal notranslate"><span class="pre">ConfigService</span></code>.</p></li>
 <li><p><strong>Workflow Update</strong>: Simplified <code class="docutils literal notranslate"><span class="pre">inicia-sesion</span></code> by removing <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">deploy</span></code> and standardizing the test execution command.</p></li>
 </ul>
+</section>
 </section>
 <section id="release-process">
 <h2>🚀 Release Process<a class="headerlink" href="#release-process" title="Link to this heading"></a></h2>
