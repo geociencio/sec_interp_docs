@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SecInterp User Guide &mdash; documentación de SecInterp - 2.9.0</title>
+  <title>Guía de Usuario de SecInterp &mdash; documentación de SecInterp - 2.9.0</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
@@ -45,12 +45,12 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">SecInterp User Guide</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Guía de Usuario de SecInterp</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#introduction">1. Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#the-main-window">2. The Main Window</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#step-by-step-tutorial-creating-a-profile">3. Step-by-Step Tutorial: Creating a Profile</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#step-1-digital-elevation-model-dem">Step 1: Digital Elevation Model (DEM)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#step-2-define-section-line">Step 2: Define Section Line</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-1-digital-elevation-model-dem">Paso 1: Modelo Digital de Elevación (DEM)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-2-define-section-line">Paso 2: Definir Línea de Sección</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#step-3-adding-geological-data">Step 3: Adding Geological Data</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#step-4-adding-structural-data">Step 4: Adding Structural Data</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#step-5-adding-drillhole-data">Step 5: Adding Drillhole Data</a><ul>
@@ -124,7 +124,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">SecInterp User Guide</li>
+      <li class="breadcrumb-item active">Guía de Usuario de SecInterp</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/USER_GUIDE.md.txt" rel="nofollow"> Ver código fuente de la página</a>
       </li>
@@ -135,59 +135,56 @@
            <div itemprop="articleBody">
              
   <section id="secinterp-user-guide">
-<h1>SecInterp User Guide<a class="headerlink" href="#secinterp-user-guide" title="Link to this heading"></a></h1>
+<h1>Guía de Usuario de SecInterp<a class="headerlink" href="#secinterp-user-guide" title="Link to this heading"></a></h1>
 <section id="introduction">
 <h2>1. Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h2>
-<p>Welcome to the SecInterp plugin! This guide will help you get started with creating geological cross-sections from your QGIS layers.</p>
-<p>SecInterp allows you to:</p>
+<p>¡Bienvenido al plugin SecInterp! Esta guía te ayudará a comenzar a crear secciones geológicas transversales a partir de tus capas de QGIS.</p>
+<p>SecInterp te permite:</p>
 <ul class="simple">
-<li><p>Create a topographic profile from a Digital Elevation Model (DEM).</p></li>
-<li><p>Project geological units from a polygon layer onto the profile.</p></li>
-<li><p>Project structural measurements (e.g., dip and strike) onto the profile.</p></li>
-<li><p>Project drillhole traces and geological intervals (sondajes) onto the section.</p></li>
-<li><p><strong>Interpretation Tool</strong>: Digitize geological interpretations directly on the section with smart snapping.</p></li>
-<li><p><strong>3D Export (PolygonZ)</strong>: Export your 2D interpretations as valid 3D Shapefiles.</p></li>
-<li><p><strong>i18n Support</strong>: Core interface available in 10 languages (English, Spanish, French, German, Italian, Portuguese, Russian, Chinese, Hindi, Japanese).</p></li>
-<li><p>View an interactive preview with level-of-detail (LOD) optimization.</p></li>
-<li><p>Measure distances and gradients with automatic snapping to vertices.</p></li>
+<li><p>Crear un perfil topográfico a partir de un Modelo Digital de Elevación (DEM).</p></li>
+<li><p>Proyectar unidades geológicas desde una capa de polígonos sobre el perfil.</p></li>
+<li><p>Proyectar medidas estructurales (ej: buzamiento y dirección) sobre el perfil.</p></li>
+<li><p>Proyectar trazas de sondajes e intervalos geológicos sobre la sección.</p></li>
+<li><p><strong>Herramienta de Interpretación</strong>: Digitaliza interpretaciones geológicas directamente en la sección con snapping inteligente.</p></li>
+<li><p><strong>Exportación 3D (PolygonZ)</strong>: Exporta tus interpretaciones 2D como Shapefiles 3D válidos.</p></li>
+<li><p><strong>Soporte i18n</strong>: Interfaz principal disponible en 14 idiomas (incluyendo Español, Francés, Alemán, Ruso, Polaco, Holandés, Finlandés, etc.).</p></li>
+<li><p>Visualizar una previsualización interactiva con optimización de nivel de detalle (LOD).</p></li>
+<li><p>Medir distancias y gradientes con snapping automático a vértices.</p></li>
 </ul>
 </section>
 <section id="the-main-window">
 <h2>2. The Main Window<a class="headerlink" href="#the-main-window" title="Link to this heading"></a></h2>
-<p>The SecInterp dialog is divided into three main areas:</p>
+<p>El diálogo de SecInterp se divide en tres áreas principales:</p>
 <ol class="arabic simple">
-<li><p><strong>Sidebar Navigation (Left)</strong>: Navigate between different modules: DEM, Drillholes, Geology, Structure, Settings, and Help.</p></li>
-<li><p><strong>Configuration Page (Center)</strong>: Where you configure the parameters for the selected module.</p></li>
-<li><p><strong>Preview Panel (Right)</strong>: An interactive canvas showing your cross-section in real-time.</p></li>
+<li><p><strong>Navegación Lateral (Izquierda)</strong>: Navega entre diferentes módulos: DEM, Sondajes, Geología, Estructural, Ajustes y Ayuda.</p></li>
+<li><p><strong>Página de Configuración (Centro)</strong>: Donde configuras los parámetros para el módulo seleccionado.</p></li>
+<li><p><strong>Panel de Previsualización (Derecha)</strong>: Un lienzo interactivo que muestra tu sección transversal en tiempo real.</p></li>
 </ol>
-<p><img alt="The consolidated v2.9.0 Main Window with Sidebar navigation" src="_images/ui_main_dialog_v26.png" />
-<em>The consolidated v2.9.0 Main Window with Sidebar navigation.</em></p>
+<p><img alt="La Ventana Principal consolidada v2.9.0 con navegación lateral" src="_images/ui_main_dialog_v26.png" /> <em>La Ventana Principal consolidada v2.9.0 con navegación lateral.</em></p>
 </section>
 <section id="step-by-step-tutorial-creating-a-profile">
 <h2>3. Step-by-Step Tutorial: Creating a Profile<a class="headerlink" href="#step-by-step-tutorial-creating-a-profile" title="Link to this heading"></a></h2>
 <section id="step-1-digital-elevation-model-dem">
-<h3>Step 1: Digital Elevation Model (DEM)<a class="headerlink" href="#step-1-digital-elevation-model-dem" title="Link to this heading"></a></h3>
+<h3>Paso 1: Modelo Digital de Elevación (DEM)<a class="headerlink" href="#step-1-digital-elevation-model-dem" title="Link to this heading"></a></h3>
 <ol class="arabic simple">
-<li><p>Navigate to the <strong>DEM</strong> page in the sidebar.</p></li>
-<li><p><strong>Raster Layer</strong>: Select your Digital Elevation Model (Mandatory).</p></li>
-<li><p><strong>Band</strong>: Select the band containing the elevation values (Mandatory).</p></li>
-<li><p><strong>Resolution</strong>: Calculated automatically based on the DEM resolution.</p></li>
-<li><p><strong>Scale 1:1</strong>: Calculated automatically based on the DEM resolution.</p></li>
-<li><p><strong>Vert. Exag</strong>: Adjust if you want to emphasize topography (e.g., 2.0x).</p></li>
+<li><p>Navega a la página <strong>DEM</strong> en la barra lateral.</p></li>
+<li><p><strong>Capa Ráster</strong>: Selecciona tu Modelo Digital de Elevación (Obligatorio).</p></li>
+<li><p><strong>Banda</strong>: Selecciona la banda que contiene los valores de elevación (Obligatorio).</p></li>
+<li><p><strong>Resolución</strong>: Calculada automáticamente basada en la resolución del DEM.</p></li>
+<li><p><strong>Escala 1:1</strong>: Calculada automáticamente basada en la resolución del DEM.</p></li>
+<li><p><strong>Exag. Vert.</strong>: Ajusta si quieres enfatizar la topografía (ej: 2.0x).</p></li>
 </ol>
-<p><img alt="Digital Elevation Model configuration" src="_images/guide_dem_setup.png" />
-<em>Digital Elevation Model configuration.</em></p>
+<p><img alt="Configuración del Modelo Digital de Elevación" src="_images/guide_dem_setup.png" /> <em>Configuración del Modelo Digital de Elevación.</em></p>
 </section>
 <section id="step-2-define-section-line">
-<h3>Step 2: Define Section Line<a class="headerlink" href="#step-2-define-section-line" title="Link to this heading"></a></h3>
+<h3>Paso 2: Definir Línea de Sección<a class="headerlink" href="#step-2-define-section-line" title="Link to this heading"></a></h3>
 <ol class="arabic simple">
-<li><p>Navigate to the <strong>Section Line</strong> page.</p></li>
-<li><p><strong>Section Layer</strong>: Select the vector line layer representing your section traces (Mandatory).</p></li>
-<li><p><strong>Buffer Dist. (m)</strong>: Set a buffer distance (e.g., 50m) to capture data around the line (Mandatory).</p></li>
-<li><p><strong>Important</strong>: The line must be single line (not multipart, only P1 and P2) in order to calculate 3d section export.</p></li>
+<li><p>Navega a la página <strong>Línea de Sección</strong>.</p></li>
+<li><p><strong>Capa de Sección</strong>: Selecciona la capa vectorial de líneas que representa tus trazas de sección (Obligatorio).</p></li>
+<li><p><strong>Dist. de Buffer (m)</strong>: Establece una distancia de buffer (ej: 50m) para capturar datos alrededor de la línea (Obligatorio).</p></li>
+<li><p><strong>Importante</strong>: La línea debe ser una línea simple (no multipart, solo P1 y P2) para poder calcular la exportación de sección 3D.</p></li>
 </ol>
-<p><img alt="Section Line selection and buffer configuration" src="_images/guide_section_setup.png" />
-<em>Section Line selection and buffer configuration.</em></p>
+<p><img alt="Selección de Línea de Sección y configuración de buffer" src="_images/guide_section_setup.png" /> <em>Selección de Línea de Sección y configuración de buffer.</em></p>
 <p><img alt="Profile DEM Section Preview" src="_images/dem_section_preview.png" />
 <em>Profile DEM Section Preview.</em></p>
 </section>
