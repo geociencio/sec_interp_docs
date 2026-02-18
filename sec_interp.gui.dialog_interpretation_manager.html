@@ -93,58 +93,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-sec_interp.gui.dialog_interpretation_manager">
-<span id="sec-interp-gui-dialog-interpretation-manager-module"></span><h1>sec_interp.gui.dialog_interpretation_manager module<a class="headerlink" href="#module-sec_interp.gui.dialog_interpretation_manager" title="Link to this heading"></a></h1>
-<p>Interpretation management module for SecInterp main dialog.</p>
-<p>This module handles interpretation polygons, their persistence, and attribute inheritance,
-decoupling this logic from the main dialog class.</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="sec_interp.gui.dialog_interpretation_manager.InterpretationManager">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.gui.dialog_interpretation_manager.</span></span><span class="sig-name descname"><span class="pre">InterpretationManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dialog</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog" title="sec_interp.gui.SecInterpDialog"><span class="pre">SecInterpDialog</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.gui.dialog_interpretation_manager.InterpretationManager" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Manages interpretation polygons and their business logic.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="sec_interp.gui.dialog_interpretation_manager.InterpretationManager.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dialog</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog" title="sec_interp.gui.SecInterpDialog"><span class="pre">SecInterpDialog</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.dialog_interpretation_manager.InterpretationManager.__init__" title="Link to this definition"></a></dt>
-<dd><p>Initialize interpretation manager.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>dialog</strong> – The main dialog instance.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="sec_interp.gui.dialog_interpretation_manager.InterpretationManager.apply_attribute_inheritance">
-<span class="sig-name descname"><span class="pre">apply_attribute_inheritance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interpretation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon" title="sec_interp.core.domain.entities.InterpretationPolygon"><span class="pre">InterpretationPolygon</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.dialog_interpretation_manager.InterpretationManager.apply_attribute_inheritance" title="Link to this definition"></a></dt>
-<dd><p>Inherit attributes from nearest geology or drillhole data.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="sec_interp.gui.dialog_interpretation_manager.InterpretationManager.handle_interpretation_finished">
-<span class="sig-name descname"><span class="pre">handle_interpretation_finished</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interpretation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon" title="sec_interp.core.domain.entities.InterpretationPolygon"><span class="pre">InterpretationPolygon</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.dialog_interpretation_manager.InterpretationManager.handle_interpretation_finished" title="Link to this definition"></a></dt>
-<dd><p>Process a finished interpretation polygon.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>interpretation</strong> – The finished interpretation polygon.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="sec_interp.gui.dialog_interpretation_manager.InterpretationManager.load_interpretations">
-<span class="sig-name descname"><span class="pre">load_interpretations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.dialog_interpretation_manager.InterpretationManager.load_interpretations" title="Link to this definition"></a></dt>
-<dd><p>Load interpretations from the QGIS project.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="sec_interp.gui.dialog_interpretation_manager.InterpretationManager.save_interpretations">
-<span class="sig-name descname"><span class="pre">save_interpretations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.dialog_interpretation_manager.InterpretationManager.save_interpretations" title="Link to this definition"></a></dt>
-<dd><p>Save interpretations to the QGIS project.</p>
-</dd></dl>
-
-</dd></dl>
-
+  <section id="sec-interp-gui-dialog-interpretation-manager-module">
+<h1>sec_interp.gui.dialog_interpretation_manager module<a class="headerlink" href="#sec-interp-gui-dialog-interpretation-manager-module" title="Link to this heading"></a></h1>
 </section>
 
 
