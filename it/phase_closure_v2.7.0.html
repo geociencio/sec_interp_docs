@@ -1,0 +1,231 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="it" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cierre de Fase - SecInterp v2.7.0 &mdash; Documentazione SecInterp 2.9.0 </title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=7ed4baf0"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=45930005"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Indice" href="genindex.html" />
+    <link rel="search" title="Cerca" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            SecInterp
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Cerca documenti" aria-label="Cerca documenti" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Menu di navigazione">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="USER_GUIDE.html">SecInterp User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">sec_interp</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Menu navigazione dispositivi mobili" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SecInterp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Naviga tra le pagine">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Cierre de Fase - SecInterp v2.7.0</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/phase_closure_v2.7.0.md.txt" rel="nofollow"> Visualizza sorgente pagina</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cierre-de-fase-secinterp-v2-7-0">
+<h1>Cierre de Fase - SecInterp v2.7.0<a class="headerlink" href="#cierre-de-fase-secinterp-v2-7-0" title="Link to this heading"></a></h1>
+<section id="documento-de-cierre-formal-de-fase-de-desarrollo">
+<h2>Documento de Cierre Formal de Fase de Desarrollo<a class="headerlink" href="#documento-de-cierre-formal-de-fase-de-desarrollo" title="Link to this heading"></a></h2>
+<p><strong>Fecha de Cierre:</strong> 2026-01-18
+<strong>Versión Actual:</strong> 2.7.0
+<strong>Fase:</strong> Excelencia Operativa y Documentación
+<strong>Responsable:</strong> Antigravity (IA Assistant)</p>
+</section>
+<hr class="docutils" />
+<section id="resumen-ejecutivo">
+<h2>1. Resumen Ejecutivo<a class="headerlink" href="#resumen-ejecutivo" title="Link to this heading"></a></h2>
+<p>La Fase v2.7.0 se centró en consolidar los cimientos del proyecto para garantizar su escalabilidad a largo plazo. Se logró una transformación completa de la infraestructura de validación, documentación y testing, eliminando deudas técnicas críticas y preparando el terreno para nuevas funcionalidades analíticas. El proyecto ahora cuenta con una arquitectura robusta de 3 niveles de validación, documentación automática desacoplada y un entorno de QA dockerizado reproducible.</p>
+</section>
+<section id="logros-principales">
+<h2>2. Logros Principales<a class="headerlink" href="#logros-principales" title="Link to this heading"></a></h2>
+<section id="infraestructura-y-calidad">
+<h3>Infraestructura y Calidad<a class="headerlink" href="#infraestructura-y-calidad" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Testing Dockerizado</strong>: Implementación de un entorno de pruebas aislado (<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">docker-test</span></code>) que replica exactamente las condiciones de ejecución de QGIS, eliminando los errores de «funciona en mi máquina».</p></li>
+<li><p><strong>Infraestructura de Mocks</strong>: Estabilización total de los mocks de PyQGIS (<code class="docutils literal notranslate"><span class="pre">ModuleProxy</span></code>, <code class="docutils literal notranslate"><span class="pre">MockSignal</span></code>), logrando una tasa de paso del 100% en 361 tests.</p></li>
+<li><p><strong>Logging Centralizado</strong>: Unificación del sistema de logs bajo un logger raíz con propagación jerárquica, facilitando la depuración.</p></li>
+</ul>
+</section>
+<section id="arquitectura-de-software">
+<h3>Arquitectura de Software<a class="headerlink" href="#arquitectura-de-software" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Validación de 3 Niveles</strong>: Implementación de una arquitectura de validación jerárquica:</p>
+<ol class="arabic simple">
+<li><p><strong>Nivel 1 (Tipos)</strong>: Validadores reusables (<code class="docutils literal notranslate"><span class="pre">validators.py</span></code>) y Data Classes.</p></li>
+<li><p><strong>Nivel 2 (Lógica)</strong>: Reglas de negocio y contexto de validación (<code class="docutils literal notranslate"><span class="pre">ValidationContext</span></code>).</p></li>
+<li><p><strong>Nivel 3 (Dominio)</strong>: Cláusulas de guarda en servicios (<code class="docutils literal notranslate"><span class="pre">GeologyService</span></code>, <code class="docutils literal notranslate"><span class="pre">DrillholeService</span></code>).</p></li>
+</ol>
+</li>
+<li><p><strong>Desacoplamiento de UI</strong>: Fragmentación del <code class="docutils literal notranslate"><span class="pre">SecInterpDialog</span></code> en gestores especializados (<code class="docutils literal notranslate"><span class="pre">InterpretationManager</span></code>, <code class="docutils literal notranslate"><span class="pre">MessageManager</span></code>, <code class="docutils literal notranslate"><span class="pre">SettingsManager</span></code>), reduciendo drásticamente la complejidad ciclomática.</p></li>
+</ul>
+</section>
+<section id="documentacion">
+<h3>Documentación<a class="headerlink" href="#documentacion" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Sphinx Automatizado</strong>: Configuración de un pipeline de documentación que genera HTML API docs fuera del repositorio, manteniendo el código fuente limpio.</p></li>
+<li><p><strong>Limpieza de Repositorio</strong>: Eliminación de archivos HTML rastreados que inflaban el tamaño del repo.</p></li>
+<li><p><strong>Documentación de Arquitectura</strong>: Creación de nuevos documentos de diseño técnico y guías de usuario alineadas con la v2.7.0.</p></li>
+</ul>
+</section>
+<section id="funcionalidad">
+<h3>Funcionalidad<a class="headerlink" href="#funcionalidad" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Exportación 3D Avanzada</strong>: Capacidad de exportar trazas e intervalos de sondajes como geometrías 3D reales (<code class="docutils literal notranslate"><span class="pre">PolygonZ</span></code>, <code class="docutils literal notranslate"><span class="pre">LineStringZ</span></code>), tanto en coordenadas originales como proyectadas.</p></li>
+<li><p><strong>Navegación Sidebar</strong>: Modernización de la interfaz con una barra lateral de navegación nativa estilo QGIS.</p></li>
+</ul>
+</section>
+</section>
+<section id="desafios-enfrentados-y-soluciones">
+<h2>3. Desafíos Enfrentados y Soluciones<a class="headerlink" href="#desafios-enfrentados-y-soluciones" title="Link to this heading"></a></h2>
+<section id="inestabilidad-de-mocks">
+<h3>Inestabilidad de Mocks<a class="headerlink" href="#inestabilidad-de-mocks" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Problema</strong>: Los tests fallaban aleatoriamente debido a la pérdida de referencias en los objetos mockeados de Qt/QGIS al resetear el estado entre tests.</p></li>
+<li><p><strong>Solución</strong>: Se implementó <code class="docutils literal notranslate"><span class="pre">ModuleProxy</span></code> para mantener referencias estables a las clases mock y se mejoró la lógica de <code class="docutils literal notranslate"><span class="pre">tearDown</span></code> para resetear el estado interno sin destruir los objetos.</p></li>
+</ul>
+</section>
+<section id="dependencia-de-ui-en-validacion">
+<h3>Dependencia de UI en Validación<a class="headerlink" href="#dependencia-de-ui-en-validacion" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Problema</strong>: La lógica de validación estaba fuertemente acoplada a los widgets de la interfaz (<code class="docutils literal notranslate"><span class="pre">QComboBox</span></code>, <code class="docutils literal notranslate"><span class="pre">QSpinBox</span></code>).</p></li>
+<li><p><strong>Solución</strong>: Se creó un <code class="docutils literal notranslate"><span class="pre">DialogDataAggregator</span></code> para extraer datos puros de la UI y pasarlos a un <code class="docutils literal notranslate"><span class="pre">DialogValidationManager</span></code> agnóstico de la interfaz visual.</p></li>
+</ul>
+</section>
+</section>
+<section id="deuda-tecnica-acumulada">
+<h2>4. Deuda Técnica Acumulada<a class="headerlink" href="#deuda-tecnica-acumulada" title="Link to this heading"></a></h2>
+<section id="moderada-para-v2-8-0">
+<h3>🟡 Moderada (Para v2.8.0)<a class="headerlink" href="#moderada-para-v2-8-0" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Soporte Multi-Raster</strong>: La arquitectura actual asume un único DEM. Se requiere refactoring para soportar múltiples superficies.</p></li>
+<li><p><strong>Tests de Integración 3D</strong>: La herramienta de interpretación 3D tiene cobertura limitada en tests de integración pura.</p></li>
+</ul>
+</section>
+<section id="menor">
+<h3>🟢 Menor<a class="headerlink" href="#menor" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Longitud de Funciones</strong>: Algunos métodos en <code class="docutils literal notranslate"><span class="pre">GeologyService</span></code> exceden las 50 líneas y podrían beneficiarse de una mayor extracción de métodos auxiliares.</p></li>
+</ul>
+</section>
+</section>
+<section id="metricas-del-proyecto">
+<h2>5. Métricas del Proyecto<a class="headerlink" href="#metricas-del-proyecto" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Métrica</p></th>
+<th class="head text-left"><p>Valor</p></th>
+<th class="head text-left"><p>Estado</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><strong>Tests Totales</strong></p></td>
+<td class="text-left"><p>361</p></td>
+<td class="text-left"><p>✅ Passing</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Score de Calidad</strong></p></td>
+<td class="text-left"><p>~83.5/100</p></td>
+<td class="text-left"><p>Estable</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>Cobertura Type Hints</strong></p></td>
+<td class="text-left"><p>&gt;76% (Params)</p></td>
+<td class="text-left"><p>Bueno</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Complejidad Promedio</strong></p></td>
+<td class="text-left"><p>12.4</p></td>
+<td class="text-left"><p>Aceptable</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>Archivos Python</strong></p></td>
+<td class="text-left"><p>~108</p></td>
+<td class="text-left"><p>-</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="conclusion-y-recomendaciones">
+<h2>6. Conclusión y Recomendaciones<a class="headerlink" href="#conclusion-y-recomendaciones" title="Link to this heading"></a></h2>
+<p>La versión 2.7.0 representa un punto de inflexión en la madurez técnica de SecInterp. Con la base sólida establecida, el equipo está listo para abordar funcionalidades de análisis avanzado en la versión 2.8.0 sin el lastre de una infraestructura frágil. Se recomienda mantener la disciplina de <code class="docutils literal notranslate"><span class="pre">conventional</span> <span class="pre">commits</span></code> y el uso del contenedor Docker para todo desarrollo futuro.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Juan M Bernales.</p>
+  </div>
+
+  Realizzato con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    fornito da <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

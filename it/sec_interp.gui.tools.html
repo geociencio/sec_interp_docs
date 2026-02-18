@@ -1,0 +1,182 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="it" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sec_interp.gui.tools package &mdash; Documentazione SecInterp 2.9.0 </title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=7ed4baf0"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=45930005"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Indice" href="genindex.html" />
+    <link rel="search" title="Cerca" href="search.html" />
+    <link rel="next" title="sec_interp.gui.tools.interpretation_tool module" href="sec_interp.gui.tools.interpretation_tool.html" />
+    <link rel="prev" title="sec_interp.gui.tasks.geology_task module" href="sec_interp.gui.tasks.geology_task.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            SecInterp
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Cerca documenti" aria-label="Cerca documenti" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Menu di navigazione">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="USER_GUIDE.html">SecInterp User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">sec_interp</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="sec_interp.html">sec_interp package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.html#sec_interp.classFactory"><code class="docutils literal notranslate"><span class="pre">classFactory()</span></code></a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="sec_interp.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.html">sec_interp.core package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.html">sec_interp.exporters package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="sec_interp.gui.html">sec_interp.gui package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.resources.html">sec_interp.resources package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Menu navigazione dispositivi mobili" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SecInterp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Naviga tra le pagine">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">sec_interp</a></li>
+          <li class="breadcrumb-item"><a href="sec_interp.html">sec_interp package</a></li>
+          <li class="breadcrumb-item"><a href="sec_interp.gui.html">sec_interp.gui package</a></li>
+      <li class="breadcrumb-item active">sec_interp.gui.tools package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/sec_interp.gui.tools.rst.txt" rel="nofollow"> Visualizza sorgente pagina</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-sec_interp.gui.tools">
+<span id="sec-interp-gui-tools-package"></span><h1>sec_interp.gui.tools package<a class="headerlink" href="#module-sec_interp.gui.tools" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.tools.interpretation_tool.html">sec_interp.gui.tools.interpretation_tool module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.tools.interpretation_tool.html#sec_interp.gui.tools.interpretation_tool.ProfileInterpretationTool"><code class="docutils literal notranslate"><span class="pre">ProfileInterpretationTool</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.tools.interpretation_tool.html#sec_interp.gui.tools.interpretation_tool.ProfileInterpretationTool.__init__"><code class="docutils literal notranslate"><span class="pre">ProfileInterpretationTool.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.tools.interpretation_tool.html#sec_interp.gui.tools.interpretation_tool.ProfileInterpretationTool.activate"><code class="docutils literal notranslate"><span class="pre">ProfileInterpretationTool.activate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.tools.interpretation_tool.html#sec_interp.gui.tools.interpretation_tool.ProfileInterpretationTool.canvasDoubleClickEvent"><code class="docutils literal notranslate"><span class="pre">ProfileInterpretationTool.canvasDoubleClickEvent()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.tools.interpretation_tool.html#sec_interp.gui.tools.interpretation_tool.ProfileInterpretationTool.canvasMoveEvent"><code class="docutils literal notranslate"><span class="pre">ProfileInterpretationTool.canvasMoveEvent()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.tools.interpretation_tool.html#sec_interp.gui.tools.interpretation_tool.ProfileInterpretationTool.canvasReleaseEvent"><code class="docutils literal notranslate"><span class="pre">ProfileInterpretationTool.canvasReleaseEvent()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.tools.interpretation_tool.html#sec_interp.gui.tools.interpretation_tool.ProfileInterpretationTool.deactivate"><code class="docutils literal notranslate"><span class="pre">ProfileInterpretationTool.deactivate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.tools.interpretation_tool.html#sec_interp.gui.tools.interpretation_tool.ProfileInterpretationTool.disconnect_signals"><code class="docutils literal notranslate"><span class="pre">ProfileInterpretationTool.disconnect_signals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.tools.interpretation_tool.html#sec_interp.gui.tools.interpretation_tool.ProfileInterpretationTool.finalize_polygon"><code class="docutils literal notranslate"><span class="pre">ProfileInterpretationTool.finalize_polygon()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.tools.interpretation_tool.html#sec_interp.gui.tools.interpretation_tool.ProfileInterpretationTool.keyPressEvent"><code class="docutils literal notranslate"><span class="pre">ProfileInterpretationTool.keyPressEvent()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.tools.interpretation_tool.html#sec_interp.gui.tools.interpretation_tool.ProfileInterpretationTool.polygonFinished"><code class="docutils literal notranslate"><span class="pre">ProfileInterpretationTool.polygonFinished</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.tools.interpretation_tool.html#sec_interp.gui.tools.interpretation_tool.ProfileInterpretationTool.reset"><code class="docutils literal notranslate"><span class="pre">ProfileInterpretationTool.reset()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.tools.interpretation_tool.html#sec_interp.gui.tools.interpretation_tool.ProfileSnapper"><code class="docutils literal notranslate"><span class="pre">ProfileSnapper</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.tools.interpretation_tool.html#sec_interp.gui.tools.interpretation_tool.ProfileSnapper.__init__"><code class="docutils literal notranslate"><span class="pre">ProfileSnapper.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.tools.interpretation_tool.html#sec_interp.gui.tools.interpretation_tool.ProfileSnapper.snap"><code class="docutils literal notranslate"><span class="pre">ProfileSnapper.snap()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.tools.measure_tool.html">sec_interp.gui.tools.measure_tool module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.tools.measure_tool.html#sec_interp.gui.tools.measure_tool.ProfileMeasureTool"><code class="docutils literal notranslate"><span class="pre">ProfileMeasureTool</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.tools.measure_tool.html#sec_interp.gui.tools.measure_tool.ProfileMeasureTool.__init__"><code class="docutils literal notranslate"><span class="pre">ProfileMeasureTool.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.tools.measure_tool.html#sec_interp.gui.tools.measure_tool.ProfileMeasureTool.activate"><code class="docutils literal notranslate"><span class="pre">ProfileMeasureTool.activate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.tools.measure_tool.html#sec_interp.gui.tools.measure_tool.ProfileMeasureTool.canvasMoveEvent"><code class="docutils literal notranslate"><span class="pre">ProfileMeasureTool.canvasMoveEvent()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.tools.measure_tool.html#sec_interp.gui.tools.measure_tool.ProfileMeasureTool.canvasReleaseEvent"><code class="docutils literal notranslate"><span class="pre">ProfileMeasureTool.canvasReleaseEvent()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.tools.measure_tool.html#sec_interp.gui.tools.measure_tool.ProfileMeasureTool.deactivate"><code class="docutils literal notranslate"><span class="pre">ProfileMeasureTool.deactivate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.tools.measure_tool.html#sec_interp.gui.tools.measure_tool.ProfileMeasureTool.disconnect_signals"><code class="docutils literal notranslate"><span class="pre">ProfileMeasureTool.disconnect_signals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.tools.measure_tool.html#sec_interp.gui.tools.measure_tool.ProfileMeasureTool.finalize_measurement"><code class="docutils literal notranslate"><span class="pre">ProfileMeasureTool.finalize_measurement()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.tools.measure_tool.html#sec_interp.gui.tools.measure_tool.ProfileMeasureTool.keyPressEvent"><code class="docutils literal notranslate"><span class="pre">ProfileMeasureTool.keyPressEvent()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.tools.measure_tool.html#sec_interp.gui.tools.measure_tool.ProfileMeasureTool.measurementChanged"><code class="docutils literal notranslate"><span class="pre">ProfileMeasureTool.measurementChanged</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.tools.measure_tool.html#sec_interp.gui.tools.measure_tool.ProfileMeasureTool.reset"><code class="docutils literal notranslate"><span class="pre">ProfileMeasureTool.reset()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.tools.measure_tool.html#sec_interp.gui.tools.measure_tool.ProfileSnapper"><code class="docutils literal notranslate"><span class="pre">ProfileSnapper</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.tools.measure_tool.html#sec_interp.gui.tools.measure_tool.ProfileSnapper.__init__"><code class="docutils literal notranslate"><span class="pre">ProfileSnapper.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.tools.measure_tool.html#sec_interp.gui.tools.measure_tool.ProfileSnapper.snap"><code class="docutils literal notranslate"><span class="pre">ProfileSnapper.snap()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Piè di pagina">
+        <a href="sec_interp.gui.tasks.geology_task.html" class="btn btn-neutral float-left" title="sec_interp.gui.tasks.geology_task module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Precedente</a>
+        <a href="sec_interp.gui.tools.interpretation_tool.html" class="btn btn-neutral float-right" title="sec_interp.gui.tools.interpretation_tool module" accesskey="n" rel="next">Prossimo <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Juan M Bernales.</p>
+  </div>
+
+  Realizzato con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    fornito da <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

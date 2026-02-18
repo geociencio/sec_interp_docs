@@ -1,0 +1,317 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="id" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SecInterp - Development Guide &mdash; Dokumentasi SecInterp 2.9.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8e1cab30"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=a1ed0097"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Indeks" href="genindex.html" />
+    <link rel="search" title="Pencarian" href="search.html" />
+    <link rel="next" title="SecInterp - Technical Compendium" href="TECHNICAL_COMPENDIUM.html" />
+    <link rel="prev" title="SecInterp - Detailed Project Architecture" href="ARCHITECTURE.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            SecInterp
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="USER_GUIDE.html">SecInterp User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">SecInterp - Development Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#technical-stack">🏗️ Technical Stack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#coding-standards">🎨 Coding Standards</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#design-principles">🧬 Design Principles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#naming-conventions">📝 Naming Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imports-ordering">🐍 Imports Ordering</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#git-workflow">⚡ Git Workflow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#conventional-commits">Conventional Commits</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#tooling-ruff">🛠️ Tooling (Ruff)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basic-commands">Basic Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ide-integration">IDE Integration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#testing">🧪 Testing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#running-tests-local">Running Tests (Local)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#running-tests-docker-recommended">Running Tests (Docker - Recommended)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mocking-qgis">Mocking QGIS</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#documentation-standards">📝 Documentation Standards</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#docstrings">Docstrings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#documentation-workflow">Documentation Workflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#image-assets">Image Assets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#deployment-makefile">📦 Deployment &amp; Makefile</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">sec_interp</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SecInterp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">SecInterp - Development Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/DEVELOPMENT_GUIDE.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="secinterp-development-guide">
+<h1>SecInterp - Development Guide<a class="headerlink" href="#secinterp-development-guide" title="Link to this heading"></a></h1>
+<p>Welcome to the <strong>SecInterp</strong> development guide. This document outlines the standards, best practices, and workflows for contributing to the project.</p>
+<hr class="docutils" />
+<section id="technical-stack">
+<h2>🏗️ Technical Stack<a class="headerlink" href="#technical-stack" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Language</strong>: Python 3.10+ (QGIS 3.x compatible)</p></li>
+<li><p><strong>GUI Framework</strong>: PyQt5 (Native QGIS integration)</p></li>
+<li><p><strong>Geospatial Engine</strong>: PyQGIS API (<code class="docutils literal notranslate"><span class="pre">qgis.core</span></code>, <code class="docutils literal notranslate"><span class="pre">qgis.gui</span></code>)</p></li>
+<li><p><strong>Package Manager</strong>: <code class="docutils literal notranslate"><span class="pre">uv</span></code> (recommended) or <code class="docutils literal notranslate"><span class="pre">pip</span></code></p></li>
+<li><p><strong>Linter &amp; Formatter</strong>: <code class="docutils literal notranslate"><span class="pre">Ruff</span></code></p></li>
+<li><p><strong>Testing</strong>: <code class="docutils literal notranslate"><span class="pre">unittest</span></code> (Standard Library)</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="coding-standards">
+<h2>🎨 Coding Standards<a class="headerlink" href="#coding-standards" title="Link to this heading"></a></h2>
+<section id="design-principles">
+<h3>🧬 Design Principles<a class="headerlink" href="#design-principles" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>SOLID</strong>: Follow SRP, OCP, and DIP strictly.</p></li>
+<li><p><strong>Separation of Concerns</strong>: GUI code (Managers/UI) MUST NOT contain business logic. Delegating to <code class="docutils literal notranslate"><span class="pre">Core/Services</span></code> is mandatory.</p></li>
+<li><p><strong>DRY (Don't Repeat Yourself)</strong>: If a calculation or check is used twice, move it to a <code class="docutils literal notranslate"><span class="pre">core/utils</span></code> module.</p></li>
+</ul>
+</section>
+<section id="naming-conventions">
+<h3>📝 Naming Conventions<a class="headerlink" href="#naming-conventions" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Classes</strong>: <code class="docutils literal notranslate"><span class="pre">CapWords</span></code> (e.g., <code class="docutils literal notranslate"><span class="pre">ProfileService</span></code>).</p></li>
+<li><p><strong>Variables/Functions</strong>: <code class="docutils literal notranslate"><span class="pre">snake_case</span></code> (e.g., <code class="docutils literal notranslate"><span class="pre">calculate_apparent_dip</span></code>).</p></li>
+<li><p><strong>Qt Overrides</strong>: <code class="docutils literal notranslate"><span class="pre">camelCase</span></code> (MUST match the original C++ signature, e.g., <code class="docutils literal notranslate"><span class="pre">showEvent</span></code>).</p></li>
+<li><p><strong>Signals</strong>: <code class="docutils literal notranslate"><span class="pre">camelCase</span></code> (PyQt style, e.g., <code class="docutils literal notranslate"><span class="pre">dataChanged</span></code>).</p></li>
+</ul>
+</section>
+<section id="imports-ordering">
+<h3>🐍 Imports Ordering<a class="headerlink" href="#imports-ordering" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p><strong>Standard Library</strong>: <code class="docutils literal notranslate"><span class="pre">os</span></code>, <code class="docutils literal notranslate"><span class="pre">sys</span></code>, <code class="docutils literal notranslate"><span class="pre">math</span></code>, etc.</p></li>
+<li><p><strong>Third-Party</strong>: <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, etc.</p></li>
+<li><p><strong>QGIS Core</strong>: <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">qgis.core</span> <span class="pre">import</span> <span class="pre">...</span></code></p></li>
+<li><p><strong>QGIS GUI</strong>: <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">qgis.gui</span> <span class="pre">import</span> <span class="pre">...</span></code></p></li>
+<li><p><strong>PyQt</strong>: <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">qgis.PyQt.QtWidgets</span> <span class="pre">import</span> <span class="pre">...</span></code> (Always use <code class="docutils literal notranslate"><span class="pre">qgis.PyQt</span></code> shim).</p></li>
+<li><p><strong>Local Modules</strong>: <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">sec_interp.core</span> <span class="pre">import</span> <span class="pre">...</span></code></p></li>
+</ol>
+</section>
+</section>
+<hr class="docutils" />
+<section id="git-workflow">
+<h2>⚡ Git Workflow<a class="headerlink" href="#git-workflow" title="Link to this heading"></a></h2>
+<section id="conventional-commits">
+<h3>Conventional Commits<a class="headerlink" href="#conventional-commits" title="Link to this heading"></a></h3>
+<p>All commits MUST follow the <a class="reference external" href="https://www.conventionalcommits.org/">Conventional Commits</a> specification:</p>
+<p><strong>Format</strong>: <code class="docutils literal notranslate"><span class="pre">&lt;type&gt;(&lt;scope&gt;):</span> <span class="pre">&lt;description&gt;</span></code></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">feat</span></code>: A new feature (e.g., <code class="docutils literal notranslate"><span class="pre">feat(drill):</span> <span class="pre">add</span> <span class="pre">3d</span> <span class="pre">projection</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fix</span></code>: A bug fix (e.g., <code class="docutils literal notranslate"><span class="pre">fix(gui):</span> <span class="pre">resolve</span> <span class="pre">range</span> <span class="pre">attribute</span> <span class="pre">error</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">refactor</span></code>: Code change that neither fixes a bug nor adds a feature.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">docs</span></code>: Documentation changes.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">test</span></code>: Adding or correcting tests.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">chore</span></code>: Build process or auxiliary tool changes.</p></li>
+</ul>
+<p><strong>Language</strong>: All commit messages must be in <strong>English</strong>.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="tooling-ruff">
+<h2>🛠️ Tooling (Ruff)<a class="headerlink" href="#tooling-ruff" title="Link to this heading"></a></h2>
+<p>We use <strong>Ruff</strong> for linting and formatting. It replaces Black, isort, and Flake8.</p>
+<section id="basic-commands">
+<h3>Basic Commands<a class="headerlink" href="#basic-commands" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Lint and auto-fix</span>
+ruff<span class="w"> </span>check<span class="w"> </span>.<span class="w"> </span>--fix
+
+<span class="c1"># Format code</span>
+ruff<span class="w"> </span>format<span class="w"> </span>.
+
+<span class="c1"># Check everything (QA)</span>
+ruff<span class="w"> </span>check<span class="w"> </span>.<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>ruff<span class="w"> </span>format<span class="w"> </span>.<span class="w"> </span>--check
+</pre></div>
+</div>
+</section>
+<section id="ide-integration">
+<h3>IDE Integration<a class="headerlink" href="#ide-integration" title="Link to this heading"></a></h3>
+<p>It is highly recommended to install the <strong>Ruff extension</strong> in VS Code and enable &quot;Format on Save&quot;.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="testing">
+<h2>🧪 Testing<a class="headerlink" href="#testing" title="Link to this heading"></a></h2>
+<section id="running-tests-local">
+<h3>Running Tests (Local)<a class="headerlink" href="#running-tests-local" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run all tests using the unified Makefile target</span>
+make<span class="w"> </span><span class="nb">test</span>
+</pre></div>
+</div>
+</section>
+<section id="running-tests-docker-recommended">
+<h3>Running Tests (Docker - Recommended)<a class="headerlink" href="#running-tests-docker-recommended" title="Link to this heading"></a></h3>
+<p>To avoid dependency issues with QGIS, use the containerized environment:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Build the image and run all tests in an isolated QGIS container</span>
+make<span class="w"> </span>docker-test
+</pre></div>
+</div>
+</section>
+<section id="mocking-qgis">
+<h3>Mocking QGIS<a class="headerlink" href="#mocking-qgis" title="Link to this heading"></a></h3>
+<p>When testing core services, use <code class="docutils literal notranslate"><span class="pre">unittest.mock</span></code> to avoid requiring a running QGIS instance. For integration tests in a headless environment, the project is configured to use <code class="docutils literal notranslate"><span class="pre">QT_QPA_PLATFORM=offscreen</span></code>.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="documentation-standards">
+<h2>📝 Documentation Standards<a class="headerlink" href="#documentation-standards" title="Link to this heading"></a></h2>
+<section id="docstrings">
+<h3>Docstrings<a class="headerlink" href="#docstrings" title="Link to this heading"></a></h3>
+<p>All public functions and methods MUST have docstrings in <strong>Google Style</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">process_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer</span><span class="p">:</span> <span class="n">QgsVectorLayer</span><span class="p">,</span> <span class="n">factor</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Processes the layer using the specified scaling factor.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        layer: The input QGIS vector layer.</span>
+<span class="sd">        factor: The vertical exaggeration factor.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A list of processed coordinates or None if invalid.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="documentation-workflow">
+<h3>Documentation Workflow<a class="headerlink" href="#documentation-workflow" title="Link to this heading"></a></h3>
+<p>The project uses Sphinx to generate documentation. The build process is automated to publish results to a separate GitHub repository (<code class="docutils literal notranslate"><span class="pre">sec_interp_docs</span></code>) which serves as the source for GitHub Pages.</p>
+<p><strong>Building and Publishing</strong></p>
+<p>To build the documentation and automatically push changes to the docs repository:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./scripts/build_docs.sh
+</pre></div>
+</div>
+<p>This script will:</p>
+<ol class="arabic simple">
+<li><p>Build HTML from <code class="docutils literal notranslate"><span class="pre">docs/source</span></code>.</p></li>
+<li><p>Output to <code class="docutils literal notranslate"><span class="pre">../sec_interp_docs</span></code>.</p></li>
+<li><p>Check for changes in the output directory.</p></li>
+<li><p>If changed, commit and push to <code class="docutils literal notranslate"><span class="pre">geociencio/sec_interp_docs</span></code>.</p></li>
+</ol>
+<p><strong>Note:</strong> You must have write access to the <code class="docutils literal notranslate"><span class="pre">sec_interp_docs</span></code> repository and have <code class="docutils literal notranslate"><span class="pre">../sec_interp_docs</span></code> initialized as a git repo (which is done automatically if you follow setup).</p>
+</section>
+<section id="image-assets">
+<h3>Image Assets<a class="headerlink" href="#image-assets" title="Link to this heading"></a></h3>
+<p>Save all documentation images in <code class="docutils literal notranslate"><span class="pre">docs/images/</span></code> using the following convention:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">workflow_DESC.png</span></code>: Step-by-step guides.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ui_DESC.png</span></code>: General interface screenshots.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">feature_DESC.png</span></code>: Specific highlighted features.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="deployment-makefile">
+<h2>📦 Deployment &amp; Makefile<a class="headerlink" href="#deployment-makefile" title="Link to this heading"></a></h2>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> for common development tasks:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">deploy</span></code>: Installs the plugin into your local QGIS plugins folder.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">zip</span></code>: Creates a release-ready ZIP file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">test</span></code>: Runs all unit and integration tests locally.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">docker-build</span></code>: Builds the testing Docker image.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">docker-test</span></code>: Builds and runs tests within a QGIS Docker container.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">docus</span></code>: Builds the Sphinx documentation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">clean</span></code>: Removes temporary and compiled files.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">transup</span></code>: Updates <code class="docutils literal notranslate"><span class="pre">.ts</span></code> files and applies master data using <code class="docutils literal notranslate"><span class="pre">apply_full.py</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">transcompile</span></code>: Compiles <code class="docutils literal notranslate"><span class="pre">.qm</span></code> files.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ARCHITECTURE.html" class="btn btn-neutral float-left" title="SecInterp - Detailed Project Architecture" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="TECHNICAL_COMPENDIUM.html" class="btn btn-neutral float-right" title="SecInterp - Technical Compendium" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Juan M Bernales.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

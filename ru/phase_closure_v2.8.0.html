@@ -1,0 +1,194 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cierre de Fase - SecInterp v2.8.0 &mdash; документация SecInterp 2.9.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=762c466f"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=cd1d70c9"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            SecInterp
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="USER_GUIDE.html">SecInterp User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">sec_interp</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SecInterp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Cierre de Fase - SecInterp v2.8.0</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/phase_closure_v2.8.0.md.txt" rel="nofollow"> Просмотреть исходный код страницы</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cierre-de-fase-secinterp-v2-8-0">
+<h1>Cierre de Fase - SecInterp v2.8.0<a class="headerlink" href="#cierre-de-fase-secinterp-v2-8-0" title="Ссылка на этот заголовок"></a></h1>
+<section id="documento-de-cierre-formal-de-fase-de-desarrollo">
+<h2>Documento de Cierre Formal de Fase de Desarrollo<a class="headerlink" href="#documento-de-cierre-formal-de-fase-de-desarrollo" title="Ссылка на этот заголовок"></a></h2>
+<p><strong>Fecha de Cierre:</strong> 2026-01-25
+<strong>Versión Actual:</strong> 2.8.0
+<strong>Fase:</strong> Reducción de Deuda y Mejoras de UI
+<strong>Responsable:</strong> Antigravity (Google DeepMind Team)</p>
+</section>
+<hr class="docutils" />
+<section id="resumen-ejecutivo">
+<h2>1. Resumen Ejecutivo<a class="headerlink" href="#resumen-ejecutivo" title="Ссылка на этот заголовок"></a></h2>
+<p>La Fase v2.8.0 se centró en la transformación del núcleo arquitectónico de SecInterp hacia un modelo agnóstico y robusto para el procesamiento asíncrono. Se eliminó la deuda técnica de métodos largos y el acoplamiento estrecho con la API de QGIS en los servicios críticos, además de implementar mejoras de usabilidad solicitadas por los usuarios.</p>
+</section>
+<section id="logros-principales">
+<h2>2. Logros Principales<a class="headerlink" href="#logros-principales" title="Ссылка на этот заголовок"></a></h2>
+<section id="infraestructura-y-core">
+<h3>Infraestructura y Core<a class="headerlink" href="#infraestructura-y-core" title="Ссылка на этот заголовок"></a></h3>
+<ul class="simple">
+<li><p><strong>Desacoplamiento Arquitectónico</strong>: Implementado un flujo de datos basado en WKT y tipos primitivos («Extract-then-Compute»), eliminando dependencias de C++ en hilos de fondo.</p></li>
+<li><p><strong>Refactorización de Servicios</strong>: Fragmentación granular de <code class="docutils literal notranslate"><span class="pre">GeologyService</span></code> y <code class="docutils literal notranslate"><span class="pre">DrillholeService</span></code>, reduciendo significativamente la complejidad ciclomática.</p></li>
+<li><p><strong>Mocks Geométricos</strong>: Implementación de funcionalidades avanzadas en la suite de pruebas para soportar cálculos espaciales en entornos sin GUI.</p></li>
+</ul>
+</section>
+<section id="funcionalidades-y-ui">
+<h3>Funcionalidades y UI<a class="headerlink" href="#funcionalidades-y-ui" title="Ссылка на этот заголовок"></a></h3>
+<ul class="simple">
+<li><p><strong>Control de Leyenda</strong>: Implementado checkbox de visibilidad para la leyenda en el Preview con persistencia total (Proyecto/Global).</p></li>
+<li><p><strong>Simplificación de UI Logic</strong>: Reducción de ~100 líneas de código en <code class="docutils literal notranslate"><span class="pre">PreviewManager</span></code> delegando la preparación de tareas a los servicios.</p></li>
+</ul>
+</section>
+<section id="calidad-y-documentacion">
+<h3>Calidad y Documentación<a class="headerlink" href="#calidad-y-documentacion" title="Ссылка на этот заголовок"></a></h3>
+<ul class="simple">
+<li><p><strong>Estabilidad Docker</strong>: 100% de éxito en la suite de pruebas (359 tests OK).</p></li>
+<li><p><strong>Sphinx Fix</strong>: Restaurado el build de documentación API mediante mocks de anotaciones diferidas.</p></li>
+</ul>
+</section>
+</section>
+<section id="desafios-enfrentados-y-soluciones">
+<h2>3. Desafíos Enfrentados y Soluciones<a class="headerlink" href="#desafios-enfrentados-y-soluciones" title="Ссылка на этот заголовок"></a></h2>
+<ul class="simple">
+<li><p><strong>Thread Safety en QGIS</strong>: Se resolvieron crashes aleatorios al mover el cálculo pesado a <code class="docutils literal notranslate"><span class="pre">QgsTask</span></code> con datos completamente desacoplados.</p></li>
+<li><p><strong>Mock Pollution</strong>: Se implementó aislamiento de procesos en Docker para evitar interferencia entre tests unitarios que comparten estado global.</p></li>
+</ul>
+</section>
+<section id="deuda-tecnica-acumulada">
+<h2>4. Deuda Técnica Acumulada<a class="headerlink" href="#deuda-tecnica-acumulada" title="Ссылка на этот заголовок"></a></h2>
+<ul class="simple">
+<li><p><strong>🟡 Moderada</strong>: Implementar suite de tests de integración 3D específica (en fase de boceto).</p></li>
+<li><p><strong>🟢 Menor</strong>: Optimización del buffer de mediciones para tramos extremadamente largos (&gt;100k puntos).</p></li>
+</ul>
+</section>
+<section id="metricas-del-proyecto">
+<h2>5. Métricas del Proyecto<a class="headerlink" href="#metricas-del-proyecto" title="Ссылка на этот заголовок"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Métrica</p></th>
+<th class="head text-left"><p>Valor</p></th>
+<th class="head text-left"><p>Estado</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>Tests Totales</p></td>
+<td class="text-left"><p>359</p></td>
+<td class="text-left"><p>✅ 100% Pass</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Quality Score</p></td>
+<td class="text-left"><p>54.6 / 100</p></td>
+<td class="text-left"><p>🟡 Estable</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p>Cobertura Type Hints</p></td>
+<td class="text-left"><p>&gt;75%</p></td>
+<td class="text-left"><p>✅ Alta</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>Complejidad Máxima</p></td>
+<td class="text-left"><p>&lt; 15</p></td>
+<td class="text-left"><p>✅ Excelente</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="conclusion-y-recomendaciones">
+<h2>6. Conclusión y Recomendaciones<a class="headerlink" href="#conclusion-y-recomendaciones" title="Ссылка на этот заголовок"></a></h2>
+<p>Fase finalizada con éxito. El Core está ahora en su estado más estable y mantenible desde el inicio del proyecto. Se recomienda iniciar la v2.9.0 enfocándose en análisis avanzado de túneles y secciones no-rectas.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2026, Juan M Bernales. </p>
+  </div>
+
+  Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">темы,</a>
+    предоставленной <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

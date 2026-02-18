@@ -1,0 +1,191 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="pl" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guía de Distinción de Componentes „Core” &mdash; SecInterp 2.9.0 - dokumentacja</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=d9907fcf"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=2827c288"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Indeks" href="genindex.html" />
+    <link rel="search" title="Szukaj" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            SecInterp
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Szukaj" aria-label="Szukaj" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="USER_GUIDE.html">SecInterp User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">sec_interp</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SecInterp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Guía de Distinción de Componentes „Core”</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/CORE_DISTINCTION_GUIDE.md.txt" rel="nofollow"> Zobacz źródło strony</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="guia-de-distincion-de-componentes-core">
+<h1>Guía de Distinción de Componentes „Core”<a class="headerlink" href="#guia-de-distincion-de-componentes-core" title="Link to this heading"></a></h1>
+<p>Este documento tiene como objetivo aclarar la distinción entre los diferentes componentes denominados „Core” dentro del proyecto <strong>SecInterp</strong>, para evitar confusiones tanto por parte de desarrolladores humanos como de agentes de IA.</p>
+<section id="la-distincion-fundamental">
+<h2>⚠️ La Distinción Fundamental<a class="headerlink" href="#la-distincion-fundamental" title="Link to this heading"></a></h2>
+<p>Existen dos entidades „Core” que coexisten en este entorno de desarrollo:</p>
+<ol class="arabic simple">
+<li><p><strong>SecInterp Core</strong> (El Núcleo del Proyecto):</p>
+<ul class="simple">
+<li><p><strong>Ubicación</strong>: Directorio <code class="docutils literal notranslate"><span class="pre">/core</span></code> dentro de la raíz del proyecto.</p></li>
+<li><p><strong>Propósito</strong>: Contiene la lógica de negocio pura, algoritmos geológicos, servicios de procesamiento y modelos de datos (DTOs) específicos de SecInterp.</p></li>
+<li><p><strong>Estado Actual</strong>: <strong>Desacoplado</strong>. A partir de la versión 2.8.0, este módulo ha sido saneado para no tener dependencias directas de las clases vivas de QGIS durante el procesamiento pesado (Thread-Safe).</p></li>
+</ul>
+</li>
+<li><p><strong>QGIS Core</strong> (La API de QGIS):</p>
+<ul class="simple">
+<li><p><strong>Referencia</strong>: Paquete de Python <code class="docutils literal notranslate"><span class="pre">qgis.core</span></code>.</p></li>
+<li><p><strong>Propósito</strong>: Proporciona la infraestructura geoespacial subyacente (geometrías, capas, proyectos, CRS).</p></li>
+<li><p><strong>Interacción</strong>: SecInterp utiliza <code class="docutils literal notranslate"><span class="pre">qgis.core</span></code> para extraer datos en el hilo principal, pero el <strong>SecInterp Core</strong> procesa estos datos usando tipos agnósticos (WKT, diccionarios, primitivos).</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="reglas-para-desarrolladores-e-ia">
+<h2>🧭 Reglas para Desarrolladores e IA<a class="headerlink" href="#reglas-para-desarrolladores-e-ia" title="Link to this heading"></a></h2>
+<p>Para mantener la integridad arquitectónica, siga estas directrices:</p>
+<section id="no-asuma-que-core-siempre-es-qgis">
+<h3>1. No asuma que „Core” siempre es QGIS<a class="headerlink" href="#no-asuma-que-core-siempre-es-qgis" title="Link to this heading"></a></h3>
+<p>Si se le pide „revisar el core”, se refiere casi exclusivamente al directorio <code class="docutils literal notranslate"><span class="pre">/core</span></code> de este plugin. No intente buscar o modificar archivos internos del motor de QGIS.</p>
+</section>
+<section id="limites-de-datos-decoupling">
+<h3>2. Límites de Datos (Decoupling)<a class="headerlink" href="#limites-de-datos-decoupling" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>En <code class="docutils literal notranslate"><span class="pre">/core</span></code></strong>: Se deben usar tipos de dominio agnósticos. Evite instanciar <code class="docutils literal notranslate"><span class="pre">QgsVectorLayer</span></code> o acceder a <code class="docutils literal notranslate"><span class="pre">QgsProject.instance()</span></code> dentro de los servicios del núcleo. Use <code class="docutils literal notranslate"><span class="pre">DomainGeometry</span></code> (WKT) y diccionarios de atributos.</p></li>
+<li><p><strong>En <code class="docutils literal notranslate"><span class="pre">/gui</span></code></strong>: Es el lugar donde se realiza la traducción entre la API real de QGIS (<code class="docutils literal notranslate"><span class="pre">qgis.core</span></code>) y el <strong>SecInterp Core</strong>. Aquí es donde se extraen las geometrías y se preparan los DTOs.</p></li>
+</ul>
+</section>
+<section id="nomenclatura-de-archivos-e-importaciones">
+<h3>3. Nomenclatura de Archivos e Importaciones<a class="headerlink" href="#nomenclatura-de-archivos-e-importaciones" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Archivos Locales</strong>: Los archivos en <code class="docutils literal notranslate"><span class="pre">core/</span></code> (ej. <code class="docutils literal notranslate"><span class="pre">core/services/geology_service.py</span></code>) son el <strong>Cerebro de SecInterp</strong>.</p></li>
+<li><p><strong>API Externa</strong>: Las importaciones que empiezan con <code class="docutils literal notranslate"><span class="pre">qgis.core</span></code>, <code class="docutils literal notranslate"><span class="pre">qgis.gui</span></code> o <code class="docutils literal notranslate"><span class="pre">qgis.utils</span></code> son <strong>Dependencias Externas</strong>.</p></li>
+<li><p><strong>Regla de Nomenclatura</strong>: En discusiones o comentarios de código, use „Internal Core” para referirse a <code class="docutils literal notranslate"><span class="pre">/core</span></code> y „PyQGIS API” para la del software.</p></li>
+</ul>
+</section>
+<section id="el-patron-extract-then-compute-extraer-y-calcular">
+<h3>4. El Patrón „Extract-then-Compute” (Extraer y Calcular)<a class="headerlink" href="#el-patron-extract-then-compute-extraer-y-calcular" title="Link to this heading"></a></h3>
+<p>Para evitar complicaciones futuras, el flujo de datos <strong>DEBE</strong> seguir este patrón:</p>
+<ol class="arabic simple">
+<li><p><strong>Capa GUI/Task Interface</strong>: Recibe objetos de QGIS (<code class="docutils literal notranslate"><span class="pre">QgsVectorLayer</span></code>, <code class="docutils literal notranslate"><span class="pre">QgsFeature</span></code>). Extrae lo necesario (geometría en WKT, diccionarios de atributos).</p></li>
+<li><p><strong>Capa Core</strong>: Recibe únicamente los datos extraídos (strings, dicts, floats). Realiza los cálculos geométricos pesados.</p></li>
+<li><p><strong>Resultado</strong>: El Core devuelve DTOs (Data Transfer Objects) definidos en <code class="docutils literal notranslate"><span class="pre">core/types.py</span></code>. La capa GUI se encarga de convertir esto de nuevo a capas de QGIS si es necesario.</p></li>
+</ol>
+</section>
+<section id="reglas-de-oro-de-hilo-seguridad-thread-safety">
+<h3>5. Reglas de Oro de Hilo-Seguridad (Thread-Safety)<a class="headerlink" href="#reglas-de-oro-de-hilo-seguridad-thread-safety" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Prohibido</strong>: Importar <code class="docutils literal notranslate"><span class="pre">qgis.gui</span></code> dentro de <code class="docutils literal notranslate"><span class="pre">core/</span></code>. Los hilos de fondo morirán si intentan tocar cualquier widget o ventana.</p></li>
+<li><p><strong>Restricción</strong>: Minimizar el uso de <code class="docutils literal notranslate"><span class="pre">qgis.core</span></code> dentro de <code class="docutils literal notranslate"><span class="pre">core/</span></code>. Aunque algunas clases como <code class="docutils literal notranslate"><span class="pre">QgsGeometry</span></code> son seguras, es preferible operar sobre WKT para garantizar total independencia.</p></li>
+<li><p><strong>Contexto de Aplicación</strong>: Nunca use <code class="docutils literal notranslate"><span class="pre">iface</span></code> o <code class="docutils literal notranslate"><span class="pre">QgsProject.instance()</span></code> dentro de <code class="docutils literal notranslate"><span class="pre">core/</span></code>. Si necesita datos del proyecto, páselos como argumentos pre-extraídos.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="estrategia-de-testing-diferenciada">
+<h2>🧪 Estrategia de Testing Diferenciada<a class="headerlink" href="#estrategia-de-testing-diferenciada" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Tests del Core (<code class="docutils literal notranslate"><span class="pre">tests/core/</span></code>)</strong>: Deben poder ejecutarse sin instalar QGIS completo. Usan mocks ligeros. Son el termómetro de la lógica geológica.</p></li>
+<li><p><strong>Tests de Integración (<code class="docutils literal notranslate"><span class="pre">tests/integration/</span></code>)</strong>: Requieren QGIS real. Prueban que nuestro „Core” se entiende correctamente con la „API de QGIS”.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="resumen-de-desacoplamiento-enero-2026">
+<h2>🛠️ Resumen de Desacoplamiento (Enero 2026)<a class="headerlink" href="#resumen-de-desacoplamiento-enero-2026" title="Link to this heading"></a></h2>
+<p>Se ha completado un esfuerzo mayor para asegurar que:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">GeologyService</span></code> no use capas vivas de QGIS en su método de procesamiento.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DrillholeService</span></code> use diccionarios en lugar de objetos <code class="docutils literal notranslate"><span class="pre">QgsFeature</span></code> durante el cálculo de trazas.</p></li>
+<li><p>La lógica de proyección 3D acepta tuplas y tipos primitivos.</p></li>
+</ul>
+<p><strong>En resumen: Mantenga nuestro Core „puro”. Trate a QGIS como un proveedor de servicios externo. No permita que las raíces de uno entren en la lógica del otro.</strong></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Prawa zastrzeżone 2026, Juan M Bernales.</p>
+  </div>
+
+  Zbudowano w <a href="https://www.sphinx-doc.org/">Sphinx</a> używając
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    dostarczone przez <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

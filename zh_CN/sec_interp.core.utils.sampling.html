@@ -1,0 +1,218 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sec_interp.core.utils.sampling module &mdash; SecInterp 2.9.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=0f2d5f14"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=540d3cec"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" />
+    <link rel="next" title="sec_interp.core.utils.spatial module" href="sec_interp.core.utils.spatial.html" />
+    <link rel="prev" title="sec_interp.core.utils.resource_manager module" href="sec_interp.core.utils.resource_manager.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            SecInterp
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="USER_GUIDE.html">SecInterp User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">sec_interp</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="sec_interp.html">sec_interp package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.html#sec_interp.classFactory"><code class="docutils literal notranslate"><span class="pre">classFactory()</span></code></a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="sec_interp.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="sec_interp.core.html">sec_interp.core package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.html">sec_interp.exporters package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.html">sec_interp.gui package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.resources.html">sec_interp.resources package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SecInterp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">sec_interp</a></li>
+          <li class="breadcrumb-item"><a href="sec_interp.html">sec_interp package</a></li>
+          <li class="breadcrumb-item"><a href="sec_interp.core.html">sec_interp.core package</a></li>
+          <li class="breadcrumb-item"><a href="sec_interp.core.utils.html">sec_interp.core.utils package</a></li>
+      <li class="breadcrumb-item active">sec_interp.core.utils.sampling module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/sec_interp.core.utils.sampling.rst.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-sec_interp.core.utils.sampling">
+<span id="sec-interp-core-utils-sampling-module"></span><h1>sec_interp.core.utils.sampling module<a class="headerlink" href="#module-sec_interp.core.utils.sampling" title="链接到此标题。"></a></h1>
+<p>Sampling Utilities Module.</p>
+<p>This module provides elevation sampling and profile context preparation tools.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="sec_interp.core.utils.sampling.interpolate_elevation">
+<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.sampling.</span></span><span class="sig-name descname"><span class="pre">interpolate_elevation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topo_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#sec_interp.core.utils.sampling.interpolate_elevation" title="链接到此定义。"></a></dt>
+<dd><p>Interpolate elevation at a given distance along the topography profile.</p>
+<p>Uses linear interpolation between the two nearest sampled points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>topo_data</strong> -- List of (distance, elevation) tuples.</p></li>
+<li><p><strong>distance</strong> -- Horizontal distance along the section.</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>The interpolated elevation value (Z) at that distance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sec_interp.core.utils.sampling.prepare_profile_context">
+<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.sampling.</span></span><span class="sig-name descname"><span class="pre">prepare_profile_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line_lyr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsVectorLayer</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">qgis.core.QgsGeometry</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">qgis.core.QgsPointXY</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">qgis.core.QgsDistanceArea</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.core.utils.sampling.prepare_profile_context" title="链接到此定义。"></a></dt>
+<dd><p>Prepare a common context for profile calculation operations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>line_lyr</strong> -- The cross-section line vector layer.</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>line_geom: The geometry of the section line.</p></li>
+<li><p>line_start: The starting point of the line.</p></li>
+<li><p>distance_area: Fully configured geodesic distance object.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A tuple containing</p>
+</dd>
+<dt class="field-even">抛出<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> -- If the input layer is empty or has invalid geometry.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sec_interp.core.utils.sampling.sample_elevation_along_line">
+<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.sampling.</span></span><span class="sig-name descname"><span class="pre">sample_elevation_along_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QgsGeometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raster_layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QgsRasterLayer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">band_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QgsDistanceArea</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QgsPointXY</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">QgsPointXY</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.core.utils.sampling.sample_elevation_along_line" title="链接到此定义。"></a></dt>
+<dd><p>Sample elevation values along a line geometry from a raster layer.</p>
+<p>Densifies the line at raster resolution and samples the elevation at each vertex.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>geometry</strong> -- The line geometry to sample along.</p></li>
+<li><p><strong>raster_layer</strong> -- The source DEM raster layer.</p></li>
+<li><p><strong>band_number</strong> -- The raster band index to sample.</p></li>
+<li><p><strong>distance_area</strong> -- Object for geodesic distance calculations.</p></li>
+<li><p><strong>reference_point</strong> -- Optional start point for distance measurements.</p></li>
+<li><p><strong>interval</strong> -- Optional sampling interval. If None, uses raster resolution.</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of QgsPointXY objects where x is horizontal distance and y is elevation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sec_interp.core.utils.sampling.sample_point_elevation">
+<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.sampling.</span></span><span class="sig-name descname"><span class="pre">sample_point_elevation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raster_layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsRasterLayer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsPointXY</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">band_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#sec_interp.core.utils.sampling.sample_point_elevation" title="链接到此定义。"></a></dt>
+<dd><p>Sample elevation from a raster layer at a specific 2D coordinate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>raster_layer</strong> -- The DEM raster layer.</p></li>
+<li><p><strong>point</strong> -- The coordinate point (X, Y) to sample.</p></li>
+<li><p><strong>band_number</strong> -- The raster band index (default 1).</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>The sampled elevation value (Z) or 0.0 if the point is out of bounds.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="sec_interp.core.utils.resource_manager.html" class="btn btn-neutral float-left" title="sec_interp.core.utils.resource_manager module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="sec_interp.core.utils.spatial.html" class="btn btn-neutral float-right" title="sec_interp.core.utils.spatial module" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2026, Juan M Bernales。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

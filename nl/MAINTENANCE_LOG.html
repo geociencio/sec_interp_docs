@@ -1,0 +1,476 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="nl" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SecInterp - Maintenance &amp; Release Log &mdash; SecInterp 2.9.0 documentatie</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=9a5311ba"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=e4d38c6a"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Zoeken" href="search.html" />
+    <link rel="next" title="sec_interp" href="modules.html" />
+    <link rel="prev" title="SecInterp - Technical Compendium" href="TECHNICAL_COMPENDIUM.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            SecInterp
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Zoek in documentatie" aria-label="Zoek in documentatie" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigatiemenu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="USER_GUIDE.html">SecInterp User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">SecInterp - Maintenance &amp; Release Log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#expansion-i18n-market-gap">[2026-02-18] EXPANSIÓN I18N (MARKET GAP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#estandares-de-documentacion">[2026-02-18] ESTÁNDARES DE DOCUMENTACIÓN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#signal-management-i18n-infrastructure">[2026-02-17] SIGNAL MANAGEMENT &amp; I18N INFRASTRUCTURE</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#v3-0-0-release-i18n-expansion-drillhole-refactor">[v3.0.0 Release] - i18n Expansion &amp; Drillhole Refactor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#v2-10-0-plan-phase-1-2026-02-01">[v2.10.0 Plan - Phase 1] - 2026-02-01</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#estabilizacion-v3-0-x-gui-exportacion">[Estabilización v3.0.x] - GUI &amp; EXPORTACION</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#phase-closure-v2-9-0-architectural-consolidation">[Phase Closure v2.9.0] - ARCHITECTURAL CONSOLIDATION</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#phase-closure-v2-8-0-debt-reduction-ui-improvements">[Phase Closure v2.8.0] - DEBT REDUCTION &amp; UI IMPROVEMENTS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#v2-8-0-plan-phase-2-2026-01-24">[v2.8.0 Plan - Phase 2] - 2026-01-24</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#v2-7-0-plan-phase-1-2026-01-15">[v2.7.0 Plan - Phase 1] - 2026-01-15</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#release-process">🚀 Release Process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#unreleased">[Unreleased]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#preparation">1. Preparation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#packaging-clean-build">2. Packaging (Clean Build)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#distribution-qgis-repository">3. Distribution &amp; QGIS Repository</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#project-history">📜 Project History</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">[2.7.0] - 2026-01-18</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#planning-2026-01-09">[2.7.0] - (Planning) 2026-01-09</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">[2.6.1] - 2026-01-09</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">[2.6.0] - 2026-01-05</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">[2.5.0] - 2026-01-03</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">[2.2.0] - 2025-12-22</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">[2.1.0] - 2025-12-17</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">[2.0.0] - 2025-12-14</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">[1.1.0] - 2025-12-12</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#historical-refactoring-notes">📁 Historical Refactoring Notes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#phase-closure-v3-0-0-release-internationalization">[Phase Closure v3.0.0] - RELEASE &amp; INTERNATIONALIZATION</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#phase-closure-v2-7-0-refactor-stabilization">[Phase Closure v2.7.0] - REFACTOR &amp; STABILIZATION</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">sec_interp</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Navigatiemenu voor mobiel" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SecInterp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Paginanavigatie">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">SecInterp - Maintenance &amp; Release Log</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/MAINTENANCE_LOG.md.txt" rel="nofollow"> Bekijk paginabron</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="secinterp-maintenance-release-log">
+<h1>SecInterp - Maintenance &amp; Release Log<a class="headerlink" href="#secinterp-maintenance-release-log" title="Link to this heading"></a></h1>
+<p>This document serves as the central record for project history, release procedures, and past refactoring analysis.</p>
+<section id="expansion-i18n-market-gap">
+<h2>[2026-02-18] EXPANSIÓN I18N (MARKET GAP)<a class="headerlink" href="#expansion-i18n-market-gap" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Cambios</strong>: Añadido soporte para <strong>pl</strong>, <strong>nl</strong>, <strong>fi</strong> (14 idiomas ahora). Implementado motor de Master Data JSON y workflow de mantenimiento.</p></li>
+<li><p><strong>Métricas/Impacto</strong>: 100% de cobertura core en nuevas lenguas. Skill <code class="docutils literal notranslate"><span class="pre">i18n-standards</span></code> actualizada.</p></li>
+</ul>
+</section>
+<section id="estandares-de-documentacion">
+<h2>[2026-02-18] ESTÁNDARES DE DOCUMENTACIÓN<a class="headerlink" href="#estandares-de-documentacion" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Cambios</strong>: Formalizado skill <code class="docutils literal notranslate"><span class="pre">documentation-standards</span></code> y actualizado workflow <code class="docutils literal notranslate"><span class="pre">/cierra-sesion</span></code>.</p></li>
+<li><p><strong>Métricas/Impacto</strong>: Reducción de inconsistencias en logs generados por diferentes agentes.</p></li>
+</ul>
+</section>
+<section id="signal-management-i18n-infrastructure">
+<h2>[2026-02-17] SIGNAL MANAGEMENT &amp; I18N INFRASTRUCTURE<a class="headerlink" href="#signal-management-i18n-infrastructure" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Cambios</strong>: Transición a conexiones explícitas en <code class="docutils literal notranslate"><span class="pre">SignalManager</span></code> y migración a Master Data JSON (11 idiomas).</p></li>
+<li><p><strong>Métricas/Impacto</strong>: Estabilización de señales para evitar memory leaks y preparación para escalado.</p></li>
+</ul>
+<section id="v3-0-0-release-i18n-expansion-drillhole-refactor">
+<h3>[v3.0.0 Release] - i18n Expansion &amp; Drillhole Refactor<a class="headerlink" href="#v3-0-0-release-i18n-expansion-drillhole-refactor" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Date</strong>: 2026-02-16</p></li>
+<li><p><strong>Focus</strong>: Global i18n (10 languages), Facade Removal, Drillhole Service Decomposition.</p></li>
+<li><p><strong>Outcome</strong>: Added Hindi/Japanese support. Verified 3D Export stability. Updated Architecture documentation.</p></li>
+<li><p><strong>Reference</strong>: <a class="reference internal" href="#/home/jmbernales/.gemini/antigravity/brain/ad157467-1590-4579-b78f-b53dc0c8b054/task.md"><span class="xref myst">Task Log</span></a></p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="v2-10-0-plan-phase-1-2026-02-01">
+<h3>[v2.10.0 Plan - Phase 1] - 2026-02-01<a class="headerlink" href="#v2-10-0-plan-phase-1-2026-02-01" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Focus</strong>: Quality Score &gt; 60, QGIS 4.x Prep (PyQt5 cleanup), ExportService Refactor.</p></li>
+<li><p><strong>Goals</strong>: Eliminate technical debt in resources.py and reduce cyclomatic complexity in 3D exporters.</p></li>
+</ul>
+</section>
+<section id="estabilizacion-v3-0-x-gui-exportacion">
+<h3>[Estabilización v3.0.x] - GUI &amp; EXPORTACION<a class="headerlink" href="#estabilizacion-v3-0-x-gui-exportacion" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Date</strong>: 2026-02-15</p></li>
+<li><p><strong>Focus</strong>: ExportService Layer Resolution, Facade Removal.</p></li>
+<li><p><strong>Outcome</strong>: 100% Tests Passing, Export functionality restored.</p></li>
+<li><p><strong>Reference</strong>: <a class="reference internal" href="#sesion_2026-02-15_stabilization_gui_export.md"><span class="xref myst">Session Log</span></a></p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="phase-closure-v2-9-0-architectural-consolidation">
+<h3>[Phase Closure v2.9.0] - ARCHITECTURAL CONSOLIDATION<a class="headerlink" href="#phase-closure-v2-9-0-architectural-consolidation" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Date</strong>: 2026-02-01</p></li>
+<li><p><strong>Focus</strong>: Core Domain Migration, Drillhole Service Decomposition, v2.9.0 Release Stabilization.</p></li>
+<li><p><strong>Outcome</strong>: 199 Tests Passing (100%). Quality Score: 54.3/100 (+9 pts). Official release published.</p></li>
+<li><p><strong>Reference</strong>: <a class="reference internal" href="phase_closure_v2.9.0.html"><span class="std std-doc">Phase Closure Document</span></a> | <a class="reference internal" href="v2.9.0_technical_analysis.html"><span class="std std-doc">Technical Analysis</span></a></p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="phase-closure-v2-8-0-debt-reduction-ui-improvements">
+<h3>[Phase Closure v2.8.0] - DEBT REDUCTION &amp; UI IMPROVEMENTS<a class="headerlink" href="#phase-closure-v2-8-0-debt-reduction-ui-improvements" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Date</strong>: 2026-01-25</p></li>
+<li><p><strong>Focus</strong>: Core Decoupling, Async Safety, Legend Visibility.</p></li>
+<li><p><strong>Outcome</strong>: 359 Tests Passing, Core-QGIS Decoupling finalized with WKT/DTO pattern.</p></li>
+<li><p><strong>Reference</strong>: <a class="reference internal" href="phase_closure_v2.8.0.html"><span class="std std-doc">Phase Closure Document</span></a></p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="v2-8-0-plan-phase-2-2026-01-24">
+<h3>[v2.8.0 Plan - Phase 2] - 2026-01-24<a class="headerlink" href="#v2-8-0-plan-phase-2-2026-01-24" title="Link to this heading"></a></h3>
+</section>
+<section id="v2-7-0-plan-phase-1-2026-01-15">
+<h3>[v2.7.0 Plan - Phase 1] - 2026-01-15<a class="headerlink" href="#v2-7-0-plan-phase-1-2026-01-15" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Mock Infrastructure Overhaul</strong>: Implemented <code class="docutils literal notranslate"><span class="pre">ModuleProxy</span></code> and <code class="docutils literal notranslate"><span class="pre">MockSignal</span></code> to stabilize the QGIS test environment. Resolved attribute errors and reference loss during mock resets. Added <code class="docutils literal notranslate"><span class="pre">indexFromName</span></code> to <code class="docutils literal notranslate"><span class="pre">MockQgsFields</span></code> for better API parity.</p></li>
+<li><p><strong>Config Fix</strong>: Completed missing <code class="docutils literal notranslate"><span class="pre">reset_defaults()</span></code> logic in <code class="docutils literal notranslate"><span class="pre">ConfigService</span></code>.</p></li>
+<li><p><strong>Workflow Update</strong>: Simplified <code class="docutils literal notranslate"><span class="pre">inicia-sesion</span></code> by removing <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">deploy</span></code> and standardizing the test execution command.</p></li>
+</ul>
+</section>
+</section>
+<section id="release-process">
+<h2>🚀 Release Process<a class="headerlink" href="#release-process" title="Link to this heading"></a></h2>
+<section id="unreleased">
+<h3>[Unreleased]<a class="headerlink" href="#unreleased" title="Link to this heading"></a></h3>
+<p>Process</p>
+<p>Follow these steps to prepare and release a new version of <strong>SecInterp</strong>.</p>
+</section>
+<section id="preparation">
+<h3>1. Preparation<a class="headerlink" href="#preparation" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Update Metadata</strong>: Increment <code class="docutils literal notranslate"><span class="pre">version</span></code> in <code class="docutils literal notranslate"><span class="pre">metadata.txt</span></code>.</p></li>
+<li><p><strong>Sync AI Context</strong>: Update <code class="docutils literal notranslate"><span class="pre">AI_CONTEXT.md</span></code> and <code class="docutils literal notranslate"><span class="pre">project_context.json</span></code>.</p></li>
+<li><p><strong>Update Changelog</strong>: Add the new version to the top of the <a class="reference internal" href="#-project-history"><span class="xref myst">Project History</span></a> section below.</p></li>
+<li><p><strong>Update User Guide</strong>: Ensure screenshots and feature descriptions in <code class="docutils literal notranslate"><span class="pre">docs/USER_GUIDE.md</span></code> are current.</p></li>
+</ul>
+</section>
+<section id="packaging-clean-build">
+<h3>2. Packaging (Clean Build)<a class="headerlink" href="#packaging-clean-build" title="Link to this heading"></a></h3>
+<p>To ensure no development files (like tests or .git) are included in the distribution zip, use the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">archive</span></code> method:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check exports-ignore in .gitattributes first</span>
+<span class="c1"># Then run the package command</span>
+make<span class="w"> </span>package<span class="w"> </span><span class="nv">VERSION</span><span class="o">=</span>main
+mv<span class="w"> </span>sec_interp.zip<span class="w"> </span>sec_interp_vX.Y.Z.zip
+</pre></div>
+</div>
+</section>
+<section id="distribution-qgis-repository">
+<h3>3. Distribution &amp; QGIS Repository<a class="headerlink" href="#distribution-qgis-repository" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Tagging</strong>: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">tag</span> <span class="pre">vX.Y.Z</span> <span class="pre">-m</span> <span class="pre">&quot;Release</span> <span class="pre">description&quot;</span></code></p></li>
+<li><p><strong>GitHub</strong>: Create a new Release and attach the ZIP.</p></li>
+<li><p><strong>QGIS Repo</strong>: Upload the ZIP to <a class="reference external" href="https://plugins.qgis.org/">plugins.qgis.org</a>.</p>
+<ul>
+<li><p>⚠️ <strong>CRITICAL</strong>: The ZIP MUST contain a <code class="docutils literal notranslate"><span class="pre">LICENSE</span></code> file and NO <code class="docutils literal notranslate"><span class="pre">__pycache__</span></code> folders.</p></li>
+<li><p>The repository will reject any package with <code class="docutils literal notranslate"><span class="pre">.pyc</span></code> files for security reasons.</p></li>
+<li><p>Verified ZIP structure with <code class="docutils literal notranslate"><span class="pre">unzip</span> <span class="pre">-t</span> <span class="pre">sec_interp.zip</span></code>.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="project-history">
+<h2>📜 Project History<a class="headerlink" href="#project-history" title="Link to this heading"></a></h2>
+<section id="id1">
+<h3>[2.7.0] - 2026-01-18<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Operational Excellence &amp; Documentation Overhaul</strong>:</p>
+<ul>
+<li><p><strong>Sphinx Integration</strong>: Automated documentation generation with <code class="docutils literal notranslate"><span class="pre">conf.py</span></code> (autodoc/napoleon) and <code class="docutils literal notranslate"><span class="pre">build_docs.sh</span></code>.</p></li>
+<li><p><strong>Link Recovery</strong>: Fixed 50+ broken links in <code class="docutils literal notranslate"><span class="pre">README.md</span></code> and aligned terminology with the new Sidebar-driven UI.</p></li>
+<li><p><strong>Architecture Documentation</strong>: Added detailed records for the <strong>3-Level Validation Architecture</strong> and <code class="docutils literal notranslate"><span class="pre">DialogInterpretationManager</span></code>.</p></li>
+<li><p><strong>i18n Cleanup</strong>: Wrapped all user-facing strings in <code class="docutils literal notranslate"><span class="pre">tr()</span></code> and audited English/Spanish source.</p></li>
+</ul>
+</li>
+<li><p><strong>Refactorización de Interfaz (Fase 2)</strong>:</p>
+<ul>
+<li><p>Introducción de <code class="docutils literal notranslate"><span class="pre">MessageManager</span></code>, <code class="docutils literal notranslate"><span class="pre">CacheHandler</span></code>, y <code class="docutils literal notranslate"><span class="pre">SettingsManager</span></code> para fragmentar el diálogo principal (Reducción de ~700 líneas de código boilerplate).</p></li>
+<li><p><strong>Bug Fix</strong>: Restaurados métodos proxy <code class="docutils literal notranslate"><span class="pre">_load_interpretations</span></code> y <code class="docutils literal notranslate"><span class="pre">_load_user_settings</span></code> para retrocompatibilidad.</p></li>
+</ul>
+</li>
+<li><p><strong>Testing Infrastructure (Dockerization)</strong>:</p>
+<ul>
+<li><p>Implemented <code class="docutils literal notranslate"><span class="pre">Dockerfile</span></code> optimized for QGIS headless testing.</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">docker-build</span></code> and <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">docker-test</span></code> for reproducible CI/CD environments.</p></li>
+</ul>
+</li>
+<li><p><strong>Data Integrity &amp; Core</strong>:</p>
+<ul>
+<li><p><strong>3-Level Validation</strong>: Hierarchical system (Type/Logic/Domain) ensuring data safety across all layers.</p></li>
+<li><p><strong>Centralized Logging</strong>: Refactored <code class="docutils literal notranslate"><span class="pre">logger_config.py</span></code> for hierarchical propagation.</p></li>
+</ul>
+</li>
+<li><p><strong>Enhanced 3D Export</strong>:</p>
+<ul>
+<li><p>Implemented high-fidelity 3D output for drillhole traces and geological intervals (PolygonZ/LineStringZ).</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="planning-2026-01-09">
+<h3>[2.7.0] - (Planning) 2026-01-09<a class="headerlink" href="#planning-2026-01-09" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Infrastructure Planning</strong>:</p>
+<ul>
+<li><p><strong>Native Validation</strong>: Transition to <code class="docutils literal notranslate"><span class="pre">dataclasses</span></code> based models (replacing Pydantic proposal).</p></li>
+<li><p><strong>External Sphinx</strong>: Strategy for out-of-repo documentation build and repository HTML cleanup.</p></li>
+<li><p><strong>Docker Consolidation</strong>: Planned <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">docker-test</span></code> integration.</p></li>
+</ul>
+</li>
+<li><p><strong>Enhanced 3D Export</strong>:</p>
+<ul>
+<li><p>Design for Original and Projected 3D exports for Drillhole Traces and Intervals.</p></li>
+<li><p>Planned UI integration in Settings/Advanced.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id2">
+<h3>[2.6.1] - 2026-01-09<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Stabilization</strong>:</p>
+<ul>
+<li><p><strong>Test Suite</strong>: Resolved major mock pollution issues and finalized 312 stable tests.</p></li>
+<li><p><strong>Mock Infrastructure</strong>: Implemented explicit <code class="docutils literal notranslate"><span class="pre">MockQListWidget</span></code> for stable GUI inheritance.</p></li>
+</ul>
+</li>
+<li><p><strong>Internationalization</strong>:</p>
+<ul>
+<li><p>Translated Measure tool results and default interpretation naming.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id3">
+<h3>[2.6.0] - 2026-01-05<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Quality Assurance</strong>:</p>
+<ul>
+<li><p><strong>Native Integration Tests</strong>: Implementation of <code class="docutils literal notranslate"><span class="pre">BaseIntegrationTest</span></code> for headless QGIS execution.</p></li>
+<li><p><strong>Workflow Validation</strong>: New automated tests for Interpretation, Measurement, and 3D Export using real QGIS API.</p></li>
+</ul>
+</li>
+<li><p><strong>Docker Integration</strong>:</p>
+<ul>
+<li><p>Full containerization of the test environment for CI/CD readiness.</p></li>
+<li><p>Automated dependency management via <code class="docutils literal notranslate"><span class="pre">uv</span></code> within Docker.</p></li>
+<li><p>Optimized build workflows with <code class="docutils literal notranslate"><span class="pre">.dockerignore</span></code> and permission handling.</p></li>
+</ul>
+</li>
+<li><p><strong>Performance</strong>:</p>
+<ul>
+<li><p><strong>Benchmarks Suite</strong>: Implementation of performance tests for Geometry and Exports using <code class="docutils literal notranslate"><span class="pre">unittest</span></code>.</p></li>
+<li><p><strong>SLA Verification</strong>: Established baseline metrics for critical operations (Shapefile Write &lt; 5s, Projection &lt; 0.1s).</p></li>
+</ul>
+</li>
+<li><p><strong>Architecture &amp; Refactoring (2026-01-08)</strong>:</p>
+<ul>
+<li><p><strong>Async Evolution</strong>: Refactored threading model to use <code class="docutils literal notranslate"><span class="pre">QgsTask</span></code> for background geology generation, improving stability and preventing UI freezes.</p></li>
+<li><p><strong>Exporter Modularization</strong>: Deep refactoring of all vector exporters (<code class="docutils literal notranslate"><span class="pre">shp</span></code>, <code class="docutils literal notranslate"><span class="pre">drillhole</span></code>, <code class="docutils literal notranslate"><span class="pre">profile</span></code>, <code class="docutils literal notranslate"><span class="pre">interpretation_3d</span></code>) to reduce complexity (mccabe &lt; 7) and improve modularity.</p></li>
+<li><p><strong>Quality &amp; Debt Cleanup</strong>: Significant improvement in type hint coverage (Params: 62.1% -&gt; 76.4%) and documentation style across core services, tools, and UI pages.</p></li>
+<li><p><strong>Workflow Security</strong>: Implemented <code class="docutils literal notranslate"><span class="pre">conventional-pre-commit</span></code> and restored <code class="docutils literal notranslate"><span class="pre">COMMIT_GUIDELINES.md</span></code> to guarantee high-quality, parsable commits.</p></li>
+<li><p><strong>Test Stability</strong>: Enhanced mocking infrastructure for asynchronous tasks and QGIS ecosystem components.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id4">
+<h3>[2.5.0] - 2026-01-03<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Major Features</strong>:</p>
+<ul>
+<li><p><strong>3D Export</strong>: Interpretation export as real 3D Shapefiles (PolygonZ).</p></li>
+<li><p><strong>Settings Hub</strong>: New sidebar page for plugin configuration management.</p></li>
+<li><p><strong>Documentation</strong>: User Guide fully integrated with screenshots.</p></li>
+</ul>
+</li>
+<li><p><strong>Critical Fixes (Hotfixes)</strong>:</p>
+<ul>
+<li><p><strong>Attribute Inheritance</strong>: Resolved regression in drillhole processing (tuple handling) and <code class="docutils literal notranslate"><span class="pre">GeologySegment</span></code> polymorphism.</p></li>
+<li><p><strong>Serialization</strong>: Fixed <code class="docutils literal notranslate"><span class="pre">QVariant</span></code> JSON serialization error.</p></li>
+</ul>
+</li>
+<li><p><strong>Workflow Optimization</strong>:</p>
+<ul>
+<li><p><strong>Context Awareness</strong>: Enhanced <code class="docutils literal notranslate"><span class="pre">.agent/workflows/</span></code> (start/close) to mandate context analysis and logging, ensuring continuity.</p></li>
+</ul>
+</li>
+<li><p><strong>Data Persistence</strong>: Overhauled <code class="docutils literal notranslate"><span class="pre">DialogSettingsManager</span></code> for robust restoration with multi-scope support (<code class="docutils literal notranslate"><span class="pre">SecInterp</span></code>/<code class="docutils literal notranslate"><span class="pre">SecInterpUI</span></code>) and layer name fallback.</p></li>
+<li><p><strong>Stability &amp; QA</strong>:</p>
+<ul>
+<li><p>Enabled project-wide Ruff rules (<code class="docutils literal notranslate"><span class="pre">F401</span></code>, <code class="docutils literal notranslate"><span class="pre">F841</span></code>, <code class="docutils literal notranslate"><span class="pre">I001</span></code>).</p></li>
+<li><p>Implemented proactive auto-save on Preview and Dialog Accept.</p></li>
+<li><p>Resolved critical <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code> in validation logic and Geology Rendering.</p></li>
+<li><p>Forced disk synchronization for configs (<code class="docutils literal notranslate"><span class="pre">sync()</span></code>).</p></li>
+</ul>
+</li>
+<li><p><strong>Test Infrastructure</strong>: Enhanced <code class="docutils literal notranslate"><span class="pre">MockQgsProject</span></code> and <code class="docutils literal notranslate"><span class="pre">MockQWidget</span></code> to support persistence and modern Qt patterns.</p></li>
+</ul>
+</section>
+<section id="id5">
+<h3>[2.2.0] - 2025-12-22<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Documentation Globalization</strong>: 100% of documentation (including Architecture) translated to English.</p></li>
+<li><p><strong>Build Optimization</strong>: Slimmed final ZIP package and removed redundant source code views from help.</p></li>
+<li><p><strong>Architectural Evolution</strong>: Moved main <code class="docutils literal notranslate"><span class="pre">SecInterp</span></code> class to <code class="docutils literal notranslate"><span class="pre">sec_interp_plugin.py</span></code>.</p></li>
+<li><p><strong>Validation Refactor</strong>: Modularized <code class="docutils literal notranslate"><span class="pre">core/validation/</span></code> package.</p></li>
+<li><p><strong>GUI Decoupling</strong>: Fragmented <code class="docutils literal notranslate"><span class="pre">SecInterpDialog</span></code> into specialized managers.</p></li>
+<li><p><strong>LOD Optimization</strong>: Implemented adaptive Level of Detail for previews.</p></li>
+</ul>
+</section>
+<section id="id6">
+<h3>[2.1.0] - 2025-12-17<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Feature</strong>: Snap-Enabled Measurement Tool.</p></li>
+<li><p><strong>Fix</strong>: Resolved Snapping configuration attribute errors.</p></li>
+</ul>
+</section>
+<section id="id7">
+<h3>[2.0.0] - 2025-12-14<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Feature</strong>: Full Drillhole Integration (Projection &amp; Intervals).</p></li>
+<li><p><strong>Export</strong>: Added drillhole trace and interval Shapefile exporters.</p></li>
+</ul>
+</section>
+<section id="id8">
+<h3>[1.1.0] - 2025-12-12<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Performance</strong>: Asynchronous parallel processing for geology.</p></li>
+<li><p><strong>Feature</strong>: Adaptive Sampling and Measurement Tool.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="historical-refactoring-notes">
+<h2>📁 Historical Refactoring Notes<a class="headerlink" href="#historical-refactoring-notes" title="Link to this heading"></a></h2>
+<p>For detailed information on past major refactoring sessions, refer to the following summaries:</p>
+<blockquote>
+<div><blockquote>
+<div><p><strong>Refactoring 2025-12-21</strong>: Significant reduction of <code class="docutils literal notranslate"><span class="pre">main_dialog.py</span></code> size (from 1k to ~300 lines) by moving logic to managers and core services.
+See <code class="docutils literal notranslate"><span class="pre">docs/docsec/archive/</span></code> for original walkthroughs if deep historical context is needed.</p>
+</div></blockquote>
+</div></blockquote>
+<section id="phase-closure-v3-0-0-release-internationalization">
+<h3>[Phase Closure v3.0.0] - RELEASE &amp; INTERNATIONALIZATION<a class="headerlink" href="#phase-closure-v3-0-0-release-internationalization" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Date</strong>: 2026-02-14</p></li>
+<li><p><strong>Focus</strong>: Internationalization (i18n), Modular Services, Release Optimization.</p></li>
+<li><p><strong>Outcome</strong>: 8 Languages Supported, Package Size Reduced 99.6% (218KB), 361 Tests Passing.</p></li>
+<li><p><strong>Key Infra</strong>: <code class="docutils literal notranslate"><span class="pre">.qgisignore</span></code>, GitHub Actions Security Scan (100/100).</p></li>
+<li><p><strong>Reference</strong>: <a class="reference internal" href="phase_closure_v3.0.0.html"><span class="std std-doc">Phase Closure Document</span></a></p></li>
+</ul>
+</section>
+<section id="phase-closure-v2-7-0-refactor-stabilization">
+<h3>[Phase Closure v2.7.0] - REFACTOR &amp; STABILIZATION<a class="headerlink" href="#phase-closure-v2-7-0-refactor-stabilization" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Date</strong>: 2026-01-18</p></li>
+<li><p><strong>Focus</strong>: Validation Architecture, Docker Infrastructure, Sphinx Docs.</p></li>
+<li><p><strong>Outcome</strong>: 361 Tests Passing, 100% Mock Stability.</p></li>
+<li><p><strong>Reference</strong>: <a class="reference internal" href="phase_closure_v2.7.0.html"><span class="std std-doc">Phase Closure Document</span></a></p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Voettekst">
+        <a href="TECHNICAL_COMPENDIUM.html" class="btn btn-neutral float-left" title="SecInterp - Technical Compendium" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Vorige</a>
+        <a href="modules.html" class="btn btn-neutral float-right" title="sec_interp" accesskey="n" rel="next">Volgende <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Juan M Bernales.</p>
+  </div>
+
+  Gebouwd met <a href="https://www.sphinx-doc.org/">Sphinx</a> met een
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thema</a>
+    geleverd door <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

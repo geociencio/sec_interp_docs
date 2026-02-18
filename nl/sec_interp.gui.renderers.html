@@ -1,0 +1,185 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="nl" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sec_interp.gui.renderers package &mdash; SecInterp 2.9.0 documentatie</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=9a5311ba"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=e4d38c6a"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Zoeken" href="search.html" />
+    <link rel="next" title="sec_interp.gui.renderers.base_renderer module" href="sec_interp.gui.renderers.base_renderer.html" />
+    <link rel="prev" title="sec_interp.gui package" href="sec_interp.gui.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            SecInterp
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Zoek in documentatie" aria-label="Zoek in documentatie" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigatiemenu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="USER_GUIDE.html">SecInterp User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">sec_interp</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="sec_interp.html">sec_interp package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.html#sec_interp.classFactory"><code class="docutils literal notranslate"><span class="pre">classFactory()</span></code></a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="sec_interp.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.html">sec_interp.core package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.html">sec_interp.exporters package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="sec_interp.gui.html">sec_interp.gui package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.resources.html">sec_interp.resources package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Navigatiemenu voor mobiel" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SecInterp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Paginanavigatie">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">sec_interp</a></li>
+          <li class="breadcrumb-item"><a href="sec_interp.html">sec_interp package</a></li>
+          <li class="breadcrumb-item"><a href="sec_interp.gui.html">sec_interp.gui package</a></li>
+      <li class="breadcrumb-item active">sec_interp.gui.renderers package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/sec_interp.gui.renderers.rst.txt" rel="nofollow"> Bekijk paginabron</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-sec_interp.gui.renderers">
+<span id="sec-interp-gui-renderers-package"></span><h1>sec_interp.gui.renderers package<a class="headerlink" href="#module-sec_interp.gui.renderers" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.renderers.base_renderer.html">sec_interp.gui.renderers.base_renderer module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.renderers.base_renderer.html#sec_interp.gui.renderers.base_renderer.BasePreviewRenderer"><code class="docutils literal notranslate"><span class="pre">BasePreviewRenderer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.renderers.base_renderer.html#sec_interp.gui.renderers.base_renderer.BasePreviewRenderer.apply_style"><code class="docutils literal notranslate"><span class="pre">BasePreviewRenderer.apply_style()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.renderers.color_manager.html">sec_interp.gui.renderers.color_manager module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.renderers.color_manager.html#sec_interp.gui.renderers.color_manager.ColorManager"><code class="docutils literal notranslate"><span class="pre">ColorManager</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.renderers.color_manager.html#sec_interp.gui.renderers.color_manager.ColorManager.GEOLOGY_COLORS"><code class="docutils literal notranslate"><span class="pre">ColorManager.GEOLOGY_COLORS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.renderers.color_manager.html#sec_interp.gui.renderers.color_manager.ColorManager.__init__"><code class="docutils literal notranslate"><span class="pre">ColorManager.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.renderers.color_manager.html#sec_interp.gui.renderers.color_manager.ColorManager.get_color"><code class="docutils literal notranslate"><span class="pre">ColorManager.get_color()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.renderers.drillhole_renderer.html">sec_interp.gui.renderers.drillhole_renderer module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.renderers.drillhole_renderer.html#sec_interp.gui.renderers.drillhole_renderer.DrillholeRenderer"><code class="docutils literal notranslate"><span class="pre">DrillholeRenderer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.renderers.drillhole_renderer.html#sec_interp.gui.renderers.drillhole_renderer.DrillholeRenderer.__init__"><code class="docutils literal notranslate"><span class="pre">DrillholeRenderer.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.renderers.drillhole_renderer.html#sec_interp.gui.renderers.drillhole_renderer.DrillholeRenderer.apply_style"><code class="docutils literal notranslate"><span class="pre">DrillholeRenderer.apply_style()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.renderers.geology_renderer.html">sec_interp.gui.renderers.geology_renderer module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.renderers.geology_renderer.html#sec_interp.gui.renderers.geology_renderer.GeologyRenderer"><code class="docutils literal notranslate"><span class="pre">GeologyRenderer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.renderers.geology_renderer.html#sec_interp.gui.renderers.geology_renderer.GeologyRenderer.__init__"><code class="docutils literal notranslate"><span class="pre">GeologyRenderer.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.renderers.geology_renderer.html#sec_interp.gui.renderers.geology_renderer.GeologyRenderer.apply_style"><code class="docutils literal notranslate"><span class="pre">GeologyRenderer.apply_style()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.renderers.structure_renderer.html">sec_interp.gui.renderers.structure_renderer module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.renderers.structure_renderer.html#sec_interp.gui.renderers.structure_renderer.StructureRenderer"><code class="docutils literal notranslate"><span class="pre">StructureRenderer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.renderers.structure_renderer.html#sec_interp.gui.renderers.structure_renderer.StructureRenderer.apply_style"><code class="docutils literal notranslate"><span class="pre">StructureRenderer.apply_style()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.renderers.topo_renderer.html">sec_interp.gui.renderers.topo_renderer module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.renderers.topo_renderer.html#sec_interp.gui.renderers.topo_renderer.TopoRenderer"><code class="docutils literal notranslate"><span class="pre">TopoRenderer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.renderers.topo_renderer.html#sec_interp.gui.renderers.topo_renderer.TopoRenderer.apply_style"><code class="docutils literal notranslate"><span class="pre">TopoRenderer.apply_style()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Voettekst">
+        <a href="sec_interp.gui.html" class="btn btn-neutral float-left" title="sec_interp.gui package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Vorige</a>
+        <a href="sec_interp.gui.renderers.base_renderer.html" class="btn btn-neutral float-right" title="sec_interp.gui.renderers.base_renderer module" accesskey="n" rel="next">Volgende <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Juan M Bernales.</p>
+  </div>
+
+  Gebouwd met <a href="https://www.sphinx-doc.org/">Sphinx</a> met een
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thema</a>
+    geleverd door <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

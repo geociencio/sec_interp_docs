@@ -1,0 +1,179 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Análisis Técnico Avanzado: SecInterp v2.9.0 &mdash; SecInterp 2.9.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=0f2d5f14"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=540d3cec"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            SecInterp
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="USER_GUIDE.html">SecInterp User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">sec_interp</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SecInterp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Análisis Técnico Avanzado: SecInterp v2.9.0</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/v2.9.0_technical_analysis.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="analisis-tecnico-avanzado-secinterp-v2-9-0">
+<h1>Análisis Técnico Avanzado: SecInterp v2.9.0<a class="headerlink" href="#analisis-tecnico-avanzado-secinterp-v2-9-0" title="链接到此标题。"></a></h1>
+<p>La versión 2.9.0 representa un hito de madurez arquitectónica para el plugin, transformando componentes monolíticos en una infraestructura desacoplada, testable y orientada al dominio.</p>
+<section id="innovaciones-arquitectonicas">
+<h2>🏛️ Innovaciones Arquitectónicas<a class="headerlink" href="#innovaciones-arquitectonicas" title="链接到此标题。"></a></h2>
+<section id="descomposicion-de-servicios-patron-facade-procesadores">
+<h3>1. Descomposición de Servicios (Patrón Facade + Procesadores)<a class="headerlink" href="#descomposicion-de-servicios-patron-facade-procesadores" title="链接到此标题。"></a></h3>
+<p>El mayor cambio reside en la atomización del <code class="docutils literal notranslate"><span class="pre">DrillholeService</span></code>. Lo que antes era un archivo de &gt;600 líneas con múltiples responsabilidades, ahora es una <strong>Fachada</strong> que orquesta cuatro procesadores especializados:</p>
+<ul class="simple">
+<li><p><strong>CollarProcessor</strong>: Especializado en la proyección geodésica de collares sobre la línea de sección.</p></li>
+<li><p><strong>SurveyProcessor</strong>: Gestiona la matemática de trayectorias (desurveying) y validación de profundidades.</p></li>
+<li><p><strong>IntervalProcessor</strong>: Encargado de la interpolación de intervalos litológicos 3D en segmentos 2D.</p></li>
+<li><p><strong>ProjectionEngine</strong>: Contiene la lógica matemática pura de transformación de coordenadas $X,Y,Z \rightarrow Dist, Elev$.</p></li>
+</ul>
+<blockquote>
+<div><p>[!TIP]
+<strong>Impacto</strong>: La complejidad ciclomática de los métodos de procesamiento bajó de un promedio de 22 a 8, facilitando enormemente el mantenimiento y la depuración.</p>
+</div></blockquote>
+</section>
+<section id="capa-de-dominio-semantica-core-domain">
+<h3>2. Capa de Dominio Semántica (<code class="docutils literal notranslate"><span class="pre">core/domain</span></code>)<a class="headerlink" href="#capa-de-dominio-semantica-core-domain" title="链接到此标题。"></a></h3>
+<p>Se ha migrado del genérico <code class="docutils literal notranslate"><span class="pre">core/types</span></code> a un paquete de dominio estructurado. Esta distinción no es solo nominal; define la jerarquía de la <strong>Arquitectura Limpia</strong>:</p>
+<ul class="simple">
+<li><p><strong>Entities</strong>: Objetos con identidad de negocio (<code class="docutils literal notranslate"><span class="pre">GeologySegment</span></code>, <code class="docutils literal notranslate"><span class="pre">StructureMeasurement</span></code>).</p></li>
+<li><p><strong>TaskInputs</strong>: DTOs inmutables diseñados específicamente para el flujo de datos asíncrono.</p></li>
+<li><p><strong>Enums</strong>: Definiciones contractuales que eliminan el uso de &quot;Magic Strings&quot; en validaciones.</p></li>
+</ul>
+</section>
+</section>
+<section id="patron-domain-pure-logic-desacoplamiento-qgis">
+<h2>🚀 Patrón &quot;Domain-Pure Logic&quot; (Desacoplamiento QGIS)<a class="headerlink" href="#patron-domain-pure-logic-desacoplamiento-qgis" title="链接到此标题。"></a></h2>
+<p>SecInterp v2.9.0 implementa un flujo de datos en dos etapas que garantiza la seguridad de hilos (thread-safety):</p>
+<ol class="arabic simple">
+<li><p><strong>Ingesta (Main Thread)</strong>: El método <code class="docutils literal notranslate"><span class="pre">prepare_task_input</span></code> extrae datos de objetos <code class="docutils literal notranslate"><span class="pre">QgsVectorLayer</span></code> hacia tipos primitivos de Python y strings WKT.</p></li>
+<li><p><strong>Cálculo (Background)</strong>: El método <code class="docutils literal notranslate"><span class="pre">process_task_data</span></code> recibe el <code class="docutils literal notranslate"><span class="pre">TaskInput</span></code> y computa las intersecciones sin tocar la API de QGIS que no sea thread-safe.</p></li>
+</ol>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Característica</p></th>
+<th class="head text-left"><p>Antes (v2.7.x)</p></th>
+<th class="head text-left"><p>Ahora (v2.9.0)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><strong>Acceso a Datos</strong></p></td>
+<td class="text-left"><p>Directo a <code class="docutils literal notranslate"><span class="pre">QgsFeature</span></code> durante cálculo</p></td>
+<td class="text-left"><p>Vía DTOs desacoplados (WKT/Attr Dicts)</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Seguridad de Hilos</strong></p></td>
+<td class="text-left"><p>Riesgosa (crashes aleatorios)</p></td>
+<td class="text-left"><p>Garantizada por diseño</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>Testabilidad</strong></p></td>
+<td class="text-left"><p>Requiere QGIS completo</p></td>
+<td class="text-left"><p>Posible con Mocks mínimos o Python puro</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="estabilidad-y-calidad-de-codigo">
+<h2>🧪 Estabilidad y Calidad de Código<a class="headerlink" href="#estabilidad-y-calidad-de-codigo" title="链接到此标题。"></a></h2>
+<ul class="simple">
+<li><p><strong>Corrección de Geometría</strong>: Se eliminó el uso de <code class="docutils literal notranslate"><span class="pre">.clone()</span></code> (causante de inestabilidad en versiones específicas de PyQt5) por constructores de copia explícitos.</p></li>
+<li><p><strong>Standardization</strong>: Adopción de <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">sec_interp.core...</span></code> para todas las importaciones internas, evitando colisiones de nombres.</p></li>
+<li><p><strong>Infraestructura</strong>: Suite de <strong>199 pruebas</strong> ejecutadas exitosamente en contenedores Docker, asegurando paridad entre entornos de desarrollo y producción.</p></li>
+</ul>
+</section>
+<section id="conclusion">
+<h2>📈 Conclusión<a class="headerlink" href="#conclusion" title="链接到此标题。"></a></h2>
+<p>La versión 2.9.0 sienta las bases para el <strong>Objetivo 2</strong>: Soporte para secciones poligonales (bent sections). Gracias a que la lógica de proyección está ahora aislada en el <code class="docutils literal notranslate"><span class="pre">ProjectionEngine</span></code>, implementar polilíneas será una extensión del motor actual en lugar de una reescritura masiva.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2026, Juan M Bernales。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

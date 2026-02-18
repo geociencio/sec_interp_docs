@@ -1,0 +1,241 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SecInterp - Technical Compendium &mdash; SecInterp 2.9.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=0f2d5f14"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=540d3cec"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" />
+    <link rel="next" title="SecInterp - Maintenance &amp; Release Log" href="MAINTENANCE_LOG.html" />
+    <link rel="prev" title="SecInterp - Development Guide" href="DEVELOPMENT_GUIDE.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            SecInterp
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="USER_GUIDE.html">SecInterp User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">SecInterp - Technical Compendium</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#scientific-geophysical-research">🔬 Scientific &amp; Geophysical Research</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#integration-of-geophysics">1. Integration of Geophysics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#drillhole-modeling">2. Drillhole Modeling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#core-algorithms">3. Core Algorithms</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#api-reference">🔧 API Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#core-services-core-services">Core Services (<code class="docutils literal notranslate"><span class="pre">core/services/</span></code>)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#profileservice"><code class="docutils literal notranslate"><span class="pre">ProfileService</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#geologyservice"><code class="docutils literal notranslate"><span class="pre">GeologyService</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#structureservice"><code class="docutils literal notranslate"><span class="pre">StructureService</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#drillholeservice"><code class="docutils literal notranslate"><span class="pre">DrillholeService</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#validation-framework">🛡️ Validation Framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#key-data-structures">🧬 Key Data Structures</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#geologysegment"><code class="docutils literal notranslate"><span class="pre">GeologySegment</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#structuremeasurement"><code class="docutils literal notranslate"><span class="pre">StructureMeasurement</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">sec_interp</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SecInterp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">SecInterp - Technical Compendium</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/TECHNICAL_COMPENDIUM.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="secinterp-technical-compendium">
+<h1>SecInterp - Technical Compendium<a class="headerlink" href="#secinterp-technical-compendium" title="链接到此标题。"></a></h1>
+<p>This document consolidates technical research, geophysical algorithms, and API references for the <strong>SecInterp</strong> plugin.</p>
+<hr class="docutils" />
+<section id="scientific-geophysical-research">
+<h2>🔬 Scientific &amp; Geophysical Research<a class="headerlink" href="#scientific-geophysical-research" title="链接到此标题。"></a></h2>
+<section id="integration-of-geophysics">
+<h3>1. Integration of Geophysics<a class="headerlink" href="#integration-of-geophysics" title="链接到此标题。"></a></h3>
+<p>The plugin is prepared for future integration of deep geophysical data:</p>
+<ul class="simple">
+<li><p><strong>Potential (SP)</strong>: Projections use normalized dot product for section alignment and absolute elevation calculation ($Z_{collar} - Depth$).</p></li>
+<li><p><strong>VES (SEV)</strong>: Resistivity models are visualized as blocks on a logarithmic scale ($\log_{10}(Rho)$) using thickness-to-elevation conversion.</p></li>
+</ul>
+</section>
+<section id="drillhole-modeling">
+<h3>2. Drillhole Modeling<a class="headerlink" href="#drillhole-modeling" title="链接到此标题。"></a></h3>
+<ul class="simple">
+<li><p><strong>Desurveying</strong>: Trayectories are calculated using the <strong>Average Angle Method</strong> (Tangential tracking).</p></li>
+<li><p><strong>Projection</strong>: 3D trajectories are mapped to the 2D plane by calculating distance along the section line while preserving absolute Z.</p></li>
+</ul>
+</section>
+<section id="core-algorithms">
+<h3>3. Core Algorithms<a class="headerlink" href="#core-algorithms" title="链接到此标题。"></a></h3>
+<ul class="simple">
+<li><p><strong>Distance &amp; Sampling</strong>: We use <code class="docutils literal notranslate"><span class="pre">QgsDistanceArea.measureLine()</span></code> and direct <code class="docutils literal notranslate"><span class="pre">dataProvider()</span></code> access for DEM sampling, yielding a ~30% performance boost over high-level processing algorithms.</p></li>
+<li><p><strong>Adaptive LOD</strong>: Uses the <strong>Douglas-Peucker (RDP)</strong> algorithm for line simplification and a curvature-based hysteresis logic to adjust sampling density dynamically during zoom.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="api-reference">
+<h2>🔧 API Reference<a class="headerlink" href="#api-reference" title="链接到此标题。"></a></h2>
+<section id="core-services-core-services">
+<h3>Core Services (<code class="docutils literal notranslate"><span class="pre">core/services/</span></code>)<a class="headerlink" href="#core-services-core-services" title="链接到此标题。"></a></h3>
+<section id="profileservice">
+<h4><code class="docutils literal notranslate"><span class="pre">ProfileService</span></code><a class="headerlink" href="#profileservice" title="链接到此标题。"></a></h4>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">generate_topographic_profile(line_lyr,</span> <span class="pre">raster_lyr,</span> <span class="pre">band)</span></code></strong>: Samples raster data along a line.</p></li>
+<li><p><strong>Returns</strong>: <code class="docutils literal notranslate"><span class="pre">List[Tuple[float,</span> <span class="pre">float]]</span></code> (distance, elevation).</p></li>
+</ul>
+</section>
+<section id="geologyservice">
+<h4><code class="docutils literal notranslate"><span class="pre">GeologyService</span></code><a class="headerlink" href="#geologyservice" title="链接到此标题。"></a></h4>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">generate_geological_profile(...)</span></code></strong>: Intersects section lines with geological geometry.</p></li>
+<li><p><strong>Returns</strong>: <code class="docutils literal notranslate"><span class="pre">List[GeologySegment]</span></code>.</p></li>
+</ul>
+</section>
+<section id="structureservice">
+<h4><code class="docutils literal notranslate"><span class="pre">StructureService</span></code><a class="headerlink" href="#structureservice" title="链接到此标题。"></a></h4>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">project_structures(...)</span></code></strong>: Projects 3D structural data and calculates apparent dip.</p></li>
+<li><p><strong>Formula</strong>: <code class="docutils literal notranslate"><span class="pre">tan(beta)</span> <span class="pre">=</span> <span class="pre">tan(alpha)</span> <span class="pre">*</span> <span class="pre">|cos(strike</span> <span class="pre">-</span> <span class="pre">azimuth)|</span></code>.</p></li>
+</ul>
+</section>
+<section id="drillholeservice">
+<h4><code class="docutils literal notranslate"><span class="pre">DrillholeService</span></code><a class="headerlink" href="#drillholeservice" title="链接到此标题。"></a></h4>
+<ul class="simple">
+<li><p><strong>Architecture</strong>: Decomposed into specialized processors (<code class="docutils literal notranslate"><span class="pre">CollarProcessor</span></code>, <code class="docutils literal notranslate"><span class="pre">SurveyProcessor</span></code>, <code class="docutils literal notranslate"><span class="pre">IntervalProcessor</span></code>).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">project_collars()</span></code></strong>: Projects collar points 3D-&gt;2D.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">process_intervals()</span></code></strong>: Handles full pipeline for trace and interval generation.</p></li>
+</ul>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section id="validation-framework">
+<h2>🛡️ Validation Framework<a class="headerlink" href="#validation-framework" title="链接到此标题。"></a></h2>
+<p>Modularized in <code class="docutils literal notranslate"><span class="pre">core/validation/</span></code>:</p>
+<ul class="simple">
+<li><p><strong>FieldValidator</strong>: Numeric and existence checks.</p></li>
+<li><p><strong>LayerValidator</strong>: CS, geometry, and feature count validation.</p></li>
+<li><p><strong>PathValidator</strong>: Security and permission handling.</p></li>
+<li><p><strong>ProjectValidator</strong>: High-level orchestration.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="key-data-structures">
+<h2>🧬 Key Data Structures<a class="headerlink" href="#key-data-structures" title="链接到此标题。"></a></h2>
+<section id="geologysegment">
+<h3><code class="docutils literal notranslate"><span class="pre">GeologySegment</span></code><a class="headerlink" href="#geologysegment" title="链接到此标题。"></a></h3>
+<p>Used to represent both surface outcrops and drillhole intervals.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GeologySegment</span><span class="p">:</span>
+    <span class="n">unit_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">points</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span>
+    <span class="n">geometry</span><span class="p">:</span> <span class="n">QgsGeometry</span>
+    <span class="n">attributes</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="structuremeasurement">
+<h3><code class="docutils literal notranslate"><span class="pre">StructureMeasurement</span></code><a class="headerlink" href="#structuremeasurement" title="链接到此标题。"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">StructureMeasurement</span><span class="p">:</span>
+    <span class="n">distance</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">elevation</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">apparent_dip</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">original_dip</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">original_strike</span><span class="p">:</span> <span class="nb">float</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="DEVELOPMENT_GUIDE.html" class="btn btn-neutral float-left" title="SecInterp - Development Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="MAINTENANCE_LOG.html" class="btn btn-neutral float-right" title="SecInterp - Maintenance &amp; Release Log" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2026, Juan M Bernales。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
