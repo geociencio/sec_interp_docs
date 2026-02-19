@@ -49,7 +49,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#introduction">1. Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#the-main-window">2. The Main Window</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#step-by-step-tutorial-creating-a-profile">3. Step-by-Step Tutorial: Creating a Profile</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#step-1-digital-elevation-model-dem">Step 1: Digital Elevation Model (DEM)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-1-digital-elevation-model-dem">ステップ1：数値標高モデル (DEM)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#step-2-define-section-line">Step 2: Define Section Line</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#step-3-adding-geological-data">Step 3: Adding Geological Data</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#step-4-adding-structural-data">Step 4: Adding Structural Data</a></li>
@@ -143,22 +143,22 @@
 <ul class="simple">
 <li><p>数値標高モデル（DEM）から地形プロファイルを作成する。</p></li>
 <li><p>ポリゴンレイヤーから地質ユニットをプロファイルに投影する。</p></li>
-<li><p>Project structural measurements (e.g., dip and strike) onto the profile.</p></li>
-<li><p>Project drillhole traces and geological intervals (sondajes) onto the section.</p></li>
-<li><p><strong>Interpretation Tool</strong>: Digitize geological interpretations directly on the section with smart snapping.</p></li>
-<li><p><strong>3D Export (PolygonZ)</strong>: Export your 2D interpretations as valid 3D Shapefiles.</p></li>
-<li><p><strong>i18n Support</strong>: Core interface available in 10 languages (English, Spanish, French, German, Italian, Portuguese, Russian, Chinese, Hindi, Japanese).</p></li>
-<li><p>View an interactive preview with level-of-detail (LOD) optimization.</p></li>
-<li><p>Measure distances and gradients with automatic snapping to vertices.</p></li>
+<li><p>構造測定値（傾斜や走向など）をプロファイルに投影する。</p></li>
+<li><p>ボーリング孔の軌跡と地質学的区間を断面図に投影する。</p></li>
+<li><p><strong>解釈ツール</strong>：スマートスナップを使用して、断面図上で直接地質学的解釈をデジタル化します。</p></li>
+<li><p><strong>3Dエクスポート (PolygonZ)</strong>：2D解釈を有効な3Dシェープファイルとしてエクスポートします。</p></li>
+<li><p><strong>多言語サポート (i18n)</strong>：コアインターフェースは10言語（英語、スペイン語、フランス語、ドイツ語、イタリア語、ポルトガル語、ロシア語、中国語、ヒンディー語、日本語）で利用可能です。</p></li>
+<li><p>詳細レベル (LOD) の最適化により、インタラクティブなプレビューを表示します。</p></li>
+<li><p>頂点への自動スナップにより、距離と勾配を測定します。</p></li>
 </ul>
 </section>
 <section id="the-main-window">
 <h2>2. The Main Window<a class="headerlink" href="#the-main-window" title="Link to this heading"></a></h2>
-<p>The SecInterp dialog is divided into three main areas:</p>
+<p>SecInterpダイアログは、3つの主要な領域に分かれています：</p>
 <ol class="arabic simple">
-<li><p><strong>Sidebar Navigation (Left)</strong>: Navigate between different modules: DEM, Drillholes, Geology, Structure, Settings, and Help.</p></li>
-<li><p><strong>Configuration Page (Center)</strong>: Where you configure the parameters for the selected module.</p></li>
-<li><p><strong>Preview Panel (Right)</strong>: An interactive canvas showing your cross-section in real-time.</p></li>
+<li><p><strong>サイドバーナビゲーション（左）</strong>：DEM、ボーリング孔、地質、構造、設定、ヘルプの各モジュール間を移動します。</p></li>
+<li><p><strong>構成ページ（中央）</strong>：選択したモジュールのパラメータを構成します。</p></li>
+<li><p><strong>プレビューパネル（右）</strong>：断面図をリアルタイムで表示するインタラクティブなキャンバスです。</p></li>
 </ol>
 <p><img alt="The consolidated v2.9.0 Main Window with Sidebar navigation" src="_images/ui_main_dialog_v26.png" />
 <em>The consolidated v2.9.0 Main Window with Sidebar navigation.</em></p>
@@ -166,9 +166,9 @@
 <section id="step-by-step-tutorial-creating-a-profile">
 <h2>3. Step-by-Step Tutorial: Creating a Profile<a class="headerlink" href="#step-by-step-tutorial-creating-a-profile" title="Link to this heading"></a></h2>
 <section id="step-1-digital-elevation-model-dem">
-<h3>Step 1: Digital Elevation Model (DEM)<a class="headerlink" href="#step-1-digital-elevation-model-dem" title="Link to this heading"></a></h3>
+<h3>ステップ1：数値標高モデル (DEM)<a class="headerlink" href="#step-1-digital-elevation-model-dem" title="Link to this heading"></a></h3>
 <ol class="arabic simple">
-<li><p>Navigate to the <strong>DEM</strong> page in the sidebar.</p></li>
+<li><p>サイドバーの <strong>DEM</strong> ページに移動します。</p></li>
 <li><p><strong>Raster Layer</strong>: Select your Digital Elevation Model (Mandatory).</p></li>
 <li><p><strong>Band</strong>: Select the band containing the elevation values (Mandatory).</p></li>
 <li><p><strong>Resolution</strong>: Calculated automatically based on the DEM resolution.</p></li>

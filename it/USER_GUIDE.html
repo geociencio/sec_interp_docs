@@ -49,11 +49,11 @@
 <li class="toctree-l2"><a class="reference internal" href="#introduction">1. Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#the-main-window">2. The Main Window</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#step-by-step-tutorial-creating-a-profile">3. Step-by-Step Tutorial: Creating a Profile</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#step-1-digital-elevation-model-dem">Step 1: Digital Elevation Model (DEM)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-1-digital-elevation-model-dem">Passo 1: Modello Digitale di Elevazione (DEM)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#step-2-define-section-line">Step 2: Define Section Line</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#step-3-adding-geological-data">Step 3: Adding Geological Data</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#step-4-adding-structural-data">Step 4: Adding Structural Data</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#step-5-adding-drillhole-data">Step 5: Adding Drillhole Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#step-4-adding-structural-data">Passo 4: Aggiungere dati strutturali</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-5-adding-drillhole-data">Passo 5: Aggiungere dati del sondaggio</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#collars-tab">1. Collars Tab</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#survey-tab">2. Survey Tab</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#intervals-tab">3. Intervals Tab</a></li>
@@ -139,26 +139,26 @@
 <section id="introduction">
 <h2>1. Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h2>
 <p>Benvenuti nel plugin SecInterp! Questa guida vi aiuterà a iniziare a creare sezioni geologiche trasversali dai vostri layer QGIS.</p>
-<p>SecInterp allows you to:</p>
+<p>SecInterp ti permette di:</p>
 <ul class="simple">
-<li><p>Create a topographic profile from a Digital Elevation Model (DEM).</p></li>
-<li><p>Project geological units from a polygon layer onto the profile.</p></li>
-<li><p>Project structural measurements (e.g., dip and strike) onto the profile.</p></li>
+<li><p>Creare un profilo topografico da un Modello Digitale di Elevazione (DEM).</p></li>
+<li><p>Proiettare unità geologiche da un layer poligonale sul profilo.</p></li>
+<li><p>Proiettare misure strutturali (es. inclinazione e direzione) sul profilo.</p></li>
 <li><p>Project drillhole traces and geological intervals (sondajes) onto the section.</p></li>
 <li><p><strong>Interpretation Tool</strong>: Digitize geological interpretations directly on the section with smart snapping.</p></li>
-<li><p><strong>3D Export (PolygonZ)</strong>: Export your 2D interpretations as valid 3D Shapefiles.</p></li>
-<li><p><strong>i18n Support</strong>: Core interface available in 10 languages (English, Spanish, French, German, Italian, Portuguese, Russian, Chinese, Hindi, Japanese).</p></li>
+<li><p><strong>Esportazione 3D (PolygonZ)</strong>: Esporta le tue interpretazioni 2D come file Shapefile 3D validi.</p></li>
+<li><p><strong>Supporto i18n</strong>: Interfaccia principale disponibile in 10 lingue (Inglese, Spagnolo, Francese, Tedesco, Italiano, Portoghese, Russo, Cinese, Hindi, Giapponese).</p></li>
 <li><p>View an interactive preview with level-of-detail (LOD) optimization.</p></li>
-<li><p>Measure distances and gradients with automatic snapping to vertices.</p></li>
+<li><p>Misurare distanze e pendenze con aggancio automatico ai vertici.</p></li>
 </ul>
 </section>
 <section id="the-main-window">
 <h2>2. The Main Window<a class="headerlink" href="#the-main-window" title="Link to this heading"></a></h2>
-<p>The SecInterp dialog is divided into three main areas:</p>
+<p>La finestra SecInterp è divisa in tre aree principali:</p>
 <ol class="arabic simple">
-<li><p><strong>Sidebar Navigation (Left)</strong>: Navigate between different modules: DEM, Drillholes, Geology, Structure, Settings, and Help.</p></li>
-<li><p><strong>Configuration Page (Center)</strong>: Where you configure the parameters for the selected module.</p></li>
-<li><p><strong>Preview Panel (Right)</strong>: An interactive canvas showing your cross-section in real-time.</p></li>
+<li><p><strong>Navigazione Laterale (Sinistra)</strong>: Naviga tra i diversi moduli: DEM, Sondaggi, Geologia, Struttura, Impostazioni e Aiuto.</p></li>
+<li><p><strong>Pagina di Configurazione (Centro)</strong>: Dove configuri i parametri per il modulo selezionato.</p></li>
+<li><p><strong>Pannello di Anteprima (Destra)</strong>: Un’area interattiva che mostra la tua sezione in tempo reale.</p></li>
 </ol>
 <p><img alt="The consolidated v2.9.0 Main Window with Sidebar navigation" src="_images/ui_main_dialog_v26.png" />
 <em>The consolidated v2.9.0 Main Window with Sidebar navigation.</em></p>
@@ -166,9 +166,9 @@
 <section id="step-by-step-tutorial-creating-a-profile">
 <h2>3. Step-by-Step Tutorial: Creating a Profile<a class="headerlink" href="#step-by-step-tutorial-creating-a-profile" title="Link to this heading"></a></h2>
 <section id="step-1-digital-elevation-model-dem">
-<h3>Step 1: Digital Elevation Model (DEM)<a class="headerlink" href="#step-1-digital-elevation-model-dem" title="Link to this heading"></a></h3>
+<h3>Passo 1: Modello Digitale di Elevazione (DEM)<a class="headerlink" href="#step-1-digital-elevation-model-dem" title="Link to this heading"></a></h3>
 <ol class="arabic simple">
-<li><p>Navigate to the <strong>DEM</strong> page in the sidebar.</p></li>
+<li><p>Naviga alla pagina <strong>DEM</strong> nella barra laterale.</p></li>
 <li><p><strong>Raster Layer</strong>: Select your Digital Elevation Model (Mandatory).</p></li>
 <li><p><strong>Band</strong>: Select the band containing the elevation values (Mandatory).</p></li>
 <li><p><strong>Resolution</strong>: Calculated automatically based on the DEM resolution.</p></li>
@@ -198,27 +198,27 @@
 <li><p><strong>Outcrop Layer</strong>: Select the polygon layer containing your surface geology (optional).</p></li>
 <li><p><strong>Name Field</strong>: Choose the field containing the unit codes or names (Mandatory if Outcrop Layer is selected).</p></li>
 </ol>
-<p><img alt="Geology configuration" src="_images/guide_geology_setup.png" />
+<p><img alt="Configurazione geologia" src="_images/guide_geology_setup.png" />
 <em>Geology configuration.</em></p>
-<p><img alt="Geology Section Preview" src="_images/geology_section_preview.png" />
+<p><img alt="Anteprima sezione geologia" src="_images/geology_section_preview.png" />
 <em>Geology Section Preview.</em></p>
 </section>
 <section id="step-4-adding-structural-data">
-<h3>Step 4: Adding Structural Data<a class="headerlink" href="#step-4-adding-structural-data" title="Link to this heading"></a></h3>
+<h3>Passo 4: Aggiungere dati strutturali<a class="headerlink" href="#step-4-adding-structural-data" title="Link to this heading"></a></h3>
 <ol class="arabic simple">
-<li><p>Navigate to the <strong>Structural</strong> page.</p></li>
+<li><p>Naviga alla pagina <strong>Struttura</strong>.</p></li>
 <li><p><strong>Structural Layer</strong>: Select the polygon layer containing your dip measurements (optional).</p></li>
-<li><p><strong>Dip Field</strong>: Choose the field containing the dip values (Mandatory if Structural Layer is selected).</p></li>
+<li><p><strong>Campo Inclinazione</strong>: Scegli il campo contenente i valori di inclinazione (Obbligatorio se lo strato strutturale è selezionato).</p></li>
 <li><p><strong>Strike Field</strong>: Choose the field containing the strike values (Mandatory if Structural Layer is selected).</p></li>
 <li><p><strong>Dip Line Scale</strong>: Adjust the scale of the dip lines (e.g., 1.0).</p></li>
 </ol>
-<p><img alt="Structural configuration" src="_images/guide_structure_setup.png" />
+<p><img alt="Configurazione strutturale" src="_images/guide_structure_setup.png" />
 <em>Structural configuration.</em></p>
 <p><img alt="Structural Section Preview" src="_images/structure_section_preview.png" />
 <em>Structural Section Preview.</em></p>
 </section>
 <section id="step-5-adding-drillhole-data">
-<h3>Step 5: Adding Drillhole Data<a class="headerlink" href="#step-5-adding-drillhole-data" title="Link to this heading"></a></h3>
+<h3>Passo 5: Aggiungere dati del sondaggio<a class="headerlink" href="#step-5-adding-drillhole-data" title="Link to this heading"></a></h3>
 <p>The <strong>Drillholes</strong> page allows you to project borehole data onto the section (optional). This page is divided into three sub-tabs:</p>
 <section id="collars-tab">
 <h4>1. Collars Tab<a class="headerlink" href="#collars-tab" title="Link to this heading"></a></h4>

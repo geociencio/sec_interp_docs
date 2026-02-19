@@ -49,11 +49,11 @@
 <li class="toctree-l2"><a class="reference internal" href="#introduction">1. Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#the-main-window">2. The Main Window</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#step-by-step-tutorial-creating-a-profile">3. Step-by-Step Tutorial: Creating a Profile</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#step-1-digital-elevation-model-dem">Step 1: Digital Elevation Model (DEM)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#step-2-define-section-line">Step 2: Define Section Line</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#step-3-adding-geological-data">Step 3: Adding Geological Data</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#step-4-adding-structural-data">Step 4: Adding Structural Data</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#step-5-adding-drillhole-data">Step 5: Adding Drillhole Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#step-1-digital-elevation-model-dem">Étape 1 : Modèle Numérique de Terrain (MNT)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-2-define-section-line">Étape 2 : Définir la Ligne de Coupe</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-3-adding-geological-data">Étape 3 : Ajouter des Données Géologiques</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-4-adding-structural-data">Étape 4 : Ajouter des Données Structurales</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-5-adding-drillhole-data">Étape 5 : Ajouter des Données de Sondage</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#collars-tab">1. Collars Tab</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#survey-tab">2. Survey Tab</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#intervals-tab">3. Intervals Tab</a></li>
@@ -63,9 +63,9 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#advanced-features-v3-0-0">4. Advanced Features (v3.0.0)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#interpretation-tool-drawing">4.1 Interpretation Tool (Drawing)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interpretation-tool-drawing">4.1 Outil d’Interprétation (Dessin)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#attribute-inheritance">4.2 Attribute Inheritance</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#exporting-to-3d-polygonz">4.3 Exporting to 3D (PolygonZ)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exporting-to-3d-polygonz">4.3 Exportation en 3D (PolygonZ)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#settings-page">4.3 Settings Page</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#default-tab-export-selection">1. Default Tab (Export Selection)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#advanced-tab">2. Advanced Tab</a></li>
@@ -143,22 +143,22 @@
 <ul class="simple">
 <li><p>Créer un profil topographique à partir d’un Modèle Numérique de Terrain (MNT/DEM).</p></li>
 <li><p>Projeter des unités géologiques à partir d’une couche de polygones sur le profil.</p></li>
-<li><p>Project structural measurements (e.g., dip and strike) onto the profile.</p></li>
-<li><p>Project drillhole traces and geological intervals (sondajes) onto the section.</p></li>
-<li><p><strong>Interpretation Tool</strong>: Digitize geological interpretations directly on the section with smart snapping.</p></li>
-<li><p><strong>3D Export (PolygonZ)</strong>: Export your 2D interpretations as valid 3D Shapefiles.</p></li>
-<li><p><strong>i18n Support</strong>: Core interface available in 10 languages (English, Spanish, French, German, Italian, Portuguese, Russian, Chinese, Hindi, Japanese).</p></li>
-<li><p>View an interactive preview with level-of-detail (LOD) optimization.</p></li>
-<li><p>Measure distances and gradients with automatic snapping to vertices.</p></li>
+<li><p>Projeter des mesures structurales (ex: pendage et direction) sur le profil.</p></li>
+<li><p>Projeter des traces de sondages et des intervalles géologiques sur la section.</p></li>
+<li><p><strong>Outil d’Interprétation</strong> : Numérisez des interprétations géologiques directement sur la section avec un accrochage intelligent.</p></li>
+<li><p><strong>Exportation 3D (PolygonZ)</strong> : Exportez vos interprétations 2D en tant que fichiers Shapefile 3D valides.</p></li>
+<li><p><strong>Support i18n</strong> : Interface principale disponible en 10 langues (Anglais, Espagnol, Français, Allemand, Italien, Portugais, Russe, Chinois, Hindi, Japonais).</p></li>
+<li><p>Visualisez un aperçu interactif avec optimisation du niveau de détail (LOD).</p></li>
+<li><p>Mesurez les distances et les gradients avec un accrochage automatique aux sommets.</p></li>
 </ul>
 </section>
 <section id="the-main-window">
 <h2>2. The Main Window<a class="headerlink" href="#the-main-window" title="Lien vers cette rubrique"></a></h2>
-<p>The SecInterp dialog is divided into three main areas:</p>
+<p>La boîte de dialogue SecInterp est divisée en trois zones principales :</p>
 <ol class="arabic simple">
-<li><p><strong>Sidebar Navigation (Left)</strong>: Navigate between different modules: DEM, Drillholes, Geology, Structure, Settings, and Help.</p></li>
-<li><p><strong>Configuration Page (Center)</strong>: Where you configure the parameters for the selected module.</p></li>
-<li><p><strong>Preview Panel (Right)</strong>: An interactive canvas showing your cross-section in real-time.</p></li>
+<li><p><strong>Navigation Latérale (Gauche)</strong> : Naviguez entre les différents modules : MNT, Sondages, Géologie, Structure, Paramètres et Aide.</p></li>
+<li><p><strong>Page de Configuration (Centre)</strong> : Où vous configurez les paramètres du module sélectionné.</p></li>
+<li><p><strong>Panneau d’Aperçu (Droite)</strong> : Un canevas interactif affichant votre coupe en temps réel.</p></li>
 </ol>
 <p><img alt="The consolidated v2.9.0 Main Window with Sidebar navigation" src="_images/ui_main_dialog_v26.png" />
 <em>The consolidated v2.9.0 Main Window with Sidebar navigation.</em></p>
@@ -166,67 +166,67 @@
 <section id="step-by-step-tutorial-creating-a-profile">
 <h2>3. Step-by-Step Tutorial: Creating a Profile<a class="headerlink" href="#step-by-step-tutorial-creating-a-profile" title="Lien vers cette rubrique"></a></h2>
 <section id="step-1-digital-elevation-model-dem">
-<h3>Step 1: Digital Elevation Model (DEM)<a class="headerlink" href="#step-1-digital-elevation-model-dem" title="Lien vers cette rubrique"></a></h3>
+<h3>Étape 1 : Modèle Numérique de Terrain (MNT)<a class="headerlink" href="#step-1-digital-elevation-model-dem" title="Lien vers cette rubrique"></a></h3>
 <ol class="arabic simple">
-<li><p>Navigate to the <strong>DEM</strong> page in the sidebar.</p></li>
+<li><p>Accédez à la page <strong>MNT</strong> (DEM) dans la barre latérale.</p></li>
 <li><p><strong>Raster Layer</strong>: Select your Digital Elevation Model (Mandatory).</p></li>
-<li><p><strong>Band</strong>: Select the band containing the elevation values (Mandatory).</p></li>
+<li><p><strong>Bande</strong> : Sélectionnez la bande contenant les valeurs d’élévation (Obligatoire).</p></li>
 <li><p><strong>Resolution</strong>: Calculated automatically based on the DEM resolution.</p></li>
 <li><p><strong>Scale 1:1</strong>: Calculated automatically based on the DEM resolution.</p></li>
 <li><p><strong>Vert. Exag</strong>: Adjust if you want to emphasize topography (e.g., 2.0x).</p></li>
 </ol>
-<p><img alt="Digital Elevation Model configuration" src="_images/guide_dem_setup.png" />
+<p><img alt="Configuration du Modèle Numérique de Terrain" src="_images/guide_dem_setup.png" />
 <em>Digital Elevation Model configuration.</em></p>
 </section>
 <section id="step-2-define-section-line">
-<h3>Step 2: Define Section Line<a class="headerlink" href="#step-2-define-section-line" title="Lien vers cette rubrique"></a></h3>
+<h3>Étape 2 : Définir la Ligne de Coupe<a class="headerlink" href="#step-2-define-section-line" title="Lien vers cette rubrique"></a></h3>
 <ol class="arabic simple">
-<li><p>Navigate to the <strong>Section Line</strong> page.</p></li>
-<li><p><strong>Section Layer</strong>: Select the vector line layer representing your section traces (Mandatory).</p></li>
-<li><p><strong>Buffer Dist. (m)</strong>: Set a buffer distance (e.g., 50m) to capture data around the line (Mandatory).</p></li>
+<li><p>Accédez à la page <strong>Ligne de Coupe</strong> (Section Line).</p></li>
+<li><p><strong>Couche de Coupe</strong> : Sélectionnez la couche de lignes vectorielles représentant vos tracés de coupe (Obligatoire).</p></li>
+<li><p><strong>Dist. Tampon (m)</strong> : Définissez une distance de tampon (ex: 50m) pour capturer les données autour de la ligne (Obligatoire).</p></li>
 <li><p><strong>Important</strong>: The line must be single line (not multipart, only P1 and P2) in order to calculate 3d section export.</p></li>
 </ol>
-<p><img alt="Section Line selection and buffer configuration" src="_images/guide_section_setup.png" />
+<p><img alt="Sélection de la ligne de coupe et configuration du tampon" src="_images/guide_section_setup.png" />
 <em>Section Line selection and buffer configuration.</em></p>
-<p><img alt="Profile DEM Section Preview" src="_images/dem_section_preview.png" />
+<p><img alt="Aperçu de la section MNT du profil" src="_images/dem_section_preview.png" />
 <em>Profile DEM Section Preview.</em></p>
 </section>
 <section id="step-3-adding-geological-data">
-<h3>Step 3: Adding Geological Data<a class="headerlink" href="#step-3-adding-geological-data" title="Lien vers cette rubrique"></a></h3>
+<h3>Étape 3 : Ajouter des Données Géologiques<a class="headerlink" href="#step-3-adding-geological-data" title="Lien vers cette rubrique"></a></h3>
 <ol class="arabic simple">
-<li><p>Navigate to the <strong>Geology</strong> page.</p></li>
-<li><p><strong>Outcrop Layer</strong>: Select the polygon layer containing your surface geology (optional).</p></li>
-<li><p><strong>Name Field</strong>: Choose the field containing the unit codes or names (Mandatory if Outcrop Layer is selected).</p></li>
+<li><p>Accédez à la page <strong>Géologie</strong>.</p></li>
+<li><p><strong>Couche d’Affleurement</strong> : Sélectionnez la couche de polygones contenant votre géologie de surface (optionnel).</p></li>
+<li><p><strong>Champ de Nom</strong> : Choisissez le champ contenant les codes ou noms d’unités (Obligatoire si une couche d’affleurement est sélectionnée).</p></li>
 </ol>
-<p><img alt="Geology configuration" src="_images/guide_geology_setup.png" />
+<p><img alt="Configuration de la géologie" src="_images/guide_geology_setup.png" />
 <em>Geology configuration.</em></p>
-<p><img alt="Geology Section Preview" src="_images/geology_section_preview.png" />
+<p><img alt="Aperçu de la section géologique" src="_images/geology_section_preview.png" />
 <em>Geology Section Preview.</em></p>
 </section>
 <section id="step-4-adding-structural-data">
-<h3>Step 4: Adding Structural Data<a class="headerlink" href="#step-4-adding-structural-data" title="Lien vers cette rubrique"></a></h3>
+<h3>Étape 4 : Ajouter des Données Structurales<a class="headerlink" href="#step-4-adding-structural-data" title="Lien vers cette rubrique"></a></h3>
 <ol class="arabic simple">
-<li><p>Navigate to the <strong>Structural</strong> page.</p></li>
-<li><p><strong>Structural Layer</strong>: Select the polygon layer containing your dip measurements (optional).</p></li>
-<li><p><strong>Dip Field</strong>: Choose the field containing the dip values (Mandatory if Structural Layer is selected).</p></li>
-<li><p><strong>Strike Field</strong>: Choose the field containing the strike values (Mandatory if Structural Layer is selected).</p></li>
+<li><p>Accédez à la page <strong>Structure</strong>.</p></li>
+<li><p><strong>Couche Structurale</strong> : Sélectionnez la couche de polygones contenant vos mesures de pendage (optionnel).</p></li>
+<li><p><strong>Champ de Pendage</strong> : Choisissez le champ contenant les valeurs de pendage (Obligatoire si une couche structurale est sélectionnée).</p></li>
+<li><p><strong>Champ de Direction</strong> : Choisissez le champ contenant les valeurs de direction (Obligatoire si une couche structurale est sélectionnée).</p></li>
 <li><p><strong>Dip Line Scale</strong>: Adjust the scale of the dip lines (e.g., 1.0).</p></li>
 </ol>
-<p><img alt="Structural configuration" src="_images/guide_structure_setup.png" />
+<p><img alt="Configuration structurale" src="_images/guide_structure_setup.png" />
 <em>Structural configuration.</em></p>
-<p><img alt="Structural Section Preview" src="_images/structure_section_preview.png" />
+<p><img alt="Aperçu de la section structurale" src="_images/structure_section_preview.png" />
 <em>Structural Section Preview.</em></p>
 </section>
 <section id="step-5-adding-drillhole-data">
-<h3>Step 5: Adding Drillhole Data<a class="headerlink" href="#step-5-adding-drillhole-data" title="Lien vers cette rubrique"></a></h3>
-<p>The <strong>Drillholes</strong> page allows you to project borehole data onto the section (optional). This page is divided into three sub-tabs:</p>
+<h3>Étape 5 : Ajouter des Données de Sondage<a class="headerlink" href="#step-5-adding-drillhole-data" title="Lien vers cette rubrique"></a></h3>
+<p>La page <strong>Sondages</strong> vous permet de projeter des données de forages sur la section (optionnel). Cette page est divisée en trois sous-onglets :</p>
 <section id="collars-tab">
 <h4>1. Collars Tab<a class="headerlink" href="#collars-tab" title="Lien vers cette rubrique"></a></h4>
-<p>Configures the location of drillhole collars (start points).</p>
+<p>Configure l’emplacement des têtes de sondages (points de départ).</p>
 <ul class="simple">
-<li><p><strong>Collar Layer</strong>: Point layer with hole locations (optional).</p></li>
-<li><p><strong>Use Layer Geometry For Coordinates</strong>: Keep checked to use the point layer’s geometry for X/Y coordinates (Optional if Collar Layer is selected).</p></li>
-<li><p><strong>Hole ID</strong>: Unique identifier for each drillhole (Mandatory if Collar Layer is selected).</p></li>
+<li><p><strong>Couche de Colliers</strong> : Couche de points avec les emplacements des forages (optionnel).</p></li>
+<li><p><strong>Utiliser la Géométrie de la Couche pour les Coordonnées</strong> : Gardez coché pour utiliser la géométrie de la couche de points pour les coordonnées X/Y (Optionnel si une couche de colliers est sélectionnée).</p></li>
+<li><p><strong>ID du Forage</strong> : Identifiant unique pour chaque sondage (Obligatoire si une couche de colliers est sélectionnée).</p></li>
 <li><p><strong>East (X)</strong>: Optional field for collar X coordinate (if not using point layer geometry).</p></li>
 <li><p><strong>North (Y)</strong>: Optional field for collar Y coordinate (if not using point layer geometry).</p></li>
 <li><p><strong>Elevation (Z)</strong>: Optional field for collar elevation (if not using DEM).</p></li>
@@ -277,8 +277,8 @@
 <section id="advanced-features-v3-0-0">
 <h2>4. Advanced Features (v3.0.0)<a class="headerlink" href="#advanced-features-v3-0-0" title="Lien vers cette rubrique"></a></h2>
 <section id="interpretation-tool-drawing">
-<h3>4.1 Interpretation Tool (Drawing)<a class="headerlink" href="#interpretation-tool-drawing" title="Lien vers cette rubrique"></a></h3>
-<p>The new <strong>Interpretation Tool</strong> allows you to draw geological polygons directly on the profile section.</p>
+<h3>4.1 Outil d’Interprétation (Dessin)<a class="headerlink" href="#interpretation-tool-drawing" title="Lien vers cette rubrique"></a></h3>
+<p>Le nouvel <strong>Outil d’Interprétation</strong> vous permet de dessiner des polygones géologiques directement sur la section du profil.</p>
 <ol class="arabic simple">
 <li><p>Enable the tool by clicking the <strong>Interpret</strong> button in the preview toolbar.</p></li>
 <li><p><strong>Drawing</strong>: Left-click to add vertices.</p></li>
@@ -310,7 +310,7 @@
 </ul>
 </section>
 <section id="exporting-to-3d-polygonz">
-<h3>4.3 Exporting to 3D (PolygonZ)<a class="headerlink" href="#exporting-to-3d-polygonz" title="Lien vers cette rubrique"></a></h3>
+<h3>4.3 Exportation en 3D (PolygonZ)<a class="headerlink" href="#exporting-to-3d-polygonz" title="Lien vers cette rubrique"></a></h3>
 <p>SecInterp now bridges the gap between 2D sections and 3D modeling. This feature allows you to export your 2D interpretations as real 3D objects.</p>
 <p><strong>Workflow:</strong></p>
 <ol class="arabic simple">

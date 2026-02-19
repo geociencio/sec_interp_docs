@@ -1,0 +1,7 @@
+sec\_interp.debug\_metadata module
+==================================
+
+.. automodule:: sec_interp.debug_metadata
+   :members:
+   :show-inheritance:
+   :undoc-members:
