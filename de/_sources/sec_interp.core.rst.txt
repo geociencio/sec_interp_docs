@@ -30,5 +30,4 @@ Submodules
    sec_interp.core.controller
    sec_interp.core.data_cache
    sec_interp.core.exceptions
-   sec_interp.core.i18n
    sec_interp.core.performance_metrics

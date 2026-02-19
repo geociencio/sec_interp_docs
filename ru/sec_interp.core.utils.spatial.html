@@ -127,7 +127,7 @@ Returns 0 for points or single-vertex lines.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="sec_interp.core.utils.spatial.calculate_step_size">
-<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.spatial.</span></span><span class="sig-name descname"><span class="pre">calculate_step_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsGeometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raster_lyr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsRasterLayer</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#sec_interp.core.utils.spatial.calculate_step_size" title="Ссылка на это определение"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.spatial.</span></span><span class="sig-name descname"><span class="pre">calculate_step_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsGeometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raster_lyr</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#sec_interp.core.utils.spatial.calculate_step_size" title="Ссылка на это определение"></a></dt>
 <dd><p>Calculate step size based on slope and raster resolution.</p>
 <div class="deprecated">
 <p><span class="versionmodified deprecated">Устарело, начиная с версии Use: </span>densify_line_by_interval() instead for better precision and simpler code.
@@ -175,43 +175,6 @@ and associated ellipsoid for geodesic calculations.</p>
 </dd>
 <dt class="field-even">Результат<span class="colon">:</span></dt>
 <dd class="field-even"><p>The first vertex of the first part of the geometry.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="sec_interp.core.utils.spatial.is_point_in_buffer">
-<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.spatial.</span></span><span class="sig-name descname"><span class="pre">is_point_in_buffer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsPointXY</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_geom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsGeometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer_dist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.core.utils.spatial.is_point_in_buffer" title="Ссылка на это определение"></a></dt>
-<dd><p>Check if a point is within a perpendicular distance from a line.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Параметры<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>point</strong> – The point to check.</p></li>
-<li><p><strong>line_geom</strong> – The line geometry representing the section.</p></li>
-<li><p><strong>buffer_dist</strong> – The maximum allowed perpendicular distance.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Результат<span class="colon">:</span></dt>
-<dd class="field-even"><p>True if the point is within the buffer.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="sec_interp.core.utils.spatial.project_point_to_section">
-<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.spatial.</span></span><span class="sig-name descname"><span class="pre">project_point_to_section</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsPointXY</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_geom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsGeometry</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.core.utils.spatial.project_point_to_section" title="Ссылка на это определение"></a></dt>
-<dd><p>Project a point onto a line and return distance along and offset.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Параметры<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>point</strong> – The point to project.</p></li>
-<li><p><strong>line_geom</strong> – The line geometry representing the section.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Результат<span class="colon">:</span></dt>
-<dd class="field-even"><p>A tuple (distance_along, perpendicular_offset).
-- distance_along: Distance from the start of the line to the projected point.
-- perpendicular_offset: Shortest distance from the point to the line.</p>
 </dd>
 </dl>
 </dd></dl>

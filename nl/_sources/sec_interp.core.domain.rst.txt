@@ -15,6 +15,5 @@ Submodules
    sec_interp.core.domain.dtos
    sec_interp.core.domain.entities
    sec_interp.core.domain.enums
-   sec_interp.core.domain.sev
    sec_interp.core.domain.spatial_meta
    sec_interp.core.domain.task_inputs
