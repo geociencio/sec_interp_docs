@@ -1,0 +1,7 @@
+sec\_interp.core.utils.inversion module
+=======================================
+
+.. automodule:: sec_interp.core.utils.inversion
+   :members:
+   :show-inheritance:
+   :undoc-members:

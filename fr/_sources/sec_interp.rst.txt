@@ -23,8 +23,6 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
-   sec_interp.debug_discovery
-   sec_interp.debug_metadata
    sec_interp.logger_config
    sec_interp.run_qgis_manage
    sec_interp.sec_interp_plugin

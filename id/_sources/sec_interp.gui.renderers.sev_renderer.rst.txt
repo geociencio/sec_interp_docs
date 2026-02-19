@@ -1,0 +1,7 @@
+sec\_interp.gui.renderers.sev\_renderer module
+==============================================
+
+.. automodule:: sec_interp.gui.renderers.sev_renderer
+   :members:
+   :show-inheritance:
+   :undoc-members:

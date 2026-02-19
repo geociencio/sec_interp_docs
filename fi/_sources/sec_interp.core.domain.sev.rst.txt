@@ -1,0 +1,7 @@
+sec\_interp.core.domain.sev module
+==================================
+
+.. automodule:: sec_interp.core.domain.sev
+   :members:
+   :show-inheritance:
+   :undoc-members:

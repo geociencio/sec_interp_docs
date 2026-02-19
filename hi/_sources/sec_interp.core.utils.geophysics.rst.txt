@@ -1,0 +1,7 @@
+sec\_interp.core.utils.geophysics module
+========================================
+
+.. automodule:: sec_interp.core.utils.geophysics
+   :members:
+   :show-inheritance:
+   :undoc-members:
