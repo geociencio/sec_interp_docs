@@ -1351,7 +1351,7 @@ window.addEventListener("load", load);</script>
 </li>
       <li><a href="sec_interp.logger_config.html#sec_interp.logger_config.QgsLogHandler.emit">emit() （sec_interp.logger_config.QgsLogHandler 方法）</a>
 </li>
-      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.EMPTY_LAYER">EMPTY_LAYER（sec_interp.gui.main_dialog_config.ValidationMessages 属性）</a>
+      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.empty_layer">empty_layer()（sec_interp.gui.main_dialog_config.ValidationMessages 静态方法）</a>
 </li>
       <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig.ENABLE_CACHE">ENABLE_CACHE（sec_interp.gui.main_dialog_config.DialogConfig 属性）</a>
 </li>
@@ -1630,6 +1630,8 @@ window.addEventListener("load", load);</script>
       <li><a href="sec_interp.core.data_cache.html#sec_interp.core.data_cache.DataCache.get_cache_size">get_cache_size() （sec_interp.core.data_cache.DataCache 方法）</a>
 </li>
       <li><a href="sec_interp.core.controller.html#sec_interp.core.controller.ProfileController.get_cached_data">get_cached_data() （sec_interp.core.controller.ProfileController 方法）</a>
+</li>
+      <li><a href="sec_interp.core.utils.safe_loader.html#sec_interp.core.utils.safe_loader.SafeLoader.get_class">get_class()（sec_interp.core.utils.safe_loader.SafeLoader 静态方法）</a>
 </li>
       <li><a href="sec_interp.gui.renderers.color_manager.html#sec_interp.gui.renderers.color_manager.ColorManager.get_color">get_color() （sec_interp.gui.renderers.color_manager.ColorManager 方法）</a>
 </li>
@@ -1967,15 +1969,15 @@ window.addEventListener("load", load);</script>
 </li>
       <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.FieldType.INT">INT（sec_interp.core.domain.FieldType 属性）</a>
 </li>
-      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.INVALID_FIELD_TYPE">INVALID_FIELD_TYPE（sec_interp.gui.main_dialog_config.ValidationMessages 属性）</a>
+      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.invalid_field_type">invalid_field_type()（sec_interp.gui.main_dialog_config.ValidationMessages 静态方法）</a>
 </li>
-      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.INVALID_GEOMETRY">INVALID_GEOMETRY（sec_interp.gui.main_dialog_config.ValidationMessages 属性）</a>
+      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.invalid_geometry">invalid_geometry()（sec_interp.gui.main_dialog_config.ValidationMessages 静态方法）</a>
 </li>
-      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.INVALID_OUTPUT_PATH">INVALID_OUTPUT_PATH（sec_interp.gui.main_dialog_config.ValidationMessages 属性）</a>
+      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.invalid_output_path">invalid_output_path()（sec_interp.gui.main_dialog_config.ValidationMessages 静态方法）</a>
 </li>
-      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.INVALID_RASTER">INVALID_RASTER（sec_interp.gui.main_dialog_config.ValidationMessages 属性）</a>
+      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.invalid_raster">invalid_raster()（sec_interp.gui.main_dialog_config.ValidationMessages 静态方法）</a>
 </li>
-      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.INVALID_SECTION_LINE">INVALID_SECTION_LINE（sec_interp.gui.main_dialog_config.ValidationMessages 属性）</a>
+      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.invalid_section_line">invalid_section_line()（sec_interp.gui.main_dialog_config.ValidationMessages 静态方法）</a>
 </li>
       <li><a href="sec_interp.core.data_cache.html#sec_interp.core.data_cache.DataCache.invalidate">invalidate() （sec_interp.core.data_cache.DataCache 方法）</a>
 </li>
@@ -2057,6 +2059,8 @@ window.addEventListener("load", load);</script>
 </li>
       <li><a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.LayerDict">LayerDict()（在 sec_interp.core.domain.entities 模块中）</a>
 </li>
+      <li><a href="sec_interp.core.utils.safe_loader.html#sec_interp.core.utils.safe_loader.SafeLoader.lazy_load">lazy_load()（sec_interp.core.utils.safe_loader.SafeLoader 静态方法）</a>
+</li>
       <li><a href="sec_interp.gui.legend_widget.html#sec_interp.gui.legend_widget.LegendWidget">LegendWidget（sec_interp.gui.legend_widget 中的类）</a>
 </li>
       <li><a href="sec_interp.core.domain.html#id8">line_crs_authid（sec_interp.core.domain.DrillholeTaskInput 属性）</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.DrillholeTaskInput.line_crs_authid">[1]</a>
@@ -2073,10 +2077,10 @@ window.addEventListener("load", load);</script>
 </li>
       <li><a href="sec_interp.core.domain.dtos.html#id18">line_layer（sec_interp.core.domain.dtos.PreviewParams 属性）</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.line_layer">[1]</a>
 </li>
-      <li><a href="sec_interp.core.domain.html#id60">line_layer（sec_interp.core.domain.PreviewParams 属性）</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.line_layer">[1]</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="sec_interp.core.domain.html#id60">line_layer（sec_interp.core.domain.PreviewParams 属性）</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.PreviewParams.line_layer">[1]</a>
+</li>
       <li><a href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ValidationParams.line_layer">line_layer（sec_interp.core.validation.project_validator.ValidationParams 属性）</a>
 </li>
       <li><a href="sec_interp.core.validation.html#sec_interp.core.validation.ValidationParams.line_layer">line_layer（sec_interp.core.validation.ValidationParams 属性）</a>
@@ -2165,23 +2169,23 @@ window.addEventListener("load", load);</script>
 </li>
       <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.UIConstants.MIN_PREVIEW_WIDTH">MIN_PREVIEW_WIDTH（sec_interp.gui.main_dialog_config.UIConstants 属性）</a>
 </li>
-      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.MISSING_DIP_FIELD">MISSING_DIP_FIELD（sec_interp.gui.main_dialog_config.ValidationMessages 属性）</a>
+      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.missing_dip_field">missing_dip_field()（sec_interp.gui.main_dialog_config.ValidationMessages 静态方法）</a>
 </li>
-      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.MISSING_FIELD">MISSING_FIELD（sec_interp.gui.main_dialog_config.ValidationMessages 属性）</a>
+      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.missing_field">missing_field()（sec_interp.gui.main_dialog_config.ValidationMessages 静态方法）</a>
 </li>
-      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.MISSING_OUTCROP_FIELD">MISSING_OUTCROP_FIELD（sec_interp.gui.main_dialog_config.ValidationMessages 属性）</a>
+      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.missing_outcrop_field">missing_outcrop_field()（sec_interp.gui.main_dialog_config.ValidationMessages 静态方法）</a>
 </li>
-      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.MISSING_OUTCROP_LAYER">MISSING_OUTCROP_LAYER（sec_interp.gui.main_dialog_config.ValidationMessages 属性）</a>
+      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.missing_outcrop_layer">missing_outcrop_layer()（sec_interp.gui.main_dialog_config.ValidationMessages 静态方法）</a>
 </li>
-      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.MISSING_OUTPUT_PATH">MISSING_OUTPUT_PATH（sec_interp.gui.main_dialog_config.ValidationMessages 属性）</a>
+      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.missing_output_path">missing_output_path()（sec_interp.gui.main_dialog_config.ValidationMessages 静态方法）</a>
 </li>
-      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.MISSING_RASTER">MISSING_RASTER（sec_interp.gui.main_dialog_config.ValidationMessages 属性）</a>
+      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.missing_raster">missing_raster()（sec_interp.gui.main_dialog_config.ValidationMessages 静态方法）</a>
 </li>
-      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.MISSING_SECTION_LINE">MISSING_SECTION_LINE（sec_interp.gui.main_dialog_config.ValidationMessages 属性）</a>
+      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.missing_section_line">missing_section_line()（sec_interp.gui.main_dialog_config.ValidationMessages 静态方法）</a>
 </li>
-      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.MISSING_STRIKE_FIELD">MISSING_STRIKE_FIELD（sec_interp.gui.main_dialog_config.ValidationMessages 属性）</a>
+      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.missing_strike_field">missing_strike_field()（sec_interp.gui.main_dialog_config.ValidationMessages 静态方法）</a>
 </li>
-      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.MISSING_STRUCTURAL_LAYER">MISSING_STRUCTURAL_LAYER（sec_interp.gui.main_dialog_config.ValidationMessages 属性）</a>
+      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.missing_structural_layer">missing_structural_layer()（sec_interp.gui.main_dialog_config.ValidationMessages 静态方法）</a>
 </li>
       <li>
     module
@@ -2296,6 +2300,8 @@ window.addEventListener("load", load);</script>
         <li><a href="sec_interp.core.utils.rendering.html#module-sec_interp.core.utils.rendering">sec_interp.core.utils.rendering</a>
 </li>
         <li><a href="sec_interp.core.utils.resource_manager.html#module-sec_interp.core.utils.resource_manager">sec_interp.core.utils.resource_manager</a>
+</li>
+        <li><a href="sec_interp.core.utils.safe_loader.html#module-sec_interp.core.utils.safe_loader">sec_interp.core.utils.safe_loader</a>
 </li>
         <li><a href="sec_interp.core.utils.sampling.html#module-sec_interp.core.utils.sampling">sec_interp.core.utils.sampling</a>
 </li>
@@ -2826,6 +2832,10 @@ window.addEventListener("load", load);</script>
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="sec_interp.core.utils.safe_loader.html#sec_interp.core.utils.safe_loader.SafeLoader.safe_import">safe_import()（sec_interp.core.utils.safe_loader.SafeLoader 静态方法）</a>
+</li>
+      <li><a href="sec_interp.core.utils.safe_loader.html#sec_interp.core.utils.safe_loader.SafeLoader">SafeLoader（sec_interp.core.utils.safe_loader 中的类）</a>
+</li>
       <li><a href="sec_interp.core.utils.html#sec_interp.core.utils.sample_elevation_along_line">sample_elevation_along_line()（在 sec_interp.core.utils 模块中）</a>
 </li>
       <li><a href="sec_interp.core.utils.sampling.html#sec_interp.core.utils.sampling.sample_elevation_along_line">sample_elevation_along_line()（在 sec_interp.core.utils.sampling 模块中）</a>
@@ -3238,6 +3248,13 @@ window.addEventListener("load", load);</script>
 </li>
       </ul></li>
       <li>
+    sec_interp.core.utils.safe_loader
+
+      <ul>
+        <li><a href="sec_interp.core.utils.safe_loader.html#module-sec_interp.core.utils.safe_loader">module</a>
+</li>
+      </ul></li>
+      <li>
     sec_interp.core.utils.sampling
 
       <ul>
@@ -3496,6 +3513,8 @@ window.addEventListener("load", load);</script>
         <li><a href="sec_interp.gui.main_dialog_config.html#module-sec_interp.gui.main_dialog_config">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     sec_interp.gui.main_dialog_utils
 
@@ -3503,8 +3522,6 @@ window.addEventListener("load", load);</script>
         <li><a href="sec_interp.gui.main_dialog_utils.html#module-sec_interp.gui.main_dialog_utils">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     sec_interp.gui.preview_axes_manager
 
@@ -4123,7 +4140,7 @@ window.addEventListener("load", load);</script>
 </li>
       <li><a href="sec_interp.core.domain.html#id19">unit_name（sec_interp.core.domain.GeologySegment 属性）</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.GeologySegment.unit_name">[1]</a>
 </li>
-      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.UNKNOWN_ERROR">UNKNOWN_ERROR（sec_interp.gui.main_dialog_config.ValidationMessages 属性）</a>
+      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.unknown_error">unknown_error()（sec_interp.gui.main_dialog_config.ValidationMessages 静态方法）</a>
 </li>
       <li><a href="sec_interp.sec_interp_plugin.html#sec_interp.sec_interp_plugin.SecInterp.unload">unload() （sec_interp.sec_interp_plugin.SecInterp 方法）</a>
 </li>
@@ -4317,7 +4334,7 @@ window.addEventListener("load", load);</script>
 </li>
       <li><a href="sec_interp.core.validation.layer_validator.html#sec_interp.core.validation.layer_validator.validate_structural_requirements">validate_structural_requirements()（在 sec_interp.core.validation.layer_validator 模块中）</a>
 </li>
-      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.VALIDATION_FAILED">VALIDATION_FAILED（sec_interp.gui.main_dialog_config.ValidationMessages 属性）</a>
+      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.validation_failed">validation_failed()（sec_interp.gui.main_dialog_config.ValidationMessages 静态方法）</a>
 </li>
       <li><a href="sec_interp.core.validation.validation_helpers.html#sec_interp.core.validation.validation_helpers.ValidationContext">ValidationContext（sec_interp.core.validation.validation_helpers 中的类）</a>
 </li>
@@ -4361,7 +4378,7 @@ window.addEventListener("load", load);</script>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.wheelEvent">wheelEvent() （sec_interp.gui.SecInterpDialog 方法）</a>
 </li>
-      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.WRONG_GEOMETRY_TYPE">WRONG_GEOMETRY_TYPE（sec_interp.gui.main_dialog_config.ValidationMessages 属性）</a>
+      <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.ValidationMessages.wrong_geometry_type">wrong_geometry_type()（sec_interp.gui.main_dialog_config.ValidationMessages 静态方法）</a>
 </li>
   </ul></td>
 </tr></table>
