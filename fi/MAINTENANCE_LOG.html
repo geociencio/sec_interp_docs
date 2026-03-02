@@ -52,10 +52,13 @@
 <li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Guía de Distinción de Componentes ”Core”</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE_EN.html">Core Components Distinction Guide</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">SecInterp - Maintenance &amp; Release Log</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#expansion-i18n-asia-auditoria-de-infraestructura">[2026-02-18] EXPANSIÓN I18N ASIA &amp; AUDITORÍA DE INFRAESTRUCTURA</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#traduccion-profunda-user-guide">[2026-02-18] TRADUCCIÓN PROFUNDA (USER GUIDE)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#expansion-i18n-market-gap">[2026-02-18] EXPANSIÓN I18N (MARKET GAP)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#estandares-de-documentacion">[2026-02-18] ESTÁNDARES DE DOCUMENTACIÓN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#testing-expansion-dac-automation">[2026-03-01] TESTING EXPANSION &amp; DaC AUTOMATION</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#refactor-layer-resolution-ux-feedback">[2026-02-28] REFACTOR LAYER RESOLUTION &amp; UX FEEDBACK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stabilization-hotfixes-drillholes-rendering">[2026-02-25] STABILIZATION HOTFIXES (DRILLHOLES &amp; RENDERING)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#i18n-asia-expansion-infrastructure-audit">[2026-02-18] I18N ASIA EXPANSION &amp; INFRASTRUCTURE AUDIT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deep-translation-user-guide">[2026-02-18] DEEP TRANSLATION (USER GUIDE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#i18n-expansion-market-gap">[2026-02-18] I18N EXPANSION (MARKET GAP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#documentation-standards">[2026-02-18] DOCUMENTATION STANDARDS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#signal-management-i18n-infrastructure">[2026-02-17] SIGNAL MANAGEMENT &amp; I18N INFRASTRUCTURE</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#v3-0-0-release-i18n-expansion-drillhole-refactor">[v3.0.0 Release] - i18n Expansion &amp; Drillhole Refactor</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#v2-10-0-plan-phase-1-2026-02-01">[v2.10.0 Plan - Phase 1] - 2026-02-01</a></li>
@@ -130,39 +133,60 @@
   <section id="secinterp-maintenance-release-log">
 <h1>SecInterp - Maintenance &amp; Release Log<a class="headerlink" href="#secinterp-maintenance-release-log" title="Link to this heading"></a></h1>
 <p>This document serves as the central record for project history, release procedures, and past refactoring analysis.</p>
-<section id="expansion-i18n-asia-auditoria-de-infraestructura">
-<h2>[2026-02-18] EXPANSIÓN I18N ASIA &amp; AUDITORÍA DE INFRAESTRUCTURA<a class="headerlink" href="#expansion-i18n-asia-auditoria-de-infraestructura" title="Link to this heading"></a></h2>
+<section id="testing-expansion-dac-automation">
+<h2>[2026-03-01] TESTING EXPANSION &amp; DaC AUTOMATION<a class="headerlink" href="#testing-expansion-dac-automation" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p><strong>Cambios</strong>: Localización a Hindi e Indonesio. Auditoría técnica de <code class="docutils literal notranslate"><span class="pre">qgis-manage</span></code> con roadmap de modernización.</p></li>
-<li><p><strong>Métricas/Impacto</strong>: 100% de cobertura de traducción en nuevos idiomas. Hoja de ruta establecida para resolver deuda técnica de compilación de recursos.</p></li>
+<li><p><strong>Changes</strong>: Massive test expansion (450 OK) and automation of <code class="docutils literal notranslate"><span class="pre">TESTING_STATUS.md</span></code>.</p></li>
+<li><p><strong>Metrics/Impact</strong>: Increased coverage in critical areas (GUI Tasks, Core). Trajectory engine stabilization.</p></li>
 </ul>
 </section>
-<section id="traduccion-profunda-user-guide">
-<h2>[2026-02-18] TRADUCCIÓN PROFUNDA (USER GUIDE)<a class="headerlink" href="#traduccion-profunda-user-guide" title="Link to this heading"></a></h2>
+<section id="refactor-layer-resolution-ux-feedback">
+<h2>[2026-02-28] REFACTOR LAYER RESOLUTION &amp; UX FEEDBACK<a class="headerlink" href="#refactor-layer-resolution-ux-feedback" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p><strong>Cambios</strong>: Finalizada la localización de la guía de usuario en 7 idiomas prioritarios. Corregida integridad de catálogos en italiano y portugués.</p></li>
-<li><p><strong>Métricas/Impacto</strong>: 100% de cobertura en secciones de tutorial para el mercado global.</p></li>
+<li><p><strong>Changes</strong>: Implemented <code class="docutils literal notranslate"><span class="pre">LayerResolver</span></code> with cache, unified validations in <code class="docutils literal notranslate"><span class="pre">ProjectValidator</span></code>, and progress feedback in UI.</p></li>
+<li><p><strong>Metrics/Impact</strong>: 229 tests executed successfully. Optimized layer access and improved user perception of performance.</p></li>
 </ul>
 </section>
-<section id="expansion-i18n-market-gap">
-<h2>[2026-02-18] EXPANSIÓN I18N (MARKET GAP)<a class="headerlink" href="#expansion-i18n-market-gap" title="Link to this heading"></a></h2>
+<section id="stabilization-hotfixes-drillholes-rendering">
+<h2>[2026-02-25] STABILIZATION HOTFIXES (DRILLHOLES &amp; RENDERING)<a class="headerlink" href="#stabilization-hotfixes-drillholes-rendering" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p><strong>Cambios</strong>: Añadido soporte para <strong>pl</strong>, <strong>nl</strong>, <strong>fi</strong> (14 idiomas ahora). Implementado motor de Master Data JSON y workflow de mantenimiento.</p></li>
-<li><p><strong>Métricas/Impacto</strong>: 100% de cobertura core en nuevas lenguas. Skill <code class="docutils literal notranslate"><span class="pre">i18n-standards</span></code> actualizada.</p></li>
+<li><p><strong>Changes</strong>: Fixed DI mismatch (<code class="docutils literal notranslate"><span class="pre">ProfileController</span></code>), index error in empty drillholes (<code class="docutils literal notranslate"><span class="pre">TrajectoryEngine</span></code>), and subscription error in rendering (<code class="docutils literal notranslate"><span class="pre">PreviewLayerFactory</span></code>).</p></li>
+<li><p><strong>Metrics/Impact</strong>: 100% stability restored for Phase 3. Drillhole rendering functional with polymorphism.</p></li>
 </ul>
 </section>
-<section id="estandares-de-documentacion">
-<h2>[2026-02-18] ESTÁNDARES DE DOCUMENTACIÓN<a class="headerlink" href="#estandares-de-documentacion" title="Link to this heading"></a></h2>
+<section id="i18n-asia-expansion-infrastructure-audit">
+<h2>[2026-02-18] I18N ASIA EXPANSION &amp; INFRASTRUCTURE AUDIT<a class="headerlink" href="#i18n-asia-expansion-infrastructure-audit" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p><strong>Cambios</strong>: Formalizado skill <code class="docutils literal notranslate"><span class="pre">documentation-standards</span></code> y actualizado workflow <code class="docutils literal notranslate"><span class="pre">/cierra-sesion</span></code>.</p></li>
-<li><p><strong>Métricas/Impacto</strong>: Reducción de inconsistencias en logs generados por diferentes agentes.</p></li>
+<li><p><strong>Changes</strong>: Localization to Hindi and Indonesian. Technical audit of <code class="docutils literal notranslate"><span class="pre">qgis-manage</span></code> with modernization roadmap.</p></li>
+<li><p><strong>Metrics/Impact</strong>: 100% translation coverage in new languages. Established roadmap to resolve resource compilation technical debt.</p></li>
+</ul>
+</section>
+<section id="deep-translation-user-guide">
+<h2>[2026-02-18] DEEP TRANSLATION (USER GUIDE)<a class="headerlink" href="#deep-translation-user-guide" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Changes</strong>: Completed user guide localization in 7 priority languages. Fixed catalog integrity in Italian and Portuguese.</p></li>
+<li><p><strong>Metrics/Impact</strong>: 100% coverage in tutorial sections for the global market.</p></li>
+</ul>
+</section>
+<section id="i18n-expansion-market-gap">
+<h2>[2026-02-18] I18N EXPANSION (MARKET GAP)<a class="headerlink" href="#i18n-expansion-market-gap" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Changes</strong>: Added support for <strong>pl</strong>, <strong>nl</strong>, <strong>fi</strong> (14 languages now). Implemented Master Data JSON engine and maintenance workflow.</p></li>
+<li><p><strong>Metrics/Impact</strong>: 100% core coverage in new languages. <code class="docutils literal notranslate"><span class="pre">i18n-standards</span></code> skill updated.</p></li>
+</ul>
+</section>
+<section id="documentation-standards">
+<h2>[2026-02-18] DOCUMENTATION STANDARDS<a class="headerlink" href="#documentation-standards" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Changes</strong>: Formalized <code class="docutils literal notranslate"><span class="pre">documentation-standards</span></code> skill and updated <code class="docutils literal notranslate"><span class="pre">/cierra-sesion</span></code> workflow.</p></li>
+<li><p><strong>Metrics/Impact</strong>: Reduced inconsistencies in logs generated by different agents.</p></li>
 </ul>
 </section>
 <section id="signal-management-i18n-infrastructure">
 <h2>[2026-02-17] SIGNAL MANAGEMENT &amp; I18N INFRASTRUCTURE<a class="headerlink" href="#signal-management-i18n-infrastructure" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p><strong>Cambios</strong>: Transición a conexiones explícitas en <code class="docutils literal notranslate"><span class="pre">SignalManager</span></code> y migración a Master Data JSON (11 idiomas).</p></li>
-<li><p><strong>Métricas/Impacto</strong>: Estabilización de señales para evitar memory leaks y preparación para escalado.</p></li>
+<li><p><strong>Changes</strong>: Transition to explicit connections in <code class="docutils literal notranslate"><span class="pre">SignalManager</span></code> and migration to Master Data JSON (11 languages).</p></li>
+<li><p><strong>Metrics/Impact</strong>: Signal stabilization to prevent memory leaks and preparation for scaling.</p></li>
 </ul>
 <section id="v3-0-0-release-i18n-expansion-drillhole-refactor">
 <h3>[v3.0.0 Release] - i18n Expansion &amp; Drillhole Refactor<a class="headerlink" href="#v3-0-0-release-i18n-expansion-drillhole-refactor" title="Link to this heading"></a></h3>

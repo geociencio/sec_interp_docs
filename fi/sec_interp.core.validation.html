@@ -109,7 +109,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="sec_interp.core.validation.ProjectValidator">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.core.validation.</span></span><span class="sig-name descname"><span class="pre">ProjectValidator</span></span><a class="headerlink" href="#sec_interp.core.validation.ProjectValidator" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dd><p>Bases: <a class="reference internal" href="sec_interp.core.utils.i18n.html#sec_interp.core.utils.i18n.TranslatableMixin" title="sec_interp.core.utils.i18n.TranslatableMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">TranslatableMixin</span></code></a></p>
 <p>Orchestrates validation of project parameters independent of the GUI.</p>
 <p>Level 2: Business Logic Validation.
 Uses ValidationContext to accumulate errors and verify cross-field dependencies.</p>
@@ -135,12 +135,6 @@ Uses ValidationContext to accumulate errors and verify cross-field dependencies.
 <dt class="sig sig-object py" id="sec_interp.core.validation.ProjectValidator.is_structure_complete">
 <span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_structure_complete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ValidationParams" title="sec_interp.core.validation.project_validator.ValidationParams"><span class="pre">ValidationParams</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.core.validation.ProjectValidator.is_structure_complete" title="Link to this definition"></a></dt>
 <dd><p>Check if structural configuration is complete.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="sec_interp.core.validation.ProjectValidator.tr">
-<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">tr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#sec_interp.core.validation.ProjectValidator.tr" title="Link to this definition"></a></dt>
-<dd><p>Translate a message using QCoreApplication.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -664,7 +658,6 @@ to inform the user about extreme values (e.g., vertical exaggeration &gt; 10).</
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ProjectValidator.is_drillhole_complete"><code class="docutils literal notranslate"><span class="pre">ProjectValidator.is_drillhole_complete()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ProjectValidator.is_geology_complete"><code class="docutils literal notranslate"><span class="pre">ProjectValidator.is_geology_complete()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ProjectValidator.is_structure_complete"><code class="docutils literal notranslate"><span class="pre">ProjectValidator.is_structure_complete()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ProjectValidator.tr"><code class="docutils literal notranslate"><span class="pre">ProjectValidator.tr()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ProjectValidator.validate_all"><code class="docutils literal notranslate"><span class="pre">ProjectValidator.validate_all()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ProjectValidator.validate_preview_requirements"><code class="docutils literal notranslate"><span class="pre">ProjectValidator.validate_preview_requirements()</span></code></a></li>
 </ul>
@@ -738,6 +731,12 @@ to inform the user about extreme values (e.g., vertical exaggeration &gt; 10).</
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.validation.validation_helpers.html#sec_interp.core.validation.validation_helpers.DependencyRule.validate"><code class="docutils literal notranslate"><span class="pre">DependencyRule.validate()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.validation.validation_helpers.html#sec_interp.core.validation.validation_helpers.LayerResolver"><code class="docutils literal notranslate"><span class="pre">LayerResolver</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.validation.validation_helpers.html#sec_interp.core.validation.validation_helpers.LayerResolver.clear_cache"><code class="docutils literal notranslate"><span class="pre">LayerResolver.clear_cache()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.validation.validation_helpers.html#sec_interp.core.validation.validation_helpers.LayerResolver.invalidate"><code class="docutils literal notranslate"><span class="pre">LayerResolver.invalidate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.validation.validation_helpers.html#sec_interp.core.validation.validation_helpers.LayerResolver.resolve"><code class="docutils literal notranslate"><span class="pre">LayerResolver.resolve()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.validation.validation_helpers.html#sec_interp.core.validation.validation_helpers.RichValidationError"><code class="docutils literal notranslate"><span class="pre">RichValidationError</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.validation.validation_helpers.html#sec_interp.core.validation.validation_helpers.RichValidationError.__str__"><code class="docutils literal notranslate"><span class="pre">RichValidationError.__str__()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.validation.validation_helpers.html#sec_interp.core.validation.validation_helpers.RichValidationError.context"><code class="docutils literal notranslate"><span class="pre">RichValidationError.context</span></code></a></li>
@@ -758,7 +757,6 @@ to inform the user about extreme values (e.g., vertical exaggeration &gt; 10).</
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.validation.validation_helpers.html#sec_interp.core.validation.validation_helpers.ValidationContext.warnings"><code class="docutils literal notranslate"><span class="pre">ValidationContext.warnings</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.validation.validation_helpers.html#sec_interp.core.validation.validation_helpers.resolve_layer"><code class="docutils literal notranslate"><span class="pre">resolve_layer()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.validation.validation_helpers.html#sec_interp.core.validation.validation_helpers.validate_dependencies"><code class="docutils literal notranslate"><span class="pre">validate_dependencies()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.validation.validation_helpers.html#sec_interp.core.validation.validation_helpers.validate_reasonable_ranges"><code class="docutils literal notranslate"><span class="pre">validate_reasonable_ranges()</span></code></a></li>
 </ul>

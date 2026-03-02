@@ -117,6 +117,125 @@ implementation details where possible.</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="sec_interp.core.domain.DrillholeProjection">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.core.domain.</span></span><span class="sig-name descname"><span class="pre">DrillholeProjection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hole_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elevation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_depth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">points_3d</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#sec_interp.core.domain.SpatialMeta" title="sec_interp.core.domain.SpatialMeta"><span class="pre">SpatialMeta</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#sec_interp.core.domain.GeologySegment" title="sec_interp.core.domain.GeologySegment"><span class="pre">GeologySegment</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.core.domain.DrillholeProjection" title="Lien vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a projected drillhole on the section plane.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sec_interp.core.domain.DrillholeProjection.hole_id">
+<span class="sig-name descname"><span class="pre">hole_id</span></span><a class="headerlink" href="#sec_interp.core.domain.DrillholeProjection.hole_id" title="Lien vers cette définition"></a></dt>
+<dd><p>Unique identifier for the drillhole.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sec_interp.core.domain.DrillholeProjection.distance">
+<span class="sig-name descname"><span class="pre">distance</span></span><a class="headerlink" href="#sec_interp.core.domain.DrillholeProjection.distance" title="Lien vers cette définition"></a></dt>
+<dd><p>Horizontal distance from the profile start.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sec_interp.core.domain.DrillholeProjection.elevation">
+<span class="sig-name descname"><span class="pre">elevation</span></span><a class="headerlink" href="#sec_interp.core.domain.DrillholeProjection.elevation" title="Lien vers cette définition"></a></dt>
+<dd><p>Elevation (Z) of the collar.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sec_interp.core.domain.DrillholeProjection.offset">
+<span class="sig-name descname"><span class="pre">offset</span></span><a class="headerlink" href="#sec_interp.core.domain.DrillholeProjection.offset" title="Lien vers cette définition"></a></dt>
+<dd><p>Orthogonal distance from the section line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sec_interp.core.domain.DrillholeProjection.total_depth">
+<span class="sig-name descname"><span class="pre">total_depth</span></span><a class="headerlink" href="#sec_interp.core.domain.DrillholeProjection.total_depth" title="Lien vers cette définition"></a></dt>
+<dd><p>Total length of the drillhole.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sec_interp.core.domain.DrillholeProjection.points_3d">
+<span class="sig-name descname"><span class="pre">points_3d</span></span><a class="headerlink" href="#sec_interp.core.domain.DrillholeProjection.points_3d" title="Lien vers cette définition"></a></dt>
+<dd><p>Optional list of spatial metadata points along the trajectory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[<a class="reference internal" href="#sec_interp.core.domain.SpatialMeta" title="sec_interp.core.domain.SpatialMeta">SpatialMeta</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sec_interp.core.domain.DrillholeProjection.segments">
+<span class="sig-name descname"><span class="pre">segments</span></span><a class="headerlink" href="#sec_interp.core.domain.DrillholeProjection.segments" title="Lien vers cette définition"></a></dt>
+<dd><p>Optional list of geological segments along the hole.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[<a class="reference internal" href="#sec_interp.core.domain.GeologySegment" title="sec_interp.core.domain.GeologySegment">GeologySegment</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">distance</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id0" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">elevation</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id1" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">hole_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id2" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">offset</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id3" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">points_3d</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#sec_interp.core.domain.SpatialMeta" title="sec_interp.core.domain.SpatialMeta"><span class="pre">SpatialMeta</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id4" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">segments</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#sec_interp.core.domain.GeologySegment" title="sec_interp.core.domain.GeologySegment"><span class="pre">GeologySegment</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id5" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">total_depth</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id6" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="sec_interp.core.domain.DrillholeTaskInput">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.core.domain.</span></span><span class="sig-name descname"><span class="pre">DrillholeTaskInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">line_geometry_wkt:</span> <span class="pre">str,</span> <span class="pre">line_start_x:</span> <span class="pre">float,</span> <span class="pre">line_start_y:</span> <span class="pre">float,</span> <span class="pre">line_crs_authid:</span> <span class="pre">str,</span> <span class="pre">section_azimuth:</span> <span class="pre">float,</span> <span class="pre">buffer_width:</span> <span class="pre">float,</span> <span class="pre">collar_id_field:</span> <span class="pre">str,</span> <span class="pre">use_geometry:</span> <span class="pre">bool,</span> <span class="pre">collar_x_field:</span> <span class="pre">str,</span> <span class="pre">collar_y_field:</span> <span class="pre">str,</span> <span class="pre">collar_z_field:</span> <span class="pre">str,</span> <span class="pre">collar_depth_field:</span> <span class="pre">str,</span> <span class="pre">collar_data:</span> <span class="pre">list[dict[str,</span> <span class="pre">~typing.Any]],</span> <span class="pre">survey_data:</span> <span class="pre">dict[~typing.Any,</span> <span class="pre">list[tuple[float,</span> <span class="pre">float,</span> <span class="pre">float]]],</span> <span class="pre">interval_data:</span> <span class="pre">dict[~typing.Any,</span> <span class="pre">list[tuple[float,</span> <span class="pre">float,</span> <span class="pre">str]]],</span> <span class="pre">pre_sampled_z:</span> <span class="pre">dict[~typing.Any,</span> <span class="pre">float]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.core.domain.DrillholeTaskInput" title="Lien vers cette définition"></a></dt>
 <dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
@@ -300,83 +419,83 @@ in a background thread without accessing QGIS API objects.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id0">
-<span class="sig-name descname"><span class="pre">buffer_width</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id0" title="Lien vers cette définition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id1">
-<span class="sig-name descname"><span class="pre">collar_data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id1" title="Lien vers cette définition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id2">
-<span class="sig-name descname"><span class="pre">collar_depth_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id2" title="Lien vers cette définition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id3">
-<span class="sig-name descname"><span class="pre">collar_id_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id3" title="Lien vers cette définition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id4">
-<span class="sig-name descname"><span class="pre">collar_x_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id4" title="Lien vers cette définition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id5">
-<span class="sig-name descname"><span class="pre">collar_y_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id5" title="Lien vers cette définition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id6">
-<span class="sig-name descname"><span class="pre">collar_z_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id6" title="Lien vers cette définition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="id7">
-<span class="sig-name descname"><span class="pre">interval_data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id7" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">buffer_width</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id7" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id8">
-<span class="sig-name descname"><span class="pre">line_crs_authid</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id8" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">collar_data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id8" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id9">
-<span class="sig-name descname"><span class="pre">line_geometry_wkt</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id9" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">collar_depth_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id9" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id10">
-<span class="sig-name descname"><span class="pre">line_start_x</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id10" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">collar_id_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id10" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id11">
-<span class="sig-name descname"><span class="pre">line_start_y</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id11" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">collar_x_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id11" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id12">
-<span class="sig-name descname"><span class="pre">pre_sampled_z</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id12" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">collar_y_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id12" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id13">
-<span class="sig-name descname"><span class="pre">section_azimuth</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id13" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">collar_z_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id13" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id14">
-<span class="sig-name descname"><span class="pre">survey_data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id14" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">interval_data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id14" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id15">
-<span class="sig-name descname"><span class="pre">use_geometry</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#id15" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">line_crs_authid</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id15" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id16">
+<span class="sig-name descname"><span class="pre">line_geometry_wkt</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id16" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id17">
+<span class="sig-name descname"><span class="pre">line_start_x</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id17" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id18">
+<span class="sig-name descname"><span class="pre">line_start_y</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id18" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id19">
+<span class="sig-name descname"><span class="pre">pre_sampled_z</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id19" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id20">
+<span class="sig-name descname"><span class="pre">section_azimuth</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id20" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id21">
+<span class="sig-name descname"><span class="pre">survey_data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id21" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id22">
+<span class="sig-name descname"><span class="pre">use_geometry</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#id22" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -480,18 +599,18 @@ direct dependencies on PyQt components.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id16">
-<span class="sig-name descname"><span class="pre">attributes</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id16" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id23">
+<span class="sig-name descname"><span class="pre">attributes</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id23" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id17">
-<span class="sig-name descname"><span class="pre">geometry_wkt</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id17" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id24">
+<span class="sig-name descname"><span class="pre">geometry_wkt</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id24" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id18">
-<span class="sig-name descname"><span class="pre">points</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id18" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id25">
+<span class="sig-name descname"><span class="pre">points</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id25" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -505,8 +624,8 @@ direct dependencies on PyQt components.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id19">
-<span class="sig-name descname"><span class="pre">unit_name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id19" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id26">
+<span class="sig-name descname"><span class="pre">unit_name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id26" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -618,48 +737,48 @@ without accessing QGIS layers directly.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id20">
-<span class="sig-name descname"><span class="pre">crs_authid</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id20" title="Lien vers cette définition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id21">
-<span class="sig-name descname"><span class="pre">line_geometry_wkt</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id21" title="Lien vers cette définition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id22">
-<span class="sig-name descname"><span class="pre">line_start_x</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id22" title="Lien vers cette définition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id23">
-<span class="sig-name descname"><span class="pre">line_start_y</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id23" title="Lien vers cette définition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id24">
-<span class="sig-name descname"><span class="pre">master_grid_dists</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id24" title="Lien vers cette définition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id25">
-<span class="sig-name descname"><span class="pre">master_profile_data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id25" title="Lien vers cette définition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id26">
-<span class="sig-name descname"><span class="pre">outcrop_data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id26" title="Lien vers cette définition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="id27">
-<span class="sig-name descname"><span class="pre">outcrop_name_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id27" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">crs_authid</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id27" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id28">
-<span class="sig-name descname"><span class="pre">tolerance</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.001</span></span><a class="headerlink" href="#id28" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">line_geometry_wkt</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id28" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id29">
+<span class="sig-name descname"><span class="pre">line_start_x</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id29" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id30">
+<span class="sig-name descname"><span class="pre">line_start_y</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id30" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id31">
+<span class="sig-name descname"><span class="pre">master_grid_dists</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id31" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id32">
+<span class="sig-name descname"><span class="pre">master_profile_data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id32" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id33">
+<span class="sig-name descname"><span class="pre">outcrop_data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id33" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id34">
+<span class="sig-name descname"><span class="pre">outcrop_name_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id34" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id35">
+<span class="sig-name descname"><span class="pre">tolerance</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.001</span></span><a class="headerlink" href="#id35" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -747,38 +866,38 @@ without accessing QGIS layers directly.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id29">
-<span class="sig-name descname"><span class="pre">attributes</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id29" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id36">
+<span class="sig-name descname"><span class="pre">attributes</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id36" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id30">
-<span class="sig-name descname"><span class="pre">color</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'#FF0000'</span></span><a class="headerlink" href="#id30" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id37">
+<span class="sig-name descname"><span class="pre">color</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'#FF0000'</span></span><a class="headerlink" href="#id37" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id31">
-<span class="sig-name descname"><span class="pre">created_at</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></span><a class="headerlink" href="#id31" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id38">
+<span class="sig-name descname"><span class="pre">created_at</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></span><a class="headerlink" href="#id38" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id32">
-<span class="sig-name descname"><span class="pre">id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id32" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id39">
+<span class="sig-name descname"><span class="pre">id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id39" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id33">
-<span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id33" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id40">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id40" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id34">
-<span class="sig-name descname"><span class="pre">type</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id34" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id41">
+<span class="sig-name descname"><span class="pre">type</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id41" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id35">
-<span class="sig-name descname"><span class="pre">vertices_2d</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id35" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id42">
+<span class="sig-name descname"><span class="pre">vertices_2d</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id42" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -855,33 +974,33 @@ without accessing QGIS layers directly.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id36">
-<span class="sig-name descname"><span class="pre">attributes</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id36" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id43">
+<span class="sig-name descname"><span class="pre">attributes</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id43" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id37">
-<span class="sig-name descname"><span class="pre">crs_authid</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id37" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id44">
+<span class="sig-name descname"><span class="pre">crs_authid</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id44" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id38">
-<span class="sig-name descname"><span class="pre">geometry_wkt</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id38" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id45">
+<span class="sig-name descname"><span class="pre">geometry_wkt</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id45" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id39">
-<span class="sig-name descname"><span class="pre">id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id39" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id46">
+<span class="sig-name descname"><span class="pre">id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id46" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id40">
-<span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id40" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id47">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id47" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id41">
-<span class="sig-name descname"><span class="pre">type</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id41" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id48">
+<span class="sig-name descname"><span class="pre">type</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id48" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1222,159 +1341,159 @@ without accessing QGIS layers directly.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id42">
-<span class="sig-name descname"><span class="pre">auto_lod</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></span><a class="headerlink" href="#id42" title="Lien vers cette définition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id43">
-<span class="sig-name descname"><span class="pre">band_num</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#id43" title="Lien vers cette définition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id44">
-<span class="sig-name descname"><span class="pre">buffer_dist</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">100.0</span></span><a class="headerlink" href="#id44" title="Lien vers cette définition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id45">
-<span class="sig-name descname"><span class="pre">canvas_width</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">800</span></span><a class="headerlink" href="#id45" title="Lien vers cette définition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id46">
-<span class="sig-name descname"><span class="pre">collar_depth_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id46" title="Lien vers cette définition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id47">
-<span class="sig-name descname"><span class="pre">collar_id_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id47" title="Lien vers cette définition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id48">
-<span class="sig-name descname"><span class="pre">collar_layer</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id48" title="Lien vers cette définition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="id49">
-<span class="sig-name descname"><span class="pre">collar_use_geometry</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></span><a class="headerlink" href="#id49" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">auto_lod</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></span><a class="headerlink" href="#id49" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id50">
-<span class="sig-name descname"><span class="pre">collar_x_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id50" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">band_num</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#id50" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id51">
-<span class="sig-name descname"><span class="pre">collar_y_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id51" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">buffer_dist</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">100.0</span></span><a class="headerlink" href="#id51" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id52">
-<span class="sig-name descname"><span class="pre">collar_z_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id52" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">canvas_width</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">800</span></span><a class="headerlink" href="#id52" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id53">
-<span class="sig-name descname"><span class="pre">dip_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id53" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">collar_depth_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id53" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id54">
-<span class="sig-name descname"><span class="pre">dip_scale_factor</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.0</span></span><a class="headerlink" href="#id54" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">collar_id_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id54" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id55">
-<span class="sig-name descname"><span class="pre">interval_from_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id55" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">collar_layer</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id55" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id56">
-<span class="sig-name descname"><span class="pre">interval_id_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id56" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">collar_use_geometry</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></span><a class="headerlink" href="#id56" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id57">
-<span class="sig-name descname"><span class="pre">interval_layer</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id57" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">collar_x_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id57" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id58">
-<span class="sig-name descname"><span class="pre">interval_lith_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id58" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">collar_y_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id58" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id59">
-<span class="sig-name descname"><span class="pre">interval_to_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id59" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">collar_z_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id59" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id60">
-<span class="sig-name descname"><span class="pre">line_layer</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id60" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">dip_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id60" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id61">
-<span class="sig-name descname"><span class="pre">max_points</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1000</span></span><a class="headerlink" href="#id61" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">dip_scale_factor</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.0</span></span><a class="headerlink" href="#id61" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id62">
-<span class="sig-name descname"><span class="pre">outcrop_layer</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id62" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">interval_from_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id62" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id63">
-<span class="sig-name descname"><span class="pre">outcrop_name_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id63" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">interval_id_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id63" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id64">
-<span class="sig-name descname"><span class="pre">raster_layer</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id64" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">interval_layer</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id64" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id65">
-<span class="sig-name descname"><span class="pre">strike_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id65" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">interval_lith_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id65" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id66">
-<span class="sig-name descname"><span class="pre">struct_layer</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id66" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">interval_to_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id66" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id67">
-<span class="sig-name descname"><span class="pre">survey_azim_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id67" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">line_layer</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id67" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id68">
-<span class="sig-name descname"><span class="pre">survey_depth_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id68" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">max_points</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1000</span></span><a class="headerlink" href="#id68" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id69">
-<span class="sig-name descname"><span class="pre">survey_id_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id69" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">outcrop_layer</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id69" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id70">
-<span class="sig-name descname"><span class="pre">survey_incl_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id70" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">outcrop_name_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id70" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id71">
-<span class="sig-name descname"><span class="pre">survey_layer</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id71" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">raster_layer</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id71" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id72">
+<span class="sig-name descname"><span class="pre">strike_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id72" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id73">
+<span class="sig-name descname"><span class="pre">struct_layer</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id73" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id74">
+<span class="sig-name descname"><span class="pre">survey_azim_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id74" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id75">
+<span class="sig-name descname"><span class="pre">survey_depth_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id75" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id76">
+<span class="sig-name descname"><span class="pre">survey_id_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id76" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id77">
+<span class="sig-name descname"><span class="pre">survey_incl_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id77" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id78">
+<span class="sig-name descname"><span class="pre">survey_layer</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id78" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.core.domain.PreviewParams.validate">
 <span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.core.domain.PreviewParams.validate" title="Lien vers cette définition"></a></dt>
-<dd><p>Perform native validation of parameters.</p>
+<dd><p>Perform native validation using ProjectValidator to avoid duplication.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Lève<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="sec_interp.core.exceptions.html#sec_interp.core.exceptions.ValidationError" title="sec_interp.core.exceptions.ValidationError"><strong>ValidationError</strong></a> – If critical parameters are missing or invalid.</p>
@@ -1456,18 +1575,18 @@ without accessing QGIS layers directly.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id72">
-<span class="sig-name descname"><span class="pre">buffer_dist</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></span><a class="headerlink" href="#id72" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id79">
+<span class="sig-name descname"><span class="pre">buffer_dist</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></span><a class="headerlink" href="#id79" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id73">
-<span class="sig-name descname"><span class="pre">drillhole</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id73" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id80">
+<span class="sig-name descname"><span class="pre">drillhole</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id80" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id74">
-<span class="sig-name descname"><span class="pre">geol</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.GeologySegment" title="sec_interp.core.domain.entities.GeologySegment"><span class="pre">GeologySegment</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id74" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id81">
+<span class="sig-name descname"><span class="pre">geol</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.GeologySegment" title="sec_interp.core.domain.entities.GeologySegment"><span class="pre">GeologySegment</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id81" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -1497,18 +1616,18 @@ to find the absolute vertical bounds.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id75">
-<span class="sig-name descname"><span class="pre">metrics</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="sec_interp.core.performance_metrics.html#sec_interp.core.performance_metrics.MetricsCollector" title="sec_interp.core.performance_metrics.MetricsCollector"><span class="pre">MetricsCollector</span></a></span><a class="headerlink" href="#id75" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id82">
+<span class="sig-name descname"><span class="pre">metrics</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="sec_interp.core.performance_metrics.html#sec_interp.core.performance_metrics.MetricsCollector" title="sec_interp.core.performance_metrics.MetricsCollector"><span class="pre">MetricsCollector</span></a></span><a class="headerlink" href="#id82" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id76">
-<span class="sig-name descname"><span class="pre">struct</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.StructureMeasurement" title="sec_interp.core.domain.entities.StructureMeasurement"><span class="pre">StructureMeasurement</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id76" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id83">
+<span class="sig-name descname"><span class="pre">struct</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.StructureMeasurement" title="sec_interp.core.domain.entities.StructureMeasurement"><span class="pre">StructureMeasurement</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id83" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id77">
-<span class="sig-name descname"><span class="pre">topo</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id77" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id84">
+<span class="sig-name descname"><span class="pre">topo</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id84" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1621,33 +1740,33 @@ vectors, and original attributes without layer dependencies.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id78">
-<span class="sig-name descname"><span class="pre">attributes</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id78" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id85">
+<span class="sig-name descname"><span class="pre">attributes</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id85" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id79">
-<span class="sig-name descname"><span class="pre">dist_along</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></span><a class="headerlink" href="#id79" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id86">
+<span class="sig-name descname"><span class="pre">dist_along</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></span><a class="headerlink" href="#id86" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id80">
-<span class="sig-name descname"><span class="pre">hole_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id80" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id87">
+<span class="sig-name descname"><span class="pre">hole_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id87" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id81">
-<span class="sig-name descname"><span class="pre">norm_x</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id81" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id88">
+<span class="sig-name descname"><span class="pre">norm_x</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id88" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id82">
-<span class="sig-name descname"><span class="pre">norm_y</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id82" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id89">
+<span class="sig-name descname"><span class="pre">norm_y</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id89" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id83">
-<span class="sig-name descname"><span class="pre">offset</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></span><a class="headerlink" href="#id83" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id90">
+<span class="sig-name descname"><span class="pre">offset</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></span><a class="headerlink" href="#id90" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -1663,8 +1782,8 @@ vectors, and original attributes without layer dependencies.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id84">
-<span class="sig-name descname"><span class="pre">x_3d</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id84" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id91">
+<span class="sig-name descname"><span class="pre">x_3d</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id91" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1673,8 +1792,8 @@ vectors, and original attributes without layer dependencies.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id85">
-<span class="sig-name descname"><span class="pre">y_3d</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id85" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id92">
+<span class="sig-name descname"><span class="pre">y_3d</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#id92" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1683,8 +1802,8 @@ vectors, and original attributes without layer dependencies.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id86">
-<span class="sig-name descname"><span class="pre">z</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></span><a class="headerlink" href="#id86" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id93">
+<span class="sig-name descname"><span class="pre">z</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></span><a class="headerlink" href="#id93" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1761,33 +1880,33 @@ vectors, and original attributes without layer dependencies.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id87">
-<span class="sig-name descname"><span class="pre">apparent_dip</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id87" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id94">
+<span class="sig-name descname"><span class="pre">apparent_dip</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id94" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id88">
-<span class="sig-name descname"><span class="pre">attributes</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id88" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id95">
+<span class="sig-name descname"><span class="pre">attributes</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id95" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id89">
-<span class="sig-name descname"><span class="pre">distance</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id89" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id96">
+<span class="sig-name descname"><span class="pre">distance</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id96" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id90">
-<span class="sig-name descname"><span class="pre">elevation</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id90" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id97">
+<span class="sig-name descname"><span class="pre">elevation</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id97" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id91">
-<span class="sig-name descname"><span class="pre">original_dip</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id91" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id98">
+<span class="sig-name descname"><span class="pre">original_dip</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id98" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="id92">
-<span class="sig-name descname"><span class="pre">original_strike</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id92" title="Lien vers cette définition"></a></dt>
+<dt class="sig sig-object py" id="id99">
+<span class="sig-name descname"><span class="pre">original_strike</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id99" title="Lien vers cette définition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1882,18 +2001,35 @@ vectors, and original attributes without layer dependencies.</p>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.core.domain.entities.html">sec_interp.core.domain.entities module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.DomainGeometry"><code class="docutils literal notranslate"><span class="pre">DomainGeometry</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.DrillholeProjection"><code class="docutils literal notranslate"><span class="pre">DrillholeProjection</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.DrillholeProjection.hole_id"><code class="docutils literal notranslate"><span class="pre">DrillholeProjection.hole_id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.DrillholeProjection.distance"><code class="docutils literal notranslate"><span class="pre">DrillholeProjection.distance</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.DrillholeProjection.elevation"><code class="docutils literal notranslate"><span class="pre">DrillholeProjection.elevation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.DrillholeProjection.offset"><code class="docutils literal notranslate"><span class="pre">DrillholeProjection.offset</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.DrillholeProjection.total_depth"><code class="docutils literal notranslate"><span class="pre">DrillholeProjection.total_depth</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.DrillholeProjection.points_3d"><code class="docutils literal notranslate"><span class="pre">DrillholeProjection.points_3d</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.DrillholeProjection.segments"><code class="docutils literal notranslate"><span class="pre">DrillholeProjection.segments</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id0"><code class="docutils literal notranslate"><span class="pre">DrillholeProjection.distance</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id1"><code class="docutils literal notranslate"><span class="pre">DrillholeProjection.elevation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id2"><code class="docutils literal notranslate"><span class="pre">DrillholeProjection.hole_id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id3"><code class="docutils literal notranslate"><span class="pre">DrillholeProjection.offset</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id4"><code class="docutils literal notranslate"><span class="pre">DrillholeProjection.points_3d</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id5"><code class="docutils literal notranslate"><span class="pre">DrillholeProjection.segments</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id6"><code class="docutils literal notranslate"><span class="pre">DrillholeProjection.total_depth</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.ExportSettings"><code class="docutils literal notranslate"><span class="pre">ExportSettings</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.GeologySegment"><code class="docutils literal notranslate"><span class="pre">GeologySegment</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.GeologySegment.unit_name"><code class="docutils literal notranslate"><span class="pre">GeologySegment.unit_name</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.GeologySegment.geometry_wkt"><code class="docutils literal notranslate"><span class="pre">GeologySegment.geometry_wkt</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.GeologySegment.attributes"><code class="docutils literal notranslate"><span class="pre">GeologySegment.attributes</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.GeologySegment.points"><code class="docutils literal notranslate"><span class="pre">GeologySegment.points</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id0"><code class="docutils literal notranslate"><span class="pre">GeologySegment.attributes</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id1"><code class="docutils literal notranslate"><span class="pre">GeologySegment.geometry_wkt</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id2"><code class="docutils literal notranslate"><span class="pre">GeologySegment.points</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id7"><code class="docutils literal notranslate"><span class="pre">GeologySegment.attributes</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id8"><code class="docutils literal notranslate"><span class="pre">GeologySegment.geometry_wkt</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id9"><code class="docutils literal notranslate"><span class="pre">GeologySegment.points</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.GeologySegment.points_3d"><code class="docutils literal notranslate"><span class="pre">GeologySegment.points_3d</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.GeologySegment.points_3d_projected"><code class="docutils literal notranslate"><span class="pre">GeologySegment.points_3d_projected</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id3"><code class="docutils literal notranslate"><span class="pre">GeologySegment.unit_name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id10"><code class="docutils literal notranslate"><span class="pre">GeologySegment.unit_name</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon</span></code></a><ul>
@@ -1904,13 +2040,13 @@ vectors, and original attributes without layer dependencies.</p>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon.attributes"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon.attributes</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon.color"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon.color</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon.created_at"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon.created_at</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id4"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon.attributes</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id5"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon.color</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id6"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon.created_at</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id7"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon.id</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id8"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon.name</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id9"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon.type</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id10"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon.vertices_2d</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id11"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon.attributes</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id12"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon.color</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id13"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon.created_at</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id14"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon.id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id15"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon.name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id16"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon.type</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id17"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon.vertices_2d</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon25D"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon25D</span></code></a><ul>
@@ -1920,12 +2056,12 @@ vectors, and original attributes without layer dependencies.</p>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon25D.geometry_wkt"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon25D.geometry_wkt</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon25D.attributes"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon25D.attributes</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon25D.crs_authid"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon25D.crs_authid</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id11"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon25D.attributes</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id12"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon25D.crs_authid</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id13"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon25D.geometry_wkt</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id14"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon25D.id</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id15"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon25D.name</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id16"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon25D.type</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id18"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon25D.attributes</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id19"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon25D.crs_authid</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id20"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon25D.geometry_wkt</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id21"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon25D.id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id22"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon25D.name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id23"><code class="docutils literal notranslate"><span class="pre">InterpretationPolygon25D.type</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.LayerDict"><code class="docutils literal notranslate"><span class="pre">LayerDict</span></code></a></li>
@@ -1940,12 +2076,12 @@ vectors, and original attributes without layer dependencies.</p>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.StructureMeasurement.original_dip"><code class="docutils literal notranslate"><span class="pre">StructureMeasurement.original_dip</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.StructureMeasurement.original_strike"><code class="docutils literal notranslate"><span class="pre">StructureMeasurement.original_strike</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.StructureMeasurement.attributes"><code class="docutils literal notranslate"><span class="pre">StructureMeasurement.attributes</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id17"><code class="docutils literal notranslate"><span class="pre">StructureMeasurement.apparent_dip</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id18"><code class="docutils literal notranslate"><span class="pre">StructureMeasurement.attributes</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id19"><code class="docutils literal notranslate"><span class="pre">StructureMeasurement.distance</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id20"><code class="docutils literal notranslate"><span class="pre">StructureMeasurement.elevation</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id21"><code class="docutils literal notranslate"><span class="pre">StructureMeasurement.original_dip</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id22"><code class="docutils literal notranslate"><span class="pre">StructureMeasurement.original_strike</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id24"><code class="docutils literal notranslate"><span class="pre">StructureMeasurement.apparent_dip</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id25"><code class="docutils literal notranslate"><span class="pre">StructureMeasurement.attributes</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id26"><code class="docutils literal notranslate"><span class="pre">StructureMeasurement.distance</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id27"><code class="docutils literal notranslate"><span class="pre">StructureMeasurement.elevation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id28"><code class="docutils literal notranslate"><span class="pre">StructureMeasurement.original_dip</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.domain.entities.html#id29"><code class="docutils literal notranslate"><span class="pre">StructureMeasurement.original_strike</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.ValidationResult"><code class="docutils literal notranslate"><span class="pre">ValidationResult</span></code></a></li>

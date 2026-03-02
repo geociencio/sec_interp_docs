@@ -148,6 +148,44 @@
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="sec_interp.core.validation.validation_helpers.LayerResolver">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.core.validation.validation_helpers.</span></span><span class="sig-name descname"><span class="pre">LayerResolver</span></span><a class="headerlink" href="#sec_interp.core.validation.validation_helpers.LayerResolver" title="Link to this definition"></a></dt>
+<dd><p>Basis: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Centralized service to resolve and cache QgsMapLayer references.</p>
+<p>Acts as a singleton/cache to avoid repeated <cite>project.mapLayer()</cite> calls
+within the same processing transaction.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="sec_interp.core.validation.validation_helpers.LayerResolver.clear_cache">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">clear_cache</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.core.validation.validation_helpers.LayerResolver.clear_cache" title="Link to this definition"></a></dt>
+<dd><p>Clear the internal layer cache.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sec_interp.core.validation.validation_helpers.LayerResolver.invalidate">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">invalidate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.core.validation.validation_helpers.LayerResolver.invalidate" title="Link to this definition"></a></dt>
+<dd><p>Remove a specific layer from the cache.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sec_interp.core.validation.validation_helpers.LayerResolver.resolve">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">resolve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer_ref</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QgsMapLayer</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.core.validation.validation_helpers.LayerResolver.resolve" title="Link to this definition"></a></dt>
+<dd><p>Resolve a layer reference (ID, name, or object) to a QgsMapLayer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameter<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>layer_ref</strong> -- A string (layer ID or name) or a QgsMapLayer object.</p></li>
+<li><p><strong>use_cache</strong> -- If True, uses the internal dict cache for faster lookups.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Kembali<span class="colon">:</span></dt>
+<dd class="field-even"><p>The resolved QgsMapLayer object if valid, else None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="sec_interp.core.validation.validation_helpers.RichValidationError">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.core.validation.validation_helpers.</span></span><span class="sig-name descname"><span class="pre">RichValidationError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">severity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'error'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict[str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">~typing.Any]</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.core.validation.validation_helpers.RichValidationError" title="Link to this definition"></a></dt>
 <dd><p>Basis: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
@@ -241,23 +279,6 @@ before presenting them to the user.</p>
 <dd><p>Get list of accumulated warnings.</p>
 </dd></dl>
 
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="sec_interp.core.validation.validation_helpers.resolve_layer">
-<span class="sig-prename descclassname"><span class="pre">sec_interp.core.validation.validation_helpers.</span></span><span class="sig-name descname"><span class="pre">resolve_layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer_ref</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#sec_interp.core.validation.validation_helpers.resolve_layer" title="Link to this definition"></a></dt>
-<dd><p>Resolve a layer reference (ID string or QgsMapLayer) to a QgsMapLayer.</p>
-<p>This is a free function extracted from <code class="docutils literal notranslate"><span class="pre">ProjectValidator._resolve_layer</span></code>
-to avoid circular imports between <code class="docutils literal notranslate"><span class="pre">project_validator</span></code> and
-<code class="docutils literal notranslate"><span class="pre">project_validators</span></code>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameter<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>layer_ref</strong> -- A <code class="docutils literal notranslate"><span class="pre">QgsMapLayer</span></code> instance or a layer ID string.</p>
-</dd>
-<dt class="field-even">Kembali<span class="colon">:</span></dt>
-<dd class="field-even"><p>The resolved <code class="docutils literal notranslate"><span class="pre">QgsMapLayer</span></code>, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if not found.</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py function">

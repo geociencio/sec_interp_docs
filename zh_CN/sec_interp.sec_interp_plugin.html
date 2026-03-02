@@ -20,7 +20,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="搜索" href="search.html" />
-    <link rel="next" title="sec_interp.test_ignore_logic module" href="sec_interp.test_ignore_logic.html" />
+    <link rel="next" title="sec_interp.test_patch module" href="sec_interp.test_patch.html" />
     <link rel="prev" title="sec_interp.run_qgis_manage module" href="sec_interp.run_qgis_manage.html" /> 
 </head>
 
@@ -61,7 +61,6 @@
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.logger_config.html">sec_interp.logger_config module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.run_qgis_manage.html">sec_interp.run_qgis_manage module</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">sec_interp.sec_interp_plugin module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.test_ignore_logic.html">sec_interp.test_ignore_logic module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.test_patch.html">sec_interp.test_patch module</a></li>
 </ul>
 </li>
@@ -111,7 +110,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="sec_interp.sec_interp_plugin.SecInterp">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.sec_interp_plugin.</span></span><span class="sig-name descname"><span class="pre">SecInterp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iface</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.sec_interp_plugin.SecInterp" title="链接到此定义。"></a></dt>
-<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dd><p>基类：<a class="reference internal" href="sec_interp.core.utils.i18n.html#sec_interp.core.utils.i18n.TranslatableMixin" title="sec_interp.core.utils.i18n.TranslatableMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">TranslatableMixin</span></code></a></p>
 <p>QGIS Plugin Implementation for Geological Data Extraction.</p>
 <p>This class implements the main logic of the SecInterp plugin, handling
 initialization, UI integration, and orchestration of data processing tasks.
@@ -210,24 +209,6 @@ mouse pointer hovers over the action.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="sec_interp.sec_interp_plugin.SecInterp.tr">
-<span class="sig-name descname"><span class="pre">tr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#sec_interp.sec_interp_plugin.SecInterp.tr" title="链接到此定义。"></a></dt>
-<dd><p>Get the translation for a string using Qt translation API.</p>
-<p>We implement this ourselves since we do not inherit QObject.</p>
-<dl class="field-list simple">
-<dt class="field-odd">参数<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>message</strong> (<em>str</em>) -- String for translation.</p>
-</dd>
-<dt class="field-even">返回<span class="colon">:</span></dt>
-<dd class="field-even"><p>Translated string (or original if no translation found).</p>
-</dd>
-<dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.sec_interp_plugin.SecInterp.unload">
 <span class="sig-name descname"><span class="pre">unload</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.sec_interp_plugin.SecInterp.unload" title="链接到此定义。"></a></dt>
 <dd><p>Remove the plugin menu item and icon from QGIS GUI.</p>
@@ -242,7 +223,7 @@ mouse pointer hovers over the action.</p></li>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
         <a href="sec_interp.run_qgis_manage.html" class="btn btn-neutral float-left" title="sec_interp.run_qgis_manage module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
-        <a href="sec_interp.test_ignore_logic.html" class="btn btn-neutral float-right" title="sec_interp.test_ignore_logic module" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="sec_interp.test_patch.html" class="btn btn-neutral float-right" title="sec_interp.test_patch module" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
