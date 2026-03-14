@@ -131,6 +131,7 @@ making the dialog initialization cleaner and more maintainable.</p>
 <dt class="sig sig-object py" id="sec_interp.gui.dialog_signal_manager.SignalManager.connect_all">
 <span class="sig-name descname"><span class="pre">connect_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.dialog_signal_manager.SignalManager.connect_all" title="Lien vers cette définition"></a></dt>
 <dd><p>Connect all signals in organized groups.</p>
+<p>This method is idempotent: it disconnects first to avoid double connections.</p>
 </dd></dl>
 
 <dl class="py method">

@@ -217,7 +217,7 @@ plugin instance for interaction with the host application.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.gui.SecInterpDialog.closeEvent">
 <span class="sig-name descname"><span class="pre">closeEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.SecInterpDialog.closeEvent" title="链接到此定义。"></a></dt>
-<dd><p>Handle dialog close event to clean up resources.</p>
+<dd><p>Handle dialog close event to clean up all resources.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -426,6 +426,10 @@ plugin instance for interaction with the host application.</p>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.renderers.geology_renderer.html#sec_interp.gui.renderers.geology_renderer.GeologyRenderer"><code class="docutils literal notranslate"><span class="pre">GeologyRenderer</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.renderers.interpretation_renderer.html">sec_interp.gui.renderers.interpretation_renderer module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.renderers.interpretation_renderer.html#sec_interp.gui.renderers.interpretation_renderer.InterpretationRenderer"><code class="docutils literal notranslate"><span class="pre">InterpretationRenderer</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.renderers.structure_renderer.html">sec_interp.gui.renderers.structure_renderer module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.renderers.structure_renderer.html#sec_interp.gui.renderers.structure_renderer.StructureRenderer"><code class="docutils literal notranslate"><span class="pre">StructureRenderer</span></code></a></li>
 </ul>
@@ -537,6 +541,8 @@ plugin instance for interaction with the host application.</p>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.dialog_preview_manager.html#sec_interp.gui.dialog_preview_manager.PreviewManager"><code class="docutils literal notranslate"><span class="pre">PreviewManager</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_preview_manager.html#sec_interp.gui.dialog_preview_manager.PreviewManager.__init__"><code class="docutils literal notranslate"><span class="pre">PreviewManager.__init__()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_preview_manager.html#sec_interp.gui.dialog_preview_manager.PreviewManager.cleanup"><code class="docutils literal notranslate"><span class="pre">PreviewManager.cleanup()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_preview_manager.html#sec_interp.gui.dialog_preview_manager.PreviewManager.connect_signals"><code class="docutils literal notranslate"><span class="pre">PreviewManager.connect_signals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_preview_manager.html#sec_interp.gui.dialog_preview_manager.PreviewManager.disconnect_signals"><code class="docutils literal notranslate"><span class="pre">PreviewManager.disconnect_signals()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_preview_manager.html#sec_interp.gui.dialog_preview_manager.PreviewManager.generate_preview"><code class="docutils literal notranslate"><span class="pre">PreviewManager.generate_preview()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_preview_manager.html#sec_interp.gui.dialog_preview_manager.PreviewManager.update_from_checkboxes"><code class="docutils literal notranslate"><span class="pre">PreviewManager.update_from_checkboxes()</span></code></a></li>
 </ul>
@@ -590,6 +596,7 @@ plugin instance for interaction with the host application.</p>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.dialog_tool_manager.html#sec_interp.gui.dialog_tool_manager.ToolManager"><code class="docutils literal notranslate"><span class="pre">ToolManager</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_tool_manager.html#sec_interp.gui.dialog_tool_manager.ToolManager.__init__"><code class="docutils literal notranslate"><span class="pre">ToolManager.__init__()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_tool_manager.html#sec_interp.gui.dialog_tool_manager.ToolManager.activate_default_tool"><code class="docutils literal notranslate"><span class="pre">ToolManager.activate_default_tool()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_tool_manager.html#sec_interp.gui.dialog_tool_manager.ToolManager.connect_signals"><code class="docutils literal notranslate"><span class="pre">ToolManager.connect_signals()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_tool_manager.html#sec_interp.gui.dialog_tool_manager.ToolManager.disconnect_signals"><code class="docutils literal notranslate"><span class="pre">ToolManager.disconnect_signals()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_tool_manager.html#sec_interp.gui.dialog_tool_manager.ToolManager.initialize_tools"><code class="docutils literal notranslate"><span class="pre">ToolManager.initialize_tools()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_tool_manager.html#sec_interp.gui.dialog_tool_manager.ToolManager.toggle_interpretation_tool"><code class="docutils literal notranslate"><span class="pre">ToolManager.toggle_interpretation_tool()</span></code></a></li>
@@ -602,6 +609,7 @@ plugin instance for interaction with the host application.</p>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.legend_widget.html">sec_interp.gui.legend_widget module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.legend_widget.html#sec_interp.gui.legend_widget.LegendWidget"><code class="docutils literal notranslate"><span class="pre">LegendWidget</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.legend_widget.html#sec_interp.gui.legend_widget.LegendWidget.__init__"><code class="docutils literal notranslate"><span class="pre">LegendWidget.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.legend_widget.html#sec_interp.gui.legend_widget.LegendWidget.cleanup"><code class="docutils literal notranslate"><span class="pre">LegendWidget.cleanup()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.legend_widget.html#sec_interp.gui.legend_widget.LegendWidget.eventFilter"><code class="docutils literal notranslate"><span class="pre">LegendWidget.eventFilter()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.legend_widget.html#sec_interp.gui.legend_widget.LegendWidget.paintEvent"><code class="docutils literal notranslate"><span class="pre">LegendWidget.paintEvent()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.legend_widget.html#sec_interp.gui.legend_widget.LegendWidget.update_legend"><code class="docutils literal notranslate"><span class="pre">LegendWidget.update_legend()</span></code></a></li>
@@ -760,6 +768,7 @@ plugin instance for interaction with the host application.</p>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.create_drillhole_interval_layer"><code class="docutils literal notranslate"><span class="pre">PreviewLayerFactory.create_drillhole_interval_layer()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.create_drillhole_trace_layer"><code class="docutils literal notranslate"><span class="pre">PreviewLayerFactory.create_drillhole_trace_layer()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.create_geol_layer"><code class="docutils literal notranslate"><span class="pre">PreviewLayerFactory.create_geol_layer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.create_interp_layer"><code class="docutils literal notranslate"><span class="pre">PreviewLayerFactory.create_interp_layer()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.create_memory_layer"><code class="docutils literal notranslate"><span class="pre">PreviewLayerFactory.create_memory_layer()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.create_struct_layer"><code class="docutils literal notranslate"><span class="pre">PreviewLayerFactory.create_struct_layer()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.create_topo_fill_layer"><code class="docutils literal notranslate"><span class="pre">PreviewLayerFactory.create_topo_fill_layer()</span></code></a></li>
