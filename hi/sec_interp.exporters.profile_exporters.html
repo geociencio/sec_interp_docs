@@ -20,7 +20,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="अनुक्रमणिका" href="genindex.html" />
     <link rel="search" title="खोज" href="search.html" />
-    <link rel="next" title="sec_interp.exporters.shp_exporter module" href="sec_interp.exporters.shp_exporter.html" />
+    <link rel="next" title="sec_interp.exporters.svg_exporter module" href="sec_interp.exporters.svg_exporter.html" />
     <link rel="prev" title="sec_interp.exporters.pdf_exporter module" href="sec_interp.exporters.pdf_exporter.html" /> 
 </head>
 
@@ -109,27 +109,28 @@
 <p>Profile export façade.</p>
 <p>Specific exporters for profile data (Shapefiles).</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="sec_interp.exporters.profile_exporters.AxesShpExporter">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.profile_exporters.</span></span><span class="sig-name descname"><span class="pre">AxesShpExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.exporters.profile_exporters.AxesShpExporter" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="sec_interp.exporters.profile_exporters.AxesVectorExporter">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.profile_exporters.</span></span><span class="sig-name descname"><span class="pre">AxesVectorExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.exporters.profile_exporters.AxesVectorExporter" title="Link to this definition"></a></dt>
 <dd><p>आधार: <a class="reference internal" href="sec_interp.exporters.base_exporter.html#sec_interp.exporters.base_exporter.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
-<p>Exports the profile axes to a Shapefile.</p>
+<p>Exports the profile axes to a vector file (SHP, GPKG, DXF).</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="sec_interp.exporters.profile_exporters.AxesShpExporter.export">
-<span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.exporters.profile_exporters.AxesShpExporter.export" title="Link to this definition"></a></dt>
-<dd><p>Export the profile axes to a Shapefile.</p>
+<dt class="sig sig-object py" id="sec_interp.exporters.profile_exporters.AxesVectorExporter.export">
+<span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.exporters.profile_exporters.AxesVectorExporter.export" title="Link to this definition"></a></dt>
+<dd><p>Export the profile axes to a vector file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">मापदण्ड<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>output_path</strong> -- Path to the output Shapefile.</p></li>
+<li><p><strong>output_path</strong> -- Path to the output file.</p></li>
 <li><p><strong>data</strong> -- Dictionary containing 'profile_data' and 'crs'.</p></li>
+<li><p><strong>layer_name</strong> -- Optional conceptual layer name.</p></li>
 </ul>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="sec_interp.exporters.profile_exporters.AxesShpExporter.get_supported_extensions">
-<span class="sig-name descname"><span class="pre">get_supported_extensions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.exporters.profile_exporters.AxesShpExporter.get_supported_extensions" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="sec_interp.exporters.profile_exporters.AxesVectorExporter.get_supported_extensions">
+<span class="sig-name descname"><span class="pre">get_supported_extensions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.exporters.profile_exporters.AxesVectorExporter.get_supported_extensions" title="Link to this definition"></a></dt>
 <dd><p>Get supported file extensions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">प्रदत्त <span class="colon">:</span></dt>
@@ -141,27 +142,28 @@
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="sec_interp.exporters.profile_exporters.GeologyShpExporter">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.profile_exporters.</span></span><span class="sig-name descname"><span class="pre">GeologyShpExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.exporters.profile_exporters.GeologyShpExporter" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="sec_interp.exporters.profile_exporters.GeologyVectorExporter">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.profile_exporters.</span></span><span class="sig-name descname"><span class="pre">GeologyVectorExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.exporters.profile_exporters.GeologyVectorExporter" title="Link to this definition"></a></dt>
 <dd><p>आधार: <a class="reference internal" href="sec_interp.exporters.base_exporter.html#sec_interp.exporters.base_exporter.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
-<p>Exports the geological profile to a Shapefile.</p>
+<p>Exports the geological profile to a vector file (SHP, GPKG, DXF).</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="sec_interp.exporters.profile_exporters.GeologyShpExporter.export">
-<span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.exporters.profile_exporters.GeologyShpExporter.export" title="Link to this definition"></a></dt>
-<dd><p>Export the geological profile to a Shapefile.</p>
+<dt class="sig sig-object py" id="sec_interp.exporters.profile_exporters.GeologyVectorExporter.export">
+<span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.exporters.profile_exporters.GeologyVectorExporter.export" title="Link to this definition"></a></dt>
+<dd><p>Export the geological profile to a vector file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">मापदण्ड<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>output_path</strong> -- Path to the output Shapefile.</p></li>
+<li><p><strong>output_path</strong> -- Path to the output file.</p></li>
 <li><p><strong>data</strong> -- Dictionary containing 'geology_data' and 'crs'.</p></li>
+<li><p><strong>layer_name</strong> -- Optional conceptual layer name.</p></li>
 </ul>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="sec_interp.exporters.profile_exporters.GeologyShpExporter.get_supported_extensions">
-<span class="sig-name descname"><span class="pre">get_supported_extensions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.exporters.profile_exporters.GeologyShpExporter.get_supported_extensions" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="sec_interp.exporters.profile_exporters.GeologyVectorExporter.get_supported_extensions">
+<span class="sig-name descname"><span class="pre">get_supported_extensions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.exporters.profile_exporters.GeologyVectorExporter.get_supported_extensions" title="Link to this definition"></a></dt>
 <dd><p>Get supported file extensions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">प्रदत्त <span class="colon">:</span></dt>
@@ -173,27 +175,28 @@
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="sec_interp.exporters.profile_exporters.ProfileLineShpExporter">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.profile_exporters.</span></span><span class="sig-name descname"><span class="pre">ProfileLineShpExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.exporters.profile_exporters.ProfileLineShpExporter" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="sec_interp.exporters.profile_exporters.ProfileLineVectorExporter">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.profile_exporters.</span></span><span class="sig-name descname"><span class="pre">ProfileLineVectorExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.exporters.profile_exporters.ProfileLineVectorExporter" title="Link to this definition"></a></dt>
 <dd><p>आधार: <a class="reference internal" href="sec_interp.exporters.base_exporter.html#sec_interp.exporters.base_exporter.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
-<p>Exports the topographic profile line to a Shapefile.</p>
+<p>Exports the topographic profile line to a vector file (SHP, GPKG, DXF).</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="sec_interp.exporters.profile_exporters.ProfileLineShpExporter.export">
-<span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.exporters.profile_exporters.ProfileLineShpExporter.export" title="Link to this definition"></a></dt>
-<dd><p>Export the topographic profile line to a Shapefile.</p>
+<dt class="sig sig-object py" id="sec_interp.exporters.profile_exporters.ProfileLineVectorExporter.export">
+<span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.exporters.profile_exporters.ProfileLineVectorExporter.export" title="Link to this definition"></a></dt>
+<dd><p>Export the topographic profile line to a vector file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">मापदण्ड<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>output_path</strong> -- Path to the output Shapefile.</p></li>
+<li><p><strong>output_path</strong> -- Path to the output file.</p></li>
 <li><p><strong>data</strong> -- Dictionary containing 'profile_data' and 'crs'.</p></li>
+<li><p><strong>layer_name</strong> -- Optional conceptual layer name.</p></li>
 </ul>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="sec_interp.exporters.profile_exporters.ProfileLineShpExporter.get_supported_extensions">
-<span class="sig-name descname"><span class="pre">get_supported_extensions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.exporters.profile_exporters.ProfileLineShpExporter.get_supported_extensions" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="sec_interp.exporters.profile_exporters.ProfileLineVectorExporter.get_supported_extensions">
+<span class="sig-name descname"><span class="pre">get_supported_extensions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.exporters.profile_exporters.ProfileLineVectorExporter.get_supported_extensions" title="Link to this definition"></a></dt>
 <dd><p>Get supported file extensions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">प्रदत्त <span class="colon">:</span></dt>
@@ -205,28 +208,29 @@
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="sec_interp.exporters.profile_exporters.StructureShpExporter">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.profile_exporters.</span></span><span class="sig-name descname"><span class="pre">StructureShpExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.exporters.profile_exporters.StructureShpExporter" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="sec_interp.exporters.profile_exporters.StructureVectorExporter">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.profile_exporters.</span></span><span class="sig-name descname"><span class="pre">StructureVectorExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.exporters.profile_exporters.StructureVectorExporter" title="Link to this definition"></a></dt>
 <dd><p>आधार: <a class="reference internal" href="sec_interp.exporters.base_exporter.html#sec_interp.exporters.base_exporter.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
-<p>Exports the structural profile to a Shapefile.</p>
+<p>Exports the structural profile to a vector file (SHP, GPKG, DXF).</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="sec_interp.exporters.profile_exporters.StructureShpExporter.export">
-<span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.exporters.profile_exporters.StructureShpExporter.export" title="Link to this definition"></a></dt>
-<dd><p>Export the structural profile to a Shapefile.</p>
+<dt class="sig sig-object py" id="sec_interp.exporters.profile_exporters.StructureVectorExporter.export">
+<span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.exporters.profile_exporters.StructureVectorExporter.export" title="Link to this definition"></a></dt>
+<dd><p>Export the structural profile to a vector file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">मापदण्ड<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>output_path</strong> -- Path to the output Shapefile.</p></li>
+<li><p><strong>output_path</strong> -- Path to the output file.</p></li>
 <li><p><strong>data</strong> -- Dictionary containing 'structural_data', 'crs', 'dip_scale_factor',
 and 'raster_res'.</p></li>
+<li><p><strong>layer_name</strong> -- Optional conceptual layer name.</p></li>
 </ul>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="sec_interp.exporters.profile_exporters.StructureShpExporter.get_supported_extensions">
-<span class="sig-name descname"><span class="pre">get_supported_extensions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.exporters.profile_exporters.StructureShpExporter.get_supported_extensions" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="sec_interp.exporters.profile_exporters.StructureVectorExporter.get_supported_extensions">
+<span class="sig-name descname"><span class="pre">get_supported_extensions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.exporters.profile_exporters.StructureVectorExporter.get_supported_extensions" title="Link to this definition"></a></dt>
 <dd><p>Get supported file extensions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">प्रदत्त <span class="colon">:</span></dt>
@@ -244,7 +248,7 @@ and 'raster_res'.</p></li>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="sec_interp.exporters.pdf_exporter.html" class="btn btn-neutral float-left" title="sec_interp.exporters.pdf_exporter module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="sec_interp.exporters.shp_exporter.html" class="btn btn-neutral float-right" title="sec_interp.exporters.shp_exporter module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="sec_interp.exporters.svg_exporter.html" class="btn btn-neutral float-right" title="sec_interp.exporters.svg_exporter module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

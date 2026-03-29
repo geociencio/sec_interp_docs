@@ -811,10 +811,10 @@ window.addEventListener("load", load);</script>
 </li>
       <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig.AUTO_SAVE_SETTINGS">AUTO_SAVE_SETTINGS (sec_interp.gui.main_dialog_config.DialogConfig の属性)</a>
 </li>
-      <li><a href="sec_interp.exporters.html#sec_interp.exporters.AxesShpExporter">AxesShpExporter (sec_interp.exporters のクラス)</a>
+      <li><a href="sec_interp.exporters.html#sec_interp.exporters.AxesVectorExporter">AxesVectorExporter (sec_interp.exporters のクラス)</a>
 
       <ul>
-        <li><a href="sec_interp.exporters.profile_exporters.html#sec_interp.exporters.profile_exporters.AxesShpExporter">(sec_interp.exporters.profile_exporters のクラス)</a>
+        <li><a href="sec_interp.exporters.profile_exporters.html#sec_interp.exporters.profile_exporters.AxesVectorExporter">(sec_interp.exporters.profile_exporters のクラス)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -1239,6 +1239,8 @@ window.addEventListener("load", load);</script>
 </li>
       <li><a href="sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.create_topo_layer">create_topo_layer() (sec_interp.gui.preview_layer_factory.PreviewLayerFactory のメソッド)</a>
 </li>
+      <li><a href="sec_interp.core.utils.io.html#sec_interp.core.utils.io.create_vector_writer">create_vector_writer() (sec_interp.core.utils.io モジュール)</a>
+</li>
       <li><a href="sec_interp.core.domain.entities.html#id13">created_at (sec_interp.core.domain.entities.InterpretationPolygon の属性)</a>, <a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon.created_at">[1]</a>
 
       <ul>
@@ -1306,6 +1308,8 @@ window.addEventListener("load", load);</script>
       <li><a href="sec_interp.core.config.html#sec_interp.core.config.ConfigService.DEFAULT_DPI">DEFAULT_DPI (sec_interp.core.config.ConfigService の属性)</a>
 </li>
       <li><a href="sec_interp.core.config.html#sec_interp.core.config.ConfigService.DEFAULT_EXPORT_QUALITY">DEFAULT_EXPORT_QUALITY (sec_interp.core.config.ConfigService の属性)</a>
+</li>
+      <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.ExportSettings.default_format">default_format (sec_interp.core.models.settings_model.ExportSettings の属性)</a>
 </li>
       <li><a href="sec_interp.core.config.html#sec_interp.core.config.ConfigService.DEFAULT_MAX_POINTS">DEFAULT_MAX_POINTS (sec_interp.core.config.ConfigService の属性)</a>
 </li>
@@ -1483,10 +1487,10 @@ window.addEventListener("load", load);</script>
         <li><a href="sec_interp.exporters.drillhole_3d_exporter.html#sec_interp.exporters.drillhole_3d_exporter.DrillholeInterval3DExporter">(sec_interp.exporters.drillhole_3d_exporter のクラス)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.exporters.html#sec_interp.exporters.DrillholeIntervalShpExporter">DrillholeIntervalShpExporter (sec_interp.exporters のクラス)</a>
+      <li><a href="sec_interp.exporters.html#sec_interp.exporters.DrillholeIntervalVectorExporter">DrillholeIntervalVectorExporter (sec_interp.exporters のクラス)</a>
 
       <ul>
-        <li><a href="sec_interp.exporters.drillhole_exporters.html#sec_interp.exporters.drillhole_exporters.DrillholeIntervalShpExporter">(sec_interp.exporters.drillhole_exporters のクラス)</a>
+        <li><a href="sec_interp.exporters.drillhole_exporters.html#sec_interp.exporters.drillhole_exporters.DrillholeIntervalVectorExporter">(sec_interp.exporters.drillhole_exporters のクラス)</a>
 </li>
       </ul></li>
       <li><a href="sec_interp.gui.ui.pages.drillhole_page.html#sec_interp.gui.ui.pages.drillhole_page.DrillholePage">DrillholePage (sec_interp.gui.ui.pages.drillhole_page のクラス)</a>
@@ -1521,14 +1525,20 @@ window.addEventListener("load", load);</script>
         <li><a href="sec_interp.exporters.drillhole_3d_exporter.html#sec_interp.exporters.drillhole_3d_exporter.DrillholeTrace3DExporter">(sec_interp.exporters.drillhole_3d_exporter のクラス)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.exporters.html#sec_interp.exporters.DrillholeTraceShpExporter">DrillholeTraceShpExporter (sec_interp.exporters のクラス)</a>
+      <li><a href="sec_interp.exporters.html#sec_interp.exporters.DrillholeTraceVectorExporter">DrillholeTraceVectorExporter (sec_interp.exporters のクラス)</a>
 
       <ul>
-        <li><a href="sec_interp.exporters.drillhole_exporters.html#sec_interp.exporters.drillhole_exporters.DrillholeTraceShpExporter">(sec_interp.exporters.drillhole_exporters のクラス)</a>
+        <li><a href="sec_interp.exporters.drillhole_exporters.html#sec_interp.exporters.drillhole_exporters.DrillholeTraceVectorExporter">(sec_interp.exporters.drillhole_exporters のクラス)</a>
 </li>
       </ul></li>
       <li><a href="sec_interp.core.validation.project_validators.html#sec_interp.core.validation.project_validators.DrillholeValidator">DrillholeValidator (sec_interp.core.validation.project_validators のクラス)</a>
 </li>
+      <li><a href="sec_interp.exporters.html#sec_interp.exporters.DXFExporter">DXFExporter (sec_interp.exporters のクラス)</a>
+
+      <ul>
+        <li><a href="sec_interp.exporters.dxf_exporter.html#sec_interp.exporters.dxf_exporter.DXFExporter">(sec_interp.exporters.dxf_exporter のクラス)</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -1577,7 +1587,9 @@ window.addEventListener("load", load);</script>
 </li>
       <li><a href="sec_interp.core.validation.pipeline.html#sec_interp.core.validation.pipeline.ValidationPipeline.execute">execute() (sec_interp.core.validation.pipeline.ValidationPipeline のメソッド)</a>
 </li>
-      <li><a href="sec_interp.exporters.html#sec_interp.exporters.AxesShpExporter.export">export() (sec_interp.exporters.AxesShpExporter のメソッド)</a>
+      <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.PluginSettings.export">export (sec_interp.core.models.settings_model.PluginSettings の属性)</a>
+</li>
+      <li><a href="sec_interp.exporters.html#sec_interp.exporters.AxesVectorExporter.export">export() (sec_interp.exporters.AxesVectorExporter のメソッド)</a>
 
       <ul>
         <li><a href="sec_interp.exporters.base_exporter.html#sec_interp.exporters.base_exporter.BaseExporter.export">(sec_interp.exporters.base_exporter.BaseExporter のメソッド)</a>
@@ -1592,19 +1604,23 @@ window.addEventListener("load", load);</script>
 </li>
         <li><a href="sec_interp.exporters.drillhole_3d_exporter.html#sec_interp.exporters.drillhole_3d_exporter.DrillholeTrace3DExporter.export">(sec_interp.exporters.drillhole_3d_exporter.DrillholeTrace3DExporter のメソッド)</a>
 </li>
-        <li><a href="sec_interp.exporters.drillhole_exporters.html#sec_interp.exporters.drillhole_exporters.DrillholeIntervalShpExporter.export">(sec_interp.exporters.drillhole_exporters.DrillholeIntervalShpExporter のメソッド)</a>
+        <li><a href="sec_interp.exporters.drillhole_exporters.html#sec_interp.exporters.drillhole_exporters.DrillholeIntervalVectorExporter.export">(sec_interp.exporters.drillhole_exporters.DrillholeIntervalVectorExporter のメソッド)</a>
 </li>
-        <li><a href="sec_interp.exporters.drillhole_exporters.html#sec_interp.exporters.drillhole_exporters.DrillholeTraceShpExporter.export">(sec_interp.exporters.drillhole_exporters.DrillholeTraceShpExporter のメソッド)</a>
+        <li><a href="sec_interp.exporters.drillhole_exporters.html#sec_interp.exporters.drillhole_exporters.DrillholeTraceVectorExporter.export">(sec_interp.exporters.drillhole_exporters.DrillholeTraceVectorExporter のメソッド)</a>
 </li>
         <li><a href="sec_interp.exporters.html#sec_interp.exporters.DrillholeInterval3DExporter.export">(sec_interp.exporters.DrillholeInterval3DExporter のメソッド)</a>
 </li>
-        <li><a href="sec_interp.exporters.html#sec_interp.exporters.DrillholeIntervalShpExporter.export">(sec_interp.exporters.DrillholeIntervalShpExporter のメソッド)</a>
+        <li><a href="sec_interp.exporters.html#sec_interp.exporters.DrillholeIntervalVectorExporter.export">(sec_interp.exporters.DrillholeIntervalVectorExporter のメソッド)</a>
 </li>
         <li><a href="sec_interp.exporters.html#sec_interp.exporters.DrillholeTrace3DExporter.export">(sec_interp.exporters.DrillholeTrace3DExporter のメソッド)</a>
 </li>
-        <li><a href="sec_interp.exporters.html#sec_interp.exporters.DrillholeTraceShpExporter.export">(sec_interp.exporters.DrillholeTraceShpExporter のメソッド)</a>
+        <li><a href="sec_interp.exporters.html#sec_interp.exporters.DrillholeTraceVectorExporter.export">(sec_interp.exporters.DrillholeTraceVectorExporter のメソッド)</a>
 </li>
-        <li><a href="sec_interp.exporters.html#sec_interp.exporters.GeologyShpExporter.export">(sec_interp.exporters.GeologyShpExporter のメソッド)</a>
+        <li><a href="sec_interp.exporters.dxf_exporter.html#sec_interp.exporters.dxf_exporter.DXFExporter.export">(sec_interp.exporters.dxf_exporter.DXFExporter のメソッド)</a>
+</li>
+        <li><a href="sec_interp.exporters.html#sec_interp.exporters.DXFExporter.export">(sec_interp.exporters.DXFExporter のメソッド)</a>
+</li>
+        <li><a href="sec_interp.exporters.html#sec_interp.exporters.GeologyVectorExporter.export">(sec_interp.exporters.GeologyVectorExporter のメソッド)</a>
 </li>
         <li><a href="sec_interp.exporters.image_exporter.html#sec_interp.exporters.image_exporter.ImageExporter.export">(sec_interp.exporters.image_exporter.ImageExporter のメソッド)</a>
 </li>
@@ -1622,25 +1638,25 @@ window.addEventListener("load", load);</script>
 </li>
         <li><a href="sec_interp.exporters.html#sec_interp.exporters.PDFExporter.export">(sec_interp.exporters.PDFExporter のメソッド)</a>
 </li>
-        <li><a href="sec_interp.exporters.profile_exporters.html#sec_interp.exporters.profile_exporters.AxesShpExporter.export">(sec_interp.exporters.profile_exporters.AxesShpExporter のメソッド)</a>
+        <li><a href="sec_interp.exporters.profile_exporters.html#sec_interp.exporters.profile_exporters.AxesVectorExporter.export">(sec_interp.exporters.profile_exporters.AxesVectorExporter のメソッド)</a>
 </li>
-        <li><a href="sec_interp.exporters.profile_exporters.html#sec_interp.exporters.profile_exporters.GeologyShpExporter.export">(sec_interp.exporters.profile_exporters.GeologyShpExporter のメソッド)</a>
+        <li><a href="sec_interp.exporters.profile_exporters.html#sec_interp.exporters.profile_exporters.GeologyVectorExporter.export">(sec_interp.exporters.profile_exporters.GeologyVectorExporter のメソッド)</a>
 </li>
-        <li><a href="sec_interp.exporters.profile_exporters.html#sec_interp.exporters.profile_exporters.ProfileLineShpExporter.export">(sec_interp.exporters.profile_exporters.ProfileLineShpExporter のメソッド)</a>
+        <li><a href="sec_interp.exporters.profile_exporters.html#sec_interp.exporters.profile_exporters.ProfileLineVectorExporter.export">(sec_interp.exporters.profile_exporters.ProfileLineVectorExporter のメソッド)</a>
 </li>
-        <li><a href="sec_interp.exporters.profile_exporters.html#sec_interp.exporters.profile_exporters.StructureShpExporter.export">(sec_interp.exporters.profile_exporters.StructureShpExporter のメソッド)</a>
+        <li><a href="sec_interp.exporters.profile_exporters.html#sec_interp.exporters.profile_exporters.StructureVectorExporter.export">(sec_interp.exporters.profile_exporters.StructureVectorExporter のメソッド)</a>
 </li>
-        <li><a href="sec_interp.exporters.html#sec_interp.exporters.ProfileLineShpExporter.export">(sec_interp.exporters.ProfileLineShpExporter のメソッド)</a>
+        <li><a href="sec_interp.exporters.html#sec_interp.exporters.ProfileLineVectorExporter.export">(sec_interp.exporters.ProfileLineVectorExporter のメソッド)</a>
 </li>
-        <li><a href="sec_interp.exporters.html#sec_interp.exporters.ShapefileExporter.export">(sec_interp.exporters.ShapefileExporter のメソッド)</a>
-</li>
-        <li><a href="sec_interp.exporters.shp_exporter.html#sec_interp.exporters.shp_exporter.ShapefileExporter.export">(sec_interp.exporters.shp_exporter.ShapefileExporter のメソッド)</a>
-</li>
-        <li><a href="sec_interp.exporters.html#sec_interp.exporters.StructureShpExporter.export">(sec_interp.exporters.StructureShpExporter のメソッド)</a>
+        <li><a href="sec_interp.exporters.html#sec_interp.exporters.StructureVectorExporter.export">(sec_interp.exporters.StructureVectorExporter のメソッド)</a>
 </li>
         <li><a href="sec_interp.exporters.svg_exporter.html#sec_interp.exporters.svg_exporter.SVGExporter.export">(sec_interp.exporters.svg_exporter.SVGExporter のメソッド)</a>
 </li>
         <li><a href="sec_interp.exporters.html#sec_interp.exporters.SVGExporter.export">(sec_interp.exporters.SVGExporter のメソッド)</a>
+</li>
+        <li><a href="sec_interp.exporters.vector_exporter.html#sec_interp.exporters.vector_exporter.VectorExporter.export">(sec_interp.exporters.vector_exporter.VectorExporter のメソッド)</a>
+</li>
+        <li><a href="sec_interp.exporters.html#sec_interp.exporters.VectorExporter.export">(sec_interp.exporters.VectorExporter のメソッド)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -1682,7 +1698,11 @@ window.addEventListener("load", load);</script>
       <li><a href="sec_interp.core.services.export_service.html#sec_interp.core.services.export_service.ExportService">ExportService (sec_interp.core.services.export_service のクラス)</a>
 </li>
       <li><a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.ExportSettings">ExportSettings (sec_interp.core.domain.entities モジュール)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.ExportSettings">(sec_interp.core.models.settings_model のクラス)</a>
 </li>
+      </ul></li>
       <li><a href="sec_interp.core.utils.geometry.html#sec_interp.core.utils.geometry.extract_all_vertices">extract_all_vertices() (sec_interp.core.utils.geometry モジュール)</a>
 
       <ul>
@@ -1829,12 +1849,6 @@ window.addEventListener("load", load);</script>
       </ul></li>
       <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.GeologySettings">GeologySettings (sec_interp.core.models.settings_model のクラス)</a>
 </li>
-      <li><a href="sec_interp.exporters.html#sec_interp.exporters.GeologyShpExporter">GeologyShpExporter (sec_interp.exporters のクラス)</a>
-
-      <ul>
-        <li><a href="sec_interp.exporters.profile_exporters.html#sec_interp.exporters.profile_exporters.GeologyShpExporter">(sec_interp.exporters.profile_exporters のクラス)</a>
-</li>
-      </ul></li>
       <li><a href="sec_interp.core.domain.html#sec_interp.core.domain.GeologyTaskInput">GeologyTaskInput (sec_interp.core.domain のクラス)</a>
 
       <ul>
@@ -1843,6 +1857,12 @@ window.addEventListener("load", load);</script>
       </ul></li>
       <li><a href="sec_interp.core.validation.project_validators.html#sec_interp.core.validation.project_validators.GeologyValidator">GeologyValidator (sec_interp.core.validation.project_validators のクラス)</a>
 </li>
+      <li><a href="sec_interp.exporters.html#sec_interp.exporters.GeologyVectorExporter">GeologyVectorExporter (sec_interp.exporters のクラス)</a>
+
+      <ul>
+        <li><a href="sec_interp.exporters.profile_exporters.html#sec_interp.exporters.profile_exporters.GeologyVectorExporter">(sec_interp.exporters.profile_exporters のクラス)</a>
+</li>
+      </ul></li>
       <li><a href="sec_interp.core.domain.entities.html#id8">geometry_wkt (sec_interp.core.domain.entities.GeologySegment の属性)</a>, <a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.GeologySegment.geometry_wkt">[1]</a>
 
       <ul>
@@ -1981,7 +2001,7 @@ window.addEventListener("load", load);</script>
       </ul></li>
       <li><a href="sec_interp.core.performance_metrics.html#sec_interp.core.performance_metrics.MetricsCollector.get_summary">get_summary() (sec_interp.core.performance_metrics.MetricsCollector のメソッド)</a>
 </li>
-      <li><a href="sec_interp.exporters.html#sec_interp.exporters.AxesShpExporter.get_supported_extensions">get_supported_extensions() (sec_interp.exporters.AxesShpExporter のメソッド)</a>
+      <li><a href="sec_interp.exporters.html#sec_interp.exporters.AxesVectorExporter.get_supported_extensions">get_supported_extensions() (sec_interp.exporters.AxesVectorExporter のメソッド)</a>
 
       <ul>
         <li><a href="sec_interp.exporters.base_exporter.html#sec_interp.exporters.base_exporter.BaseExporter.get_supported_extensions">(sec_interp.exporters.base_exporter.BaseExporter のメソッド)</a>
@@ -1996,19 +2016,23 @@ window.addEventListener("load", load);</script>
 </li>
         <li><a href="sec_interp.exporters.drillhole_3d_exporter.html#sec_interp.exporters.drillhole_3d_exporter.DrillholeTrace3DExporter.get_supported_extensions">(sec_interp.exporters.drillhole_3d_exporter.DrillholeTrace3DExporter のメソッド)</a>
 </li>
-        <li><a href="sec_interp.exporters.drillhole_exporters.html#sec_interp.exporters.drillhole_exporters.DrillholeIntervalShpExporter.get_supported_extensions">(sec_interp.exporters.drillhole_exporters.DrillholeIntervalShpExporter のメソッド)</a>
+        <li><a href="sec_interp.exporters.drillhole_exporters.html#sec_interp.exporters.drillhole_exporters.DrillholeIntervalVectorExporter.get_supported_extensions">(sec_interp.exporters.drillhole_exporters.DrillholeIntervalVectorExporter のメソッド)</a>
 </li>
-        <li><a href="sec_interp.exporters.drillhole_exporters.html#sec_interp.exporters.drillhole_exporters.DrillholeTraceShpExporter.get_supported_extensions">(sec_interp.exporters.drillhole_exporters.DrillholeTraceShpExporter のメソッド)</a>
+        <li><a href="sec_interp.exporters.drillhole_exporters.html#sec_interp.exporters.drillhole_exporters.DrillholeTraceVectorExporter.get_supported_extensions">(sec_interp.exporters.drillhole_exporters.DrillholeTraceVectorExporter のメソッド)</a>
 </li>
         <li><a href="sec_interp.exporters.html#sec_interp.exporters.DrillholeInterval3DExporter.get_supported_extensions">(sec_interp.exporters.DrillholeInterval3DExporter のメソッド)</a>
 </li>
-        <li><a href="sec_interp.exporters.html#sec_interp.exporters.DrillholeIntervalShpExporter.get_supported_extensions">(sec_interp.exporters.DrillholeIntervalShpExporter のメソッド)</a>
+        <li><a href="sec_interp.exporters.html#sec_interp.exporters.DrillholeIntervalVectorExporter.get_supported_extensions">(sec_interp.exporters.DrillholeIntervalVectorExporter のメソッド)</a>
 </li>
         <li><a href="sec_interp.exporters.html#sec_interp.exporters.DrillholeTrace3DExporter.get_supported_extensions">(sec_interp.exporters.DrillholeTrace3DExporter のメソッド)</a>
 </li>
-        <li><a href="sec_interp.exporters.html#sec_interp.exporters.DrillholeTraceShpExporter.get_supported_extensions">(sec_interp.exporters.DrillholeTraceShpExporter のメソッド)</a>
+        <li><a href="sec_interp.exporters.html#sec_interp.exporters.DrillholeTraceVectorExporter.get_supported_extensions">(sec_interp.exporters.DrillholeTraceVectorExporter のメソッド)</a>
 </li>
-        <li><a href="sec_interp.exporters.html#sec_interp.exporters.GeologyShpExporter.get_supported_extensions">(sec_interp.exporters.GeologyShpExporter のメソッド)</a>
+        <li><a href="sec_interp.exporters.dxf_exporter.html#sec_interp.exporters.dxf_exporter.DXFExporter.get_supported_extensions">(sec_interp.exporters.dxf_exporter.DXFExporter のメソッド)</a>
+</li>
+        <li><a href="sec_interp.exporters.html#sec_interp.exporters.DXFExporter.get_supported_extensions">(sec_interp.exporters.DXFExporter のメソッド)</a>
+</li>
+        <li><a href="sec_interp.exporters.html#sec_interp.exporters.GeologyVectorExporter.get_supported_extensions">(sec_interp.exporters.GeologyVectorExporter のメソッド)</a>
 </li>
         <li><a href="sec_interp.exporters.image_exporter.html#sec_interp.exporters.image_exporter.ImageExporter.get_supported_extensions">(sec_interp.exporters.image_exporter.ImageExporter のメソッド)</a>
 </li>
@@ -2026,25 +2050,25 @@ window.addEventListener("load", load);</script>
 </li>
         <li><a href="sec_interp.exporters.html#sec_interp.exporters.PDFExporter.get_supported_extensions">(sec_interp.exporters.PDFExporter のメソッド)</a>
 </li>
-        <li><a href="sec_interp.exporters.profile_exporters.html#sec_interp.exporters.profile_exporters.AxesShpExporter.get_supported_extensions">(sec_interp.exporters.profile_exporters.AxesShpExporter のメソッド)</a>
+        <li><a href="sec_interp.exporters.profile_exporters.html#sec_interp.exporters.profile_exporters.AxesVectorExporter.get_supported_extensions">(sec_interp.exporters.profile_exporters.AxesVectorExporter のメソッド)</a>
 </li>
-        <li><a href="sec_interp.exporters.profile_exporters.html#sec_interp.exporters.profile_exporters.GeologyShpExporter.get_supported_extensions">(sec_interp.exporters.profile_exporters.GeologyShpExporter のメソッド)</a>
+        <li><a href="sec_interp.exporters.profile_exporters.html#sec_interp.exporters.profile_exporters.GeologyVectorExporter.get_supported_extensions">(sec_interp.exporters.profile_exporters.GeologyVectorExporter のメソッド)</a>
 </li>
-        <li><a href="sec_interp.exporters.profile_exporters.html#sec_interp.exporters.profile_exporters.ProfileLineShpExporter.get_supported_extensions">(sec_interp.exporters.profile_exporters.ProfileLineShpExporter のメソッド)</a>
+        <li><a href="sec_interp.exporters.profile_exporters.html#sec_interp.exporters.profile_exporters.ProfileLineVectorExporter.get_supported_extensions">(sec_interp.exporters.profile_exporters.ProfileLineVectorExporter のメソッド)</a>
 </li>
-        <li><a href="sec_interp.exporters.profile_exporters.html#sec_interp.exporters.profile_exporters.StructureShpExporter.get_supported_extensions">(sec_interp.exporters.profile_exporters.StructureShpExporter のメソッド)</a>
+        <li><a href="sec_interp.exporters.profile_exporters.html#sec_interp.exporters.profile_exporters.StructureVectorExporter.get_supported_extensions">(sec_interp.exporters.profile_exporters.StructureVectorExporter のメソッド)</a>
 </li>
-        <li><a href="sec_interp.exporters.html#sec_interp.exporters.ProfileLineShpExporter.get_supported_extensions">(sec_interp.exporters.ProfileLineShpExporter のメソッド)</a>
+        <li><a href="sec_interp.exporters.html#sec_interp.exporters.ProfileLineVectorExporter.get_supported_extensions">(sec_interp.exporters.ProfileLineVectorExporter のメソッド)</a>
 </li>
-        <li><a href="sec_interp.exporters.html#sec_interp.exporters.ShapefileExporter.get_supported_extensions">(sec_interp.exporters.ShapefileExporter のメソッド)</a>
-</li>
-        <li><a href="sec_interp.exporters.shp_exporter.html#sec_interp.exporters.shp_exporter.ShapefileExporter.get_supported_extensions">(sec_interp.exporters.shp_exporter.ShapefileExporter のメソッド)</a>
-</li>
-        <li><a href="sec_interp.exporters.html#sec_interp.exporters.StructureShpExporter.get_supported_extensions">(sec_interp.exporters.StructureShpExporter のメソッド)</a>
+        <li><a href="sec_interp.exporters.html#sec_interp.exporters.StructureVectorExporter.get_supported_extensions">(sec_interp.exporters.StructureVectorExporter のメソッド)</a>
 </li>
         <li><a href="sec_interp.exporters.svg_exporter.html#sec_interp.exporters.svg_exporter.SVGExporter.get_supported_extensions">(sec_interp.exporters.svg_exporter.SVGExporter のメソッド)</a>
 </li>
         <li><a href="sec_interp.exporters.html#sec_interp.exporters.SVGExporter.get_supported_extensions">(sec_interp.exporters.SVGExporter のメソッド)</a>
+</li>
+        <li><a href="sec_interp.exporters.vector_exporter.html#sec_interp.exporters.vector_exporter.VectorExporter.get_supported_extensions">(sec_interp.exporters.vector_exporter.VectorExporter のメソッド)</a>
+</li>
+        <li><a href="sec_interp.exporters.html#sec_interp.exporters.VectorExporter.get_supported_extensions">(sec_interp.exporters.VectorExporter のメソッド)</a>
 </li>
       </ul></li>
       <li><a href="sec_interp.gui.main_dialog_utils.html#sec_interp.gui.main_dialog_utils.DialogEntityManager.get_theme_icon">get_theme_icon() (sec_interp.gui.main_dialog_utils.DialogEntityManager の静的メソッド)</a>
@@ -2711,6 +2735,8 @@ window.addEventListener("load", load);</script>
 </li>
         <li><a href="sec_interp.exporters.drillhole_exporters.html#module-sec_interp.exporters.drillhole_exporters">sec_interp.exporters.drillhole_exporters</a>
 </li>
+        <li><a href="sec_interp.exporters.dxf_exporter.html#module-sec_interp.exporters.dxf_exporter">sec_interp.exporters.dxf_exporter</a>
+</li>
         <li><a href="sec_interp.exporters.image_exporter.html#module-sec_interp.exporters.image_exporter">sec_interp.exporters.image_exporter</a>
 </li>
         <li><a href="sec_interp.exporters.interpretation_3d_exporter.html#module-sec_interp.exporters.interpretation_3d_exporter">sec_interp.exporters.interpretation_3d_exporter</a>
@@ -2721,9 +2747,9 @@ window.addEventListener("load", load);</script>
 </li>
         <li><a href="sec_interp.exporters.profile_exporters.html#module-sec_interp.exporters.profile_exporters">sec_interp.exporters.profile_exporters</a>
 </li>
-        <li><a href="sec_interp.exporters.shp_exporter.html#module-sec_interp.exporters.shp_exporter">sec_interp.exporters.shp_exporter</a>
-</li>
         <li><a href="sec_interp.exporters.svg_exporter.html#module-sec_interp.exporters.svg_exporter">sec_interp.exporters.svg_exporter</a>
+</li>
+        <li><a href="sec_interp.exporters.vector_exporter.html#module-sec_interp.exporters.vector_exporter">sec_interp.exporters.vector_exporter</a>
 </li>
         <li><a href="sec_interp.gui.html#module-sec_interp.gui">sec_interp.gui</a>
 </li>
@@ -2856,6 +2882,8 @@ window.addEventListener("load", load);</script>
         <li><a href="sec_interp.core.domain.html#id49">(sec_interp.core.domain.InterpretationPolygon25D の属性)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.InterpretationPolygon25D.name">[1]</a>
 </li>
       </ul></li>
+      <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.ExportSettings.naming_pattern">naming_pattern (sec_interp.core.models.settings_model.ExportSettings の属性)</a>
+</li>
       <li><a href="sec_interp.gui.dialog_tool_manager.html#sec_interp.gui.dialog_tool_manager.NavigationManager">NavigationManager (sec_interp.gui.dialog_tool_manager のクラス)</a>
 </li>
   </ul></td>
@@ -2959,6 +2987,8 @@ window.addEventListener("load", load);</script>
 </li>
       </ul></li>
       <li><a href="sec_interp.core.validation.project_validators.html#sec_interp.core.validation.project_validators.OutputValidator">OutputValidator (sec_interp.core.validation.project_validators のクラス)</a>
+</li>
+      <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.ExportSettings.overwrite_existing">overwrite_existing (sec_interp.core.models.settings_model.ExportSettings の属性)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -3140,10 +3170,10 @@ window.addEventListener("load", load);</script>
 </li>
       <li><a href="sec_interp.gui.tools.interpretation_tool.html#sec_interp.gui.tools.interpretation_tool.ProfileInterpretationTool">ProfileInterpretationTool (sec_interp.gui.tools.interpretation_tool のクラス)</a>
 </li>
-      <li><a href="sec_interp.exporters.html#sec_interp.exporters.ProfileLineShpExporter">ProfileLineShpExporter (sec_interp.exporters のクラス)</a>
+      <li><a href="sec_interp.exporters.html#sec_interp.exporters.ProfileLineVectorExporter">ProfileLineVectorExporter (sec_interp.exporters のクラス)</a>
 
       <ul>
-        <li><a href="sec_interp.exporters.profile_exporters.html#sec_interp.exporters.profile_exporters.ProfileLineShpExporter">(sec_interp.exporters.profile_exporters のクラス)</a>
+        <li><a href="sec_interp.exporters.profile_exporters.html#sec_interp.exporters.profile_exporters.ProfileLineVectorExporter">(sec_interp.exporters.profile_exporters のクラス)</a>
 </li>
       </ul></li>
       <li><a href="sec_interp.gui.tools.measure_tool.html#sec_interp.gui.tools.measure_tool.ProfileMeasureTool">ProfileMeasureTool (sec_interp.gui.tools.measure_tool のクラス)</a>
@@ -3248,6 +3278,8 @@ window.addEventListener("load", load);</script>
         <li><a href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.reject_handler">(sec_interp.gui.SecInterpDialog のメソッド)</a>
 </li>
       </ul></li>
+      <li><a href="sec_interp.core.controller.html#sec_interp.core.controller.ProfileController.reload_settings">reload_settings() (sec_interp.core.controller.ProfileController のメソッド)</a>
+</li>
       <li><a href="sec_interp.gui.preview_renderer.html#sec_interp.gui.preview_renderer.PreviewRenderer.render">render() (sec_interp.gui.preview_renderer.PreviewRenderer のメソッド)</a>
 
       <ul>
@@ -3344,6 +3376,8 @@ window.addEventListener("load", load);</script>
         <li><a href="sec_interp.gui.dialog_state_manager.html#sec_interp.gui.dialog_state_manager.StateManager.save_settings">(sec_interp.gui.dialog_state_manager.StateManager のメソッド)</a>
 </li>
       </ul></li>
+      <li><a href="sec_interp.gui.dialog_interpretation_manager.html#sec_interp.gui.dialog_interpretation_manager.InterpretationManager.save_to_layer">save_to_layer() (sec_interp.gui.dialog_interpretation_manager.InterpretationManager のメソッド)</a>
+</li>
       <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DemSettings.scale">scale (sec_interp.core.models.settings_model.DemSettings の属性)</a>
 
       <ul>
@@ -3880,6 +3914,13 @@ window.addEventListener("load", load);</script>
 </li>
       </ul></li>
       <li>
+    sec_interp.exporters.dxf_exporter
+
+      <ul>
+        <li><a href="sec_interp.exporters.dxf_exporter.html#module-sec_interp.exporters.dxf_exporter">module</a>
+</li>
+      </ul></li>
+      <li>
     sec_interp.exporters.image_exporter
 
       <ul>
@@ -3915,17 +3956,17 @@ window.addEventListener("load", load);</script>
 </li>
       </ul></li>
       <li>
-    sec_interp.exporters.shp_exporter
-
-      <ul>
-        <li><a href="sec_interp.exporters.shp_exporter.html#module-sec_interp.exporters.shp_exporter">module</a>
-</li>
-      </ul></li>
-      <li>
     sec_interp.exporters.svg_exporter
 
       <ul>
         <li><a href="sec_interp.exporters.svg_exporter.html#module-sec_interp.exporters.svg_exporter">module</a>
+</li>
+      </ul></li>
+      <li>
+    sec_interp.exporters.vector_exporter
+
+      <ul>
+        <li><a href="sec_interp.exporters.vector_exporter.html#module-sec_interp.exporters.vector_exporter">module</a>
 </li>
       </ul></li>
       <li>
@@ -4012,6 +4053,8 @@ window.addEventListener("load", load);</script>
         <li><a href="sec_interp.gui.main_dialog.html#module-sec_interp.gui.main_dialog">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     sec_interp.gui.main_dialog_config
 
@@ -4019,8 +4062,6 @@ window.addEventListener("load", load);</script>
         <li><a href="sec_interp.gui.main_dialog_config.html#module-sec_interp.gui.main_dialog_config">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     sec_interp.gui.main_dialog_utils
 
@@ -4393,12 +4434,6 @@ window.addEventListener("load", load);</script>
 </li>
       <li><a href="sec_interp.core.validation.validation_helpers.html#sec_interp.core.validation.validation_helpers.RichValidationError.severity">severity (sec_interp.core.validation.validation_helpers.RichValidationError の属性)</a>
 </li>
-      <li><a href="sec_interp.exporters.html#sec_interp.exporters.ShapefileExporter">ShapefileExporter (sec_interp.exporters のクラス)</a>
-
-      <ul>
-        <li><a href="sec_interp.exporters.shp_exporter.html#sec_interp.exporters.shp_exporter.ShapefileExporter">(sec_interp.exporters.shp_exporter のクラス)</a>
-</li>
-      </ul></li>
       <li><a href="sec_interp.gui.main_dialog.html#sec_interp.gui.main_dialog.SecInterpDialog.show_dialog">show_dialog() (sec_interp.gui.main_dialog.SecInterpDialog のメソッド)</a>
 
       <ul>
@@ -4519,14 +4554,14 @@ window.addEventListener("load", load);</script>
       </ul></li>
       <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.StructureSettings">StructureSettings (sec_interp.core.models.settings_model のクラス)</a>
 </li>
-      <li><a href="sec_interp.exporters.html#sec_interp.exporters.StructureShpExporter">StructureShpExporter (sec_interp.exporters のクラス)</a>
-
-      <ul>
-        <li><a href="sec_interp.exporters.profile_exporters.html#sec_interp.exporters.profile_exporters.StructureShpExporter">(sec_interp.exporters.profile_exporters のクラス)</a>
-</li>
-      </ul></li>
       <li><a href="sec_interp.core.validation.project_validators.html#sec_interp.core.validation.project_validators.StructureValidator">StructureValidator (sec_interp.core.validation.project_validators のクラス)</a>
 </li>
+      <li><a href="sec_interp.exporters.html#sec_interp.exporters.StructureVectorExporter">StructureVectorExporter (sec_interp.exporters のクラス)</a>
+
+      <ul>
+        <li><a href="sec_interp.exporters.profile_exporters.html#sec_interp.exporters.profile_exporters.StructureVectorExporter">(sec_interp.exporters.profile_exporters のクラス)</a>
+</li>
+      </ul></li>
       <li><a href="sec_interp.core.config.html#sec_interp.core.config.ConfigService.SUPPORTED_DOCUMENT_FORMATS">SUPPORTED_DOCUMENT_FORMATS (sec_interp.core.config.ConfigService の属性)</a>
 
       <ul>
@@ -4629,6 +4664,8 @@ window.addEventListener("load", load);</script>
         <li><a href="sec_interp.exporters.svg_exporter.html#sec_interp.exporters.svg_exporter.SVGExporter">(sec_interp.exporters.svg_exporter のクラス)</a>
 </li>
       </ul></li>
+      <li><a href="sec_interp.gui.dialog_interpretation_manager.html#sec_interp.gui.dialog_interpretation_manager.InterpretationManager.sync_from_layer">sync_from_layer() (sec_interp.gui.dialog_interpretation_manager.InterpretationManager のメソッド)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -4925,14 +4962,14 @@ window.addEventListener("load", load);</script>
         <li><a href="sec_interp.core.validation.layer_validator.html#sec_interp.core.validation.layer_validator.validate_layer_geometry">(sec_interp.core.validation.layer_validator モジュール)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sec_interp.core.validation.html#sec_interp.core.validation.validate_layer_has_features">validate_layer_has_features() (sec_interp.core.validation モジュール)</a>
 
       <ul>
         <li><a href="sec_interp.core.validation.layer_validator.html#sec_interp.core.validation.layer_validator.validate_layer_has_features">(sec_interp.core.validation.layer_validator モジュール)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sec_interp.core.validation.validators.html#sec_interp.core.validation.validators.validate_non_empty">validate_non_empty() (sec_interp.core.validation.validators モジュール)</a>
 </li>
       <li><a href="sec_interp.core.validation.validators.html#sec_interp.core.validation.validators.validate_non_negative">validate_non_negative() (sec_interp.core.validation.validators モジュール)</a>
@@ -5015,6 +5052,12 @@ window.addEventListener("load", load);</script>
 </li>
       <li><a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.ValidationResult">ValidationResult (sec_interp.core.domain.entities モジュール)</a>
 </li>
+      <li><a href="sec_interp.exporters.html#sec_interp.exporters.VectorExporter">VectorExporter (sec_interp.exporters のクラス)</a>
+
+      <ul>
+        <li><a href="sec_interp.exporters.vector_exporter.html#sec_interp.exporters.vector_exporter.VectorExporter">(sec_interp.exporters.vector_exporter のクラス)</a>
+</li>
+      </ul></li>
       <li><a href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig.VERBOSE_LOGGING">VERBOSE_LOGGING (sec_interp.gui.main_dialog_config.DialogConfig の属性)</a>
 </li>
       <li><a href="sec_interp.core.models.settings_model.html#sec_interp.core.models.settings_model.DemSettings.vert_exag">vert_exag (sec_interp.core.models.settings_model.DemSettings の属性)</a>

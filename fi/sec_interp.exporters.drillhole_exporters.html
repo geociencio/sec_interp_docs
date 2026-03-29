@@ -20,7 +20,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Sisällysluettelo" href="genindex.html" />
     <link rel="search" title="Etsi" href="search.html" />
-    <link rel="next" title="sec_interp.exporters.image_exporter module" href="sec_interp.exporters.image_exporter.html" />
+    <link rel="next" title="sec_interp.exporters.dxf_exporter module" href="sec_interp.exporters.dxf_exporter.html" />
     <link rel="prev" title="sec_interp.exporters.drillhole_3d_exporter module" href="sec_interp.exporters.drillhole_3d_exporter.html" /> 
 </head>
 
@@ -106,21 +106,22 @@
              
   <section id="module-sec_interp.exporters.drillhole_exporters">
 <span id="sec-interp-exporters-drillhole-exporters-module"></span><h1>sec_interp.exporters.drillhole_exporters module<a class="headerlink" href="#module-sec_interp.exporters.drillhole_exporters" title="Link to this heading"></a></h1>
-<p>Exporters for drillhole data (Shapefiles).</p>
+<p>Exporters for drillhole data (SHP, GPKG, DXF).</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="sec_interp.exporters.drillhole_exporters.DrillholeIntervalShpExporter">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.drillhole_exporters.</span></span><span class="sig-name descname"><span class="pre">DrillholeIntervalShpExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.exporters.drillhole_exporters.DrillholeIntervalShpExporter" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="sec_interp.exporters.drillhole_exporters.DrillholeIntervalVectorExporter">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.drillhole_exporters.</span></span><span class="sig-name descname"><span class="pre">DrillholeIntervalVectorExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.exporters.drillhole_exporters.DrillholeIntervalVectorExporter" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="sec_interp.exporters.base_exporter.html#sec_interp.exporters.base_exporter.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
-<p>Exports drillhole intervals to a Shapefile.</p>
+<p>Exports drillhole intervals to a vector file (SHP, GPKG, DXF).</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="sec_interp.exporters.drillhole_exporters.DrillholeIntervalShpExporter.export">
-<span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.exporters.drillhole_exporters.DrillholeIntervalShpExporter.export" title="Link to this definition"></a></dt>
-<dd><p>Export drillhole intervals to a Shapefile.</p>
+<dt class="sig sig-object py" id="sec_interp.exporters.drillhole_exporters.DrillholeIntervalVectorExporter.export">
+<span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.exporters.drillhole_exporters.DrillholeIntervalVectorExporter.export" title="Link to this definition"></a></dt>
+<dd><p>Export drillhole intervals to a vector file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>output_path</strong> – Path to the output Shapefile.</p></li>
+<li><p><strong>output_path</strong> – Path to the output file.</p></li>
 <li><p><strong>data</strong> – Dictionary containing ’drillhole_data’ and ’crs’.</p></li>
+<li><p><strong>layer_name</strong> – Optional conceptual layer name.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -133,8 +134,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="sec_interp.exporters.drillhole_exporters.DrillholeIntervalShpExporter.get_supported_extensions">
-<span class="sig-name descname"><span class="pre">get_supported_extensions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.exporters.drillhole_exporters.DrillholeIntervalShpExporter.get_supported_extensions" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="sec_interp.exporters.drillhole_exporters.DrillholeIntervalVectorExporter.get_supported_extensions">
+<span class="sig-name descname"><span class="pre">get_supported_extensions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.exporters.drillhole_exporters.DrillholeIntervalVectorExporter.get_supported_extensions" title="Link to this definition"></a></dt>
 <dd><p>Get supported file extensions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -146,19 +147,20 @@
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="sec_interp.exporters.drillhole_exporters.DrillholeTraceShpExporter">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.drillhole_exporters.</span></span><span class="sig-name descname"><span class="pre">DrillholeTraceShpExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.exporters.drillhole_exporters.DrillholeTraceShpExporter" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="sec_interp.exporters.drillhole_exporters.DrillholeTraceVectorExporter">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.drillhole_exporters.</span></span><span class="sig-name descname"><span class="pre">DrillholeTraceVectorExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.exporters.drillhole_exporters.DrillholeTraceVectorExporter" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="sec_interp.exporters.base_exporter.html#sec_interp.exporters.base_exporter.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
-<p>Exports drillhole traces to a Shapefile.</p>
+<p>Exports drillhole traces to a vector file (SHP, GPKG, DXF).</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="sec_interp.exporters.drillhole_exporters.DrillholeTraceShpExporter.export">
-<span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.exporters.drillhole_exporters.DrillholeTraceShpExporter.export" title="Link to this definition"></a></dt>
-<dd><p>Export drillhole traces to a Shapefile.</p>
+<dt class="sig sig-object py" id="sec_interp.exporters.drillhole_exporters.DrillholeTraceVectorExporter.export">
+<span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.exporters.drillhole_exporters.DrillholeTraceVectorExporter.export" title="Link to this definition"></a></dt>
+<dd><p>Export drillhole traces to a vector file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>output_path</strong> – Path to the output Shapefile.</p></li>
+<li><p><strong>output_path</strong> – Path to the output file.</p></li>
 <li><p><strong>data</strong> – Dictionary containing ’drillhole_data’ and ’crs’.</p></li>
+<li><p><strong>layer_name</strong> – Optional conceptual layer name.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -171,8 +173,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="sec_interp.exporters.drillhole_exporters.DrillholeTraceShpExporter.get_supported_extensions">
-<span class="sig-name descname"><span class="pre">get_supported_extensions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.exporters.drillhole_exporters.DrillholeTraceShpExporter.get_supported_extensions" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="sec_interp.exporters.drillhole_exporters.DrillholeTraceVectorExporter.get_supported_extensions">
+<span class="sig-name descname"><span class="pre">get_supported_extensions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.exporters.drillhole_exporters.DrillholeTraceVectorExporter.get_supported_extensions" title="Link to this definition"></a></dt>
 <dd><p>Get supported file extensions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -190,7 +192,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="sec_interp.exporters.drillhole_3d_exporter.html" class="btn btn-neutral float-left" title="sec_interp.exporters.drillhole_3d_exporter module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="sec_interp.exporters.image_exporter.html" class="btn btn-neutral float-right" title="sec_interp.exporters.image_exporter module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="sec_interp.exporters.dxf_exporter.html" class="btn btn-neutral float-right" title="sec_interp.exporters.dxf_exporter module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

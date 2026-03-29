@@ -133,7 +133,7 @@ and validation logic while delegating format-specific export to subclasses.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.exporters.base_exporter.BaseExporter.export">
-<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.exporters.base_exporter.BaseExporter.export" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.exporters.base_exporter.BaseExporter.export" title="Link to this definition"></a></dt>
 <dd><p>Export data to file.</p>
 <p>This method must be implemented by all concrete exporters.</p>
 <dl class="field-list simple">
@@ -141,6 +141,7 @@ and validation logic while delegating format-specific export to subclasses.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>output_path</strong> -- Destination file path</p></li>
 <li><p><strong>data</strong> -- Data to export (format depends on exporter type)</p></li>
+<li><p><strong>layer_name</strong> -- Optional conceptual name for the layer (e.g. inside a GeoPackage)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Kembali<span class="colon">:</span></dt>

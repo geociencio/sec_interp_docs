@@ -145,13 +145,25 @@ decoupling this logic from the main dialog class.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.gui.dialog_interpretation_manager.InterpretationManager.load_interpretations">
 <span class="sig-name descname"><span class="pre">load_interpretations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.dialog_interpretation_manager.InterpretationManager.load_interpretations" title="Link para esta definição"></a></dt>
-<dd><p>Load interpretations from the QGIS project.</p>
+<dd><p>Load interpretations from the elected source (Project JSON or Vector Layer).</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.gui.dialog_interpretation_manager.InterpretationManager.save_interpretations">
 <span class="sig-name descname"><span class="pre">save_interpretations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.dialog_interpretation_manager.InterpretationManager.save_interpretations" title="Link para esta definição"></a></dt>
-<dd><p>Save interpretations to the QGIS project.</p>
+<dd><p>Save interpretations to the elected source (Project JSON or Vector Layer).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sec_interp.gui.dialog_interpretation_manager.InterpretationManager.save_to_layer">
+<span class="sig-name descname"><span class="pre">save_to_layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.dialog_interpretation_manager.InterpretationManager.save_to_layer" title="Link para esta definição"></a></dt>
+<dd><p>Save interpretation polygons to an external vector layer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sec_interp.gui.dialog_interpretation_manager.InterpretationManager.sync_from_layer">
+<span class="sig-name descname"><span class="pre">sync_from_layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.dialog_interpretation_manager.InterpretationManager.sync_from_layer" title="Link para esta definição"></a></dt>
+<dd><p>Synchronize interpretation polygons from an external vector layer.</p>
 </dd></dl>
 
 </dd></dl>

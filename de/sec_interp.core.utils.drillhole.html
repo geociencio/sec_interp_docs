@@ -136,26 +136,18 @@ tangential approximation based on survey readings (depth, azimuth, dip).</p>
 <dt class="sig sig-object py" id="sec_interp.core.utils.drillhole.interpolate_intervals_on_trajectory">
 <span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.drillhole.</span></span><span class="sig-name descname"><span class="pre">interpolate_intervals_on_trajectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajectory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intervals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.core.utils.drillhole.interpolate_intervals_on_trajectory" title="Link to this definition"></a></dt>
 <dd><p>Interpolate interval attributes along drillhole trajectory.</p>
-<p>Filters and maps geological intervals onto the 3D trajectory points
-that fall within the specified section buffer.</p>
+<p>Ensures that even short intervals have at least two points by interpolating
+at the exact from/to depths on the trajectory segments.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameter<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>trajectory</strong> – List of (depth, x, y, z, dist_along, offset) tuples.</p></li>
+<li><p><strong>trajectory</strong> – List of (depth, x, y, z, dist_along, offset, nx, ny) tuples.</p></li>
 <li><p><strong>intervals</strong> – List of (from_depth, to_depth, attribute) tuples.</p></li>
 <li><p><strong>buffer_width</strong> – Maximum perpendicular offset to include a point.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Rückgabe<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p>attribute: The metadata/geology associated with the interval.</p></li>
-<li><p>points_2d: List of (distance, elevation) coordinates for rendering.</p></li>
-<li><p>points_3d: List of (x, y, z) original coordinates for 3D export.</p></li>
-</ul>
-</p>
-</dd>
-<dt class="field-odd">Rückgabetyp<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of tuples containing</p>
+<dd class="field-even"><p>List of tuples (attribute, points_2d, points_3d, points_3d_proj).</p>
 </dd>
 </dl>
 </dd></dl>

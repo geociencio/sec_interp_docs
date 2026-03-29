@@ -324,25 +324,8 @@ and associated ellipsoid for geodesic calculations.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="sec_interp.core.utils.create_shapefile_writer">
-<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">create_shapefile_writer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsCoordinateReferenceSystem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsFields</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsWkbTypes.GeometryType</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">qgis.core.QgsWkbTypes.LineString</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qgis.core.QgsVectorFileWriter</span></span></span><a class="headerlink" href="#sec_interp.core.utils.create_shapefile_writer" title="Link to this definition"></a></dt>
-<dd><p>Create and initialize a QgsVectorFileWriter for Shapefiles.</p>
-<p>Uses the modern <cite>create</cite> static method for QGIS 3.38+ compatibility.</p>
-<dl class="field-list simple">
-<dt class="field-odd">मापदण्ड<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>output_path</strong> -- File system path where the shapefile will be created.</p></li>
-<li><p><strong>crs</strong> -- The Coordinate Reference System for the new file.</p></li>
-<li><p><strong>fields</strong> -- The attribute fields definition.</p></li>
-<li><p><strong>geometry_type</strong> -- The mapping geometry type (default: LineString).</p></li>
-</ul>
-</dd>
-<dt class="field-even">प्रदत्त <span class="colon">:</span></dt>
-<dd class="field-even"><p>An initialized writer object for creating a Shapefile.</p>
-</dd>
-<dt class="field-odd">उभारता है <span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>OSError</strong> -- If the writer cannot be created or has an initialization error.</p>
-</dd>
-</dl>
+<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">create_shapefile_writer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qgis.core.QgsVectorFileWriter</span></span></span><a class="headerlink" href="#sec_interp.core.utils.create_shapefile_writer" title="Link to this definition"></a></dt>
+<dd><p>Delegate to create_vector_writer (deprecated shim).</p>
 </dd></dl>
 
 <dl class="py function">
@@ -449,26 +432,18 @@ and associated ellipsoid for geodesic calculations.</p>
 <dt class="sig sig-object py" id="sec_interp.core.utils.interpolate_intervals_on_trajectory">
 <span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">interpolate_intervals_on_trajectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajectory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intervals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.core.utils.interpolate_intervals_on_trajectory" title="Link to this definition"></a></dt>
 <dd><p>Interpolate interval attributes along drillhole trajectory.</p>
-<p>Filters and maps geological intervals onto the 3D trajectory points
-that fall within the specified section buffer.</p>
+<p>Ensures that even short intervals have at least two points by interpolating
+at the exact from/to depths on the trajectory segments.</p>
 <dl class="field-list simple">
 <dt class="field-odd">मापदण्ड<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>trajectory</strong> -- List of (depth, x, y, z, dist_along, offset) tuples.</p></li>
+<li><p><strong>trajectory</strong> -- List of (depth, x, y, z, dist_along, offset, nx, ny) tuples.</p></li>
 <li><p><strong>intervals</strong> -- List of (from_depth, to_depth, attribute) tuples.</p></li>
 <li><p><strong>buffer_width</strong> -- Maximum perpendicular offset to include a point.</p></li>
 </ul>
 </dd>
 <dt class="field-even">प्रदत्त <span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p>attribute: The metadata/geology associated with the interval.</p></li>
-<li><p>points_2d: List of (distance, elevation) coordinates for rendering.</p></li>
-<li><p>points_3d: List of (x, y, z) original coordinates for 3D export.</p></li>
-</ul>
-</p>
-</dd>
-<dt class="field-odd">प्रदत्त प्रकार <span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of tuples containing</p>
+<dd class="field-even"><p>List of tuples (attribute, points_2d, points_3d, points_3d_proj).</p>
 </dd>
 </dl>
 </dd></dl>
@@ -477,7 +452,8 @@ that fall within the specified section buffer.</p>
 <dt class="sig sig-object py" id="sec_interp.core.utils.parse_dip">
 <span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">parse_dip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.core.utils.parse_dip" title="Link to this definition"></a></dt>
 <dd><p>Parse a dip value from various formats.</p>
-<p>Supports numeric dip (&quot;45&quot;) and field notation with direction (&quot;45 NE&quot;, &quot;22 SW&quot;).</p>
+<p>Supports numeric dip (&quot;45&quot;) and field notation with direction (&quot;45 NE&quot;, &quot;22 SW&quot;).
+Also supports finding the dip part in combined strings (e.g. &quot;N30E, 45NW&quot;).</p>
 <dl class="field-list simple">
 <dt class="field-odd">मापदण्ड<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>value</strong> -- The raw dip value.</p>
@@ -493,7 +469,8 @@ parsing fails.</p>
 <dt class="sig sig-object py" id="sec_interp.core.utils.parse_strike">
 <span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">parse_strike</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.core.utils.parse_strike" title="Link to this definition"></a></dt>
 <dd><p>Parse a strike value from various formats into an azimuth (0-360).</p>
-<p>Supports numeric values, strings, and quadrant notation (e.g., &quot;N 30 E&quot;, &quot;S 45 W&quot;).</p>
+<p>Supports numeric values, strings, and quadrant notation (e.g., &quot;N 30 E&quot;, &quot;S 45 W&quot;).
+Also handles combined strike/dip strings by splitting them.</p>
 <dl class="field-list simple">
 <dt class="field-odd">मापदण्ड<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>value</strong> -- The raw strike value (string, int, float, or None).</p>
@@ -663,6 +640,7 @@ parsing fails.</p>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.core.utils.io.html">sec_interp.core.utils.io module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.io.html#sec_interp.core.utils.io.create_shapefile_writer"><code class="docutils literal notranslate"><span class="pre">create_shapefile_writer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.io.html#sec_interp.core.utils.io.create_vector_writer"><code class="docutils literal notranslate"><span class="pre">create_vector_writer()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.core.utils.metadata_reader.html">sec_interp.core.utils.metadata_reader module</a><ul>
