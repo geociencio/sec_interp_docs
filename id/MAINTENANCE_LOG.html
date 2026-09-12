@@ -49,46 +49,57 @@
 <li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
-<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Guía de Distinción de Componentes &quot;Core&quot;</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Core Component Distinction Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE_EN.html">Core Components Distinction Guide</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">SecInterp - Maintenance &amp; Release Log</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#cierre-de-fase-v3-4-0-integration-translation">[2026-03-29] CIERRE DE FASE v3.4.0 (INTEGRATION &amp; TRANSLATION)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#cierre-de-fase-v3-3-0-estabilidad-qgis-4-x">[2026-03-14] CIERRE DE FASE v3.3.0 (ESTABILIDAD &amp; QGIS 4.x)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#inicio-de-fase-v3-3-0-calidad-estricta">[2026-03-03] INICIO DE FASE v3.3.0 (CALIDAD ESTRICTA)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#phase-closure-v3-7-0-i18n-quality-gate-ux-qt6-qgis-4-enum-migration">[2026-09-12] PHASE CLOSURE v3.7.0 (I18N QUALITY GATE, UX &amp; QT6/QGIS 4 ENUM MIGRATION)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#phase-closure-v3-6-0-next-gen-stability-spatial-optimization">[2026-05-18] PHASE CLOSURE v3.6.0 (NEXT-GEN STABILITY &amp; SPATIAL OPTIMIZATION)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#phase-closure-v3-5-0-operational-excellence-agentic-autonomy">[2026-04-28] PHASE CLOSURE v3.5.0 (OPERATIONAL EXCELLENCE &amp; AGENTIC AUTONOMY)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#phase-closure-v3-4-0-integration-translation">[2026-03-29] PHASE CLOSURE v3.4.0 (INTEGRATION &amp; TRANSLATION)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#phase-closure-v3-3-0-stability-qgis-4-x">[2026-03-14] PHASE CLOSURE v3.3.0 (STABILITY &amp; QGIS 4.x)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#phase-start-v3-3-0-strict-quality">[2026-03-03] PHASE START v3.3.0 (STRICT QUALITY)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#testing-expansion-dac-automation">[2026-03-01] TESTING EXPANSION &amp; DaC AUTOMATION</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#refactor-layer-resolution-ux-feedback">[2026-02-28] REFACTOR LAYER RESOLUTION &amp; UX FEEDBACK</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#stabilization-hotfixes-drillholes-rendering">[2026-02-25] STABILIZATION HOTFIXES (DRILLHOLES &amp; RENDERING)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#i18n-asia-expansion-infrastructure-audit">[2026-02-18] I18N ASIA EXPANSION &amp; INFRASTRUCTURE AUDIT</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#deep-translation-user-guide">[2026-02-18] DEEP TRANSLATION (USER GUIDE)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#i18n-expansion-market-gap">[2026-02-18] I18N EXPANSION (MARKET GAP)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#documentation-standards">[2026-02-18] DOCUMENTATION STANDARDS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#signal-management-i18n-infrastructure">[2026-02-17] SIGNAL MANAGEMENT &amp; I18N INFRASTRUCTURE</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#v3-0-0-release-i18n-expansion-drillhole-refactor">[v3.0.0 Release] - i18n Expansion &amp; Drillhole Refactor</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#v2-10-0-plan-phase-1-2026-02-01">[v2.10.0 Plan - Phase 1] - 2026-02-01</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#estabilizacion-v3-0-x-gui-exportacion">[Estabilización v3.0.x] - GUI &amp; EXPORTACION</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#phase-closure-v2-9-0-architectural-consolidation">[Phase Closure v2.9.0] - ARCHITECTURAL CONSOLIDATION</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#phase-closure-v2-8-0-debt-reduction-ui-improvements">[Phase Closure v2.8.0] - DEBT REDUCTION &amp; UI IMPROVEMENTS</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#v2-8-0-plan-phase-2-2026-01-24">[v2.8.0 Plan - Phase 2] - 2026-01-24</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#v2-7-0-plan-phase-1-2026-01-15">[v2.7.0 Plan - Phase 1] - 2026-01-15</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plugin-release-v3-0-1">[2026-02-17] PLUGIN RELEASE v3.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#agentic-continuity-session-management">[2026-02-16] AGENTIC CONTINUITY (SESSION MANAGEMENT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plugin-release-v3-0-0-multilingual-integration">[2026-02-16] PLUGIN RELEASE v3.0.0 — MULTILINGUAL &amp; INTEGRATION</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plugin-release-v3-0-0">[2026-02-15] PLUGIN RELEASE v3.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build-system-i18n-refinement">[2026-02-14] BUILD SYSTEM &amp; I18N REFINEMENT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#internationalization-i18n-qgis-4-preparation">[2026-02-12] INTERNATIONALIZATION (i18n) &amp; QGIS 4 PREPARATION</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stabilization-v2-9-0">[2026-02-03] STABILIZATION v2.9.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rigorous-testing-qgis-standards">[2026-02-02] RIGOROUS TESTING &amp; QGIS STANDARDS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#advanced-testing-qgis-integration">[2026-02-01] ADVANCED TESTING &amp; QGIS INTEGRATION</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#unit-testing-qgis-compliance">[2026-01-31] UNIT TESTING &amp; QGIS COMPLIANCE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gui-module-testing">[2026-01-30] GUI MODULE TESTING</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#core-module-testing">[2026-01-29] CORE MODULE TESTING</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#solid-refactoring-mock-stabilization">[2026-01-28] SOLID REFACTORING &amp; MOCK STABILIZATION</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gui-testing-expansion">[2026-01-24] GUI TESTING EXPANSION</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#phase-v2-7-0-completion-operational-excellence">[2026-01-18] PHASE v2.7.0 COMPLETION (OPERATIONAL EXCELLENCE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#major-architectural-refactoring">[2026-01-13] MAJOR ARCHITECTURAL REFACTORING</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#qa-milestone-v2-6-1">[2026-01-09] QA MILESTONE v2.6.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quality-dockerization">[2026-01-04] QUALITY &amp; DOCKERIZATION</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#expansion-phase">[2026-01-02] EXPANSION PHASE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#architectural-refinement">[2025-12-28] ARCHITECTURAL REFINEMENT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#structural-foundation">[2025-12-26] STRUCTURAL FOUNDATION</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#architectural-restructuring">[2025-12-25] ARCHITECTURAL RESTRUCTURING</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#massive-architectural-refactoring">[2025-12-23] MASSIVE ARCHITECTURAL REFACTORING</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cumulative-development-summary">📊 Cumulative Development Summary</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#key-quantitative-milestones">Key Quantitative Milestones</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#major-architectural-contributions">Major Architectural Contributions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#to-2026-01-20">[2.8.0] - 2026-01-19 to 2026-01-20</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#release-process">🚀 Release Process</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#unreleased">[Unreleased]</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#preparation">1. Preparation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#packaging-clean-build">2. Packaging (Clean Build)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#distribution-qgis-repository">3. Distribution &amp; QGIS Repository</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#project-history">📜 Project History</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id1">[2.7.0] - 2026-01-18</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#planning-2026-01-09">[2.7.0] - (Planning) 2026-01-09</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">[2.6.1] - 2026-01-09</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">[2.6.0] - 2026-01-05</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">[2.5.0] - 2026-01-03</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id5">[2.2.0] - 2025-12-22</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id6">[2.1.0] - 2025-12-17</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id7">[2.0.0] - 2025-12-14</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id8">[1.1.0] - 2025-12-12</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">[2.6.1] - 2026-01-09</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">[2.6.0] - 2026-01-05</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">[2.5.0] - 2026-01-03</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">[2.2.0] - 2025-12-22</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">[2.1.0] - 2025-12-17</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">[2.0.0] - 2025-12-14</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">[1.1.0] - 2025-12-12</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#historical-refactoring-notes">📁 Historical Refactoring Notes</a><ul>
@@ -103,9 +114,9 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project Archive</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Cierre de Fase - SecInterp v2.7.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Phase Closure - SecInterp v2.7.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.8.0.html">Cierre de Fase - SecInterp v2.8.0</a></li>
-<li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.9.0.html">Cierre de Fase - SecInterp v2.9.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.9.0.html">Phase Closure - SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v3.0.0.html">Cierre de Fase - SecInterp v3.0.0</a></li>
 </ul>
 
@@ -135,24 +146,48 @@
              
   <section id="secinterp-maintenance-release-log">
 <h1>SecInterp - Maintenance &amp; Release Log<a class="headerlink" href="#secinterp-maintenance-release-log" title="Link to this heading"></a></h1>
-<section id="cierre-de-fase-v3-4-0-integration-translation">
-<h2>[2026-03-29] CIERRE DE FASE v3.4.0 (INTEGRATION &amp; TRANSLATION)<a class="headerlink" href="#cierre-de-fase-v3-4-0-integration-translation" title="Link to this heading"></a></h2>
+<section id="phase-closure-v3-7-0-i18n-quality-gate-ux-qt6-qgis-4-enum-migration">
+<h2>[2026-09-12] PHASE CLOSURE v3.7.0 (I18N QUALITY GATE, UX &amp; QT6/QGIS 4 ENUM MIGRATION)<a class="headerlink" href="#phase-closure-v3-7-0-i18n-quality-gate-ux-qt6-qgis-4-enum-migration" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p><strong>Achievements</strong>: Alcanzada cobertura de traducción del 100% en 13 idiomas y 620 tests exitosos en Docker. Pruebas exhaustivas para integración estructural vectorial.</p></li>
+<li><p><strong>Achievements</strong>: Two releases (v3.7.0 / v3.7.1). AST i18n hygiene gate (0 violations), 9 dialog titles wrapped in <code class="docutils literal notranslate"><span class="pre">self.tr()</span></code>, 79 analyzer flags triaged to 72 false positives. 114 flat enums migrated to scoped form for QGIS 4 (pyqgis4-checker 0 errors). Collapsible preview controls. Security patch (Bandit B110). ZIP reduced 25MB → 3.3MB.</p></li>
+<li><p><strong>Reference</strong>: <span class="xref myst">Phase Closure Document</span></p></li>
+<li><p><strong>Metrics</strong>: 620 tests Green, Maintainability 99.9/100, Security 100/100, CC &lt;= 10, i18n AST Gate PASS.</p></li>
+</ul>
+</section>
+<section id="phase-closure-v3-6-0-next-gen-stability-spatial-optimization">
+<h2>[2026-05-18] PHASE CLOSURE v3.6.0 (NEXT-GEN STABILITY &amp; SPATIAL OPTIMIZATION)<a class="headerlink" href="#phase-closure-v3-6-0-next-gen-stability-spatial-optimization" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Achievements</strong>: Extreme stability and full compatibility with QGIS 4.x/Qt6. Spatial performance optimization via QgsSpatialIndex, achieving sub-second query times. 100% translation coverage and 572 successful tests.</p></li>
+<li><p><strong>Reference</strong>: <span class="xref myst">Phase Closure Document</span></p></li>
+<li><p><strong>Metrics</strong>: 572 tests Green, Code Maintainability 94.2/100, Type Hint Params 97.3%, CC &lt;= 10.</p></li>
+</ul>
+</section>
+<section id="phase-closure-v3-5-0-operational-excellence-agentic-autonomy">
+<h2>[2026-04-28] PHASE CLOSURE v3.5.0 (OPERATIONAL EXCELLENCE &amp; AGENTIC AUTONOMY)<a class="headerlink" href="#phase-closure-v3-5-0-operational-excellence-agentic-autonomy" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Achievements</strong>: Modernization of the development cycle with the Gen 6 Agent framework, memory pruning automation, and observability metrics. Strict quality gate (CC &lt;= 10) and 100% docstrings.</p></li>
+<li><p><strong>Reference</strong>: <span class="xref myst">Phase Closure Document</span></p></li>
+<li><p><strong>Metrics</strong>: 620 tests Green, Code Maintainability 94.1/100, Docstring Coverage 100.0%.</p></li>
+</ul>
+</section>
+<section id="phase-closure-v3-4-0-integration-translation">
+<h2>[2026-03-29] PHASE CLOSURE v3.4.0 (INTEGRATION &amp; TRANSLATION)<a class="headerlink" href="#phase-closure-v3-4-0-integration-translation" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Achievements</strong>: Achieved 100% translation coverage in 13 languages and 620 successful tests in Docker. Comprehensive testing for vector structural integration.</p></li>
 <li><p><strong>Reference</strong>: <span class="xref myst">Phase Closure Document</span></p></li>
 <li><p><strong>Metrics</strong>: 620 tests Green, Code Maintainability 100.0/100, Type Hint Params 96.0%.</p></li>
 </ul>
 </section>
-<section id="cierre-de-fase-v3-3-0-estabilidad-qgis-4-x">
-<h2>[2026-03-14] CIERRE DE FASE v3.3.0 (ESTABILIDAD &amp; QGIS 4.x)<a class="headerlink" href="#cierre-de-fase-v3-3-0-estabilidad-qgis-4-x" title="Link to this heading"></a></h2>
+<section id="phase-closure-v3-3-0-stability-qgis-4-x">
+<h2>[2026-03-14] PHASE CLOSURE v3.3.0 (STABILITY &amp; QGIS 4.x)<a class="headerlink" href="#phase-closure-v3-3-0-stability-qgis-4-x" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p><strong>Achievements</strong>: Estabilidad industrial de recursos, 100% QGIS 4.x Readiness, y 607 tests exitosos.</p></li>
+<li><p><strong>Achievements</strong>: Industrial resource stability, 100% QGIS 4.x Readiness, and 607 successful tests.</p></li>
 <li><p><strong>Reference</strong>: <span class="xref myst">Phase Closure Document</span> | <span class="xref myst">Refactoring Analysis</span></p></li>
 <li><p><strong>Metrics</strong>: 607 tests Green, 100% API compliance, 91% GUI Coverage.</p></li>
 </ul>
 </section>
-<section id="inicio-de-fase-v3-3-0-calidad-estricta">
-<h2>[2026-03-03] INICIO DE FASE v3.3.0 (CALIDAD ESTRICTA)<a class="headerlink" href="#inicio-de-fase-v3-3-0-calidad-estricta" title="Link to this heading"></a></h2>
+<section id="phase-start-v3-3-0-strict-quality">
+<h2>[2026-03-03] PHASE START v3.3.0 (STRICT QUALITY)<a class="headerlink" href="#phase-start-v3-3-0-strict-quality" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p><strong>Changes</strong>: Phase initialization, implementation plan v3.3.0 creation, and environment sync.</p></li>
 <li><p><strong>Metrics/Impact</strong>: Established 450 tests baseline. Targeted return type hints (44.9%) and i18n (895 gaps).</p></li>
@@ -190,155 +225,188 @@
 <h2>[2026-02-18] DEEP TRANSLATION (USER GUIDE)<a class="headerlink" href="#deep-translation-user-guide" title="Link to this heading"></a></h2>
 <ul class="simple">
 <li><p><strong>Changes</strong>: Completed user guide localization in 7 priority languages. Fixed catalog integrity in Italian and Portuguese.</p></li>
-<li><p><strong>Metrics/Impact</strong>: 100% coverage in tutorial sections for the global market.</p></li>
+<li><p><strong>Metrics/Impact</strong>: 100% coverage in tutorial sections. Established SSoT principle for master data.</p></li>
 </ul>
 </section>
-<section id="i18n-expansion-market-gap">
-<h2>[2026-02-18] I18N EXPANSION (MARKET GAP)<a class="headerlink" href="#i18n-expansion-market-gap" title="Link to this heading"></a></h2>
+<section id="plugin-release-v3-0-1">
+<h2>[2026-02-17] PLUGIN RELEASE v3.0.1<a class="headerlink" href="#plugin-release-v3-0-1" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p><strong>Changes</strong>: Added support for <strong>pl</strong>, <strong>nl</strong>, <strong>fi</strong> (14 languages now). Implemented Master Data JSON engine and maintenance workflow.</p></li>
-<li><p><strong>Metrics/Impact</strong>: 100% core coverage in new languages. <code class="docutils literal notranslate"><span class="pre">i18n-standards</span></code> skill updated.</p></li>
+<li><p><strong>Changes</strong>: Plugin officially published to the QGIS Repository. Fixed critical crash in <code class="docutils literal notranslate"><span class="pre">GeometryEngine</span></code> and restoration of old layers.</p></li>
+<li><p><strong>Metrics/Impact</strong>: First community release. 320 tests verified against real API.</p></li>
 </ul>
 </section>
-<section id="documentation-standards">
-<h2>[2026-02-18] DOCUMENTATION STANDARDS<a class="headerlink" href="#documentation-standards" title="Link to this heading"></a></h2>
+<section id="agentic-continuity-session-management">
+<h2>[2026-02-16] AGENTIC CONTINUITY (SESSION MANAGEMENT)<a class="headerlink" href="#agentic-continuity-session-management" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p><strong>Changes</strong>: Formalized <code class="docutils literal notranslate"><span class="pre">documentation-standards</span></code> skill and updated <code class="docutils literal notranslate"><span class="pre">/cierra-sesion</span></code> workflow.</p></li>
-<li><p><strong>Metrics/Impact</strong>: Reduced inconsistencies in logs generated by different agents.</p></li>
+<li><p><strong>Changes</strong>: Restored state from previous sessions. Optimized long session handling.</p></li>
+<li><p><strong>Metrics/Impact</strong>: Context restored. Prepared for v3.0.1 hotfixes.</p></li>
 </ul>
 </section>
-<section id="signal-management-i18n-infrastructure">
-<h2>[2026-02-17] SIGNAL MANAGEMENT &amp; I18N INFRASTRUCTURE<a class="headerlink" href="#signal-management-i18n-infrastructure" title="Link to this heading"></a></h2>
+<section id="plugin-release-v3-0-0-multilingual-integration">
+<h2>[2026-02-16] PLUGIN RELEASE v3.0.0 — MULTILINGUAL &amp; INTEGRATION<a class="headerlink" href="#plugin-release-v3-0-0-multilingual-integration" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p><strong>Changes</strong>: Transition to explicit connections in <code class="docutils literal notranslate"><span class="pre">SignalManager</span></code> and migration to Master Data JSON (11 languages).</p></li>
-<li><p><strong>Metrics/Impact</strong>: Signal stabilization to prevent memory leaks and preparation for scaling.</p></li>
+<li><p><strong>Changes</strong>: Official release with 10 complete translations, new <code class="docutils literal notranslate"><span class="pre">SettingsPage</span></code>, native integration with <code class="docutils literal notranslate"><span class="pre">QgsTask</span></code>.</p></li>
+<li><p><strong>Metrics/Impact</strong>: 361 tests Green. Quality Score 83.5. Deployment to QGIS Python Plugins.</p></li>
 </ul>
-<section id="v3-0-0-release-i18n-expansion-drillhole-refactor">
-<h3>[v3.0.0 Release] - i18n Expansion &amp; Drillhole Refactor<a class="headerlink" href="#v3-0-0-release-i18n-expansion-drillhole-refactor" title="Link to this heading"></a></h3>
+</section>
+<section id="plugin-release-v3-0-0">
+<h2>[2026-02-15] PLUGIN RELEASE v3.0.0<a class="headerlink" href="#plugin-release-v3-0-0" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p><strong>Date</strong>: 2026-02-16</p></li>
-<li><p><strong>Focus</strong>: Global i18n (10 languages), Facade Removal, Drillhole Service Decomposition.</p></li>
-<li><p><strong>Outcome</strong>: Added Hindi/Japanese support. Verified 3D Export stability. Updated Architecture documentation.</p></li>
-<li><p><strong>Reference</strong>: <a class="reference internal" href="#/home/jmbernales/.gemini/antigravity/brain/ad157467-1590-4579-b78f-b53dc0c8b054/task.md"><span class="xref myst">Task Log</span></a></p></li>
+<li><p><strong>Changes</strong>: Full <code class="docutils literal notranslate"><span class="pre">.qgisignore</span></code> integration. Final i18n validations. New Settings UI.</p></li>
+<li><p><strong>Metrics/Impact</strong>: 361 tests Green.</p></li>
+</ul>
+</section>
+<section id="build-system-i18n-refinement">
+<h2>[2026-02-14] BUILD SYSTEM &amp; I18N REFINEMENT<a class="headerlink" href="#build-system-i18n-refinement" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Changes</strong>: Fixed <code class="docutils literal notranslate"><span class="pre">qgis-manage</span></code> linking and unicode conflicts. Applied <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">compile</span></code> with 13 languages.</p></li>
+<li><p><strong>Metrics/Impact</strong>: 316 tests Green. 13 locales verified.</p></li>
+</ul>
+</section>
+<section id="internationalization-i18n-qgis-4-preparation">
+<h2>[2026-02-12] INTERNATIONALIZATION (i18n) &amp; QGIS 4 PREPARATION<a class="headerlink" href="#internationalization-i18n-qgis-4-preparation" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Changes</strong>: Automatic extraction of 1451 translatable strings (13 languages). Migration to <code class="docutils literal notranslate"><span class="pre">qgis.PyQt</span></code> for QGIS 4.x.</p></li>
+<li><p><strong>Metrics/Impact</strong>: 317 tests Green. Master data engine fully operational. 507 metadata fields synchronized.</p></li>
+</ul>
+</section>
+<section id="stabilization-v2-9-0">
+<h2>[2026-02-03] STABILIZATION v2.9.0<a class="headerlink" href="#stabilization-v2-9-0" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Changes</strong>: Fixed <code class="docutils literal notranslate"><span class="pre">GeologyService</span></code> DI and <code class="docutils literal notranslate"><span class="pre">TrajectoryEngine</span></code> index error. Migrated to <code class="docutils literal notranslate"><span class="pre">unittest</span></code> exclusively. Stabilized 255 tests.</p></li>
+<li><p><strong>Metrics/Impact</strong>: 100% regression tests Green.</p></li>
+</ul>
+</section>
+<section id="rigorous-testing-qgis-standards">
+<h2>[2026-02-02] RIGOROUS TESTING &amp; QGIS STANDARDS<a class="headerlink" href="#rigorous-testing-qgis-standards" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Changes</strong>: QGIS Compliance Analysis. Whitelisted plugins for real API integration. 245/245 unit tests passing.</p></li>
+<li><p><strong>Metrics/Impact</strong>: 100% pass rate. Deep fixes in mock infrastructure.</p></li>
+</ul>
+</section>
+<section id="advanced-testing-qgis-integration">
+<h2>[2026-02-01] ADVANCED TESTING &amp; QGIS INTEGRATION<a class="headerlink" href="#advanced-testing-qgis-integration" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Changes</strong>: Implemented <code class="docutils literal notranslate"><span class="pre">QgsCoordinateReferenceSystem</span></code> integration tests. 10 new headless QGIS tests.</p></li>
+<li><p><strong>Metrics/Impact</strong>: 171 tests Green in mock environment, 37 native QGIS tests stable.</p></li>
+</ul>
+</section>
+<section id="unit-testing-qgis-compliance">
+<h2>[2026-01-31] UNIT TESTING &amp; QGIS COMPLIANCE<a class="headerlink" href="#unit-testing-qgis-compliance" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Changes</strong>: Created <code class="docutils literal notranslate"><span class="pre">BaseIntegrationTest</span></code> class. 27 new tests for <code class="docutils literal notranslate"><span class="pre">GeologyService</span></code>, <code class="docutils literal notranslate"><span class="pre">StructureService</span></code>, <code class="docutils literal notranslate"><span class="pre">ExportService</span></code>.</p></li>
+<li><p><strong>Metrics/Impact</strong>: 155 unit tests + 37 native QGIS tests Green.</p></li>
+</ul>
+</section>
+<section id="gui-module-testing">
+<h2>[2026-01-30] GUI MODULE TESTING<a class="headerlink" href="#gui-module-testing" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Changes</strong>: Test suite for GUI modules (<code class="docutils literal notranslate"><span class="pre">PreviewRenderer</span></code>, <code class="docutils literal notranslate"><span class="pre">LODCalculator</span></code>, <code class="docutils literal notranslate"><span class="pre">PreviewParamHasher</span></code>).</p></li>
+<li><p><strong>Metrics/Impact</strong>: 155 unit tests Green. GUI-related mock coverage increased.</p></li>
+</ul>
+</section>
+<section id="core-module-testing">
+<h2>[2026-01-29] CORE MODULE TESTING<a class="headerlink" href="#core-module-testing" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Changes</strong>: 62 tests for Core module (<code class="docutils literal notranslate"><span class="pre">DrillholeService</span></code>, <code class="docutils literal notranslate"><span class="pre">TrajectoryEngine</span></code>, <code class="docutils literal notranslate"><span class="pre">PreviewService</span></code>).</p></li>
+<li><p><strong>Metrics/Impact</strong>: 135 unit tests Green. Core coverage at highest historical level.</p></li>
+</ul>
+</section>
+<section id="solid-refactoring-mock-stabilization">
+<h2>[2026-01-28] SOLID REFACTORING &amp; MOCK STABILIZATION<a class="headerlink" href="#solid-refactoring-mock-stabilization" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Changes</strong>: Deep refactoring of <code class="docutils literal notranslate"><span class="pre">main_dialog</span></code> applying SOLID principles. <code class="docutils literal notranslate"><span class="pre">preview_task_orchestrator.py</span></code> extraction.</p></li>
+<li><p><strong>Metrics/Impact</strong>: 169 unit tests Green. Mock environment 100% stable for headless testing.</p></li>
+</ul>
+</section>
+<section id="gui-testing-expansion">
+<h2>[2026-01-24] GUI TESTING EXPANSION<a class="headerlink" href="#gui-testing-expansion" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Changes</strong>: 38 tests for <code class="docutils literal notranslate"><span class="pre">main_dialog_validation.py</span></code>, <code class="docutils literal notranslate"><span class="pre">legend_renderer</span></code>, and <code class="docutils literal notranslate"><span class="pre">lod_calculator</span></code>.</p></li>
+<li><p><strong>Metrics/Impact</strong>: 106 unit tests Green.</p></li>
+</ul>
+</section>
+<section id="phase-v2-7-0-completion-operational-excellence">
+<h2>[2026-01-18] PHASE v2.7.0 COMPLETION (OPERATIONAL EXCELLENCE)<a class="headerlink" href="#phase-v2-7-0-completion-operational-excellence" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Changes</strong>: Formal closure of validation/documentation phase. Modular architecture validated.</p></li>
+<li><p><strong>Reference</strong>: phase_closure_v2.7.0.md</p></li>
+<li><p><strong>Metrics/Impact</strong>: 73 unit tests Green. Technical debt under control.</p></li>
+</ul>
+</section>
+<section id="major-architectural-refactoring">
+<h2>[2026-01-13] MAJOR ARCHITECTURAL REFACTORING<a class="headerlink" href="#major-architectural-refactoring" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Changes</strong>: Fragmentation of <code class="docutils literal notranslate"><span class="pre">SecInterpDialog</span></code> into specialized managers. Modularization of <code class="docutils literal notranslate"><span class="pre">core/utils/</span></code>.</p></li>
+<li><p><strong>Metrics/Impact</strong>: 52 unit tests Green. Cyclomatic complexity reduced by 60%.</p></li>
+</ul>
+</section>
+<section id="qa-milestone-v2-6-1">
+<h2>[2026-01-09] QA MILESTONE v2.6.1<a class="headerlink" href="#qa-milestone-v2-6-1" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Changes</strong>: Full stabilization of test suite. Mock pollution resolved in <code class="docutils literal notranslate"><span class="pre">QListWidget</span></code> tests.</p></li>
+<li><p><strong>Metrics/Impact</strong>: 312 tests Green.</p></li>
+</ul>
+</section>
+<section id="quality-dockerization">
+<h2>[2026-01-04] QUALITY &amp; DOCKERIZATION<a class="headerlink" href="#quality-dockerization" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Changes</strong>: Complete dockerization of the test environment. Consolidated <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">docker-test</span></code> integration.</p></li>
+<li><p><strong>Metrics/Impact</strong>: Containerized environment with 45% improved execution times.</p></li>
+</ul>
+</section>
+<section id="expansion-phase">
+<h2>[2026-01-02] EXPANSION PHASE<a class="headerlink" href="#expansion-phase" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Changes</strong>: Implementation of drillhole 3D services. GUI testing expansion with native mocks.</p></li>
+<li><p><strong>Metrics/Impact</strong>: 86 unit tests Green.</p></li>
+</ul>
+</section>
+<section id="architectural-refinement">
+<h2>[2025-12-28] ARCHITECTURAL REFINEMENT<a class="headerlink" href="#architectural-refinement" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Changes</strong>: Extraction of <code class="docutils literal notranslate"><span class="pre">DrillholeService</span></code>, <code class="docutils literal notranslate"><span class="pre">Controllers</span></code>, and <code class="docutils literal notranslate"><span class="pre">utils</span></code> modules. Validation framework unification.</p></li>
+<li><p><strong>Metrics/Impact</strong>: 23 unit tests Green.</p></li>
+</ul>
+</section>
+<section id="structural-foundation">
+<h2>[2025-12-26] STRUCTURAL FOUNDATION<a class="headerlink" href="#structural-foundation" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Changes</strong>: Solid foundation for drillhole implementations. Establishment of architectural dependencies.</p></li>
+<li><p><strong>Metrics/Impact</strong>: 21 unit tests Green.</p></li>
+</ul>
+</section>
+<section id="architectural-restructuring">
+<h2>[2025-12-25] ARCHITECTURAL RESTRUCTURING<a class="headerlink" href="#architectural-restructuring" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Changes</strong>: Reorganized <code class="docutils literal notranslate"><span class="pre">core/</span></code> and <code class="docutils literal notranslate"><span class="pre">gui/</span></code>. Implemented preview caching system.</p></li>
+<li><p><strong>Metrics/Impact</strong>: 12 unit tests Green.</p></li>
+</ul>
+</section>
+<section id="massive-architectural-refactoring">
+<h2>[2025-12-23] MASSIVE ARCHITECTURAL REFACTORING<a class="headerlink" href="#massive-architectural-refactoring" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Changes</strong>: Complete restructuring of codebase into modular packages (<code class="docutils literal notranslate"><span class="pre">core/</span></code>, <code class="docutils literal notranslate"><span class="pre">gui/</span></code>, <code class="docutils literal notranslate"><span class="pre">exporters/</span></code>).</p></li>
+<li><p><strong>Metrics/Impact</strong>: 0 tests, phase focused on structural integrity.</p></li>
 </ul>
 </section>
 <hr class="docutils" />
-<section id="v2-10-0-plan-phase-1-2026-02-01">
-<h3>[v2.10.0 Plan - Phase 1] - 2026-02-01<a class="headerlink" href="#v2-10-0-plan-phase-1-2026-02-01" title="Link to this heading"></a></h3>
+<section id="cumulative-development-summary">
+<h2>📊 Cumulative Development Summary<a class="headerlink" href="#cumulative-development-summary" title="Link to this heading"></a></h2>
+<section id="key-quantitative-milestones">
+<h3>Key Quantitative Milestones<a class="headerlink" href="#key-quantitative-milestones" title="Link to this heading"></a></h3>
 <ul class="simple">
-<li><p><strong>Focus</strong>: Quality Score &gt; 60, QGIS 4.x Prep (PyQt5 cleanup), ExportService Refactor.</p></li>
-<li><p><strong>Goals</strong>: Eliminate technical debt in resources.py and reduce cyclomatic complexity in 3D exporters.</p></li>
+<li><p><strong>Full Testing</strong>: From 0 to 361+ stable unit tests.</p></li>
+<li><p><strong>Dockerization</strong>: Complete test environment with 100% reproducibility.</p></li>
+<li><p><strong>Internationalization</strong>: 14 languages supported with automated maintenance.</p></li>
+<li><p><strong>Architectural Decoupling</strong>: Clean separation between QGIS API and business logic.</p></li>
 </ul>
 </section>
-<section id="estabilizacion-v3-0-x-gui-exportacion">
-<h3>[Estabilización v3.0.x] - GUI &amp; EXPORTACION<a class="headerlink" href="#estabilizacion-v3-0-x-gui-exportacion" title="Link to this heading"></a></h3>
+<section id="major-architectural-contributions">
+<h3>Major Architectural Contributions<a class="headerlink" href="#major-architectural-contributions" title="Link to this heading"></a></h3>
+<section id="to-2026-01-20">
+<h4>[2.8.0] - 2026-01-19 to 2026-01-20<a class="headerlink" href="#to-2026-01-20" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p><strong>Date</strong>: 2026-02-15</p></li>
-<li><p><strong>Focus</strong>: ExportService Layer Resolution, Facade Removal.</p></li>
-<li><p><strong>Outcome</strong>: 100% Tests Passing, Export functionality restored.</p></li>
-<li><p><strong>Reference</strong>: <a class="reference internal" href="#sesion_2026-02-15_stabilization_gui_export.md"><span class="xref myst">Session Log</span></a></p></li>
-</ul>
-</section>
-<hr class="docutils" />
-<section id="phase-closure-v2-9-0-architectural-consolidation">
-<h3>[Phase Closure v2.9.0] - ARCHITECTURAL CONSOLIDATION<a class="headerlink" href="#phase-closure-v2-9-0-architectural-consolidation" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Date</strong>: 2026-02-01</p></li>
-<li><p><strong>Focus</strong>: Core Domain Migration, Drillhole Service Decomposition, v2.9.0 Release Stabilization.</p></li>
-<li><p><strong>Outcome</strong>: 199 Tests Passing (100%). Quality Score: 54.3/100 (+9 pts). Official release published.</p></li>
-<li><p><strong>Reference</strong>: <a class="reference internal" href="phase_closure_v2.9.0.html"><span class="std std-doc">Phase Closure Document</span></a> | <a class="reference internal" href="v2.9.0_technical_analysis.html"><span class="std std-doc">Technical Analysis</span></a></p></li>
-</ul>
-</section>
-<hr class="docutils" />
-<section id="phase-closure-v2-8-0-debt-reduction-ui-improvements">
-<h3>[Phase Closure v2.8.0] - DEBT REDUCTION &amp; UI IMPROVEMENTS<a class="headerlink" href="#phase-closure-v2-8-0-debt-reduction-ui-improvements" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Date</strong>: 2026-01-25</p></li>
-<li><p><strong>Focus</strong>: Core Decoupling, Async Safety, Legend Visibility.</p></li>
-<li><p><strong>Outcome</strong>: 359 Tests Passing, Core-QGIS Decoupling finalized with WKT/DTO pattern.</p></li>
-<li><p><strong>Reference</strong>: <a class="reference internal" href="phase_closure_v2.8.0.html"><span class="std std-doc">Phase Closure Document</span></a></p></li>
-</ul>
-</section>
-<hr class="docutils" />
-<section id="v2-8-0-plan-phase-2-2026-01-24">
-<h3>[v2.8.0 Plan - Phase 2] - 2026-01-24<a class="headerlink" href="#v2-8-0-plan-phase-2-2026-01-24" title="Link to this heading"></a></h3>
-</section>
-<section id="v2-7-0-plan-phase-1-2026-01-15">
-<h3>[v2.7.0 Plan - Phase 1] - 2026-01-15<a class="headerlink" href="#v2-7-0-plan-phase-1-2026-01-15" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Mock Infrastructure Overhaul</strong>: Implemented <code class="docutils literal notranslate"><span class="pre">ModuleProxy</span></code> and <code class="docutils literal notranslate"><span class="pre">MockSignal</span></code> to stabilize the QGIS test environment. Resolved attribute errors and reference loss during mock resets. Added <code class="docutils literal notranslate"><span class="pre">indexFromName</span></code> to <code class="docutils literal notranslate"><span class="pre">MockQgsFields</span></code> for better API parity.</p></li>
-<li><p><strong>Config Fix</strong>: Completed missing <code class="docutils literal notranslate"><span class="pre">reset_defaults()</span></code> logic in <code class="docutils literal notranslate"><span class="pre">ConfigService</span></code>.</p></li>
-<li><p><strong>Workflow Update</strong>: Simplified <code class="docutils literal notranslate"><span class="pre">inicia-sesion</span></code> by removing <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">deploy</span></code> and standardizing the test execution command.</p></li>
-</ul>
-</section>
-</section>
-<section id="release-process">
-<h2>🚀 Release Process<a class="headerlink" href="#release-process" title="Link to this heading"></a></h2>
-<section id="unreleased">
-<h3>[Unreleased]<a class="headerlink" href="#unreleased" title="Link to this heading"></a></h3>
-<p>Process</p>
-<p>Follow these steps to prepare and release a new version of <strong>SecInterp</strong>.</p>
-</section>
-<section id="preparation">
-<h3>1. Preparation<a class="headerlink" href="#preparation" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Update Metadata</strong>: Increment <code class="docutils literal notranslate"><span class="pre">version</span></code> in <code class="docutils literal notranslate"><span class="pre">metadata.txt</span></code>.</p></li>
-<li><p><strong>Sync AI Context</strong>: Update <code class="docutils literal notranslate"><span class="pre">AI_CONTEXT.md</span></code> and <code class="docutils literal notranslate"><span class="pre">project_context.json</span></code>.</p></li>
-<li><p><strong>Update Changelog</strong>: Add the new version to the top of the <a class="reference internal" href="#-project-history"><span class="xref myst">Project History</span></a> section below.</p></li>
-<li><p><strong>Update User Guide</strong>: Ensure screenshots and feature descriptions in <code class="docutils literal notranslate"><span class="pre">docs/USER_GUIDE.md</span></code> are current.</p></li>
-</ul>
-</section>
-<section id="packaging-clean-build">
-<h3>2. Packaging (Clean Build)<a class="headerlink" href="#packaging-clean-build" title="Link to this heading"></a></h3>
-<p>To ensure no development files (like tests or .git) are included in the distribution zip, use the <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">archive</span></code> method:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check exports-ignore in .gitattributes first</span>
-<span class="c1"># Then run the package command</span>
-make<span class="w"> </span>package<span class="w"> </span><span class="nv">VERSION</span><span class="o">=</span>main
-mv<span class="w"> </span>sec_interp.zip<span class="w"> </span>sec_interp_vX.Y.Z.zip
-</pre></div>
-</div>
-</section>
-<section id="distribution-qgis-repository">
-<h3>3. Distribution &amp; QGIS Repository<a class="headerlink" href="#distribution-qgis-repository" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Tagging</strong>: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">tag</span> <span class="pre">vX.Y.Z</span> <span class="pre">-m</span> <span class="pre">&quot;Release</span> <span class="pre">description&quot;</span></code></p></li>
-<li><p><strong>GitHub</strong>: Create a new Release and attach the ZIP.</p></li>
-<li><p><strong>QGIS Repo</strong>: Upload the ZIP to <a class="reference external" href="https://plugins.qgis.org/">plugins.qgis.org</a>.</p>
-<ul>
-<li><p>⚠️ <strong>CRITICAL</strong>: The ZIP MUST contain a <code class="docutils literal notranslate"><span class="pre">LICENSE</span></code> file and NO <code class="docutils literal notranslate"><span class="pre">__pycache__</span></code> folders.</p></li>
-<li><p>The repository will reject any package with <code class="docutils literal notranslate"><span class="pre">.pyc</span></code> files for security reasons.</p></li>
-<li><p>Verified ZIP structure with <code class="docutils literal notranslate"><span class="pre">unzip</span> <span class="pre">-t</span> <span class="pre">sec_interp.zip</span></code>.</p></li>
-</ul>
-</li>
-</ul>
-</section>
-</section>
-<hr class="docutils" />
-<section id="project-history">
-<h2>📜 Project History<a class="headerlink" href="#project-history" title="Link to this heading"></a></h2>
-<section id="id1">
-<h3>[2.7.0] - 2026-01-18<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p><strong>Operational Excellence &amp; Documentation Overhaul</strong>:</p>
-<ul>
-<li><p><strong>Sphinx Integration</strong>: Automated documentation generation with <code class="docutils literal notranslate"><span class="pre">conf.py</span></code> (autodoc/napoleon) and <code class="docutils literal notranslate"><span class="pre">build_docs.sh</span></code>.</p></li>
-<li><p><strong>Link Recovery</strong>: Fixed 50+ broken links in <code class="docutils literal notranslate"><span class="pre">README.md</span></code> and aligned terminology with the new Sidebar-driven UI.</p></li>
-<li><p><strong>Architecture Documentation</strong>: Added detailed records for the <strong>3-Level Validation Architecture</strong> and <code class="docutils literal notranslate"><span class="pre">DialogInterpretationManager</span></code>.</p></li>
-<li><p><strong>i18n Cleanup</strong>: Wrapped all user-facing strings in <code class="docutils literal notranslate"><span class="pre">tr()</span></code> and audited English/Spanish source.</p></li>
-</ul>
-</li>
-<li><p><strong>Refactorización de Interfaz (Fase 2)</strong>:</p>
-<ul>
-<li><p>Introducción de <code class="docutils literal notranslate"><span class="pre">MessageManager</span></code>, <code class="docutils literal notranslate"><span class="pre">CacheHandler</span></code>, y <code class="docutils literal notranslate"><span class="pre">SettingsManager</span></code> para fragmentar el diálogo principal (Reducción de ~700 líneas de código boilerplate).</p></li>
-<li><p><strong>Bug Fix</strong>: Restaurados métodos proxy <code class="docutils literal notranslate"><span class="pre">_load_interpretations</span></code> y <code class="docutils literal notranslate"><span class="pre">_load_user_settings</span></code> para retrocompatibilidad.</p></li>
-</ul>
-</li>
-<li><p><strong>Testing Infrastructure (Dockerization)</strong>:</p>
-<ul>
-<li><p>Implemented <code class="docutils literal notranslate"><span class="pre">Dockerfile</span></code> optimized for QGIS headless testing.</p></li>
-<li><p>Added <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">docker-build</span></code> and <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">docker-test</span></code> for reproducible CI/CD environments.</p></li>
-</ul>
-</li>
 <li><p><strong>Data Integrity &amp; Core</strong>:</p>
 <ul>
 <li><p><strong>3-Level Validation</strong>: Hierarchical system (Type/Logic/Domain) ensuring data safety across all layers.</p></li>
@@ -351,6 +419,7 @@ mv<span class="w"> </span>sec_interp.zip<span class="w"> </span>sec_interp_vX.Y.
 </ul>
 </li>
 </ul>
+</section>
 </section>
 <section id="planning-2026-01-09">
 <h3>[2.7.0] - (Planning) 2026-01-09<a class="headerlink" href="#planning-2026-01-09" title="Link to this heading"></a></h3>
@@ -370,8 +439,8 @@ mv<span class="w"> </span>sec_interp.zip<span class="w"> </span>sec_interp_vX.Y.
 </li>
 </ul>
 </section>
-<section id="id2">
-<h3>[2.6.1] - 2026-01-09<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<section id="id1">
+<h3>[2.6.1] - 2026-01-09<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Stabilization</strong>:</p>
 <ul>
@@ -386,8 +455,8 @@ mv<span class="w"> </span>sec_interp.zip<span class="w"> </span>sec_interp_vX.Y.
 </li>
 </ul>
 </section>
-<section id="id3">
-<h3>[2.6.0] - 2026-01-05<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<section id="id2">
+<h3>[2.6.0] - 2026-01-05<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Quality Assurance</strong>:</p>
 <ul>
@@ -419,8 +488,8 @@ mv<span class="w"> </span>sec_interp.zip<span class="w"> </span>sec_interp_vX.Y.
 </li>
 </ul>
 </section>
-<section id="id4">
-<h3>[2.5.0] - 2026-01-03<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<section id="id3">
+<h3>[2.5.0] - 2026-01-03<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Major Features</strong>:</p>
 <ul>
@@ -452,8 +521,8 @@ mv<span class="w"> </span>sec_interp.zip<span class="w"> </span>sec_interp_vX.Y.
 <li><p><strong>Test Infrastructure</strong>: Enhanced <code class="docutils literal notranslate"><span class="pre">MockQgsProject</span></code> and <code class="docutils literal notranslate"><span class="pre">MockQWidget</span></code> to support persistence and modern Qt patterns.</p></li>
 </ul>
 </section>
-<section id="id5">
-<h3>[2.2.0] - 2025-12-22<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<section id="id4">
+<h3>[2.2.0] - 2025-12-22<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Documentation Globalization</strong>: 100% of documentation (including Architecture) translated to English.</p></li>
 <li><p><strong>Build Optimization</strong>: Slimmed final ZIP package and removed redundant source code views from help.</p></li>
@@ -463,22 +532,22 @@ mv<span class="w"> </span>sec_interp.zip<span class="w"> </span>sec_interp_vX.Y.
 <li><p><strong>LOD Optimization</strong>: Implemented adaptive Level of Detail for previews.</p></li>
 </ul>
 </section>
-<section id="id6">
-<h3>[2.1.0] - 2025-12-17<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<section id="id5">
+<h3>[2.1.0] - 2025-12-17<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Feature</strong>: Snap-Enabled Measurement Tool.</p></li>
 <li><p><strong>Fix</strong>: Resolved Snapping configuration attribute errors.</p></li>
 </ul>
 </section>
-<section id="id7">
-<h3>[2.0.0] - 2025-12-14<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<section id="id6">
+<h3>[2.0.0] - 2025-12-14<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Feature</strong>: Full Drillhole Integration (Projection &amp; Intervals).</p></li>
 <li><p><strong>Export</strong>: Added drillhole trace and interval Shapefile exporters.</p></li>
 </ul>
 </section>
-<section id="id8">
-<h3>[1.1.0] - 2025-12-12<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<section id="id7">
+<h3>[1.1.0] - 2025-12-12<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>Performance</strong>: Asynchronous parallel processing for geology.</p></li>
 <li><p><strong>Feature</strong>: Adaptive Sampling and Measurement Tool.</p></li>

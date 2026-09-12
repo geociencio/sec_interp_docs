@@ -48,7 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
-<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Guía de Distinción de Componentes „Core”</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Core Component Distinction Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE_EN.html">Core Components Distinction Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
@@ -56,9 +56,9 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project Archive</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Cierre de Fase - SecInterp v2.7.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Phase Closure - SecInterp v2.7.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.8.0.html">Cierre de Fase - SecInterp v2.8.0</a></li>
-<li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.9.0.html">Cierre de Fase - SecInterp v2.9.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.9.0.html">Phase Closure - SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v3.0.0.html">Cierre de Fase - SecInterp v3.0.0</a></li>
 </ul>
 
@@ -140,11 +140,11 @@
 <li class="toctree-l2"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html#key-data-structures">🧬 Key Data Structures</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Guía de Distinción de Componentes „Core”</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html#la-distincion-fundamental">⚠️ La Distinción Fundamental</a></li>
-<li class="toctree-l2"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html#reglas-para-desarrolladores-e-ia">🧭 Reglas para Desarrolladores e IA</a></li>
-<li class="toctree-l2"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html#estrategia-de-testing-diferenciada">🧪 Estrategia de Testing Diferenciada</a></li>
-<li class="toctree-l2"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html#resumen-de-desacoplamiento-enero-2026">🛠️ Resumen de Desacoplamiento (Enero 2026)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Core Component Distinction Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html#the-fundamental-distinction">⚠️ The Fundamental Distinction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html#rules-for-developers-and-ai">🧭 Rules for Developers and AI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html#differentiated-testing-strategy">🧪 Differentiated Testing Strategy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html#decoupling-summary-january-2026">🛠️ Decoupling Summary (January 2026)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE_EN.html">Core Components Distinction Guide</a><ul>
@@ -155,19 +155,41 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#cierre-de-fase-v3-4-0-integration-translation">[2026-03-29] CIERRE DE FASE v3.4.0 (INTEGRATION &amp; TRANSLATION)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#cierre-de-fase-v3-3-0-estabilidad-qgis-4-x">[2026-03-14] CIERRE DE FASE v3.3.0 (ESTABILIDAD &amp; QGIS 4.x)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#inicio-de-fase-v3-3-0-calidad-estricta">[2026-03-03] INICIO DE FASE v3.3.0 (CALIDAD ESTRICTA)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#phase-closure-v3-7-0-i18n-quality-gate-ux-qt6-qgis-4-enum-migration">[2026-09-12] PHASE CLOSURE v3.7.0 (I18N QUALITY GATE, UX &amp; QT6/QGIS 4 ENUM MIGRATION)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#phase-closure-v3-6-0-next-gen-stability-spatial-optimization">[2026-05-18] PHASE CLOSURE v3.6.0 (NEXT-GEN STABILITY &amp; SPATIAL OPTIMIZATION)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#phase-closure-v3-5-0-operational-excellence-agentic-autonomy">[2026-04-28] PHASE CLOSURE v3.5.0 (OPERATIONAL EXCELLENCE &amp; AGENTIC AUTONOMY)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#phase-closure-v3-4-0-integration-translation">[2026-03-29] PHASE CLOSURE v3.4.0 (INTEGRATION &amp; TRANSLATION)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#phase-closure-v3-3-0-stability-qgis-4-x">[2026-03-14] PHASE CLOSURE v3.3.0 (STABILITY &amp; QGIS 4.x)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#phase-start-v3-3-0-strict-quality">[2026-03-03] PHASE START v3.3.0 (STRICT QUALITY)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#testing-expansion-dac-automation">[2026-03-01] TESTING EXPANSION &amp; DaC AUTOMATION</a></li>
 <li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#refactor-layer-resolution-ux-feedback">[2026-02-28] REFACTOR LAYER RESOLUTION &amp; UX FEEDBACK</a></li>
 <li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#stabilization-hotfixes-drillholes-rendering">[2026-02-25] STABILIZATION HOTFIXES (DRILLHOLES &amp; RENDERING)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#i18n-asia-expansion-infrastructure-audit">[2026-02-18] I18N ASIA EXPANSION &amp; INFRASTRUCTURE AUDIT</a></li>
 <li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#deep-translation-user-guide">[2026-02-18] DEEP TRANSLATION (USER GUIDE)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#i18n-expansion-market-gap">[2026-02-18] I18N EXPANSION (MARKET GAP)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#documentation-standards">[2026-02-18] DOCUMENTATION STANDARDS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#signal-management-i18n-infrastructure">[2026-02-17] SIGNAL MANAGEMENT &amp; I18N INFRASTRUCTURE</a></li>
-<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#release-process">🚀 Release Process</a></li>
-<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#project-history">📜 Project History</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#plugin-release-v3-0-1">[2026-02-17] PLUGIN RELEASE v3.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#agentic-continuity-session-management">[2026-02-16] AGENTIC CONTINUITY (SESSION MANAGEMENT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#plugin-release-v3-0-0-multilingual-integration">[2026-02-16] PLUGIN RELEASE v3.0.0 — MULTILINGUAL &amp; INTEGRATION</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#plugin-release-v3-0-0">[2026-02-15] PLUGIN RELEASE v3.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#build-system-i18n-refinement">[2026-02-14] BUILD SYSTEM &amp; I18N REFINEMENT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#internationalization-i18n-qgis-4-preparation">[2026-02-12] INTERNATIONALIZATION (i18n) &amp; QGIS 4 PREPARATION</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#stabilization-v2-9-0">[2026-02-03] STABILIZATION v2.9.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#rigorous-testing-qgis-standards">[2026-02-02] RIGOROUS TESTING &amp; QGIS STANDARDS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#advanced-testing-qgis-integration">[2026-02-01] ADVANCED TESTING &amp; QGIS INTEGRATION</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#unit-testing-qgis-compliance">[2026-01-31] UNIT TESTING &amp; QGIS COMPLIANCE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#gui-module-testing">[2026-01-30] GUI MODULE TESTING</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#core-module-testing">[2026-01-29] CORE MODULE TESTING</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#solid-refactoring-mock-stabilization">[2026-01-28] SOLID REFACTORING &amp; MOCK STABILIZATION</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#gui-testing-expansion">[2026-01-24] GUI TESTING EXPANSION</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#phase-v2-7-0-completion-operational-excellence">[2026-01-18] PHASE v2.7.0 COMPLETION (OPERATIONAL EXCELLENCE)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#major-architectural-refactoring">[2026-01-13] MAJOR ARCHITECTURAL REFACTORING</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#qa-milestone-v2-6-1">[2026-01-09] QA MILESTONE v2.6.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#quality-dockerization">[2026-01-04] QUALITY &amp; DOCKERIZATION</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#expansion-phase">[2026-01-02] EXPANSION PHASE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#architectural-refinement">[2025-12-28] ARCHITECTURAL REFINEMENT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#structural-foundation">[2025-12-26] STRUCTURAL FOUNDATION</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#architectural-restructuring">[2025-12-25] ARCHITECTURAL RESTRUCTURING</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#massive-architectural-refactoring">[2025-12-23] MASSIVE ARCHITECTURAL REFACTORING</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#cumulative-development-summary">📊 Cumulative Development Summary</a></li>
 <li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#historical-refactoring-notes">📁 Historical Refactoring Notes</a></li>
 </ul>
 </li>

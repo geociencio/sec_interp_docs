@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cierre de Fase - SecInterp v2.7.0 &mdash; Documentation SecInterp 3.4.0</title>
+  <title>Phase Closure - SecInterp v2.7.0 &mdash; Documentation SecInterp 3.4.0</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
@@ -49,7 +49,7 @@
 <li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
-<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Guía de Distinción de Componentes « Core »</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Core Component Distinction Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE_EN.html">Core Components Distinction Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
@@ -57,32 +57,32 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project Archive</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Cierre de Fase - SecInterp v2.7.0</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#documento-de-cierre-formal-de-fase-de-desarrollo">Documento de Cierre Formal de Fase de Desarrollo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#resumen-ejecutivo">1. Resumen Ejecutivo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#logros-principales">2. Logros Principales</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#infraestructura-y-calidad">Infraestructura y Calidad</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#arquitectura-de-software">Arquitectura de Software</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#documentacion">Documentación</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#funcionalidad">Funcionalidad</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Phase Closure - SecInterp v2.7.0</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#formal-development-phase-closure-document">Formal Development Phase Closure Document</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#executive-summary">1. Executive Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#key-achievements">2. Key Achievements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#infrastructure-quality">Infrastructure &amp; Quality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#software-architecture">Software Architecture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#documentation">Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#functionality">Functionality</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#desafios-enfrentados-y-soluciones">3. Desafíos Enfrentados y Soluciones</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#inestabilidad-de-mocks">Inestabilidad de Mocks</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#dependencia-de-ui-en-validacion">Dependencia de UI en Validación</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#challenges-faced-and-solutions">3. Challenges Faced and Solutions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mock-instability">Mock Instability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ui-dependency-in-validation">UI Dependency in Validation</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#deuda-tecnica-acumulada">4. Deuda Técnica Acumulada</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#moderada-para-v2-8-0">🟡 Moderada (Para v2.8.0)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#menor">🟢 Menor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#accumulated-technical-debt">4. Accumulated Technical Debt</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#moderate-for-v2-8-0">🟡 Moderate (For v2.8.0)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#minor">🟢 Minor</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#metricas-del-proyecto">5. Métricas del Proyecto</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#conclusion-y-recomendaciones">6. Conclusión y Recomendaciones</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#project-metrics">5. Project Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#conclusion-and-recommendations">6. Conclusion and Recommendations</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.8.0.html">Cierre de Fase - SecInterp v2.8.0</a></li>
-<li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.9.0.html">Cierre de Fase - SecInterp v2.9.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.9.0.html">Phase Closure - SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v3.0.0.html">Cierre de Fase - SecInterp v3.0.0</a></li>
 </ul>
 
@@ -100,7 +100,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Cierre de Fase - SecInterp v2.7.0</li>
+      <li class="breadcrumb-item active">Phase Closure - SecInterp v2.7.0</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/phase_closure_v2.7.0.md.txt" rel="nofollow"> Afficher la source de la page</a>
       </li>
@@ -110,128 +110,128 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="cierre-de-fase-secinterp-v2-7-0">
-<h1>Cierre de Fase - SecInterp v2.7.0<a class="headerlink" href="#cierre-de-fase-secinterp-v2-7-0" title="Lien vers cette rubrique"></a></h1>
-<section id="documento-de-cierre-formal-de-fase-de-desarrollo">
-<h2>Documento de Cierre Formal de Fase de Desarrollo<a class="headerlink" href="#documento-de-cierre-formal-de-fase-de-desarrollo" title="Lien vers cette rubrique"></a></h2>
-<p><strong>Fecha de Cierre:</strong> 2026-01-18
-<strong>Versión Actual:</strong> 2.7.0
-<strong>Fase:</strong> Excelencia Operativa y Documentación
-<strong>Responsable:</strong> Antigravity (IA Assistant)</p>
+  <section id="phase-closure-secinterp-v2-7-0">
+<h1>Phase Closure - SecInterp v2.7.0<a class="headerlink" href="#phase-closure-secinterp-v2-7-0" title="Lien vers cette rubrique"></a></h1>
+<section id="formal-development-phase-closure-document">
+<h2>Formal Development Phase Closure Document<a class="headerlink" href="#formal-development-phase-closure-document" title="Lien vers cette rubrique"></a></h2>
+<p><strong>Closure Date:</strong> 2026-01-18
+<strong>Current Version:</strong> 2.7.0
+<strong>Phase:</strong> Operational Excellence and Documentation
+<strong>Lead:</strong> Antigravity (AI Assistant)</p>
 </section>
 <hr class="docutils" />
-<section id="resumen-ejecutivo">
-<h2>1. Resumen Ejecutivo<a class="headerlink" href="#resumen-ejecutivo" title="Lien vers cette rubrique"></a></h2>
-<p>La Fase v2.7.0 se centró en consolidar los cimientos del proyecto para garantizar su escalabilidad a largo plazo. Se logró una transformación completa de la infraestructura de validación, documentación y testing, eliminando deudas técnicas críticas y preparando el terreno para nuevas funcionalidades analíticas. El proyecto ahora cuenta con una arquitectura robusta de 3 niveles de validación, documentación automática desacoplada y un entorno de QA dockerizado reproducible.</p>
+<section id="executive-summary">
+<h2>1. Executive Summary<a class="headerlink" href="#executive-summary" title="Lien vers cette rubrique"></a></h2>
+<p>Phase v2.7.0 focused on consolidating the project’s foundations to ensure its long-term scalability. A complete transformation of the validation, documentation, and testing infrastructure was achieved, eliminating critical technical debt and paving the way for new analytical features. The project now has a robust 3-level validation architecture, decoupled automated documentation, and a reproducible dockerized QA environment.</p>
 </section>
-<section id="logros-principales">
-<h2>2. Logros Principales<a class="headerlink" href="#logros-principales" title="Lien vers cette rubrique"></a></h2>
-<section id="infraestructura-y-calidad">
-<h3>Infraestructura y Calidad<a class="headerlink" href="#infraestructura-y-calidad" title="Lien vers cette rubrique"></a></h3>
+<section id="key-achievements">
+<h2>2. Key Achievements<a class="headerlink" href="#key-achievements" title="Lien vers cette rubrique"></a></h2>
+<section id="infrastructure-quality">
+<h3>Infrastructure &amp; Quality<a class="headerlink" href="#infrastructure-quality" title="Lien vers cette rubrique"></a></h3>
 <ul class="simple">
-<li><p><strong>Testing Dockerizado</strong>: Implementación de un entorno de pruebas aislado (<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">docker-test</span></code>) que replica exactamente las condiciones de ejecución de QGIS, eliminando los errores de « funciona en mi máquina ».</p></li>
-<li><p><strong>Infraestructura de Mocks</strong>: Estabilización total de los mocks de PyQGIS (<code class="docutils literal notranslate"><span class="pre">ModuleProxy</span></code>, <code class="docutils literal notranslate"><span class="pre">MockSignal</span></code>), logrando una tasa de paso del 100% en 361 tests.</p></li>
-<li><p><strong>Logging Centralizado</strong>: Unificación del sistema de logs bajo un logger raíz con propagación jerárquica, facilitando la depuración.</p></li>
+<li><p><strong>Dockerized Testing</strong>: Implementation of an isolated test environment (<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">docker-test</span></code>) that exactly replicates QGIS execution conditions, eliminating « works on my machine » errors.</p></li>
+<li><p><strong>Mock Infrastructure</strong>: Full stabilization of PyQGIS mocks (<code class="docutils literal notranslate"><span class="pre">ModuleProxy</span></code>, <code class="docutils literal notranslate"><span class="pre">MockSignal</span></code>), achieving a 100% pass rate across 361 tests.</p></li>
+<li><p><strong>Centralized Logging</strong>: Unified logging system under a root logger with hierarchical propagation, facilitating debugging.</p></li>
 </ul>
 </section>
-<section id="arquitectura-de-software">
-<h3>Arquitectura de Software<a class="headerlink" href="#arquitectura-de-software" title="Lien vers cette rubrique"></a></h3>
+<section id="software-architecture">
+<h3>Software Architecture<a class="headerlink" href="#software-architecture" title="Lien vers cette rubrique"></a></h3>
 <ul class="simple">
-<li><p><strong>Validación de 3 Niveles</strong>: Implementación de una arquitectura de validación jerárquica:</p>
+<li><p><strong>3-Level Validation</strong>: Implementation of a hierarchical validation architecture:</p>
 <ol class="arabic simple">
-<li><p><strong>Nivel 1 (Tipos)</strong>: Validadores reusables (<code class="docutils literal notranslate"><span class="pre">validators.py</span></code>) y Data Classes.</p></li>
-<li><p><strong>Nivel 2 (Lógica)</strong>: Reglas de negocio y contexto de validación (<code class="docutils literal notranslate"><span class="pre">ValidationContext</span></code>).</p></li>
-<li><p><strong>Nivel 3 (Dominio)</strong>: Cláusulas de guarda en servicios (<code class="docutils literal notranslate"><span class="pre">GeologyService</span></code>, <code class="docutils literal notranslate"><span class="pre">DrillholeService</span></code>).</p></li>
+<li><p><strong>Level 1 (Types)</strong>: Reusable validators (<code class="docutils literal notranslate"><span class="pre">validators.py</span></code>) and Data Classes.</p></li>
+<li><p><strong>Level 2 (Logic)</strong>: Business rules and validation context (<code class="docutils literal notranslate"><span class="pre">ValidationContext</span></code>).</p></li>
+<li><p><strong>Level 3 (Domain)</strong>: Guard clauses in services (<code class="docutils literal notranslate"><span class="pre">GeologyService</span></code>, <code class="docutils literal notranslate"><span class="pre">DrillholeService</span></code>).</p></li>
 </ol>
 </li>
-<li><p><strong>Desacoplamiento de UI</strong>: Fragmentación del <code class="docutils literal notranslate"><span class="pre">SecInterpDialog</span></code> en gestores especializados (<code class="docutils literal notranslate"><span class="pre">InterpretationManager</span></code>, <code class="docutils literal notranslate"><span class="pre">MessageManager</span></code>, <code class="docutils literal notranslate"><span class="pre">SettingsManager</span></code>), reduciendo drásticamente la complejidad ciclomática.</p></li>
+<li><p><strong>UI Decoupling</strong>: Fragmentation of <code class="docutils literal notranslate"><span class="pre">SecInterpDialog</span></code> into specialized managers (<code class="docutils literal notranslate"><span class="pre">InterpretationManager</span></code>, <code class="docutils literal notranslate"><span class="pre">MessageManager</span></code>, <code class="docutils literal notranslate"><span class="pre">SettingsManager</span></code>), drastically reducing cyclomatic complexity.</p></li>
 </ul>
 </section>
-<section id="documentacion">
-<h3>Documentación<a class="headerlink" href="#documentacion" title="Lien vers cette rubrique"></a></h3>
+<section id="documentation">
+<h3>Documentation<a class="headerlink" href="#documentation" title="Lien vers cette rubrique"></a></h3>
 <ul class="simple">
-<li><p><strong>Sphinx Automatizado</strong>: Configuración de un pipeline de documentación que genera HTML API docs fuera del repositorio, manteniendo el código fuente limpio.</p></li>
-<li><p><strong>Limpieza de Repositorio</strong>: Eliminación de archivos HTML rastreados que inflaban el tamaño del repo.</p></li>
-<li><p><strong>Documentación de Arquitectura</strong>: Creación de nuevos documentos de diseño técnico y guías de usuario alineadas con la v2.7.0.</p></li>
+<li><p><strong>Automated Sphinx</strong>: Configuration of a documentation pipeline that generates HTML API docs outside the repository, keeping source code clean.</p></li>
+<li><p><strong>Repository Cleanup</strong>: Removal of tracked HTML files that were inflating the repo size.</p></li>
+<li><p><strong>Architecture Documentation</strong>: Creation of new technical design documents and user guides aligned with v2.7.0.</p></li>
 </ul>
 </section>
-<section id="funcionalidad">
-<h3>Funcionalidad<a class="headerlink" href="#funcionalidad" title="Lien vers cette rubrique"></a></h3>
+<section id="functionality">
+<h3>Functionality<a class="headerlink" href="#functionality" title="Lien vers cette rubrique"></a></h3>
 <ul class="simple">
-<li><p><strong>Exportación 3D Avanzada</strong>: Capacidad de exportar trazas e intervalos de sondajes como geometrías 3D reales (<code class="docutils literal notranslate"><span class="pre">PolygonZ</span></code>, <code class="docutils literal notranslate"><span class="pre">LineStringZ</span></code>), tanto en coordenadas originales como proyectadas.</p></li>
-<li><p><strong>Navegación Sidebar</strong>: Modernización de la interfaz con una barra lateral de navegación nativa estilo QGIS.</p></li>
+<li><p><strong>Advanced 3D Export</strong>: Ability to export drillhole traces and intervals as real 3D geometries (<code class="docutils literal notranslate"><span class="pre">PolygonZ</span></code>, <code class="docutils literal notranslate"><span class="pre">LineStringZ</span></code>), in both original and projected coordinates.</p></li>
+<li><p><strong>Sidebar Navigation</strong>: Interface modernization with a native QGIS-style sidebar navigation.</p></li>
 </ul>
 </section>
 </section>
-<section id="desafios-enfrentados-y-soluciones">
-<h2>3. Desafíos Enfrentados y Soluciones<a class="headerlink" href="#desafios-enfrentados-y-soluciones" title="Lien vers cette rubrique"></a></h2>
-<section id="inestabilidad-de-mocks">
-<h3>Inestabilidad de Mocks<a class="headerlink" href="#inestabilidad-de-mocks" title="Lien vers cette rubrique"></a></h3>
+<section id="challenges-faced-and-solutions">
+<h2>3. Challenges Faced and Solutions<a class="headerlink" href="#challenges-faced-and-solutions" title="Lien vers cette rubrique"></a></h2>
+<section id="mock-instability">
+<h3>Mock Instability<a class="headerlink" href="#mock-instability" title="Lien vers cette rubrique"></a></h3>
 <ul class="simple">
-<li><p><strong>Problema</strong>: Los tests fallaban aleatoriamente debido a la pérdida de referencias en los objetos mockeados de Qt/QGIS al resetear el estado entre tests.</p></li>
-<li><p><strong>Solución</strong>: Se implementó <code class="docutils literal notranslate"><span class="pre">ModuleProxy</span></code> para mantener referencias estables a las clases mock y se mejoró la lógica de <code class="docutils literal notranslate"><span class="pre">tearDown</span></code> para resetear el estado interno sin destruir los objetos.</p></li>
+<li><p><strong>Problem</strong>: Tests were randomly failing due to loss of references in mocked Qt/QGIS objects when resetting state between tests.</p></li>
+<li><p><strong>Solution</strong>: Implemented <code class="docutils literal notranslate"><span class="pre">ModuleProxy</span></code> to maintain stable references to mock classes and improved <code class="docutils literal notranslate"><span class="pre">tearDown</span></code> logic to reset internal state without destroying objects.</p></li>
 </ul>
 </section>
-<section id="dependencia-de-ui-en-validacion">
-<h3>Dependencia de UI en Validación<a class="headerlink" href="#dependencia-de-ui-en-validacion" title="Lien vers cette rubrique"></a></h3>
+<section id="ui-dependency-in-validation">
+<h3>UI Dependency in Validation<a class="headerlink" href="#ui-dependency-in-validation" title="Lien vers cette rubrique"></a></h3>
 <ul class="simple">
-<li><p><strong>Problema</strong>: La lógica de validación estaba fuertemente acoplada a los widgets de la interfaz (<code class="docutils literal notranslate"><span class="pre">QComboBox</span></code>, <code class="docutils literal notranslate"><span class="pre">QSpinBox</span></code>).</p></li>
-<li><p><strong>Solución</strong>: Se creó un <code class="docutils literal notranslate"><span class="pre">DialogDataAggregator</span></code> para extraer datos puros de la UI y pasarlos a un <code class="docutils literal notranslate"><span class="pre">DialogValidationManager</span></code> agnóstico de la interfaz visual.</p></li>
+<li><p><strong>Problem</strong>: Validation logic was tightly coupled to interface widgets (<code class="docutils literal notranslate"><span class="pre">QComboBox</span></code>, <code class="docutils literal notranslate"><span class="pre">QSpinBox</span></code>).</p></li>
+<li><p><strong>Solution</strong>: Created a <code class="docutils literal notranslate"><span class="pre">DialogDataAggregator</span></code> to extract pure data from the UI and pass it to a <code class="docutils literal notranslate"><span class="pre">DialogValidationManager</span></code> agnostic of the visual interface.</p></li>
 </ul>
 </section>
 </section>
-<section id="deuda-tecnica-acumulada">
-<h2>4. Deuda Técnica Acumulada<a class="headerlink" href="#deuda-tecnica-acumulada" title="Lien vers cette rubrique"></a></h2>
-<section id="moderada-para-v2-8-0">
-<h3>🟡 Moderada (Para v2.8.0)<a class="headerlink" href="#moderada-para-v2-8-0" title="Lien vers cette rubrique"></a></h3>
+<section id="accumulated-technical-debt">
+<h2>4. Accumulated Technical Debt<a class="headerlink" href="#accumulated-technical-debt" title="Lien vers cette rubrique"></a></h2>
+<section id="moderate-for-v2-8-0">
+<h3>🟡 Moderate (For v2.8.0)<a class="headerlink" href="#moderate-for-v2-8-0" title="Lien vers cette rubrique"></a></h3>
 <ul class="simple">
-<li><p><strong>Soporte Multi-Raster</strong>: La arquitectura actual asume un único DEM. Se requiere refactoring para soportar múltiples superficies.</p></li>
-<li><p><strong>Tests de Integración 3D</strong>: La herramienta de interpretación 3D tiene cobertura limitada en tests de integración pura.</p></li>
+<li><p><strong>Multi-Raster Support</strong>: The current architecture assumes a single DEM. Refactoring is required to support multiple surfaces.</p></li>
+<li><p><strong>3D Integration Tests</strong>: The 3D interpretation tool has limited coverage in pure integration tests.</p></li>
 </ul>
 </section>
-<section id="menor">
-<h3>🟢 Menor<a class="headerlink" href="#menor" title="Lien vers cette rubrique"></a></h3>
+<section id="minor">
+<h3>🟢 Minor<a class="headerlink" href="#minor" title="Lien vers cette rubrique"></a></h3>
 <ul class="simple">
-<li><p><strong>Longitud de Funciones</strong>: Algunos métodos en <code class="docutils literal notranslate"><span class="pre">GeologyService</span></code> exceden las 50 líneas y podrían beneficiarse de una mayor extracción de métodos auxiliares.</p></li>
+<li><p><strong>Function Length</strong>: Some methods in <code class="docutils literal notranslate"><span class="pre">GeologyService</span></code> exceed 50 lines and could benefit from further extraction of helper methods.</p></li>
 </ul>
 </section>
 </section>
-<section id="metricas-del-proyecto">
-<h2>5. Métricas del Proyecto<a class="headerlink" href="#metricas-del-proyecto" title="Lien vers cette rubrique"></a></h2>
+<section id="project-metrics">
+<h2>5. Project Metrics<a class="headerlink" href="#project-metrics" title="Lien vers cette rubrique"></a></h2>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head text-left"><p>Métrica</p></th>
-<th class="head text-left"><p>Valor</p></th>
-<th class="head text-left"><p>Estado</p></th>
+<tr class="row-odd"><th class="head text-left"><p>Metric</p></th>
+<th class="head text-left"><p>Value</p></th>
+<th class="head text-left"><p>Status</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="text-left"><p><strong>Tests Totales</strong></p></td>
+<tr class="row-even"><td class="text-left"><p><strong>Total Tests</strong></p></td>
 <td class="text-left"><p>361</p></td>
 <td class="text-left"><p>✅ Passing</p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><strong>Score de Calidad</strong></p></td>
+<tr class="row-odd"><td class="text-left"><p><strong>Quality Score</strong></p></td>
 <td class="text-left"><p>~83.5/100</p></td>
-<td class="text-left"><p>Estable</p></td>
+<td class="text-left"><p>Stable</p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><strong>Cobertura Type Hints</strong></p></td>
+<tr class="row-even"><td class="text-left"><p><strong>Type Hint Coverage</strong></p></td>
 <td class="text-left"><p>&gt;76% (Params)</p></td>
-<td class="text-left"><p>Bueno</p></td>
+<td class="text-left"><p>Good</p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><strong>Complejidad Promedio</strong></p></td>
+<tr class="row-odd"><td class="text-left"><p><strong>Average Complexity</strong></p></td>
 <td class="text-left"><p>12.4</p></td>
-<td class="text-left"><p>Aceptable</p></td>
+<td class="text-left"><p>Acceptable</p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><strong>Archivos Python</strong></p></td>
+<tr class="row-even"><td class="text-left"><p><strong>Python Files</strong></p></td>
 <td class="text-left"><p>~108</p></td>
 <td class="text-left"><p>-</p></td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="conclusion-y-recomendaciones">
-<h2>6. Conclusión y Recomendaciones<a class="headerlink" href="#conclusion-y-recomendaciones" title="Lien vers cette rubrique"></a></h2>
-<p>La versión 2.7.0 representa un punto de inflexión en la madurez técnica de SecInterp. Con la base sólida establecida, el equipo está listo para abordar funcionalidades de análisis avanzado en la versión 2.8.0 sin el lastre de una infraestructura frágil. Se recomienda mantener la disciplina de <code class="docutils literal notranslate"><span class="pre">conventional</span> <span class="pre">commits</span></code> y el uso del contenedor Docker para todo desarrollo futuro.</p>
+<section id="conclusion-and-recommendations">
+<h2>6. Conclusion and Recommendations<a class="headerlink" href="#conclusion-and-recommendations" title="Lien vers cette rubrique"></a></h2>
+<p>Version 2.7.0 represents a turning point in SecInterp’s technical maturity. With the solid foundation established, the team is ready to tackle advanced analysis features in version 2.8.0 without the burden of fragile infrastructure. It is recommended to maintain the discipline of <code class="docutils literal notranslate"><span class="pre">conventional</span> <span class="pre">commits</span></code> and the use of the Docker container for all future development.</p>
 </section>
 </section>
 

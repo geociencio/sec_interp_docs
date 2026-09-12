@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cierre de Fase - SecInterp v2.9.0 &mdash; Documentação SecInterp 3.4.0</title>
+  <title>Phase Closure - SecInterp v2.9.0 &mdash; Documentação SecInterp 3.4.0</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
@@ -49,7 +49,7 @@
 <li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
-<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Guía de Distinción de Componentes “Core”</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Core Component Distinction Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE_EN.html">Core Components Distinction Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
@@ -57,63 +57,63 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project Archive</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Cierre de Fase - SecInterp v2.7.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Phase Closure - SecInterp v2.7.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.8.0.html">Cierre de Fase - SecInterp v2.8.0</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Cierre de Fase - SecInterp v2.9.0</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#documento-de-cierre-formal-de-fase-de-desarrollo">Documento de Cierre Formal de Fase de Desarrollo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#resumen-ejecutivo">1. Resumen Ejecutivo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#logros-principales">2. Logros Principales</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#arquitectura-y-refactorizacion">2.1 Arquitectura y Refactorización</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#descomposicion-de-drillholeservice-srp">Descomposición de DrillholeService (SRP)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#migracion-core-types-core-domain">Migración core/types → core/domain</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#centralizacion-de-contexto-de-perfil">Centralización de Contexto de Perfil</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Phase Closure - SecInterp v2.9.0</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#formal-development-phase-closure-document">Formal Development Phase Closure Document</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#executive-summary">1. Executive Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#key-achievements">2. Key Achievements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#architecture-refactoring">2.1 Architecture &amp; Refactoring</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#drillholeservice-decomposition-srp">DrillholeService Decomposition (SRP)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#migration-core-types-core-domain">Migration core/types → core/domain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#profile-context-centralization">Profile Context Centralization</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#calidad-y-testing">2.2 Calidad y Testing</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#estabilizacion-de-tests-docker">Estabilización de Tests Docker</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#metricas-de-codigo">Métricas de Código</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#quality-testing">2.2 Quality &amp; Testing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#docker-test-stabilization">Docker Test Stabilization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#code-metrics">Code Metrics</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#infraestructura-y-devops">2.3 Infraestructura y DevOps</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#sistema-agentico-mejorado">Sistema Agéntico Mejorado</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#proceso-de-release-robusto">Proceso de Release Robusto</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#limpieza-de-seguridad">Limpieza de Seguridad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#infrastructure-devops">2.3 Infrastructure &amp; DevOps</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#enhanced-agentic-system">Enhanced Agentic System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#robust-release-process">Robust Release Process</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#security-cleanup">Security Cleanup</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#documentacion">2.4 Documentación</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#documentos-creados-actualizados">Documentos Creados/Actualizados</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#documentation">2.4 Documentation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#created-updated-documents">Created/Updated Documents</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#desafios-enfrentados-y-soluciones">3. Desafíos Enfrentados y Soluciones</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#error-de-parseo-en-portal-qgis">3.1 Error de Parseo en Portal QGIS</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#fallo-en-compilacion-de-traducciones">3.2 Fallo en Compilación de Traducciones</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#falsos-positivos-de-seguridad-229-issues">3.3 Falsos Positivos de Seguridad (229 issues)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#challenges-faced-and-solutions">3. Challenges Faced and Solutions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#parse-error-in-qgis-portal">3.1 Parse Error in QGIS Portal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#translation-compilation-failure">3.2 Translation Compilation Failure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#security-false-positives-229-issues">3.3 Security False Positives (229 issues)</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#deuda-tecnica-acumulada">4. Deuda Técnica Acumulada</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#critica-bloqueante-para-qgis-4-x">🔴 Crítica (Bloqueante para QGIS 4.x)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#moderada-mejoras-de-calidad">🟡 Moderada (Mejoras de Calidad)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#menor-mantenibilidad">🟢 Menor (Mantenibilidad)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#accumulated-technical-debt">4. Accumulated Technical Debt</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#critical-blocking-for-qgis-4-x">🔴 Critical (Blocking for QGIS 4.x)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#moderate-quality-improvements">🟡 Moderate (Quality Improvements)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#minor-maintainability">🟢 Minor (Maintainability)</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#metricas-del-proyecto">5. Métricas del Proyecto</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#calidad-de-codigo">Calidad de Código</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#complejidad">Complejidad</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#cobertura">Cobertura</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#compliance-qgis">Compliance QGIS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#project-metrics">5. Project Metrics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#code-quality">Code Quality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#complexity">Complexity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#coverage">Coverage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qgis-compliance">QGIS Compliance</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#conclusion-y-recomendaciones">6. Conclusión y Recomendaciones</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#conclusion">Conclusión</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#recomendaciones-para-v2-10-0">Recomendaciones para v2.10.0</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#prioridad-alta">Prioridad Alta</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#prioridad-media">Prioridad Media</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#prioridad-baja">Prioridad Baja</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#conclusion-and-recommendations">6. Conclusion and Recommendations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#conclusion">Conclusion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#recommendations-for-v2-10-0">Recommendations for v2.10.0</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#high-priority">High Priority</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#medium-priority">Medium Priority</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#low-priority">Low Priority</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#proximos-pasos-inmediatos">Próximos Pasos Inmediatos</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#immediate-next-steps">Immediate Next Steps</a></li>
 </ul>
 </li>
 </ul>
@@ -135,7 +135,7 @@
           <div role="navigation" aria-label="Navegação da página">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Cierre de Fase - SecInterp v2.9.0</li>
+      <li class="breadcrumb-item active">Phase Closure - SecInterp v2.9.0</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/phase_closure_v2.9.0.md.txt" rel="nofollow"> Ver código-fonte da página</a>
       </li>
@@ -145,93 +145,93 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="cierre-de-fase-secinterp-v2-9-0">
-<h1>Cierre de Fase - SecInterp v2.9.0<a class="headerlink" href="#cierre-de-fase-secinterp-v2-9-0" title="Link para este cabeçalho"></a></h1>
-<section id="documento-de-cierre-formal-de-fase-de-desarrollo">
-<h2>Documento de Cierre Formal de Fase de Desarrollo<a class="headerlink" href="#documento-de-cierre-formal-de-fase-de-desarrollo" title="Link para este cabeçalho"></a></h2>
-<p><strong>Fecha de Cierre:</strong> 2026-02-01
-<strong>Versión Actual:</strong> 2.9.0
-<strong>Fase:</strong> Consolidación Arquitectónica y Estabilización de Release
-<strong>Responsable:</strong> Juan M Bernales</p>
+  <section id="phase-closure-secinterp-v2-9-0">
+<h1>Phase Closure - SecInterp v2.9.0<a class="headerlink" href="#phase-closure-secinterp-v2-9-0" title="Link para este cabeçalho"></a></h1>
+<section id="formal-development-phase-closure-document">
+<h2>Formal Development Phase Closure Document<a class="headerlink" href="#formal-development-phase-closure-document" title="Link para este cabeçalho"></a></h2>
+<p><strong>Closure Date:</strong> 2026-02-01
+<strong>Current Version:</strong> 2.9.0
+<strong>Phase:</strong> Architectural Consolidation and Release Stabilization
+<strong>Lead:</strong> Juan M Bernales</p>
 </section>
 <hr class="docutils" />
-<section id="resumen-ejecutivo">
-<h2>1. Resumen Ejecutivo<a class="headerlink" href="#resumen-ejecutivo" title="Link para este cabeçalho"></a></h2>
-<p>La fase v2.9.0 representa un hito crítico en la madurez arquitectónica del plugin SecInterp. Se completó una refactorización profunda del núcleo del sistema, migrando de una arquitectura monolítica hacia un modelo de dominio limpio con separación clara de responsabilidades. El enfoque principal fue la <strong>descomposición de servicios</strong>, la <strong>modularización del sistema de tipos</strong> y la <strong>estabilización del proceso de release</strong>.</p>
-<p><strong>Logros Clave:</strong></p>
+<section id="executive-summary">
+<h2>1. Executive Summary<a class="headerlink" href="#executive-summary" title="Link para este cabeçalho"></a></h2>
+<p>Phase v2.9.0 represents a critical milestone in the architectural maturity of the SecInterp plugin. A deep refactoring of the system core was completed, migrating from a monolithic architecture toward a clean domain model with clear separation of responsibilities. The primary focus was <strong>service decomposition</strong>, <strong>type system modularization</strong>, and <strong>release process stabilization</strong>.</p>
+<p><strong>Key Achievements:</strong></p>
 <ul class="simple">
-<li><p>✅ Descomposición completa de <code class="docutils literal notranslate"><span class="pre">DrillholeService</span></code> en 4 procesadores especializados</p></li>
-<li><p>✅ Migración de <code class="docutils literal notranslate"><span class="pre">core/types</span></code> a <code class="docutils literal notranslate"><span class="pre">core/domain</span></code> con arquitectura limpia</p></li>
-<li><p>✅ 199 tests pasando en entorno Docker (100% estabilidad)</p></li>
-<li><p>✅ Quality Score: <strong>54.3/100</strong> (+9 puntos desde v2.8.0)</p></li>
-<li><p>✅ Release oficial publicado en GitHub y portal de QGIS</p></li>
+<li><p>✅ Complete decomposition of <code class="docutils literal notranslate"><span class="pre">DrillholeService</span></code> into 4 specialized processors</p></li>
+<li><p>✅ Migration of <code class="docutils literal notranslate"><span class="pre">core/types</span></code> to <code class="docutils literal notranslate"><span class="pre">core/domain</span></code> with clean architecture</p></li>
+<li><p>✅ 199 tests passing in Docker environment (100% stability)</p></li>
+<li><p>✅ Quality Score: <strong>54.3/100</strong> (+9 points since v2.8.0)</p></li>
+<li><p>✅ Official release published on GitHub and QGIS portal</p></li>
 </ul>
 </section>
 <hr class="docutils" />
-<section id="logros-principales">
-<h2>2. Logros Principales<a class="headerlink" href="#logros-principales" title="Link para este cabeçalho"></a></h2>
-<section id="arquitectura-y-refactorizacion">
-<h3>2.1 Arquitectura y Refactorización<a class="headerlink" href="#arquitectura-y-refactorizacion" title="Link para este cabeçalho"></a></h3>
-<section id="descomposicion-de-drillholeservice-srp">
-<h4>Descomposición de DrillholeService (SRP)<a class="headerlink" href="#descomposicion-de-drillholeservice-srp" title="Link para este cabeçalho"></a></h4>
+<section id="key-achievements">
+<h2>2. Key Achievements<a class="headerlink" href="#key-achievements" title="Link para este cabeçalho"></a></h2>
+<section id="architecture-refactoring">
+<h3>2.1 Architecture &amp; Refactoring<a class="headerlink" href="#architecture-refactoring" title="Link para este cabeçalho"></a></h3>
+<section id="drillholeservice-decomposition-srp">
+<h4>DrillholeService Decomposition (SRP)<a class="headerlink" href="#drillholeservice-decomposition-srp" title="Link para este cabeçalho"></a></h4>
 <ul class="simple">
-<li><p><strong>Antes</strong>: Monolito de 500+ líneas con múltiples responsabilidades</p></li>
-<li><p><strong>Después</strong>: 4 procesadores especializados:</p>
+<li><p><strong>Before</strong>: 500+ line monolith with multiple responsibilities</p></li>
+<li><p><strong>After</strong>: 4 specialized processors:</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">CollarProcessor</span></code>: Manejo de collars y validación de datos</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">SurveyProcessor</span></code>: Cálculo de trayectorias 3D</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">IntervalProcessor</span></code>: Procesamiento de intervalos geológicos</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ProjectionEngine</span></code>: Proyección de trazas en secciones 2D</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CollarProcessor</span></code>: Collar handling and data validation</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SurveyProcessor</span></code>: 3D trajectory calculation</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">IntervalProcessor</span></code>: Geological interval processing</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ProjectionEngine</span></code>: Trace projection in 2D sections</p></li>
 </ul>
 </li>
-<li><p><strong>Impacto</strong>: Reducción de complejidad ciclomática, mejor testabilidad, mantenibilidad mejorada</p></li>
+<li><p><strong>Impact</strong>: Reduced cyclomatic complexity, improved testability, enhanced maintainability</p></li>
 </ul>
 </section>
-<section id="migracion-core-types-core-domain">
-<h4>Migración core/types → core/domain<a class="headerlink" href="#migracion-core-types-core-domain" title="Link para este cabeçalho"></a></h4>
+<section id="migration-core-types-core-domain">
+<h4>Migration core/types → core/domain<a class="headerlink" href="#migration-core-types-core-domain" title="Link para este cabeçalho"></a></h4>
 <ul>
-<li><p><strong>Motivación</strong>: Separar entidades de dominio de DTOs y enums</p></li>
-<li><p><strong>Estructura Nueva</strong>:</p>
+<li><p><strong>Motivation</strong>: Separate domain entities from DTOs and enums</p></li>
+<li><p><strong>New Structure</strong>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>core/domain/
 ├── entities.py      # GeologySegment, DomainGeometry
-├── task_inputs.py   # DTOs para procesamiento asíncrono
-├── dtos.py          # Objetos de transferencia
-└── enums.py         # Enumeraciones del dominio
+├── task_inputs.py   # DTOs for async processing
+├── dtos.py          # Transfer objects
+└── enums.py         # Domain enumerations
 </pre></div>
 </div>
 </li>
-<li><p><strong>Impacto</strong>: Arquitectura más semántica, mejor alineación con Clean Architecture</p></li>
+<li><p><strong>Impact</strong>: More semantic architecture, better alignment with Clean Architecture</p></li>
 </ul>
 </section>
-<section id="centralizacion-de-contexto-de-perfil">
-<h4>Centralización de Contexto de Perfil<a class="headerlink" href="#centralizacion-de-contexto-de-perfil" title="Link para este cabeçalho"></a></h4>
+<section id="profile-context-centralization">
+<h4>Profile Context Centralization<a class="headerlink" href="#profile-context-centralization" title="Link para este cabeçalho"></a></h4>
 <ul class="simple">
-<li><p>Implementación de <code class="docutils literal notranslate"><span class="pre">prepare_profile_context()</span></code> para unificar la preparación de datos</p></li>
-<li><p>Eliminación de duplicación de lógica entre servicios</p></li>
-<li><p>Mejora en la consistencia de transformaciones CRS</p></li>
+<li><p>Implementation of <code class="docutils literal notranslate"><span class="pre">prepare_profile_context()</span></code> to unify data preparation</p></li>
+<li><p>Elimination of logic duplication between services</p></li>
+<li><p>Improved consistency of CRS transformations</p></li>
 </ul>
 </section>
 </section>
-<section id="calidad-y-testing">
-<h3>2.2 Calidad y Testing<a class="headerlink" href="#calidad-y-testing" title="Link para este cabeçalho"></a></h3>
-<section id="estabilizacion-de-tests-docker">
-<h4>Estabilización de Tests Docker<a class="headerlink" href="#estabilizacion-de-tests-docker" title="Link para este cabeçalho"></a></h4>
+<section id="quality-testing">
+<h3>2.2 Quality &amp; Testing<a class="headerlink" href="#quality-testing" title="Link para este cabeçalho"></a></h3>
+<section id="docker-test-stabilization">
+<h4>Docker Test Stabilization<a class="headerlink" href="#docker-test-stabilization" title="Link para este cabeçalho"></a></h4>
 <ul class="simple">
-<li><p><strong>Resultado</strong>: 199/199 tests pasando (100% success rate)</p></li>
-<li><p><strong>Mejoras</strong>:</p>
+<li><p><strong>Result</strong>: 199/199 tests passing (100% success rate)</p></li>
+<li><p><strong>Improvements</strong>:</p>
 <ul>
-<li><p>Resolución de problemas de <code class="docutils literal notranslate"><span class="pre">QgsGeometry.clone()</span></code> → uso de constructores</p></li>
-<li><p>Estabilización de mocks de QGIS</p></li>
-<li><p>Limpieza de archivos de caché que causaban interferencias</p></li>
+<li><p>Resolution of <code class="docutils literal notranslate"><span class="pre">QgsGeometry.clone()</span></code> issues → use of constructors</p></li>
+<li><p>Stabilization of QGIS mocks</p></li>
+<li><p>Cleanup of cache files causing interference</p></li>
 </ul>
 </li>
 </ul>
 </section>
-<section id="metricas-de-codigo">
-<h4>Métricas de Código<a class="headerlink" href="#metricas-de-codigo" title="Link para este cabeçalho"></a></h4>
+<section id="code-metrics">
+<h4>Code Metrics<a class="headerlink" href="#code-metrics" title="Link para este cabeçalho"></a></h4>
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>Métrica</p></th>
+<tr class="row-odd"><th class="head"><p>Metric</p></th>
 <th class="head"><p>v2.8.0</p></th>
 <th class="head"><p>v2.9.0</p></th>
 <th class="head"><p>Δ</p></th>
@@ -251,7 +251,7 @@
 <tr class="row-even"><td><p>Tests Passing</p></td>
 <td><p>359</p></td>
 <td><p>199*</p></td>
-<td><p>Estabilizado</p></td>
+<td><p>Stabilized</p></td>
 </tr>
 <tr class="row-odd"><td><p>Optimizations</p></td>
 <td><p>18</p></td>
@@ -260,148 +260,148 @@
 </tr>
 </tbody>
 </table>
-<p>*Nota: Reducción aparente debido a reorganización de suite de tests</p>
+<p>*Note: Apparent reduction due to test suite reorganization</p>
 </section>
 </section>
-<section id="infraestructura-y-devops">
-<h3>2.3 Infraestructura y DevOps<a class="headerlink" href="#infraestructura-y-devops" title="Link para este cabeçalho"></a></h3>
-<section id="sistema-agentico-mejorado">
-<h4>Sistema Agéntico Mejorado<a class="headerlink" href="#sistema-agentico-mejorado" title="Link para este cabeçalho"></a></h4>
+<section id="infrastructure-devops">
+<h3>2.3 Infrastructure &amp; DevOps<a class="headerlink" href="#infrastructure-devops" title="Link para este cabeçalho"></a></h3>
+<section id="enhanced-agentic-system">
+<h4>Enhanced Agentic System<a class="headerlink" href="#enhanced-agentic-system" title="Link para este cabeçalho"></a></h4>
 <ul class="simple">
-<li><p><strong>Nuevo Skill</strong>: <code class="docutils literal notranslate"><span class="pre">release-management</span></code> con reglas críticas de metadata</p></li>
-<li><p><strong>Workflows Actualizados</strong>: <code class="docutils literal notranslate"><span class="pre">/release-plugin</span></code> (ES/EN) con validaciones de escapado</p></li>
-<li><p><strong>Prevención</strong>: Regla de escapado <code class="docutils literal notranslate"><span class="pre">%</span></code> → <code class="docutils literal notranslate"><span class="pre">%%</span></code> en metadata.txt documentada</p></li>
+<li><p><strong>New Skill</strong>: <code class="docutils literal notranslate"><span class="pre">release-management</span></code> with critical metadata rules</p></li>
+<li><p><strong>Updated Workflows</strong>: <code class="docutils literal notranslate"><span class="pre">/release-plugin</span></code> (ES/EN) with escape validations</p></li>
+<li><p><strong>Prevention</strong>: <code class="docutils literal notranslate"><span class="pre">%</span></code> → <code class="docutils literal notranslate"><span class="pre">%%</span></code> escape rule in metadata.txt documented</p></li>
 </ul>
 </section>
-<section id="proceso-de-release-robusto">
-<h4>Proceso de Release Robusto<a class="headerlink" href="#proceso-de-release-robusto" title="Link para este cabeçalho"></a></h4>
+<section id="robust-release-process">
+<h4>Robust Release Process<a class="headerlink" href="#robust-release-process" title="Link para este cabeçalho"></a></h4>
 <ul class="simple">
-<li><p><strong>Fases Completadas</strong>:</p>
+<li><p><strong>Completed Phases</strong>:</p>
 <ol class="arabic simple">
-<li><p>✅ Calidad y Preparación (qgis-analyzer)</p></li>
-<li><p>✅ Versionamiento y Documentación</p></li>
-<li><p>✅ Sanidad (Linting &amp; Docker Tests)</p></li>
+<li><p>✅ Quality &amp; Preparation (qgis-analyzer)</p></li>
+<li><p>✅ Versioning &amp; Documentation</p></li>
+<li><p>✅ Sanity (Linting &amp; Docker Tests)</p></li>
 <li><p>✅ Git &amp; Tagging (v2.9.0)</p></li>
-<li><p>✅ Empaquetado &amp; Distribución</p></li>
+<li><p>✅ Packaging &amp; Distribution</p></li>
 </ol>
 </li>
-<li><p><strong>Artefactos Generados</strong>:</p>
+<li><p><strong>Generated Artifacts</strong>:</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">sec_interp.2.9.0.zip</span></code> (5.0M)</p></li>
 <li><p>SHA256 checksum</p></li>
-<li><p>Release notes oficiales</p></li>
+<li><p>Official release notes</p></li>
 </ul>
 </li>
 </ul>
 </section>
-<section id="limpieza-de-seguridad">
-<h4>Limpieza de Seguridad<a class="headerlink" href="#limpieza-de-seguridad" title="Link para este cabeçalho"></a></h4>
+<section id="security-cleanup">
+<h4>Security Cleanup<a class="headerlink" href="#security-cleanup" title="Link para este cabeçalho"></a></h4>
 <ul class="simple">
-<li><p>Eliminación de 229 falsos positivos (archivos <code class="docutils literal notranslate"><span class="pre">.ai_context_cache.json</span></code>)</p></li>
-<li><p>Actualización de <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> para prevenir futuros problemas</p></li>
-<li><p>Corrección de error de parseo en metadata.txt (portal QGIS)</p></li>
+<li><p>Removal of 229 false positives (<code class="docutils literal notranslate"><span class="pre">.ai_context_cache.json</span></code> files)</p></li>
+<li><p>Updated <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> to prevent future issues</p></li>
+<li><p>Fixed parse error in metadata.txt (QGIS portal)</p></li>
 </ul>
 </section>
 </section>
-<section id="documentacion">
-<h3>2.4 Documentación<a class="headerlink" href="#documentacion" title="Link para este cabeçalho"></a></h3>
-<section id="documentos-creados-actualizados">
-<h4>Documentos Creados/Actualizados<a class="headerlink" href="#documentos-creados-actualizados" title="Link para este cabeçalho"></a></h4>
+<section id="documentation">
+<h3>2.4 Documentation<a class="headerlink" href="#documentation" title="Link para este cabeçalho"></a></h3>
+<section id="created-updated-documents">
+<h4>Created/Updated Documents<a class="headerlink" href="#created-updated-documents" title="Link para este cabeçalho"></a></h4>
 <ul class="simple">
-<li><p>✅ <code class="docutils literal notranslate"><span class="pre">RELEASE_NOTES_v2.9.0.md</span></code>: Notas oficiales de lanzamiento</p></li>
-<li><p>✅ <code class="docutils literal notranslate"><span class="pre">ADR-0008</span></code>: Decisión arquitectónica sobre descomposición de DrillholeService</p></li>
-<li><p>✅ <code class="docutils literal notranslate"><span class="pre">ARCHITECTURE.md</span></code>: Actualizado con nueva estructura <code class="docutils literal notranslate"><span class="pre">core/domain</span></code></p></li>
-<li><p>✅ <code class="docutils literal notranslate"><span class="pre">USER_GUIDE.md</span></code>: Actualizado a v2.9.0</p></li>
-<li><p>✅ <code class="docutils literal notranslate"><span class="pre">MAINTENANCE_LOG.md</span></code>: Entrada de cierre de fase</p></li>
-<li><p>✅ <code class="docutils literal notranslate"><span class="pre">v2.9.0_technical_analysis.md</span></code>: Análisis técnico profundo</p></li>
+<li><p>✅ <code class="docutils literal notranslate"><span class="pre">RELEASE_NOTES_v2.9.0.md</span></code>: Official release notes</p></li>
+<li><p>✅ <code class="docutils literal notranslate"><span class="pre">ADR-0008</span></code>: Architectural decision on DrillholeService decomposition</p></li>
+<li><p>✅ <code class="docutils literal notranslate"><span class="pre">ARCHITECTURE.md</span></code>: Updated with new <code class="docutils literal notranslate"><span class="pre">core/domain</span></code> structure</p></li>
+<li><p>✅ <code class="docutils literal notranslate"><span class="pre">USER_GUIDE.md</span></code>: Updated to v2.9.0</p></li>
+<li><p>✅ <code class="docutils literal notranslate"><span class="pre">MAINTENANCE_LOG.md</span></code>: Phase closure entry</p></li>
+<li><p>✅ <code class="docutils literal notranslate"><span class="pre">v2.9.0_technical_analysis.md</span></code>: Deep technical analysis</p></li>
 </ul>
 </section>
 </section>
 </section>
 <hr class="docutils" />
-<section id="desafios-enfrentados-y-soluciones">
-<h2>3. Desafíos Enfrentados y Soluciones<a class="headerlink" href="#desafios-enfrentados-y-soluciones" title="Link para este cabeçalho"></a></h2>
-<section id="error-de-parseo-en-portal-qgis">
-<h3>3.1 Error de Parseo en Portal QGIS<a class="headerlink" href="#error-de-parseo-en-portal-qgis" title="Link para este cabeçalho"></a></h3>
-<p><strong>Problema</strong>: El portal de QGIS rechazó el paquete inicial con error de parseo en <code class="docutils literal notranslate"><span class="pre">metadata.txt</span></code> (línea 24: <code class="docutils literal notranslate"><span class="pre">100%</span></code> sin escapar).</p>
-<p><strong>Causa Raíz</strong>: El portal usa interpolación de strings estilo Python (<code class="docutils literal notranslate"><span class="pre">%</span></code> debe ser <code class="docutils literal notranslate"><span class="pre">%%</span></code>).</p>
-<p><strong>Solución</strong>:</p>
+<section id="challenges-faced-and-solutions">
+<h2>3. Challenges Faced and Solutions<a class="headerlink" href="#challenges-faced-and-solutions" title="Link para este cabeçalho"></a></h2>
+<section id="parse-error-in-qgis-portal">
+<h3>3.1 Parse Error in QGIS Portal<a class="headerlink" href="#parse-error-in-qgis-portal" title="Link para este cabeçalho"></a></h3>
+<p><strong>Problem</strong>: QGIS portal rejected the initial package with a parse error in <code class="docutils literal notranslate"><span class="pre">metadata.txt</span></code> (line 24: unescaped <code class="docutils literal notranslate"><span class="pre">100%</span></code>).</p>
+<p><strong>Root Cause</strong>: The portal uses Python-style string interpolation (<code class="docutils literal notranslate"><span class="pre">%</span></code> must be <code class="docutils literal notranslate"><span class="pre">%%</span></code>).</p>
+<p><strong>Solution</strong>:</p>
 <ol class="arabic simple">
-<li><p>Corrección inmediata en metadata.txt</p></li>
-<li><p>Regeneración de tag v2.9.0 con <code class="docutils literal notranslate"><span class="pre">--amend</span></code></p></li>
-<li><p>Documentación de regla en skills y workflows</p></li>
-<li><p>Prevención: Advertencias críticas en <code class="docutils literal notranslate"><span class="pre">/release-plugin</span></code></p></li>
+<li><p>Immediate fix in metadata.txt</p></li>
+<li><p>Regeneration of tag v2.9.0 with <code class="docutils literal notranslate"><span class="pre">--amend</span></code></p></li>
+<li><p>Documentation of the rule in skills and workflows</p></li>
+<li><p>Prevention: Critical warnings in <code class="docutils literal notranslate"><span class="pre">/release-plugin</span></code></p></li>
 </ol>
 </section>
-<section id="fallo-en-compilacion-de-traducciones">
-<h3>3.2 Fallo en Compilación de Traducciones<a class="headerlink" href="#fallo-en-compilacion-de-traducciones" title="Link para este cabeçalho"></a></h3>
-<p><strong>Problema</strong>: <code class="docutils literal notranslate"><span class="pre">qgis-manage</span> <span class="pre">compile</span></code> abortaba silenciosamente en archivos <code class="docutils literal notranslate"><span class="pre">.ts</span></code> espurios.</p>
-<p><strong>Causa Raíz</strong>: Archivos de ejemplo (<code class="docutils literal notranslate"><span class="pre">MURALLA.ts</span></code>) y cachés de IA (<code class="docutils literal notranslate"><span class="pre">.ai_context_cache.json</span></code>) en directorio <code class="docutils literal notranslate"><span class="pre">i18n/</span></code>.</p>
-<p><strong>Solución</strong>:</p>
+<section id="translation-compilation-failure">
+<h3>3.2 Translation Compilation Failure<a class="headerlink" href="#translation-compilation-failure" title="Link para este cabeçalho"></a></h3>
+<p><strong>Problem</strong>: <code class="docutils literal notranslate"><span class="pre">qgis-manage</span> <span class="pre">compile</span></code> silently aborted on spurious <code class="docutils literal notranslate"><span class="pre">.ts</span></code> files.</p>
+<p><strong>Root Cause</strong>: Example files (<code class="docutils literal notranslate"><span class="pre">MURALLA.ts</span></code>) and AI caches (<code class="docutils literal notranslate"><span class="pre">.ai_context_cache.json</span></code>) in <code class="docutils literal notranslate"><span class="pre">i18n/</span></code> directory.</p>
+<p><strong>Solution</strong>:</p>
 <ol class="arabic simple">
-<li><p>Movimiento de archivos espurios fuera de <code class="docutils literal notranslate"><span class="pre">i18n/</span></code></p></li>
-<li><p>Uso directo de <code class="docutils literal notranslate"><span class="pre">lrelease</span></code> para compilación</p></li>
-<li><p>Empaquetado manual con <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">archive</span></code> como fallback</p></li>
-<li><p>Actualización de <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> para prevenir recurrencia</p></li>
+<li><p>Moved spurious files out of <code class="docutils literal notranslate"><span class="pre">i18n/</span></code></p></li>
+<li><p>Used <code class="docutils literal notranslate"><span class="pre">lrelease</span></code> directly for compilation</p></li>
+<li><p>Manual packaging with <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">archive</span></code> as fallback</p></li>
+<li><p>Updated <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code> to prevent recurrence</p></li>
 </ol>
 </section>
-<section id="falsos-positivos-de-seguridad-229-issues">
-<h3>3.3 Falsos Positivos de Seguridad (229 issues)<a class="headerlink" href="#falsos-positivos-de-seguridad-229-issues" title="Link para este cabeçalho"></a></h3>
-<p><strong>Problema</strong>: Escáner <code class="docutils literal notranslate"><span class="pre">detect-secrets</span></code> reportó 229 “secretos” en archivos de caché.</p>
-<p><strong>Causa Raíz</strong>: Hashes SHA256/MD5 en <code class="docutils literal notranslate"><span class="pre">.ai_context_cache.json</span></code> confundidos con credenciales.</p>
-<p><strong>Solución</strong>:</p>
+<section id="security-false-positives-229-issues">
+<h3>3.3 Security False Positives (229 issues)<a class="headerlink" href="#security-false-positives-229-issues" title="Link para este cabeçalho"></a></h3>
+<p><strong>Problem</strong>: <code class="docutils literal notranslate"><span class="pre">detect-secrets</span></code> scanner reported 229 “secrets” in cache files.</p>
+<p><strong>Root Cause</strong>: SHA256/MD5 hashes in <code class="docutils literal notranslate"><span class="pre">.ai_context_cache.json</span></code> mistaken for credentials.</p>
+<p><strong>Solution</strong>:</p>
 <ol class="arabic simple">
-<li><p>Eliminación de archivos de caché del repositorio</p></li>
-<li><p>Actualización de <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code></p></li>
-<li><p>Commit de limpieza (<code class="docutils literal notranslate"><span class="pre">43a2101</span></code>)</p></li>
+<li><p>Removed cache files from repository</p></li>
+<li><p>Updated <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code></p></li>
+<li><p>Cleanup commit (<code class="docutils literal notranslate"><span class="pre">43a2101</span></code>)</p></li>
 </ol>
 </section>
 </section>
 <hr class="docutils" />
-<section id="deuda-tecnica-acumulada">
-<h2>4. Deuda Técnica Acumulada<a class="headerlink" href="#deuda-tecnica-acumulada" title="Link para este cabeçalho"></a></h2>
-<section id="critica-bloqueante-para-qgis-4-x">
-<h3>🔴 Crítica (Bloqueante para QGIS 4.x)<a class="headerlink" href="#critica-bloqueante-para-qgis-4-x" title="Link para este cabeçalho"></a></h3>
+<section id="accumulated-technical-debt">
+<h2>4. Accumulated Technical Debt<a class="headerlink" href="#accumulated-technical-debt" title="Link para este cabeçalho"></a></h2>
+<section id="critical-blocking-for-qgis-4-x">
+<h3>🔴 Critical (Blocking for QGIS 4.x)<a class="headerlink" href="#critical-blocking-for-qgis-4-x" title="Link para este cabeçalho"></a></h3>
 <ul class="simple">
-<li><p><strong>Importación Legacy en <code class="docutils literal notranslate"><span class="pre">resources.py</span></code></strong>: Uso de <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">PyQt5</span> <span class="pre">import</span> <span class="pre">QtCore</span></code> (debe ser <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">qgis.PyQt</span> <span class="pre">import</span> <span class="pre">QtCore</span></code>)</p>
+<li><p><strong>Legacy Import in <code class="docutils literal notranslate"><span class="pre">resources.py</span></code></strong>: Use of <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">PyQt5</span> <span class="pre">import</span> <span class="pre">QtCore</span></code> (must be <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">qgis.PyQt</span> <span class="pre">import</span> <span class="pre">QtCore</span></code>)</p>
 <ul>
-<li><p><strong>Impacto</strong>: Bloqueará migración a QGIS 4.x</p></li>
-<li><p><strong>Prioridad</strong>: Resolver en v2.10.0 o crear rama <code class="docutils literal notranslate"><span class="pre">qgis4-compat</span></code></p></li>
+<li><p><strong>Impact</strong>: Will block migration to QGIS 4.x</p></li>
+<li><p><strong>Priority</strong>: Resolve in v2.10.0 or create <code class="docutils literal notranslate"><span class="pre">qgis4-compat</span></code> branch</p></li>
 </ul>
 </li>
 </ul>
 </section>
-<section id="moderada-mejoras-de-calidad">
-<h3>🟡 Moderada (Mejoras de Calidad)<a class="headerlink" href="#moderada-mejoras-de-calidad" title="Link para este cabeçalho"></a></h3>
+<section id="moderate-quality-improvements">
+<h3>🟡 Moderate (Quality Improvements)<a class="headerlink" href="#moderate-quality-improvements" title="Link para este cabeçalho"></a></h3>
 <ul class="simple">
-<li><p><strong>Uso de MD5 para Cache Keys</strong>: Escáneres de seguridad marcan como vulnerabilidad</p>
+<li><p><strong>Use of MD5 for Cache Keys</strong>: Security scanners flag as vulnerability</p>
 <ul>
-<li><p><strong>Realidad</strong>: Uso legítimo para identificadores de caché (no criptográfico)</p></li>
-<li><p><strong>Acción</strong>: Agregar comentario explicativo o migrar a SHA256</p></li>
+<li><p><strong>Reality</strong>: Legitimate use for cache identifiers (non-cryptographic)</p></li>
+<li><p><strong>Action</strong>: Add explanatory comment or migrate to SHA256</p></li>
 </ul>
 </li>
-<li><p><strong>Complejidad en <code class="docutils literal notranslate"><span class="pre">export_service.py</span></code></strong>: Algunos métodos 3D aún tienen CC &gt; 10</p>
+<li><p><strong>Complexity in <code class="docutils literal notranslate"><span class="pre">export_service.py</span></code></strong>: Some 3D methods still have CC &gt; 10</p>
 <ul>
-<li><p><strong>Acción</strong>: Continuar refactorización en próxima fase</p></li>
+<li><p><strong>Action</strong>: Continue refactoring in next phase</p></li>
 </ul>
 </li>
 </ul>
 </section>
-<section id="menor-mantenibilidad">
-<h3>🟢 Menor (Mantenibilidad)<a class="headerlink" href="#menor-mantenibilidad" title="Link para este cabeçalho"></a></h3>
+<section id="minor-maintainability">
+<h3>🟢 Minor (Maintainability)<a class="headerlink" href="#minor-maintainability" title="Link para este cabeçalho"></a></h3>
 <ul class="simple">
-<li><p><strong>Cobertura de Docstrings</strong>: 75.9% (objetivo: 85%)</p></li>
-<li><p><strong>Type Hints</strong>: Algunas funciones auxiliares sin tipado completo</p></li>
-<li><p><strong>Optimizaciones Pendientes</strong>: 24 oportunidades identificadas por <code class="docutils literal notranslate"><span class="pre">ai-ctx</span></code></p></li>
+<li><p><strong>Docstring Coverage</strong>: 75.9% (target: 85%)</p></li>
+<li><p><strong>Type Hints</strong>: Some auxiliary functions without full typing</p></li>
+<li><p><strong>Pending Optimizations</strong>: 24 opportunities identified by <code class="docutils literal notranslate"><span class="pre">ai-ctx</span></code></p></li>
 </ul>
 </section>
 </section>
 <hr class="docutils" />
-<section id="metricas-del-proyecto">
-<h2>5. Métricas del Proyecto<a class="headerlink" href="#metricas-del-proyecto" title="Link para este cabeçalho"></a></h2>
-<section id="calidad-de-codigo">
-<h3>Calidad de Código<a class="headerlink" href="#calidad-de-codigo" title="Link para este cabeçalho"></a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Quality Score:        54.3/100 (+9.0 desde v2.8.0)
+<section id="project-metrics">
+<h2>5. Project Metrics<a class="headerlink" href="#project-metrics" title="Link para este cabeçalho"></a></h2>
+<section id="code-quality">
+<h3>Code Quality<a class="headerlink" href="#code-quality" title="Link para este cabeçalho"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Quality Score:        54.3/100 (+9.0 since v2.8.0)
 Total Lines:          8,975
 Optimizations:        24
 Tests Passing:        199/199 (100%)
@@ -409,79 +409,79 @@ Docker Environment:   ✅ Stable
 </pre></div>
 </div>
 </section>
-<section id="complejidad">
-<h3>Complejidad<a class="headerlink" href="#complejidad" title="Link para este cabeçalho"></a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Max</span> <span class="n">Cyclomatic</span> <span class="n">Complexity</span><span class="p">:</span>  <span class="o">&lt;</span> <span class="mi">20</span> <span class="p">(</span><span class="n">objetivo</span> <span class="n">cumplido</span><span class="p">)</span>
-<span class="n">Average</span> <span class="n">CC</span><span class="p">:</span>                 <span class="o">~</span><span class="mi">5</span><span class="o">-</span><span class="mi">7</span> <span class="p">(</span><span class="n">saludable</span><span class="p">)</span>
+<section id="complexity">
+<h3>Complexity<a class="headerlink" href="#complexity" title="Link para este cabeçalho"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Max</span> <span class="n">Cyclomatic</span> <span class="n">Complexity</span><span class="p">:</span>  <span class="o">&lt;</span> <span class="mi">20</span> <span class="p">(</span><span class="n">target</span> <span class="n">met</span><span class="p">)</span>
+<span class="n">Average</span> <span class="n">CC</span><span class="p">:</span>                 <span class="o">~</span><span class="mi">5</span><span class="o">-</span><span class="mi">7</span> <span class="p">(</span><span class="n">healthy</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
-<section id="cobertura">
-<h3>Cobertura<a class="headerlink" href="#cobertura" title="Link para este cabeçalho"></a></h3>
+<section id="coverage">
+<h3>Coverage<a class="headerlink" href="#coverage" title="Link para este cabeçalho"></a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Docstring</span> <span class="n">Coverage</span><span class="p">:</span>  <span class="mf">75.9</span><span class="o">%</span>
-<span class="n">Type</span> <span class="n">Hint</span> <span class="n">Coverage</span><span class="p">:</span>  <span class="o">~</span><span class="mi">85</span><span class="o">%</span> <span class="p">(</span><span class="n">estimado</span><span class="p">)</span>
+<span class="n">Type</span> <span class="n">Hint</span> <span class="n">Coverage</span><span class="p">:</span>  <span class="o">~</span><span class="mi">85</span><span class="o">%</span> <span class="p">(</span><span class="n">estimated</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
-<section id="compliance-qgis">
-<h3>Compliance QGIS<a class="headerlink" href="#compliance-qgis" title="Link para este cabeçalho"></a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>PyQt5 Direct Imports:  1 (resources.py - documentado)
-QGIS API Usage:        ✅ Correcto
-Plugin Metadata:       ✅ Válido
+<section id="qgis-compliance">
+<h3>QGIS Compliance<a class="headerlink" href="#qgis-compliance" title="Link para este cabeçalho"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>PyQt5 Direct Imports:  1 (resources.py - documented)
+QGIS API Usage:        ✅ Correct
+Plugin Metadata:       ✅ Valid
 </pre></div>
 </div>
 </section>
 </section>
 <hr class="docutils" />
-<section id="conclusion-y-recomendaciones">
-<h2>6. Conclusión y Recomendaciones<a class="headerlink" href="#conclusion-y-recomendaciones" title="Link para este cabeçalho"></a></h2>
+<section id="conclusion-and-recommendations">
+<h2>6. Conclusion and Recommendations<a class="headerlink" href="#conclusion-and-recommendations" title="Link para este cabeçalho"></a></h2>
 <section id="conclusion">
-<h3>Conclusión<a class="headerlink" href="#conclusion" title="Link para este cabeçalho"></a></h3>
-<p>La fase v2.9.0 ha sido <strong>exitosa</strong> en términos de consolidación arquitectónica y estabilización del proceso de release. Se logró:</p>
+<h3>Conclusion<a class="headerlink" href="#conclusion" title="Link para este cabeçalho"></a></h3>
+<p>Phase v2.9.0 has been <strong>successful</strong> in terms of architectural consolidation and release process stabilization. Achieved:</p>
 <ul class="simple">
-<li><p>✅ Arquitectura más limpia y mantenible</p></li>
-<li><p>✅ Proceso de release robusto y documentado</p></li>
-<li><p>✅ Calidad de código mejorada (+9 puntos)</p></li>
-<li><p>✅ Release oficial publicado sin incidentes post-corrección</p></li>
+<li><p>✅ Cleaner, more maintainable architecture</p></li>
+<li><p>✅ Robust, documented release process</p></li>
+<li><p>✅ Improved code quality (+9 points)</p></li>
+<li><p>✅ Official release published without post-fix incidents</p></li>
 </ul>
 </section>
-<section id="recomendaciones-para-v2-10-0">
-<h3>Recomendaciones para v2.10.0<a class="headerlink" href="#recomendaciones-para-v2-10-0" title="Link para este cabeçalho"></a></h3>
-<section id="prioridad-alta">
-<h4>Prioridad Alta<a class="headerlink" href="#prioridad-alta" title="Link para este cabeçalho"></a></h4>
+<section id="recommendations-for-v2-10-0">
+<h3>Recommendations for v2.10.0<a class="headerlink" href="#recommendations-for-v2-10-0" title="Link para este cabeçalho"></a></h3>
+<section id="high-priority">
+<h4>High Priority<a class="headerlink" href="#high-priority" title="Link para este cabeçalho"></a></h4>
 <ol class="arabic simple">
-<li><p><strong>Resolver Deuda Crítica</strong>: Eliminar importación legacy de PyQt5 en <code class="docutils literal notranslate"><span class="pre">resources.py</span></code></p></li>
-<li><p><strong>Preparación QGIS 4.x</strong>: Crear rama de compatibilidad y auditar API deprecadas</p></li>
-<li><p><strong>Continuar Refactorización</strong>: Reducir CC en métodos 3D de <code class="docutils literal notranslate"><span class="pre">export_service.py</span></code></p></li>
+<li><p><strong>Resolve Critical Debt</strong>: Remove legacy PyQt5 import in <code class="docutils literal notranslate"><span class="pre">resources.py</span></code></p></li>
+<li><p><strong>QGIS 4.x Preparation</strong>: Create compatibility branch and audit deprecated APIs</p></li>
+<li><p><strong>Continue Refactoring</strong>: Reduce CC in 3D methods of <code class="docutils literal notranslate"><span class="pre">export_service.py</span></code></p></li>
 </ol>
 </section>
-<section id="prioridad-media">
-<h4>Prioridad Media<a class="headerlink" href="#prioridad-media" title="Link para este cabeçalho"></a></h4>
+<section id="medium-priority">
+<h4>Medium Priority<a class="headerlink" href="#medium-priority" title="Link para este cabeçalho"></a></h4>
 <ol class="arabic simple" start="4">
-<li><p><strong>Mejorar Cobertura de Documentación</strong>: Objetivo 85% docstrings</p></li>
-<li><p><strong>Optimizaciones de Rendimiento</strong>: Implementar las 24 oportunidades identificadas</p></li>
-<li><p><strong>Ampliar Suite de Tests</strong>: Aumentar cobertura de casos edge</p></li>
+<li><p><strong>Improve Documentation Coverage</strong>: Target 85% docstrings</p></li>
+<li><p><strong>Performance Optimizations</strong>: Implement the 24 identified opportunities</p></li>
+<li><p><strong>Expand Test Suite</strong>: Increase edge case coverage</p></li>
 </ol>
 </section>
-<section id="prioridad-baja">
-<h4>Prioridad Baja<a class="headerlink" href="#prioridad-baja" title="Link para este cabeçalho"></a></h4>
+<section id="low-priority">
+<h4>Low Priority<a class="headerlink" href="#low-priority" title="Link para este cabeçalho"></a></h4>
 <ol class="arabic simple" start="7">
-<li><p><strong>Migrar MD5 a SHA256</strong>: Para cache keys (silenciar escáneres de seguridad)</p></li>
-<li><p><strong>Internacionalización</strong>: Completar traducciones faltantes (49 strings sin traducir)</p></li>
+<li><p><strong>Migrate MD5 to SHA256</strong>: For cache keys (silence security scanners)</p></li>
+<li><p><strong>Internationalization</strong>: Complete missing translations (49 untranslated strings)</p></li>
 </ol>
 </section>
 </section>
-<section id="proximos-pasos-inmediatos">
-<h3>Próximos Pasos Inmediatos<a class="headerlink" href="#proximos-pasos-inmediatos" title="Link para este cabeçalho"></a></h3>
+<section id="immediate-next-steps">
+<h3>Immediate Next Steps<a class="headerlink" href="#immediate-next-steps" title="Link para este cabeçalho"></a></h3>
 <ol class="arabic simple">
-<li><p><strong>Validar Release</strong>: Confirmar que v2.9.0 aparece correctamente en QGIS Plugin Manager</p></li>
-<li><p><strong>Monitorear Feedback</strong>: Revisar issues de usuarios en las primeras 2 semanas</p></li>
-<li><p><strong>Planificar v2.10.0</strong>: Definir alcance y prioridades basadas en feedback</p></li>
-<li><p><strong>Iniciar Siguiente Fase</strong>: Usar <code class="docutils literal notranslate"><span class="pre">/inicia-sesion</span></code> cuando esté listo</p></li>
+<li><p><strong>Validate Release</strong>: Confirm v2.9.0 appears correctly in QGIS Plugin Manager</p></li>
+<li><p><strong>Monitor Feedback</strong>: Review user issues in the first 2 weeks</p></li>
+<li><p><strong>Plan v2.10.0</strong>: Define scope and priorities based on feedback</p></li>
+<li><p><strong>Start Next Phase</strong>: Use <code class="docutils literal notranslate"><span class="pre">/inicia-sesion</span></code> when ready</p></li>
 </ol>
 <hr class="docutils" />
-<p><strong>Filosofía de Cierre</strong>: Esta fase demuestra que la calidad no es un destino, sino un proceso continuo de mejora incremental. Cada refactorización, cada test, cada línea de documentación es una inversión en la sostenibilidad del proyecto.</p>
-<p><strong>Estado del Proyecto</strong>: 🟢 <strong>ESTABLE Y LISTO PARA PRODUCCIÓN</strong></p>
+<p><strong>Closure Philosophy</strong>: This phase demonstrates that quality is not a destination, but a continuous process of incremental improvement. Every refactoring, every test, every line of documentation is an investment in the project’s sustainability.</p>
+<p><strong>Project Status</strong>: 🟢 <strong>STABLE AND PRODUCTION-READY</strong></p>
 </section>
 </section>
 </section>
