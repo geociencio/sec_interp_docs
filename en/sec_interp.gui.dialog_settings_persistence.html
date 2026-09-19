@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp.gui.dialog_settings_persistence module &mdash; SecInterp 3.4.0 documentation</title>
+  <title>sec_interp.gui.dialog_settings_persistence module &mdash; SecInterp 3.8.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=b0e360d0"></script>
+      <script src="_static/documentation_options.js?v=948f11bf"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -111,6 +111,8 @@
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.gui.dialog_settings_persistence.</span></span><span class="sig-name descname"><span class="pre">DialogSettingsPersistence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dialog</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog" title="sec_interp.gui.SecInterpDialog"><span class="pre">SecInterpDialog</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.gui.dialog_settings_persistence.DialogSettingsPersistence" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Manages saving and loading of dialog settings using QgsSettings and Project entries.</p>
+<p>Pages expose a <code class="docutils literal notranslate"><span class="pre">dump()</span></code>/<code class="docutils literal notranslate"><span class="pre">load()</span></code>/<code class="docutils literal notranslate"><span class="pre">reset()</span></code> protocol so this manager
+no longer reaches into individual page widgets by attribute name.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.gui.dialog_settings_persistence.DialogSettingsPersistence.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dialog</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog" title="sec_interp.gui.SecInterpDialog"><span class="pre">SecInterpDialog</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.dialog_settings_persistence.DialogSettingsPersistence.__init__" title="Link to this definition"></a></dt>

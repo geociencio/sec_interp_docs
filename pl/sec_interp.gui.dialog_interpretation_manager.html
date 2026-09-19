@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp.gui.dialog_interpretation_manager module &mdash; SecInterp 3.4.0 - dokumentacja</title>
+  <title>sec_interp.gui.dialog_interpretation_manager module &mdash; SecInterp 3.8.0 - dokumentacja</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=71597bbf"></script>
+      <script src="_static/documentation_options.js?v=55350ad0"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/translations.js?v=2827c288"></script>
@@ -111,16 +111,19 @@
 decoupling this logic from the main dialog class.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="sec_interp.gui.dialog_interpretation_manager.InterpretationManager">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.gui.dialog_interpretation_manager.</span></span><span class="sig-name descname"><span class="pre">InterpretationManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dialog</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog" title="sec_interp.gui.SecInterpDialog"><span class="pre">SecInterpDialog</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.gui.dialog_interpretation_manager.InterpretationManager" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.gui.dialog_interpretation_manager.</span></span><span class="sig-name descname"><span class="pre">InterpretationManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dialog</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog" title="sec_interp.gui.SecInterpDialog"><span class="pre">SecInterpDialog</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.gui.preview_state.html#sec_interp.gui.preview_state.PreviewCache" title="sec_interp.gui.preview_state.PreviewCache"><span class="pre">PreviewCache</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.gui.dialog_interpretation_manager.InterpretationManager" title="Link to this definition"></a></dt>
 <dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Manages interpretation polygons and their business logic.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.gui.dialog_interpretation_manager.InterpretationManager.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dialog</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog" title="sec_interp.gui.SecInterpDialog"><span class="pre">SecInterpDialog</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.dialog_interpretation_manager.InterpretationManager.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dialog</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog" title="sec_interp.gui.SecInterpDialog"><span class="pre">SecInterpDialog</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.gui.preview_state.html#sec_interp.gui.preview_state.PreviewCache" title="sec_interp.gui.preview_state.PreviewCache"><span class="pre">PreviewCache</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.dialog_interpretation_manager.InterpretationManager.__init__" title="Link to this definition"></a></dt>
 <dd><p>Initialize interpretation manager.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parametry<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>dialog</strong> – The main dialog instance.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dialog</strong> – The main dialog instance.</p></li>
+<li><p><strong>cache</strong> – Shared preview data cache (owned by the dialog).</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -129,6 +132,12 @@ decoupling this logic from the main dialog class.</p>
 <dt class="sig sig-object py" id="sec_interp.gui.dialog_interpretation_manager.InterpretationManager.apply_attribute_inheritance">
 <span class="sig-name descname"><span class="pre">apply_attribute_inheritance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interpretation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon" title="sec_interp.core.domain.entities.InterpretationPolygon"><span class="pre">InterpretationPolygon</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.dialog_interpretation_manager.InterpretationManager.apply_attribute_inheritance" title="Link to this definition"></a></dt>
 <dd><p>Inherit attributes from nearest geology or drillhole data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sec_interp.gui.dialog_interpretation_manager.InterpretationManager.clear_interpretations">
+<span class="sig-name descname"><span class="pre">clear_interpretations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.dialog_interpretation_manager.InterpretationManager.clear_interpretations" title="Link to this definition"></a></dt>
+<dd><p>Clear all interpretations and persist the change.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -158,6 +167,17 @@ decoupling this logic from the main dialog class.</p>
 <dt class="sig sig-object py" id="sec_interp.gui.dialog_interpretation_manager.InterpretationManager.save_to_layer">
 <span class="sig-name descname"><span class="pre">save_to_layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.dialog_interpretation_manager.InterpretationManager.save_to_layer" title="Link to this definition"></a></dt>
 <dd><p>Save interpretation polygons to an external vector layer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sec_interp.gui.dialog_interpretation_manager.InterpretationManager.set_preview_update_handler">
+<span class="sig-name descname"><span class="pre">set_preview_update_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">handler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.dialog_interpretation_manager.InterpretationManager.set_preview_update_handler" title="Link to this definition"></a></dt>
+<dd><p>Register the callback invoked after an interpretation is added.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parametry<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>handler</strong> – Callable that re-renders the preview.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">

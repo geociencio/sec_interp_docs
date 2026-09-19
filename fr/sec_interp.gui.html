@@ -6,21 +6,21 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp.gui package &mdash; Documentation SecInterp 3.4.0</title>
+  <title>sec_interp.gui package &mdash; Documentation SecInterp 3.8.0</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=386f8cd2"></script>
+      <script src="_static/documentation_options.js?v=1c03fdbd"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/translations.js?v=e6b791cb"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
-    <link rel="next" title="sec_interp.gui.renderers package" href="sec_interp.gui.renderers.html" />
+    <link rel="next" title="sec_interp.gui.adapters package" href="sec_interp.gui.adapters.html" />
     <link rel="prev" title="sec_interp.exporters.vector_exporter module" href="sec_interp.exporters.vector_exporter.html" /> 
 </head>
 
@@ -141,14 +141,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="sec_interp.gui.PreviewRenderer.export_to_image">
-<span class="sig-name descname"><span class="pre">export_to_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_legend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.gui.PreviewRenderer.export_to_image" title="Lien vers cette définition"></a></dt>
-<dd><p>Export preview to image file. Maintains same logic but orchestrated.</p>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.gui.PreviewRenderer.render">
-<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topo_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ProfileData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geol_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeologyData</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">struct_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">StructureData</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vert_exag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dip_line_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preserve_extent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_adaptive_sampling</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drillhole_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interp_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="sec_interp.core.domain.html#sec_interp.core.domain.InterpretationPolygon" title="sec_interp.core.domain.InterpretationPolygon"><span class="pre">InterpretationPolygon</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_legend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">QgsMapCanvas</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.gui.PreviewRenderer.render" title="Lien vers cette définition"></a></dt>
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topo_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ProfileData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geol_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeologyData</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">struct_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">StructureData</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vert_exag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dip_line_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preserve_extent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_adaptive_sampling</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drillhole_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interp_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="sec_interp.core.domain.html#sec_interp.core.domain.InterpretationPolygon" title="sec_interp.core.domain.InterpretationPolygon"><span class="pre">InterpretationPolygon</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">QgsMapCanvas</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.gui.PreviewRenderer.render" title="Lien vers cette définition"></a></dt>
 <dd><p>Render preview with all data layers.</p>
 </dd></dl>
 
@@ -408,10 +402,64 @@ plugin instance for interaction with the host application.</p>
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Lien vers cette rubrique"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.adapters.html">sec_interp.gui.adapters package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.drillhole_extractor.html">sec_interp.gui.adapters.drillhole_extractor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.adapters.drillhole_extractor.html#sec_interp.gui.adapters.drillhole_extractor.DrillholeExtractor"><code class="docutils literal notranslate"><span class="pre">DrillholeExtractor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.feature_fetcher.html">sec_interp.gui.adapters.feature_fetcher module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.adapters.feature_fetcher.html#sec_interp.gui.adapters.feature_fetcher.DataFetcher"><code class="docutils literal notranslate"><span class="pre">DataFetcher</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.geology_extractor.html">sec_interp.gui.adapters.geology_extractor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.adapters.geology_extractor.html#sec_interp.gui.adapters.geology_extractor.GeologyExtractor"><code class="docutils literal notranslate"><span class="pre">GeologyExtractor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html">sec_interp.gui.adapters.geometry module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.calculate_segment_range"><code class="docutils literal notranslate"><span class="pre">calculate_segment_range()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.create_distance_area"><code class="docutils literal notranslate"><span class="pre">create_distance_area()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.densify_line_by_interval"><code class="docutils literal notranslate"><span class="pre">densify_line_by_interval()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.extract_all_vertices"><code class="docutils literal notranslate"><span class="pre">extract_all_vertices()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.extract_lines_from_geometry"><code class="docutils literal notranslate"><span class="pre">extract_lines_from_geometry()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.get_line_vertices"><code class="docutils literal notranslate"><span class="pre">get_line_vertices()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.line_length"><code class="docutils literal notranslate"><span class="pre">line_length()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.prepare_profile_context"><code class="docutils literal notranslate"><span class="pre">prepare_profile_context()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.sample_elevation_along_line"><code class="docutils literal notranslate"><span class="pre">sample_elevation_along_line()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.sample_point_elevation"><code class="docutils literal notranslate"><span class="pre">sample_point_elevation()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.layer_resolver.html">sec_interp.gui.adapters.layer_resolver module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.adapters.layer_resolver.html#sec_interp.gui.adapters.layer_resolver.LayerResolver"><code class="docutils literal notranslate"><span class="pre">LayerResolver</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.adapters.layer_resolver.html#sec_interp.gui.adapters.layer_resolver.resolve_layer"><code class="docutils literal notranslate"><span class="pre">resolve_layer()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.profile_extractor.html">sec_interp.gui.adapters.profile_extractor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.adapters.profile_extractor.html#sec_interp.gui.adapters.profile_extractor.ProfileExtractor"><code class="docutils literal notranslate"><span class="pre">ProfileExtractor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.structure_extractor.html">sec_interp.gui.adapters.structure_extractor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.adapters.structure_extractor.html#sec_interp.gui.adapters.structure_extractor.SectionContext"><code class="docutils literal notranslate"><span class="pre">SectionContext</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.adapters.structure_extractor.html#sec_interp.gui.adapters.structure_extractor.StructureExtractor"><code class="docutils literal notranslate"><span class="pre">StructureExtractor</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.validation_extractor.html">sec_interp.gui.adapters.validation_extractor module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.adapters.validation_extractor.html#sec_interp.gui.adapters.validation_extractor.build_validation_params"><code class="docutils literal notranslate"><span class="pre">build_validation_params()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.adapters.validation_extractor.html#sec_interp.gui.adapters.validation_extractor.extract_layer_metadata"><code class="docutils literal notranslate"><span class="pre">extract_layer_metadata()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.adapters.validation_extractor.html#sec_interp.gui.adapters.validation_extractor.extract_raster_metadata"><code class="docutils literal notranslate"><span class="pre">extract_raster_metadata()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.adapters.validation_extractor.html#sec_interp.gui.adapters.validation_extractor.extract_vector_metadata"><code class="docutils literal notranslate"><span class="pre">extract_vector_metadata()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.adapters.validation_extractor.html#sec_interp.gui.adapters.validation_extractor.resolve_layer_metadata"><code class="docutils literal notranslate"><span class="pre">resolve_layer_metadata()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.renderers.html">sec_interp.gui.renderers package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.renderers.html#submodules">Submodules</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.renderers.base_renderer.html">sec_interp.gui.renderers.base_renderer module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.renderers.base_renderer.html#sec_interp.gui.renderers.base_renderer.BasePreviewRenderer"><code class="docutils literal notranslate"><span class="pre">BasePreviewRenderer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.renderers.base_renderer.html#sec_interp.gui.renderers.base_renderer.build_categorized_line_style"><code class="docutils literal notranslate"><span class="pre">build_categorized_line_style()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.renderers.color_manager.html">sec_interp.gui.renderers.color_manager module</a><ul>
@@ -461,12 +509,14 @@ plugin instance for interaction with the host application.</p>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.tools.html#submodules">Submodules</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.tools.interpretation_tool.html">sec_interp.gui.tools.interpretation_tool module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.tools.interpretation_tool.html#sec_interp.gui.tools.interpretation_tool.ProfileInterpretationTool"><code class="docutils literal notranslate"><span class="pre">ProfileInterpretationTool</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.tools.interpretation_tool.html#sec_interp.gui.tools.interpretation_tool.ProfileSnapper"><code class="docutils literal notranslate"><span class="pre">ProfileSnapper</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.tools.measure_tool.html">sec_interp.gui.tools.measure_tool module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.tools.measure_tool.html#sec_interp.gui.tools.measure_tool.ProfileMeasureTool"><code class="docutils literal notranslate"><span class="pre">ProfileMeasureTool</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.tools.measure_tool.html#sec_interp.gui.tools.measure_tool.ProfileSnapper"><code class="docutils literal notranslate"><span class="pre">ProfileSnapper</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.tools.snapper.html">sec_interp.gui.tools.snapper module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.tools.snapper.html#sec_interp.gui.tools.snapper.ProfileSnapper"><code class="docutils literal notranslate"><span class="pre">ProfileSnapper</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -502,6 +552,18 @@ plugin instance for interaction with the host application.</p>
 <h2>Submodules<a class="headerlink" href="#submodules" title="Lien vers cette rubrique"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.dialog_dependencies.html">sec_interp.gui.dialog_dependencies module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.dialog_dependencies.html#sec_interp.gui.dialog_dependencies.Pages"><code class="docutils literal notranslate"><span class="pre">Pages</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_dependencies.html#sec_interp.gui.dialog_dependencies.Pages.dem"><code class="docutils literal notranslate"><span class="pre">Pages.dem</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_dependencies.html#sec_interp.gui.dialog_dependencies.Pages.drillhole"><code class="docutils literal notranslate"><span class="pre">Pages.drillhole</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_dependencies.html#sec_interp.gui.dialog_dependencies.Pages.geology"><code class="docutils literal notranslate"><span class="pre">Pages.geology</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_dependencies.html#sec_interp.gui.dialog_dependencies.Pages.section"><code class="docutils literal notranslate"><span class="pre">Pages.section</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_dependencies.html#sec_interp.gui.dialog_dependencies.Pages.settings"><code class="docutils literal notranslate"><span class="pre">Pages.settings</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_dependencies.html#sec_interp.gui.dialog_dependencies.Pages.structure"><code class="docutils literal notranslate"><span class="pre">Pages.structure</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.dialog_export_manager.html">sec_interp.gui.dialog_export_manager module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.dialog_export_manager.html#sec_interp.gui.dialog_export_manager.ExportManager"><code class="docutils literal notranslate"><span class="pre">ExportManager</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_export_manager.html#sec_interp.gui.dialog_export_manager.ExportManager.__init__"><code class="docutils literal notranslate"><span class="pre">ExportManager.__init__()</span></code></a></li>
@@ -530,10 +592,12 @@ plugin instance for interaction with the host application.</p>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.dialog_interpretation_manager.html#sec_interp.gui.dialog_interpretation_manager.InterpretationManager"><code class="docutils literal notranslate"><span class="pre">InterpretationManager</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_interpretation_manager.html#sec_interp.gui.dialog_interpretation_manager.InterpretationManager.__init__"><code class="docutils literal notranslate"><span class="pre">InterpretationManager.__init__()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_interpretation_manager.html#sec_interp.gui.dialog_interpretation_manager.InterpretationManager.apply_attribute_inheritance"><code class="docutils literal notranslate"><span class="pre">InterpretationManager.apply_attribute_inheritance()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_interpretation_manager.html#sec_interp.gui.dialog_interpretation_manager.InterpretationManager.clear_interpretations"><code class="docutils literal notranslate"><span class="pre">InterpretationManager.clear_interpretations()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_interpretation_manager.html#sec_interp.gui.dialog_interpretation_manager.InterpretationManager.handle_interpretation_finished"><code class="docutils literal notranslate"><span class="pre">InterpretationManager.handle_interpretation_finished()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_interpretation_manager.html#sec_interp.gui.dialog_interpretation_manager.InterpretationManager.load_interpretations"><code class="docutils literal notranslate"><span class="pre">InterpretationManager.load_interpretations()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_interpretation_manager.html#sec_interp.gui.dialog_interpretation_manager.InterpretationManager.save_interpretations"><code class="docutils literal notranslate"><span class="pre">InterpretationManager.save_interpretations()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_interpretation_manager.html#sec_interp.gui.dialog_interpretation_manager.InterpretationManager.save_to_layer"><code class="docutils literal notranslate"><span class="pre">InterpretationManager.save_to_layer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_interpretation_manager.html#sec_interp.gui.dialog_interpretation_manager.InterpretationManager.set_preview_update_handler"><code class="docutils literal notranslate"><span class="pre">InterpretationManager.set_preview_update_handler()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_interpretation_manager.html#sec_interp.gui.dialog_interpretation_manager.InterpretationManager.sync_from_layer"><code class="docutils literal notranslate"><span class="pre">InterpretationManager.sync_from_layer()</span></code></a></li>
 </ul>
 </li>
@@ -546,6 +610,7 @@ plugin instance for interaction with the host application.</p>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_preview_manager.html#sec_interp.gui.dialog_preview_manager.PreviewManager.connect_signals"><code class="docutils literal notranslate"><span class="pre">PreviewManager.connect_signals()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_preview_manager.html#sec_interp.gui.dialog_preview_manager.PreviewManager.disconnect_signals"><code class="docutils literal notranslate"><span class="pre">PreviewManager.disconnect_signals()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_preview_manager.html#sec_interp.gui.dialog_preview_manager.PreviewManager.generate_preview"><code class="docutils literal notranslate"><span class="pre">PreviewManager.generate_preview()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_preview_manager.html#sec_interp.gui.dialog_preview_manager.PreviewManager.set_interpretations_cleared_handler"><code class="docutils literal notranslate"><span class="pre">PreviewManager.set_interpretations_cleared_handler()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_preview_manager.html#sec_interp.gui.dialog_preview_manager.PreviewManager.update_from_checkboxes"><code class="docutils literal notranslate"><span class="pre">PreviewManager.update_from_checkboxes()</span></code></a></li>
 </ul>
 </li>
@@ -608,6 +673,15 @@ plugin instance for interaction with the host application.</p>
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.layer_notification_manager.html">sec_interp.gui.layer_notification_manager module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.layer_notification_manager.html#sec_interp.gui.layer_notification_manager.LayerNotificationManager"><code class="docutils literal notranslate"><span class="pre">LayerNotificationManager</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.layer_notification_manager.html#sec_interp.gui.layer_notification_manager.LayerNotificationManager.__init__"><code class="docutils literal notranslate"><span class="pre">LayerNotificationManager.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.layer_notification_manager.html#sec_interp.gui.layer_notification_manager.LayerNotificationManager.connect"><code class="docutils literal notranslate"><span class="pre">LayerNotificationManager.connect()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.layer_notification_manager.html#sec_interp.gui.layer_notification_manager.LayerNotificationManager.disconnect"><code class="docutils literal notranslate"><span class="pre">LayerNotificationManager.disconnect()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.legend_widget.html">sec_interp.gui.legend_widget module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.legend_widget.html#sec_interp.gui.legend_widget.LegendWidget"><code class="docutils literal notranslate"><span class="pre">LegendWidget</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.legend_widget.html#sec_interp.gui.legend_widget.LegendWidget.__init__"><code class="docutils literal notranslate"><span class="pre">LegendWidget.__init__()</span></code></a></li>
@@ -615,14 +689,6 @@ plugin instance for interaction with the host application.</p>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.legend_widget.html#sec_interp.gui.legend_widget.LegendWidget.eventFilter"><code class="docutils literal notranslate"><span class="pre">LegendWidget.eventFilter()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.legend_widget.html#sec_interp.gui.legend_widget.LegendWidget.paintEvent"><code class="docutils literal notranslate"><span class="pre">LegendWidget.paintEvent()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.legend_widget.html#sec_interp.gui.legend_widget.LegendWidget.update_legend"><code class="docutils literal notranslate"><span class="pre">LegendWidget.update_legend()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.lod_calculator.html">sec_interp.gui.lod_calculator module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.lod_calculator.html#sec_interp.gui.lod_calculator.LODCalculator"><code class="docutils literal notranslate"><span class="pre">LODCalculator</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.lod_calculator.html#sec_interp.gui.lod_calculator.LODCalculator.__init__"><code class="docutils literal notranslate"><span class="pre">LODCalculator.__init__()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.lod_calculator.html#sec_interp.gui.lod_calculator.LODCalculator.calculate_max_points"><code class="docutils literal notranslate"><span class="pre">LODCalculator.calculate_max_points()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -665,24 +731,9 @@ plugin instance for interaction with the host application.</p>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.main_dialog_config.html">sec_interp.gui.main_dialog_config module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig"><code class="docutils literal notranslate"><span class="pre">DialogConfig</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig.ALLOW_EMPTY_GEOLOGY"><code class="docutils literal notranslate"><span class="pre">DialogConfig.ALLOW_EMPTY_GEOLOGY</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig.ALLOW_EMPTY_STRUCTURES"><code class="docutils literal notranslate"><span class="pre">DialogConfig.ALLOW_EMPTY_STRUCTURES</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig.AUTO_REFRESH_PREVIEW"><code class="docutils literal notranslate"><span class="pre">DialogConfig.AUTO_REFRESH_PREVIEW</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig.AUTO_SAVE_SETTINGS"><code class="docutils literal notranslate"><span class="pre">DialogConfig.AUTO_SAVE_SETTINGS</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig.CACHE_EXPIRY_SECONDS"><code class="docutils literal notranslate"><span class="pre">DialogConfig.CACHE_EXPIRY_SECONDS</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig.ENABLE_CACHE"><code class="docutils literal notranslate"><span class="pre">DialogConfig.ENABLE_CACHE</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig.ENABLE_LOD"><code class="docutils literal notranslate"><span class="pre">DialogConfig.ENABLE_LOD</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig.ENABLE_PERFORMANCE_METRICS"><code class="docutils literal notranslate"><span class="pre">DialogConfig.ENABLE_PERFORMANCE_METRICS</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig.ENABLE_TOOLTIPS"><code class="docutils literal notranslate"><span class="pre">DialogConfig.ENABLE_TOOLTIPS</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig.ENABLE_ZOOM"><code class="docutils literal notranslate"><span class="pre">DialogConfig.ENABLE_ZOOM</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig.LOG_DETAILED_METRICS"><code class="docutils literal notranslate"><span class="pre">DialogConfig.LOG_DETAILED_METRICS</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig.LOG_PERFORMANCE"><code class="docutils literal notranslate"><span class="pre">DialogConfig.LOG_PERFORMANCE</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig.MAX_PREVIEW_POINTS"><code class="docutils literal notranslate"><span class="pre">DialogConfig.MAX_PREVIEW_POINTS</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig.SHOW_HELP_ON_START"><code class="docutils literal notranslate"><span class="pre">DialogConfig.SHOW_HELP_ON_START</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig.SHOW_LEGEND"><code class="docutils literal notranslate"><span class="pre">DialogConfig.SHOW_LEGEND</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig.SHOW_METRICS_IN_RESULTS"><code class="docutils literal notranslate"><span class="pre">DialogConfig.SHOW_METRICS_IN_RESULTS</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig.STRICT_VALIDATION"><code class="docutils literal notranslate"><span class="pre">DialogConfig.STRICT_VALIDATION</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig.VERBOSE_LOGGING"><code class="docutils literal notranslate"><span class="pre">DialogConfig.VERBOSE_LOGGING</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog_config.html#sec_interp.gui.main_dialog_config.DialogConfig.ZOOM_DEBOUNCE_MS"><code class="docutils literal notranslate"><span class="pre">DialogConfig.ZOOM_DEBOUNCE_MS</span></code></a></li>
 </ul>
 </li>
@@ -776,7 +827,6 @@ plugin instance for interaction with the host application.</p>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.create_topo_fill_layer"><code class="docutils literal notranslate"><span class="pre">PreviewLayerFactory.create_topo_fill_layer()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.create_topo_layer"><code class="docutils literal notranslate"><span class="pre">PreviewLayerFactory.create_topo_layer()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.get_color_for_unit"><code class="docutils literal notranslate"><span class="pre">PreviewLayerFactory.get_color_for_unit()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.interpolate_elevation"><code class="docutils literal notranslate"><span class="pre">PreviewLayerFactory.interpolate_elevation()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -800,7 +850,6 @@ plugin instance for interaction with the host application.</p>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_renderer.html#sec_interp.gui.preview_renderer.PreviewRenderer.__init__"><code class="docutils literal notranslate"><span class="pre">PreviewRenderer.__init__()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_renderer.html#sec_interp.gui.preview_renderer.PreviewRenderer.active_units"><code class="docutils literal notranslate"><span class="pre">PreviewRenderer.active_units</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_renderer.html#sec_interp.gui.preview_renderer.PreviewRenderer.draw_legend"><code class="docutils literal notranslate"><span class="pre">PreviewRenderer.draw_legend()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_renderer.html#sec_interp.gui.preview_renderer.PreviewRenderer.export_to_image"><code class="docutils literal notranslate"><span class="pre">PreviewRenderer.export_to_image()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_renderer.html#sec_interp.gui.preview_renderer.PreviewRenderer.render"><code class="docutils literal notranslate"><span class="pre">PreviewRenderer.render()</span></code></a></li>
 </ul>
 </li>
@@ -814,6 +863,22 @@ plugin instance for interaction with the host application.</p>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_reporter.html#sec_interp.gui.preview_reporter.PreviewReporter.format_result_metrics"><code class="docutils literal notranslate"><span class="pre">PreviewReporter.format_result_metrics()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_reporter.html#sec_interp.gui.preview_reporter.PreviewReporter.format_results_message"><code class="docutils literal notranslate"><span class="pre">PreviewReporter.format_results_message()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_reporter.html#sec_interp.gui.preview_reporter.PreviewReporter.format_structure_summary"><code class="docutils literal notranslate"><span class="pre">PreviewReporter.format_structure_summary()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.preview_state.html">sec_interp.gui.preview_state module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.preview_state.html#sec_interp.gui.preview_state.PreviewCache"><code class="docutils literal notranslate"><span class="pre">PreviewCache</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_state.html#sec_interp.gui.preview_state.PreviewCache.__getitem__"><code class="docutils literal notranslate"><span class="pre">PreviewCache.__getitem__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_state.html#sec_interp.gui.preview_state.PreviewCache.__init__"><code class="docutils literal notranslate"><span class="pre">PreviewCache.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_state.html#sec_interp.gui.preview_state.PreviewCache.__setitem__"><code class="docutils literal notranslate"><span class="pre">PreviewCache.__setitem__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_state.html#sec_interp.gui.preview_state.PreviewCache.get"><code class="docutils literal notranslate"><span class="pre">PreviewCache.get()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_state.html#sec_interp.gui.preview_state.PreviewCache.update"><code class="docutils literal notranslate"><span class="pre">PreviewCache.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.preview_state.html#sec_interp.gui.preview_state.RenderState"><code class="docutils literal notranslate"><span class="pre">RenderState</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_state.html#sec_interp.gui.preview_state.RenderState.__init__"><code class="docutils literal notranslate"><span class="pre">RenderState.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_state.html#sec_interp.gui.preview_state.RenderState.update"><code class="docutils literal notranslate"><span class="pre">RenderState.update()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -843,6 +908,7 @@ plugin instance for interaction with the host application.</p>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.utils.html">sec_interp.gui.utils module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.utils.html#sec_interp.gui.utils.create_memory_layer"><code class="docutils literal notranslate"><span class="pre">create_memory_layer()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.utils.html#sec_interp.gui.utils.show_user_message"><code class="docutils literal notranslate"><span class="pre">show_user_message()</span></code></a></li>
 </ul>
 </li>
@@ -856,7 +922,7 @@ plugin instance for interaction with the host application.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
         <a href="sec_interp.exporters.vector_exporter.html" class="btn btn-neutral float-left" title="sec_interp.exporters.vector_exporter module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
-        <a href="sec_interp.gui.renderers.html" class="btn btn-neutral float-right" title="sec_interp.gui.renderers package" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="sec_interp.gui.adapters.html" class="btn btn-neutral float-right" title="sec_interp.gui.adapters package" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

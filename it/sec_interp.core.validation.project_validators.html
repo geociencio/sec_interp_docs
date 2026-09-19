@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp.core.validation.project_validators module &mdash; Documentazione SecInterp 3.4.0 </title>
+  <title>sec_interp.core.validation.project_validators module &mdash; Documentazione SecInterp 3.8.0 </title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=d61dbe80"></script>
+      <script src="_static/documentation_options.js?v=f271cfef"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/translations.js?v=45930005"></script>
@@ -107,7 +107,7 @@
              
   <section id="module-sec_interp.core.validation.project_validators">
 <span id="sec-interp-core-validation-project-validators-module"></span><h1>sec_interp.core.validation.project_validators module<a class="headerlink" href="#module-sec_interp.core.validation.project_validators" title="Link to this heading"></a></h1>
-<p>Specialized validators for project components.</p>
+<p>Specialized validators for project components (QGIS-agnostic).</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="sec_interp.core.validation.project_validators.DEMValidator">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.core.validation.project_validators.</span></span><span class="sig-name descname"><span class="pre">DEMValidator</span></span><a class="headerlink" href="#sec_interp.core.validation.project_validators.DEMValidator" title="Link to this definition"></a></dt>
@@ -157,7 +157,7 @@
 <dt class="sig sig-object py" id="sec_interp.core.validation.project_validators.OutputValidator">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.core.validation.project_validators.</span></span><span class="sig-name descname"><span class="pre">OutputValidator</span></span><a class="headerlink" href="#sec_interp.core.validation.project_validators.OutputValidator" title="Link to this definition"></a></dt>
 <dd><blockquote>
-<div><p>Basi: <a class="reference internal" href="sec_interp.core.validation.base_validator.html#sec_interp.core.validation.base_validator.IValidator" title="sec_interp.core.validation.base_validator.IValidator"><code class="xref py py-class docutils literal notranslate"><span class="pre">IValidator</span></code></a></p>
+<div><p>Basi: <a class="reference internal" href="sec_interp.core.validation.base_validator.html#sec_interp.core.validation.base_validator.IValidator" title="sec_interp.core.validation.base_validator.IValidator"><code class="xref py py-class docutils literal notranslate"><span class="pre">IValidator</span></code></a>, <a class="reference internal" href="sec_interp.core.utils.i18n.html#sec_interp.core.utils.i18n.TranslatableMixin" title="sec_interp.core.utils.i18n.TranslatableMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">TranslatableMixin</span></code></a></p>
 </div></blockquote>
 <p>Validates output path and range requirements.</p>
 <dl class="py method">

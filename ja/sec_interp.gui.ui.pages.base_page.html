@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp.gui.ui.pages.base_page module &mdash; SecInterp 3.4.0 ドキュメント</title>
+  <title>sec_interp.gui.ui.pages.base_page module &mdash; SecInterp 3.8.0 ドキュメント</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=29f9db7e"></script>
+      <script src="_static/documentation_options.js?v=0d95aa11"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/translations.js?v=4755f45a"></script>
@@ -142,6 +142,22 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="sec_interp.gui.ui.pages.base_page.BasePage.dump">
+<span class="sig-name descname"><span class="pre">dump</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.gui.ui.pages.base_page.BasePage.dump" title="Link to this definition"></a></dt>
+<dd><p>Return the page's persistable state as a plain dict.</p>
+<p>Layer values are returned as <code class="docutils literal notranslate"><span class="pre">QgsMapLayer</span></code> objects (or <code class="docutils literal notranslate"><span class="pre">None</span></code>);
+every other value is a primitive (str, bool, int, float).</p>
+<dl class="field-list simple">
+<dt class="field-odd">戻り値<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Mapping of persistent keys to current values.</p>
+</dd>
+<dt class="field-even">戻り値の型<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.gui.ui.pages.base_page.BasePage.get_data">
 <span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.gui.ui.pages.base_page.BasePage.get_data" title="Link to this definition"></a></dt>
 <dd><p>Get the current configuration data from the page.</p>
@@ -153,6 +169,24 @@
 <dd class="field-even"><p>dict</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sec_interp.gui.ui.pages.base_page.BasePage.load">
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.ui.pages.base_page.BasePage.load" title="Link to this definition"></a></dt>
+<dd><p>Apply persistable state to the page's widgets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> -- Mapping of persistent keys to values. Layer values are
+expected as <code class="docutils literal notranslate"><span class="pre">QgsMapLayer</span></code> objects (already resolved).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sec_interp.gui.ui.pages.base_page.BasePage.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.ui.pages.base_page.BasePage.reset" title="Link to this definition"></a></dt>
+<dd><p>Reset the page's widgets to their default values.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -169,6 +203,20 @@
 </dl>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sec_interp.gui.ui.pages.base_page.set_combo_layer">
+<span class="sig-prename descclassname"><span class="pre">sec_interp.gui.ui.pages.base_page.</span></span><span class="sig-name descname"><span class="pre">set_combo_layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">combo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.ui.pages.base_page.set_combo_layer" title="Link to this definition"></a></dt>
+<dd><p>Set a layer on a map-layer combo without emitting its signals.</p>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>combo</strong> -- A <code class="docutils literal notranslate"><span class="pre">QgsMapLayerComboBox</span></code> (or compatible mock).</p></li>
+<li><p><strong>layer</strong> -- The layer to select, or <code class="docutils literal notranslate"><span class="pre">None</span></code> to clear.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </section>

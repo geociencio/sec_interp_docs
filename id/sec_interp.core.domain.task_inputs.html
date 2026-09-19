@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp.core.domain.task_inputs module &mdash; Dokumentasi SecInterp 3.4.0</title>
+  <title>sec_interp.core.domain.task_inputs module &mdash; Dokumentasi SecInterp 3.8.0</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=26d5af40"></script>
+      <script src="_static/documentation_options.js?v=02b9de2f"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/translations.js?v=a1ed0097"></script>
@@ -109,38 +109,27 @@
 <span id="sec-interp-core-domain-task-inputs-module"></span><h1>sec_interp.core.domain.task_inputs module<a class="headerlink" href="#module-sec_interp.core.domain.task_inputs" title="Link to this heading"></a></h1>
 <p>Data Transfer Objects for async task inputs.</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.DrillholeTaskInput">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.core.domain.task_inputs.</span></span><span class="sig-name descname"><span class="pre">DrillholeTaskInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">line_geometry_wkt:</span> <span class="pre">str,</span> <span class="pre">line_start_x:</span> <span class="pre">float,</span> <span class="pre">line_start_y:</span> <span class="pre">float,</span> <span class="pre">line_crs_authid:</span> <span class="pre">str,</span> <span class="pre">section_azimuth:</span> <span class="pre">float,</span> <span class="pre">buffer_width:</span> <span class="pre">float,</span> <span class="pre">collar_id_field:</span> <span class="pre">str,</span> <span class="pre">use_geometry:</span> <span class="pre">bool,</span> <span class="pre">collar_x_field:</span> <span class="pre">str,</span> <span class="pre">collar_y_field:</span> <span class="pre">str,</span> <span class="pre">collar_z_field:</span> <span class="pre">str,</span> <span class="pre">collar_depth_field:</span> <span class="pre">str,</span> <span class="pre">collar_data:</span> <span class="pre">list[dict[str,</span> <span class="pre">~typing.Any]],</span> <span class="pre">survey_data:</span> <span class="pre">dict[~typing.Any,</span> <span class="pre">list[tuple[float,</span> <span class="pre">float,</span> <span class="pre">float]]],</span> <span class="pre">interval_data:</span> <span class="pre">dict[~typing.Any,</span> <span class="pre">list[tuple[float,</span> <span class="pre">float,</span> <span class="pre">str]]],</span> <span class="pre">pre_sampled_z:</span> <span class="pre">dict[~typing.Any,</span> <span class="pre">float]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.DrillholeTaskInput" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.DrillholeContext">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.core.domain.task_inputs.</span></span><span class="sig-name descname"><span class="pre">DrillholeContext</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">line_points:</span> <span class="pre">list[tuple[float,</span> <span class="pre">float]],</span> <span class="pre">section_azimuth:</span> <span class="pre">float,</span> <span class="pre">buffer_width:</span> <span class="pre">float,</span> <span class="pre">collar_id_field:</span> <span class="pre">str,</span> <span class="pre">collar_z_field:</span> <span class="pre">str,</span> <span class="pre">collar_depth_field:</span> <span class="pre">str,</span> <span class="pre">collar_data:</span> <span class="pre">list[dict[str,</span> <span class="pre">~typing.Any]],</span> <span class="pre">survey_data:</span> <span class="pre">dict[~typing.Any,</span> <span class="pre">list[tuple[float,</span> <span class="pre">float,</span> <span class="pre">float]]],</span> <span class="pre">interval_data:</span> <span class="pre">dict[~typing.Any,</span> <span class="pre">list[tuple[float,</span> <span class="pre">float,</span> <span class="pre">str]]],</span> <span class="pre">pre_sampled_z:</span> <span class="pre">dict[~typing.Any,</span> <span class="pre">float]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.DrillholeContext" title="Link to this definition"></a></dt>
 <dd><p>Basis: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Data Transfer Object for DrillholeGenerationTask.</p>
-<p>Encapsulates all data required to project and process drillholes
-in a background thread without accessing QGIS API objects.</p>
+<p>Fully-detached drillhole data (Extract output) for pure computation.</p>
+<p>Produced by the GUI <code class="docutils literal notranslate"><span class="pre">DrillholeExtractor</span></code> adapter and consumed by the
+QGIS-agnostic <code class="docutils literal notranslate"><span class="pre">DrillholeService</span></code>. Contains no live QGIS objects.</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.DrillholeTaskInput.line_geometry_wkt">
-<span class="sig-name descname"><span class="pre">line_geometry_wkt</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.DrillholeTaskInput.line_geometry_wkt" title="Link to this definition"></a></dt>
-<dd><p>Section geometry in WKT.</p>
+<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.DrillholeContext.line_points">
+<span class="sig-name descname"><span class="pre">line_points</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.DrillholeContext.line_points" title="Link to this definition"></a></dt>
+<dd><p>Section line vertices as <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code> tuples.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>list[tuple[float, float]]</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.DrillholeTaskInput.line_start_x">
-<span class="sig-name descname"><span class="pre">line_start_x</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.DrillholeTaskInput.line_start_x" title="Link to this definition"></a></dt>
-<dd><p>Start vertex X.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.DrillholeTaskInput.line_start_y">
-<span class="sig-name descname"><span class="pre">line_start_y</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.DrillholeTaskInput.line_start_y" title="Link to this definition"></a></dt>
-<dd><p>Start vertex Y.</p>
+<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.DrillholeContext.section_azimuth">
+<span class="sig-name descname"><span class="pre">section_azimuth</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.DrillholeContext.section_azimuth" title="Link to this definition"></a></dt>
+<dd><p>Section orientation in degrees.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>float</p>
@@ -149,30 +138,8 @@ in a background thread without accessing QGIS API objects.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.DrillholeTaskInput.line_crs_authid">
-<span class="sig-name descname"><span class="pre">line_crs_authid</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.DrillholeTaskInput.line_crs_authid" title="Link to this definition"></a></dt>
-<dd><p>CRS of the section line.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.DrillholeTaskInput.section_azimuth">
-<span class="sig-name descname"><span class="pre">section_azimuth</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.DrillholeTaskInput.section_azimuth" title="Link to this definition"></a></dt>
-<dd><p>Azimuth orientation in degrees.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.DrillholeTaskInput.buffer_width">
-<span class="sig-name descname"><span class="pre">buffer_width</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.DrillholeTaskInput.buffer_width" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.DrillholeContext.buffer_width">
+<span class="sig-name descname"><span class="pre">buffer_width</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.DrillholeContext.buffer_width" title="Link to this definition"></a></dt>
 <dd><p>Maximum horizontal projection buffer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -182,8 +149,8 @@ in a background thread without accessing QGIS API objects.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.DrillholeTaskInput.collar_id_field">
-<span class="sig-name descname"><span class="pre">collar_id_field</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.DrillholeTaskInput.collar_id_field" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.DrillholeContext.collar_id_field">
+<span class="sig-name descname"><span class="pre">collar_id_field</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.DrillholeContext.collar_id_field" title="Link to this definition"></a></dt>
 <dd><p>ID field name.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -193,41 +160,8 @@ in a background thread without accessing QGIS API objects.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.DrillholeTaskInput.use_geometry">
-<span class="sig-name descname"><span class="pre">use_geometry</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.DrillholeTaskInput.use_geometry" title="Link to this definition"></a></dt>
-<dd><p>Whether to use geometric coordinates for collars.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bool</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.DrillholeTaskInput.collar_x_field">
-<span class="sig-name descname"><span class="pre">collar_x_field</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.DrillholeTaskInput.collar_x_field" title="Link to this definition"></a></dt>
-<dd><p>Fallback X field name.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.DrillholeTaskInput.collar_y_field">
-<span class="sig-name descname"><span class="pre">collar_y_field</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.DrillholeTaskInput.collar_y_field" title="Link to this definition"></a></dt>
-<dd><p>Fallback Y field name.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.DrillholeTaskInput.collar_z_field">
-<span class="sig-name descname"><span class="pre">collar_z_field</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.DrillholeTaskInput.collar_z_field" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.DrillholeContext.collar_z_field">
+<span class="sig-name descname"><span class="pre">collar_z_field</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.DrillholeContext.collar_z_field" title="Link to this definition"></a></dt>
 <dd><p>Collar elevation field.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -237,8 +171,8 @@ in a background thread without accessing QGIS API objects.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.DrillholeTaskInput.collar_depth_field">
-<span class="sig-name descname"><span class="pre">collar_depth_field</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.DrillholeTaskInput.collar_depth_field" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.DrillholeContext.collar_depth_field">
+<span class="sig-name descname"><span class="pre">collar_depth_field</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.DrillholeContext.collar_depth_field" title="Link to this definition"></a></dt>
 <dd><p>Total depth field.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -248,9 +182,9 @@ in a background thread without accessing QGIS API objects.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.DrillholeTaskInput.collar_data">
-<span class="sig-name descname"><span class="pre">collar_data</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.DrillholeTaskInput.collar_data" title="Link to this definition"></a></dt>
-<dd><p>List of detached features.</p>
+<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.DrillholeContext.collar_data">
+<span class="sig-name descname"><span class="pre">collar_data</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.DrillholeContext.collar_data" title="Link to this definition"></a></dt>
+<dd><p>Detached collars (<code class="docutils literal notranslate"><span class="pre">{&quot;id&quot;,</span> <span class="pre">&quot;point&quot;,</span> <span class="pre">&quot;attributes&quot;}</span></code>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>list[dict[str, Any]]</p>
@@ -259,9 +193,9 @@ in a background thread without accessing QGIS API objects.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.DrillholeTaskInput.survey_data">
-<span class="sig-name descname"><span class="pre">survey_data</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.DrillholeTaskInput.survey_data" title="Link to this definition"></a></dt>
-<dd><p>Dictionary mapping hole IDs to survey readings.</p>
+<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.DrillholeContext.survey_data">
+<span class="sig-name descname"><span class="pre">survey_data</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.DrillholeContext.survey_data" title="Link to this definition"></a></dt>
+<dd><p>hole_id -&gt; [(depth, azim, incl)].</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dict[Any, list[tuple[float, float, float]]]</p>
@@ -270,9 +204,9 @@ in a background thread without accessing QGIS API objects.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.DrillholeTaskInput.interval_data">
-<span class="sig-name descname"><span class="pre">interval_data</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.DrillholeTaskInput.interval_data" title="Link to this definition"></a></dt>
-<dd><p>Dictionary mapping hole IDs to geological logs.</p>
+<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.DrillholeContext.interval_data">
+<span class="sig-name descname"><span class="pre">interval_data</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.DrillholeContext.interval_data" title="Link to this definition"></a></dt>
+<dd><p>hole_id -&gt; [(from, to, lith)].</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dict[Any, list[tuple[float, float, str]]]</p>
@@ -281,9 +215,9 @@ in a background thread without accessing QGIS API objects.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.DrillholeTaskInput.pre_sampled_z">
-<span class="sig-name descname"><span class="pre">pre_sampled_z</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.DrillholeTaskInput.pre_sampled_z" title="Link to this definition"></a></dt>
-<dd><p>Dictionary of pre-calculated collar elevations.</p>
+<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.DrillholeContext.pre_sampled_z">
+<span class="sig-name descname"><span class="pre">pre_sampled_z</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.DrillholeContext.pre_sampled_z" title="Link to this definition"></a></dt>
+<dd><p>hole_id -&gt; pre-sampled collar elevation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dict[Any, float]</p>
@@ -313,121 +247,47 @@ in a background thread without accessing QGIS API objects.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id4">
-<span class="sig-name descname"><span class="pre">collar_x_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">collar_z_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id5">
-<span class="sig-name descname"><span class="pre">collar_y_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">interval_data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id6">
-<span class="sig-name descname"><span class="pre">collar_z_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id6" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">line_points</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id6" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id7">
-<span class="sig-name descname"><span class="pre">interval_data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id7" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">pre_sampled_z</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id7" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id8">
-<span class="sig-name descname"><span class="pre">line_crs_authid</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id8" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">section_azimuth</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id8" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id9">
-<span class="sig-name descname"><span class="pre">line_geometry_wkt</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id9" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id10">
-<span class="sig-name descname"><span class="pre">line_start_x</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id10" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id11">
-<span class="sig-name descname"><span class="pre">line_start_y</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id11" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id12">
-<span class="sig-name descname"><span class="pre">pre_sampled_z</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id12" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id13">
-<span class="sig-name descname"><span class="pre">section_azimuth</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id13" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id14">
-<span class="sig-name descname"><span class="pre">survey_data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id14" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id15">
-<span class="sig-name descname"><span class="pre">use_geometry</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#id15" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">survey_data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id9" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.GeologyTaskInput">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.core.domain.task_inputs.</span></span><span class="sig-name descname"><span class="pre">GeologyTaskInput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line_geometry_wkt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_start_x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_start_y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crs_authid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">master_profile_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">master_grid_dists</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outcrop_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outcrop_name_field</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.001</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.GeologyTaskInput" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.GeologyContext">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.core.domain.task_inputs.</span></span><span class="sig-name descname"><span class="pre">GeologyContext</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">master_profile_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">master_grid_dists</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outcrops</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#sec_interp.core.domain.task_inputs.OutcropSegments" title="sec_interp.core.domain.task_inputs.OutcropSegments"><span class="pre">OutcropSegments</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.001</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.GeologyContext" title="Link to this definition"></a></dt>
 <dd><p>Basis: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Data Transfer Object for GeologyGenerationTask.</p>
-<p>Contains all necessary data to process geological profiles
-without accessing QGIS layers directly.</p>
+<p>Fully-detached geology data (Extract output) for pure computation.</p>
+<p>Produced by the GUI <code class="docutils literal notranslate"><span class="pre">GeologyExtractor</span></code> adapter and consumed by the
+QGIS-agnostic <code class="docutils literal notranslate"><span class="pre">GeologyService</span></code>. Contains no live QGIS objects.</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.GeologyTaskInput.line_geometry_wkt">
-<span class="sig-name descname"><span class="pre">line_geometry_wkt</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.GeologyTaskInput.line_geometry_wkt" title="Link to this definition"></a></dt>
-<dd><p>Section geometry in WKT format.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.GeologyTaskInput.line_start_x">
-<span class="sig-name descname"><span class="pre">line_start_x</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.GeologyTaskInput.line_start_x" title="Link to this definition"></a></dt>
-<dd><p>X coordinate of section start vertex.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.GeologyTaskInput.line_start_y">
-<span class="sig-name descname"><span class="pre">line_start_y</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.GeologyTaskInput.line_start_y" title="Link to this definition"></a></dt>
-<dd><p>Y coordinate of section start vertex.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.GeologyTaskInput.crs_authid">
-<span class="sig-name descname"><span class="pre">crs_authid</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.GeologyTaskInput.crs_authid" title="Link to this definition"></a></dt>
-<dd><p>Authority ID for the CRS (e.g., 'EPSG:4326').</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.GeologyTaskInput.master_profile_data">
-<span class="sig-name descname"><span class="pre">master_profile_data</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.GeologyTaskInput.master_profile_data" title="Link to this definition"></a></dt>
-<dd><p>Sampled topography elevations.</p>
+<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.GeologyContext.master_profile_data">
+<span class="sig-name descname"><span class="pre">master_profile_data</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.GeologyContext.master_profile_data" title="Link to this definition"></a></dt>
+<dd><p>Sampled topography elevations <code class="docutils literal notranslate"><span class="pre">(dist,</span> <span class="pre">elev)</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>list[tuple[float, float]]</p>
@@ -436,9 +296,9 @@ without accessing QGIS layers directly.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.GeologyTaskInput.master_grid_dists">
-<span class="sig-name descname"><span class="pre">master_grid_dists</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.GeologyTaskInput.master_grid_dists" title="Link to this definition"></a></dt>
-<dd><p>Grid distances for point sampling.</p>
+<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.GeologyContext.master_grid_dists">
+<span class="sig-name descname"><span class="pre">master_grid_dists</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.GeologyContext.master_grid_dists" title="Link to this definition"></a></dt>
+<dd><p>Grid <code class="docutils literal notranslate"><span class="pre">(dist,</span> <span class="pre">(x,</span> <span class="pre">y),</span> <span class="pre">elev)</span></code> for interpolation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>list[tuple[float, tuple[float, float], float]]</p>
@@ -447,30 +307,19 @@ without accessing QGIS layers directly.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.GeologyTaskInput.outcrop_data">
-<span class="sig-name descname"><span class="pre">outcrop_data</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.GeologyTaskInput.outcrop_data" title="Link to this definition"></a></dt>
-<dd><p>Detached outcrop features (geometries and attrs).</p>
+<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.GeologyContext.outcrops">
+<span class="sig-name descname"><span class="pre">outcrops</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.GeologyContext.outcrops" title="Link to this definition"></a></dt>
+<dd><p>Detached outcrop intersection segments.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list[dict[str, Any]]</p>
+<dd class="field-odd"><p>list[<a class="reference internal" href="#sec_interp.core.domain.task_inputs.OutcropSegments" title="sec_interp.core.domain.task_inputs.OutcropSegments">sec_interp.core.domain.task_inputs.OutcropSegments</a>]</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.GeologyTaskInput.outcrop_name_field">
-<span class="sig-name descname"><span class="pre">outcrop_name_field</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.GeologyTaskInput.outcrop_name_field" title="Link to this definition"></a></dt>
-<dd><p>Name of the field containing unit info.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.GeologyTaskInput.tolerance">
-<span class="sig-name descname"><span class="pre">tolerance</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.GeologyTaskInput.tolerance" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.GeologyContext.tolerance">
+<span class="sig-name descname"><span class="pre">tolerance</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.GeologyContext.tolerance" title="Link to this definition"></a></dt>
 <dd><p>Distance tolerance for intersection sampling.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -480,48 +329,79 @@ without accessing QGIS layers directly.</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="id10">
+<span class="sig-name descname"><span class="pre">master_grid_dists</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id10" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id11">
+<span class="sig-name descname"><span class="pre">master_profile_data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id11" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id12">
+<span class="sig-name descname"><span class="pre">outcrops</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#sec_interp.core.domain.task_inputs.OutcropSegments" title="sec_interp.core.domain.task_inputs.OutcropSegments"><span class="pre">OutcropSegments</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id12" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id13">
+<span class="sig-name descname"><span class="pre">tolerance</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.001</span></span><a class="headerlink" href="#id13" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.OutcropSegments">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.core.domain.task_inputs.</span></span><span class="sig-name descname"><span class="pre">OutcropSegments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unit_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.OutcropSegments" title="Link to this definition"></a></dt>
+<dd><p>Basis: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Detached intersection segments for a single outcrop feature.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.OutcropSegments.unit_name">
+<span class="sig-name descname"><span class="pre">unit_name</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.OutcropSegments.unit_name" title="Link to this definition"></a></dt>
+<dd><p>Geological unit name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.OutcropSegments.attributes">
+<span class="sig-name descname"><span class="pre">attributes</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.OutcropSegments.attributes" title="Link to this definition"></a></dt>
+<dd><p>Original feature attributes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sec_interp.core.domain.task_inputs.OutcropSegments.segments">
+<span class="sig-name descname"><span class="pre">segments</span></span><a class="headerlink" href="#sec_interp.core.domain.task_inputs.OutcropSegments.segments" title="Link to this definition"></a></dt>
+<dd><p>List of <code class="docutils literal notranslate"><span class="pre">(dist_start,</span> <span class="pre">dist_end,</span> <span class="pre">wkt)</span></code> tuples, one per
+intersection segment along the section line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[tuple[float, float, str]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id14">
+<span class="sig-name descname"><span class="pre">attributes</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id14" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id15">
+<span class="sig-name descname"><span class="pre">segments</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id15" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="id16">
-<span class="sig-name descname"><span class="pre">crs_authid</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id16" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id17">
-<span class="sig-name descname"><span class="pre">line_geometry_wkt</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id17" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id18">
-<span class="sig-name descname"><span class="pre">line_start_x</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id18" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id19">
-<span class="sig-name descname"><span class="pre">line_start_y</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id19" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id20">
-<span class="sig-name descname"><span class="pre">master_grid_dists</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id20" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id21">
-<span class="sig-name descname"><span class="pre">master_profile_data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id21" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id22">
-<span class="sig-name descname"><span class="pre">outcrop_data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#id22" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id23">
-<span class="sig-name descname"><span class="pre">outcrop_name_field</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id23" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id24">
-<span class="sig-name descname"><span class="pre">tolerance</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.001</span></span><a class="headerlink" href="#id24" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">unit_name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#id16" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

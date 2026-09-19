@@ -1,0 +1,239 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="pl" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sec_interp.gui.adapters package &mdash; SecInterp 3.8.0 - dokumentacja</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=55350ad0"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/translations.js?v=2827c288"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Indeks" href="genindex.html" />
+    <link rel="search" title="Szukaj" href="search.html" />
+    <link rel="next" title="sec_interp.gui.adapters.drillhole_extractor module" href="sec_interp.gui.adapters.drillhole_extractor.html" />
+    <link rel="prev" title="sec_interp.gui package" href="sec_interp.gui.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            SecInterp
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Szukaj" aria-label="Szukaj" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="USER_GUIDE.html">Podręcznik użytkownika SecInterp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Core Component Distinction Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE_EN.html">Core Components Distinction Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">sec_interp</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="sec_interp.html">sec_interp package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.html#sec_interp.classFactory"><code class="docutils literal notranslate"><span class="pre">classFactory()</span></code></a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="sec_interp.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.html">sec_interp.core package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.html">sec_interp.exporters package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="sec_interp.gui.html">sec_interp.gui package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.resources.html">sec_interp.resources package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Project Archive</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Phase Closure - SecInterp v2.7.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.8.0.html">Cierre de Fase - SecInterp v2.8.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.9.0.html">Phase Closure - SecInterp v2.9.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase_closure_v3.0.0.html">Cierre de Fase - SecInterp v3.0.0</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SecInterp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">sec_interp</a></li>
+          <li class="breadcrumb-item"><a href="sec_interp.html">sec_interp package</a></li>
+          <li class="breadcrumb-item"><a href="sec_interp.gui.html">sec_interp.gui package</a></li>
+      <li class="breadcrumb-item active">sec_interp.gui.adapters package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/sec_interp.gui.adapters.rst.txt" rel="nofollow"> Zobacz źródło strony</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-sec_interp.gui.adapters">
+<span id="sec-interp-gui-adapters-package"></span><h1>sec_interp.gui.adapters package<a class="headerlink" href="#module-sec_interp.gui.adapters" title="Link to this heading"></a></h1>
+<p>GUI adapters (Extract phase).</p>
+<p>Adapters bridge the QGIS object world and the QGIS-agnostic core layer.
+They perform the „Extract” step of the Extract-then-Compute pattern: resolving
+layers, reading features, transforming CRS, and buffering — everything that
+needs live QGIS objects — so the core never has to.</p>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.adapters.drillhole_extractor.html">sec_interp.gui.adapters.drillhole_extractor module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.drillhole_extractor.html#sec_interp.gui.adapters.drillhole_extractor.DrillholeExtractor"><code class="docutils literal notranslate"><span class="pre">DrillholeExtractor</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.drillhole_extractor.html#sec_interp.gui.adapters.drillhole_extractor.DrillholeExtractor.__init__"><code class="docutils literal notranslate"><span class="pre">DrillholeExtractor.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.drillhole_extractor.html#sec_interp.gui.adapters.drillhole_extractor.DrillholeExtractor.extract_context"><code class="docutils literal notranslate"><span class="pre">DrillholeExtractor.extract_context()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.drillhole_extractor.html#sec_interp.gui.adapters.drillhole_extractor.DrillholeExtractor.tr"><code class="docutils literal notranslate"><span class="pre">DrillholeExtractor.tr()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.adapters.feature_fetcher.html">sec_interp.gui.adapters.feature_fetcher module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.feature_fetcher.html#sec_interp.gui.adapters.feature_fetcher.DataFetcher"><code class="docutils literal notranslate"><span class="pre">DataFetcher</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.feature_fetcher.html#sec_interp.gui.adapters.feature_fetcher.DataFetcher.fetch_bulk_data"><code class="docutils literal notranslate"><span class="pre">DataFetcher.fetch_bulk_data()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.adapters.geology_extractor.html">sec_interp.gui.adapters.geology_extractor module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geology_extractor.html#sec_interp.gui.adapters.geology_extractor.GeologyExtractor"><code class="docutils literal notranslate"><span class="pre">GeologyExtractor</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.geology_extractor.html#sec_interp.gui.adapters.geology_extractor.GeologyExtractor.extract_context"><code class="docutils literal notranslate"><span class="pre">GeologyExtractor.extract_context()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.geology_extractor.html#sec_interp.gui.adapters.geology_extractor.GeologyExtractor.tr"><code class="docutils literal notranslate"><span class="pre">GeologyExtractor.tr()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html">sec_interp.gui.adapters.geometry module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.calculate_segment_range"><code class="docutils literal notranslate"><span class="pre">calculate_segment_range()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.create_distance_area"><code class="docutils literal notranslate"><span class="pre">create_distance_area()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.densify_line_by_interval"><code class="docutils literal notranslate"><span class="pre">densify_line_by_interval()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.extract_all_vertices"><code class="docutils literal notranslate"><span class="pre">extract_all_vertices()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.extract_lines_from_geometry"><code class="docutils literal notranslate"><span class="pre">extract_lines_from_geometry()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.get_line_vertices"><code class="docutils literal notranslate"><span class="pre">get_line_vertices()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.line_length"><code class="docutils literal notranslate"><span class="pre">line_length()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.prepare_profile_context"><code class="docutils literal notranslate"><span class="pre">prepare_profile_context()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.sample_elevation_along_line"><code class="docutils literal notranslate"><span class="pre">sample_elevation_along_line()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.sample_point_elevation"><code class="docutils literal notranslate"><span class="pre">sample_point_elevation()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.adapters.layer_resolver.html">sec_interp.gui.adapters.layer_resolver module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.layer_resolver.html#sec_interp.gui.adapters.layer_resolver.LayerResolver"><code class="docutils literal notranslate"><span class="pre">LayerResolver</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.layer_resolver.html#sec_interp.gui.adapters.layer_resolver.LayerResolver.clear_cache"><code class="docutils literal notranslate"><span class="pre">LayerResolver.clear_cache()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.layer_resolver.html#sec_interp.gui.adapters.layer_resolver.LayerResolver.invalidate"><code class="docutils literal notranslate"><span class="pre">LayerResolver.invalidate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.layer_resolver.html#sec_interp.gui.adapters.layer_resolver.LayerResolver.resolve"><code class="docutils literal notranslate"><span class="pre">LayerResolver.resolve()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.layer_resolver.html#sec_interp.gui.adapters.layer_resolver.resolve_layer"><code class="docutils literal notranslate"><span class="pre">resolve_layer()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.adapters.profile_extractor.html">sec_interp.gui.adapters.profile_extractor module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.profile_extractor.html#sec_interp.gui.adapters.profile_extractor.ProfileExtractor"><code class="docutils literal notranslate"><span class="pre">ProfileExtractor</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.profile_extractor.html#sec_interp.gui.adapters.profile_extractor.ProfileExtractor.calculate_lod_interval"><code class="docutils literal notranslate"><span class="pre">ProfileExtractor.calculate_lod_interval()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.profile_extractor.html#sec_interp.gui.adapters.profile_extractor.ProfileExtractor.extract_profile"><code class="docutils literal notranslate"><span class="pre">ProfileExtractor.extract_profile()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.profile_extractor.html#sec_interp.gui.adapters.profile_extractor.ProfileExtractor.tr"><code class="docutils literal notranslate"><span class="pre">ProfileExtractor.tr()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.adapters.structure_extractor.html">sec_interp.gui.adapters.structure_extractor module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.structure_extractor.html#sec_interp.gui.adapters.structure_extractor.SectionContext"><code class="docutils literal notranslate"><span class="pre">SectionContext</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.structure_extractor.html#sec_interp.gui.adapters.structure_extractor.SectionContext.line_points"><code class="docutils literal notranslate"><span class="pre">SectionContext.line_points</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.structure_extractor.html#sec_interp.gui.adapters.structure_extractor.SectionContext.line_start"><code class="docutils literal notranslate"><span class="pre">SectionContext.line_start</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.structure_extractor.html#sec_interp.gui.adapters.structure_extractor.SectionContext.line_azimuth"><code class="docutils literal notranslate"><span class="pre">SectionContext.line_azimuth</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.structure_extractor.html#sec_interp.gui.adapters.structure_extractor.SectionContext.structures"><code class="docutils literal notranslate"><span class="pre">SectionContext.structures</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.structure_extractor.html#id0"><code class="docutils literal notranslate"><span class="pre">SectionContext.line_azimuth</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.structure_extractor.html#id1"><code class="docutils literal notranslate"><span class="pre">SectionContext.line_points</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.structure_extractor.html#id2"><code class="docutils literal notranslate"><span class="pre">SectionContext.line_start</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.structure_extractor.html#id3"><code class="docutils literal notranslate"><span class="pre">SectionContext.structures</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.structure_extractor.html#sec_interp.gui.adapters.structure_extractor.StructureExtractor"><code class="docutils literal notranslate"><span class="pre">StructureExtractor</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.structure_extractor.html#sec_interp.gui.adapters.structure_extractor.StructureExtractor.detach_structures"><code class="docutils literal notranslate"><span class="pre">StructureExtractor.detach_structures()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.structure_extractor.html#sec_interp.gui.adapters.structure_extractor.StructureExtractor.extract_line"><code class="docutils literal notranslate"><span class="pre">StructureExtractor.extract_line()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.structure_extractor.html#sec_interp.gui.adapters.structure_extractor.StructureExtractor.extract_section_and_structures"><code class="docutils literal notranslate"><span class="pre">StructureExtractor.extract_section_and_structures()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.structure_extractor.html#sec_interp.gui.adapters.structure_extractor.StructureExtractor.sample_elevation"><code class="docutils literal notranslate"><span class="pre">StructureExtractor.sample_elevation()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.adapters.validation_extractor.html">sec_interp.gui.adapters.validation_extractor module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.validation_extractor.html#sec_interp.gui.adapters.validation_extractor.build_validation_params"><code class="docutils literal notranslate"><span class="pre">build_validation_params()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.validation_extractor.html#sec_interp.gui.adapters.validation_extractor.extract_layer_metadata"><code class="docutils literal notranslate"><span class="pre">extract_layer_metadata()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.validation_extractor.html#sec_interp.gui.adapters.validation_extractor.extract_raster_metadata"><code class="docutils literal notranslate"><span class="pre">extract_raster_metadata()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.validation_extractor.html#sec_interp.gui.adapters.validation_extractor.extract_vector_metadata"><code class="docutils literal notranslate"><span class="pre">extract_vector_metadata()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.validation_extractor.html#sec_interp.gui.adapters.validation_extractor.resolve_layer_metadata"><code class="docutils literal notranslate"><span class="pre">resolve_layer_metadata()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sec_interp.gui.html" class="btn btn-neutral float-left" title="sec_interp.gui package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Poprzedni</a>
+        <a href="sec_interp.gui.adapters.drillhole_extractor.html" class="btn btn-neutral float-right" title="sec_interp.gui.adapters.drillhole_extractor module" accesskey="n" rel="next">Następny <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Prawa zastrzeżone 2026, Juan M Bernales.</p>
+  </div>
+
+  Zbudowano w <a href="https://www.sphinx-doc.org/">Sphinx</a> używając
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    dostarczone przez <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

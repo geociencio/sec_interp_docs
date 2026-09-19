@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp.core.utils package &mdash; SecInterp 3.4.0 Dokumentation</title>
+  <title>sec_interp.core.utils package &mdash; SecInterp 3.8.0 Dokumentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=cd9cbbda"></script>
+      <script src="_static/documentation_options.js?v=e9f0cab5"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/translations.js?v=9bf55d28"></script>
@@ -194,39 +194,16 @@ tangential approximation based on survey readings (depth, azimuth, dip).</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="sec_interp.core.utils.calculate_line_azimuth">
-<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">calculate_line_azimuth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line_geom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsGeometry</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#sec_interp.core.utils.calculate_line_azimuth" title="Link to this definition"></a></dt>
-<dd><p>Calculate the azimuth (compass bearing) of a line geometry.</p>
-<p>Calculates the azimuth based on the first two vertices of the line.
+<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">calculate_line_azimuth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#sec_interp.core.utils.calculate_line_azimuth" title="Link to this definition"></a></dt>
+<dd><p>Calculate the azimuth (compass bearing) of a line.</p>
+<p>Calculates the azimuth based on the first two points of the line.
 Returns 0 for points or single-vertex lines.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameter<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>line_geom</strong> – The QGIS line geometry.</p>
+<dd class="field-odd"><p><strong>points</strong> – List of (x, y) tuples defining the line.</p>
 </dd>
 <dt class="field-even">Rückgabe<span class="colon">:</span></dt>
 <dd class="field-even"><p>Azimuth in degrees (0-360).</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="sec_interp.core.utils.calculate_step_size">
-<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">calculate_step_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsGeometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raster_lyr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#sec_interp.core.utils.calculate_step_size" title="Link to this definition"></a></dt>
-<dd><p>Calculate step size based on slope and raster resolution.</p>
-<div class="deprecated">
-<p><span class="versionmodified deprecated">Veraltet ab Version Use: </span>densify_line_by_interval() instead for better precision and simpler code.
-This function is kept for backward compatibility but may be removed in future versions.</p>
-</div>
-<p>Ensures that sampling occurs at approximately one pixel intervals,
-accounting for the slope of the line relative to the raster grid.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameter<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>geom</strong> – The geometry to sample along.</p></li>
-<li><p><strong>raster_lyr</strong> – The raster layer being sampled.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Rückgabe<span class="colon">:</span></dt>
-<dd class="field-even"><p>Calculated step size in map units.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -242,25 +219,6 @@ accounting for the slope of the line relative to the raster grid.</p>
 </dd>
 <dt class="field-even">Rückgabe<span class="colon">:</span></dt>
 <dd class="field-even"><p>The azimuth in degrees (0-360), or None if invalid.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="sec_interp.core.utils.create_buffer_geometry">
-<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">create_buffer_geometry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsGeometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsCoordinateReferenceSystem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qgis.core.QgsGeometry</span></span></span><a class="headerlink" href="#sec_interp.core.utils.create_buffer_geometry" title="Link to this definition"></a></dt>
-<dd><p>Create a buffer around a geometry.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameter<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>geometry</strong> – Input geometry.</p></li>
-<li><p><strong>crs</strong> – Coordinate Reference System of the geometry.</p></li>
-<li><p><strong>distance</strong> – Buffer distance in layer units.</p></li>
-<li><p><strong>segments</strong> – Number of segments for the buffer approximation.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Rückgabe<span class="colon">:</span></dt>
-<dd class="field-even"><p>The buffered geometry.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -288,62 +246,9 @@ to pixel coordinates (x, y) based on the provided view dimensions.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="sec_interp.core.utils.create_distance_area">
-<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">create_distance_area</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsCoordinateReferenceSystem</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qgis.core.QgsDistanceArea</span></span></span><a class="headerlink" href="#sec_interp.core.utils.create_distance_area" title="Link to this definition"></a></dt>
-<dd><p>Create and configure a QgsDistanceArea object.</p>
-<p>Configures the distance area with the provided CRS, project transform context,
-and associated ellipsoid for geodesic calculations.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameter<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>crs</strong> – The Coordinate Reference System to use.</p>
-</dd>
-<dt class="field-even">Rückgabe<span class="colon">:</span></dt>
-<dd class="field-even"><p>The configured distance calculation object.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="sec_interp.core.utils.create_memory_layer">
-<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">create_memory_layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsCoordinateReferenceSystem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">qgis.core.QgsField</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qgis.core.QgsVectorLayer</span></span></span><a class="headerlink" href="#sec_interp.core.utils.create_memory_layer" title="Link to this definition"></a></dt>
-<dd><p>Create a temporary memory (scratch) layer.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameter<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>layer_name</strong> – Name for the layer.</p></li>
-<li><p><strong>layer_type</strong> – QGIS geometry type string (e.g., ‚Point‘, ‚LineString‘).</p></li>
-<li><p><strong>crs</strong> – Coordinate reference system.</p></li>
-<li><p><strong>fields</strong> – List of fields for the layer.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Rückgabe<span class="colon">:</span></dt>
-<dd class="field-even"><p>The created memory layer.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="sec_interp.core.utils.create_shapefile_writer">
 <span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">create_shapefile_writer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qgis.core.QgsVectorFileWriter</span></span></span><a class="headerlink" href="#sec_interp.core.utils.create_shapefile_writer" title="Link to this definition"></a></dt>
 <dd><p>Delegate to create_vector_writer (deprecated shim).</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="sec_interp.core.utils.densify_line_by_interval">
-<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">densify_line_by_interval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsGeometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qgis.core.QgsGeometry</span></span></span><a class="headerlink" href="#sec_interp.core.utils.densify_line_by_interval" title="Link to this definition"></a></dt>
-<dd><p>Densify a line geometry by a specific distance interval.</p>
-<p>Adds intermediate vertices to ensure segments are no longer than the interval.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameter<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>geometry</strong> – Line geometry to densify.</p></li>
-<li><p><strong>interval</strong> – Maximum distance between vertices (in CRS units).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Rückgabe<span class="colon">:</span></dt>
-<dd class="field-even"><p>The densified QgsGeometry.</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -358,56 +263,6 @@ threading issues with QVariant objects in QGIS 4/Qt6.</p>
 </dd>
 <dt class="field-even">Rückgabe<span class="colon">:</span></dt>
 <dd class="field-even"><p>A dictionary mapping field names to sanitized attribute values.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="sec_interp.core.utils.filter_features_by_buffer">
-<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">filter_features_by_buffer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features_layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QgsVectorLayer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer_geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QgsGeometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer_crs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QgsCoordinateReferenceSystem</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">QgsFeature</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.core.utils.filter_features_by_buffer" title="Link to this definition"></a></dt>
-<dd><p>Filter features that intersect with buffer using spatial index.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameter<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>features_layer</strong> – Layer containing features to filter.</p></li>
-<li><p><strong>buffer_geometry</strong> – Buffer geometry to use for spatial filter.</p></li>
-<li><p><strong>buffer_crs</strong> – CRS of the buffer geometry (optional).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Rückgabe<span class="colon">:</span></dt>
-<dd class="field-even"><p>List of QgsFeature objects that intersect the query buffer.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="sec_interp.core.utils.get_line_start_point">
-<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">get_line_start_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsGeometry</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qgis.core.QgsPointXY</span></span></span><a class="headerlink" href="#sec_interp.core.utils.get_line_start_point" title="Link to this definition"></a></dt>
-<dd><p>Get the start point of a line geometry.</p>
-<p>Handles both singlepart and multipart line geometries.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameter<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>geometry</strong> – The line geometry.</p>
-</dd>
-<dt class="field-even">Rückgabe<span class="colon">:</span></dt>
-<dd class="field-even"><p>The first vertex of the first part of the geometry.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="sec_interp.core.utils.get_line_vertices">
-<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">get_line_vertices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsGeometry</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">qgis.core.QgsPointXY</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.core.utils.get_line_vertices" title="Link to this definition"></a></dt>
-<dd><p>Extract vertices specifically from a line or multiline geometry.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameter<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>geometry</strong> – A QGIS geometry of type <cite>LineGeometry</cite>.</p>
-</dd>
-<dt class="field-even">Rückgabe<span class="colon">:</span></dt>
-<dd class="field-even"><p>A flat list of vertices.</p>
-</dd>
-<dt class="field-odd">Verursacht<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – If the geometry is null, not a line, or contains no vertices.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -484,87 +339,21 @@ Also handles combined strike/dip strings by splitting them.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="sec_interp.core.utils.prepare_profile_context">
-<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">prepare_profile_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line_lyr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsVectorLayer</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">qgis.core.QgsGeometry</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">qgis.core.QgsPointXY</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">qgis.core.QgsDistanceArea</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.core.utils.prepare_profile_context" title="Link to this definition"></a></dt>
-<dd><p>Prepare a common context for profile calculation operations.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameter<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>line_lyr</strong> – The cross-section line vector layer.</p>
-</dd>
-<dt class="field-even">Rückgabe<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p>line_geom: The geometry of the section line.</p></li>
-<li><p>line_start: The starting point of the line.</p></li>
-<li><p>distance_area: Fully configured geodesic distance object.</p></li>
-</ul>
-</p>
-</dd>
-<dt class="field-odd">Rückgabetyp<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A tuple containing</p>
-</dd>
-<dt class="field-even">Verursacht<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ValueError</strong> – If the input layer is empty or has invalid geometry.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="sec_interp.core.utils.project_trajectory_to_section">
-<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">project_trajectory_to_section</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajectory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_geom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsGeometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsDistanceArea</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.core.utils.project_trajectory_to_section" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">project_trajectory_to_section</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajectory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.core.utils.project_trajectory_to_section" title="Link to this definition"></a></dt>
 <dd><p>Project drillhole trajectory points onto the section line.</p>
 <p>Calculates the 2D projection (distance along section) and the offset
-(distance from section) for each point in a 3D trajectory.</p>
+(distance from section) for each point in a 3D trajectory using planar
+math.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameter<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>trajectory</strong> – List of 3D trajectory points (depth, x, y, z, …).</p></li>
-<li><p><strong>line_geom</strong> – Section line geometry.</p></li>
-<li><p><strong>line_start</strong> – Reference start point for distance calculation.</p></li>
-<li><p><strong>distance_area</strong> – Distance calculation utility.</p></li>
+<li><p><strong>line_points</strong> – Section line vertices as <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code> tuples.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Rückgabe<span class="colon">:</span></dt>
 <dd class="field-even"><p>List of (depth, x, y, z, dist_along, offset, proj_x, proj_y) tuples.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="sec_interp.core.utils.sample_elevation_along_line">
-<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">sample_elevation_along_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QgsGeometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raster_layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QgsRasterLayer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">band_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QgsDistanceArea</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QgsPointXY</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">QgsPointXY</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.core.utils.sample_elevation_along_line" title="Link to this definition"></a></dt>
-<dd><p>Sample elevation values along a line geometry from a raster layer.</p>
-<p>Densifies the line at raster resolution and samples the elevation at each vertex.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameter<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>geometry</strong> – The line geometry to sample along.</p></li>
-<li><p><strong>raster_layer</strong> – The source DEM raster layer.</p></li>
-<li><p><strong>band_number</strong> – The raster band index to sample.</p></li>
-<li><p><strong>distance_area</strong> – Object for geodesic distance calculations.</p></li>
-<li><p><strong>reference_point</strong> – Optional start point for distance measurements.</p></li>
-<li><p><strong>interval</strong> – Optional sampling interval. If None, uses raster resolution.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Rückgabe<span class="colon">:</span></dt>
-<dd class="field-even"><p>A list of QgsPointXY objects where x is horizontal distance and y is elevation.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="sec_interp.core.utils.sample_point_elevation">
-<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">sample_point_elevation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raster_layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsRasterLayer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsPointXY</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">band_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#sec_interp.core.utils.sample_point_elevation" title="Link to this definition"></a></dt>
-<dd><p>Sample elevation from a raster layer at a specific 2D coordinate.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameter<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>raster_layer</strong> – The DEM raster layer.</p></li>
-<li><p><strong>point</strong> – The coordinate point (X, Y) to sample.</p></li>
-<li><p><strong>band_number</strong> – The raster band index (default 1).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Rückgabe<span class="colon">:</span></dt>
-<dd class="field-even"><p>The sampled elevation value (Z) or 0.0 if the point is out of bounds.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -575,18 +364,9 @@ Also handles combined strike/dip strings by splitting them.</p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.html">sec_interp.core.utils.geometry_utils package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.html#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.extraction.html">sec_interp.core.utils.geometry_utils.extraction module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.extraction.html#sec_interp.core.utils.geometry_utils.extraction.extract_all_vertices"><code class="docutils literal notranslate"><span class="pre">extract_all_vertices()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.extraction.html#sec_interp.core.utils.geometry_utils.extraction.extract_lines_from_geometry"><code class="docutils literal notranslate"><span class="pre">extract_lines_from_geometry()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.extraction.html#sec_interp.core.utils.geometry_utils.extraction.get_line_vertices"><code class="docutils literal notranslate"><span class="pre">get_line_vertices()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.filtering.html">sec_interp.core.utils.geometry_utils.filtering module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.filtering.html#sec_interp.core.utils.geometry_utils.filtering.filter_features_by_buffer"><code class="docutils literal notranslate"><span class="pre">filter_features_by_buffer()</span></code></a></li>
-</ul>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.measurement.html">sec_interp.core.utils.geometry_utils.measurement module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.measurement.html#sec_interp.core.utils.geometry_utils.measurement.calculate_polyline_metrics"><code class="docutils literal notranslate"><span class="pre">calculate_polyline_metrics()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.measurement.html#sec_interp.core.utils.geometry_utils.measurement.project_point_onto_polyline"><code class="docutils literal notranslate"><span class="pre">project_point_onto_polyline()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.optimization.html">sec_interp.core.utils.geometry_utils.optimization module</a><ul>
@@ -594,12 +374,8 @@ Also handles combined strike/dip strings by splitting them.</p>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.processing.html">sec_interp.core.utils.geometry_utils.processing module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.processing.html#sec_interp.core.utils.geometry_utils.processing.calculate_segment_range"><code class="docutils literal notranslate"><span class="pre">calculate_segment_range()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.processing.html#sec_interp.core.utils.geometry_utils.processing.create_buffer_geometry"><code class="docutils literal notranslate"><span class="pre">create_buffer_geometry()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.processing.html#sec_interp.core.utils.geometry_utils.processing.create_memory_layer"><code class="docutils literal notranslate"><span class="pre">create_memory_layer()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.processing.html#sec_interp.core.utils.geometry_utils.processing.densify_line_by_interval"><code class="docutils literal notranslate"><span class="pre">densify_line_by_interval()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.processing.html#sec_interp.core.utils.geometry_utils.processing.densify_line_points"><code class="docutils literal notranslate"><span class="pre">densify_line_points()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.processing.html#sec_interp.core.utils.geometry_utils.processing.interpolate_segment_points"><code class="docutils literal notranslate"><span class="pre">interpolate_segment_points()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.processing.html#sec_interp.core.utils.geometry_utils.processing.run_geometry_operation"><code class="docutils literal notranslate"><span class="pre">run_geometry_operation()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -621,16 +397,6 @@ Also handles combined strike/dip strings by splitting them.</p>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.core.utils.geology.html">sec_interp.core.utils.geology module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.geology.html#sec_interp.core.utils.geology.calculate_apparent_dip"><code class="docutils literal notranslate"><span class="pre">calculate_apparent_dip()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="sec_interp.core.utils.geometry.html">sec_interp.core.utils.geometry module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.geometry.html#sec_interp.core.utils.geometry.create_buffer_geometry"><code class="docutils literal notranslate"><span class="pre">create_buffer_geometry()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.geometry.html#sec_interp.core.utils.geometry.create_memory_layer"><code class="docutils literal notranslate"><span class="pre">create_memory_layer()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.geometry.html#sec_interp.core.utils.geometry.densify_line_by_interval"><code class="docutils literal notranslate"><span class="pre">densify_line_by_interval()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.geometry.html#sec_interp.core.utils.geometry.extract_all_vertices"><code class="docutils literal notranslate"><span class="pre">extract_all_vertices()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.geometry.html#sec_interp.core.utils.geometry.filter_features_by_buffer"><code class="docutils literal notranslate"><span class="pre">filter_features_by_buffer()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.geometry.html#sec_interp.core.utils.geometry.get_line_vertices"><code class="docutils literal notranslate"><span class="pre">get_line_vertices()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.geometry.html#sec_interp.core.utils.geometry.run_geometry_operation"><code class="docutils literal notranslate"><span class="pre">run_geometry_operation()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.core.utils.i18n.html">sec_interp.core.utils.i18n module</a><ul>
@@ -657,33 +423,10 @@ Also handles combined strike/dip strings by splitting them.</p>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.parsing.html#sec_interp.core.utils.parsing.parse_strike"><code class="docutils literal notranslate"><span class="pre">parse_strike()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="sec_interp.core.utils.qgis.html">sec_interp.core.utils.qgis module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.qgis.html#sec_interp.core.utils.qgis.LayerResolver"><code class="docutils literal notranslate"><span class="pre">LayerResolver</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.utils.qgis.html#sec_interp.core.utils.qgis.LayerResolver.clear_cache"><code class="docutils literal notranslate"><span class="pre">LayerResolver.clear_cache()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.utils.qgis.html#sec_interp.core.utils.qgis.LayerResolver.invalidate"><code class="docutils literal notranslate"><span class="pre">LayerResolver.invalidate()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.utils.qgis.html#sec_interp.core.utils.qgis.LayerResolver.resolve"><code class="docutils literal notranslate"><span class="pre">LayerResolver.resolve()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.qgis.html#sec_interp.core.utils.qgis.resolve_layer"><code class="docutils literal notranslate"><span class="pre">resolve_layer()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="sec_interp.core.utils.qt6_compat.html">sec_interp.core.utils.qt6_compat module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.qt6_compat.html#sec_interp.core.utils.qt6_compat.apply_qt6_patches"><code class="docutils literal notranslate"><span class="pre">apply_qt6_patches()</span></code></a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.core.utils.rendering.html">sec_interp.core.utils.rendering module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.rendering.html#sec_interp.core.utils.rendering.calculate_bounds"><code class="docutils literal notranslate"><span class="pre">calculate_bounds()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.rendering.html#sec_interp.core.utils.rendering.calculate_interval"><code class="docutils literal notranslate"><span class="pre">calculate_interval()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.rendering.html#sec_interp.core.utils.rendering.create_coordinate_transform"><code class="docutils literal notranslate"><span class="pre">create_coordinate_transform()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="sec_interp.core.utils.resource_manager.html">sec_interp.core.utils.resource_manager module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.resource_manager.html#sec_interp.core.utils.resource_manager.ResourceManager"><code class="docutils literal notranslate"><span class="pre">ResourceManager</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.utils.resource_manager.html#sec_interp.core.utils.resource_manager.ResourceManager.cleanup_layer"><code class="docutils literal notranslate"><span class="pre">ResourceManager.cleanup_layer()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.resource_manager.html#sec_interp.core.utils.resource_manager.temporary_file"><code class="docutils literal notranslate"><span class="pre">temporary_file()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.resource_manager.html#sec_interp.core.utils.resource_manager.temporary_memory_layer"><code class="docutils literal notranslate"><span class="pre">temporary_memory_layer()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.core.utils.safe_loader.html">sec_interp.core.utils.safe_loader module</a><ul>
@@ -697,16 +440,10 @@ Also handles combined strike/dip strings by splitting them.</p>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.core.utils.sampling.html">sec_interp.core.utils.sampling module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.sampling.html#sec_interp.core.utils.sampling.interpolate_elevation"><code class="docutils literal notranslate"><span class="pre">interpolate_elevation()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.sampling.html#sec_interp.core.utils.sampling.prepare_profile_context"><code class="docutils literal notranslate"><span class="pre">prepare_profile_context()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.sampling.html#sec_interp.core.utils.sampling.sample_elevation_along_line"><code class="docutils literal notranslate"><span class="pre">sample_elevation_along_line()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.sampling.html#sec_interp.core.utils.sampling.sample_point_elevation"><code class="docutils literal notranslate"><span class="pre">sample_point_elevation()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.core.utils.spatial.html">sec_interp.core.utils.spatial module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.spatial.html#sec_interp.core.utils.spatial.calculate_line_azimuth"><code class="docutils literal notranslate"><span class="pre">calculate_line_azimuth()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.spatial.html#sec_interp.core.utils.spatial.calculate_step_size"><code class="docutils literal notranslate"><span class="pre">calculate_step_size()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.spatial.html#sec_interp.core.utils.spatial.create_distance_area"><code class="docutils literal notranslate"><span class="pre">create_distance_area()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.spatial.html#sec_interp.core.utils.spatial.get_line_start_point"><code class="docutils literal notranslate"><span class="pre">get_line_start_point()</span></code></a></li>
 </ul>
 </li>
 </ul>

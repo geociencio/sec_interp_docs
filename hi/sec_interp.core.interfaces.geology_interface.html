@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp.core.interfaces.geology_interface module &mdash; SecInterp 3.4.0 दिग्दर्शिका</title>
+  <title>sec_interp.core.interfaces.geology_interface module &mdash; SecInterp 3.8.0 दिग्दर्शिका</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=79817202"></script>
+      <script src="_static/documentation_options.js?v=5ded036d"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/translations.js?v=4b22bba3"></script>
@@ -114,17 +114,14 @@
 <dd><p>आधार: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
 <p>Abstract interface for the Geological Profiling Service.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="sec_interp.core.interfaces.geology_interface.IGeologyService.generate_geological_profile">
-<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">generate_geological_profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raster_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outcrop_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outcrop_name_field</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">band_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#sec_interp.core.interfaces.geology_interface.IGeologyService.generate_geological_profile" title="Link to this definition"></a></dt>
-<dd><p>Generate geological profile data using detached structures.</p>
+<dt class="sig sig-object py" id="sec_interp.core.interfaces.geology_interface.IGeologyService.build_segments">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">build_segments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.core.domain.task_inputs.html#sec_interp.core.domain.task_inputs.GeologyContext" title="sec_interp.core.domain.task_inputs.GeologyContext"><span class="pre">GeologyContext</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">feedback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#sec_interp.core.interfaces.geology_interface.IGeologyService.build_segments" title="Link to this definition"></a></dt>
+<dd><p>Build geological segments from a detached context.</p>
 <dl class="field-list simple">
 <dt class="field-odd">मापदण्ड<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>line_data</strong> -- Section line orientation data.</p></li>
-<li><p><strong>raster_data</strong> -- DEM elevation data.</p></li>
-<li><p><strong>outcrop_data</strong> -- List of detached outcrop entities.</p></li>
-<li><p><strong>outcrop_name_field</strong> -- Field name for unit names.</p></li>
-<li><p><strong>band_number</strong> -- Raster band to use.</p></li>
+<li><p><strong>context</strong> -- Fully-detached geology data (Extract output).</p></li>
+<li><p><strong>feedback</strong> -- Optional feedback object for progress/cancellation.</p></li>
 </ul>
 </dd>
 <dt class="field-even">प्रदत्त <span class="colon">:</span></dt>
