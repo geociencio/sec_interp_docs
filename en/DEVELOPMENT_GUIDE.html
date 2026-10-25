@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SecInterp - Development Guide &mdash; SecInterp 3.8.0 documentation</title>
+  <title>SecInterp - Development Guide &mdash; SecInterp 3.11.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=948f11bf"></script>
+      <script src="_static/documentation_options.js?v=8905d4f5"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -79,14 +79,14 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
-<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Core Component Distinction Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Guía de Distinción de Componentes “Core”</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE_EN.html">Core Components Distinction Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">sec_interp</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project Archive</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Phase Closure - SecInterp v2.7.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.8.0.html">Cierre de Fase - SecInterp v2.8.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.9.0.html">Phase Closure - SecInterp v2.9.0</a></li>
@@ -119,6 +119,11 @@
              
   <section id="secinterp-development-guide">
 <h1>SecInterp - Development Guide<a class="headerlink" href="#secinterp-development-guide" title="Link to this heading"></a></h1>
+<blockquote>
+<div><p>[!note] Related guide
+A repo-facing companion guide (decoupled architecture + commit workflow) lives in
+<code class="docutils literal notranslate"><span class="pre">docs/docsec/DEVELOPMENT_GUIDE.md</span></code>.</p>
+</div></blockquote>
 <p>Welcome to the <strong>SecInterp</strong> development guide. This document outlines the standards, best practices, and workflows for contributing to the project.</p>
 <hr class="docutils" />
 <section id="technical-stack">
@@ -234,7 +239,7 @@ make<span class="w"> </span>docker-test
 <h3>Docstrings<a class="headerlink" href="#docstrings" title="Link to this heading"></a></h3>
 <p>All public functions and methods MUST have docstrings in <strong>Google Style</strong>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">process_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer</span><span class="p">:</span> <span class="n">QgsVectorLayer</span><span class="p">,</span> <span class="n">factor</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Processes the layer using the specified scaling factor.</span>
 
 <span class="sd">    Args:</span>
@@ -243,26 +248,58 @@ make<span class="w"> </span>docker-test
 
 <span class="sd">    Returns:</span>
 <span class="sd">        A list of processed coordinates or None if invalid.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 </pre></div>
 </div>
 </section>
 <section id="documentation-workflow">
 <h3>Documentation Workflow<a class="headerlink" href="#documentation-workflow" title="Link to this heading"></a></h3>
-<p>The project uses Sphinx to generate documentation. The build process is automated to publish results to a separate GitHub repository (<code class="docutils literal notranslate"><span class="pre">sec_interp_docs</span></code>) which serves as the source for GitHub Pages.</p>
+<p>The project uses <strong>Sphinx</strong> to generate documentation. The build is automated and publishes the result to a separate GitHub repository (<code class="docutils literal notranslate"><span class="pre">sec_interp_docs</span></code>), which serves as the source for GitHub Pages.</p>
 <p><strong>Building and Publishing</strong></p>
-<p>To build the documentation and automatically push changes to the docs repository:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./scripts/build_docs.sh
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make<span class="w"> </span>docs<span class="w">                       </span><span class="c1"># → ./scripts/build_docs.sh</span>
+./scripts/build_docs.sh<span class="w"> </span><span class="o">[</span>DIR<span class="o">]</span><span class="w">   </span><span class="c1"># DIR defaults to ../sec_interp_docs</span>
 </pre></div>
 </div>
-<p>This script will:</p>
+<p>The script performs:</p>
 <ol class="arabic simple">
-<li><p>Build HTML from <code class="docutils literal notranslate"><span class="pre">docs/source</span></code>.</p></li>
-<li><p>Output to <code class="docutils literal notranslate"><span class="pre">../sec_interp_docs</span></code>.</p></li>
-<li><p>Check for changes in the output directory.</p></li>
-<li><p>If changed, commit and push to <code class="docutils literal notranslate"><span class="pre">geociencio/sec_interp_docs</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sphinx-apidoc</span> <span class="pre">-o</span> <span class="pre">docs/source</span> <span class="pre">.</span> <span class="pre">docs/</span> <span class="pre">tests/</span> <span class="pre">scripts/</span> <span class="pre">help/</span> <span class="pre">build/</span> <span class="pre">--force</span> <span class="pre">--separate</span> <span class="pre">--module-first</span></code> — regenerates one autodoc page <strong>per Python module</strong> of the plugin (<code class="docutils literal notranslate"><span class="pre">core/</span></code>, <code class="docutils literal notranslate"><span class="pre">gui/</span></code>, <code class="docutils literal notranslate"><span class="pre">exporters/</span></code>, <code class="docutils literal notranslate"><span class="pre">plugin/</span></code>, <code class="docutils literal notranslate"><span class="pre">resources/</span></code> and the root entry points). It excludes <code class="docutils literal notranslate"><span class="pre">tests/</span></code>, <code class="docutils literal notranslate"><span class="pre">scripts/</span></code>, <code class="docutils literal notranslate"><span class="pre">docs/</span></code>, <code class="docutils literal notranslate"><span class="pre">help/</span></code> and <code class="docutils literal notranslate"><span class="pre">build/</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">scripts/i18n/translate_docs.py</span> <span class="pre">compile</span></code> — compiles the <code class="docutils literal notranslate"><span class="pre">.po</span></code> message catalogs to <code class="docutils literal notranslate"><span class="pre">.mo</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sphinx-build</span></code> — builds HTML for <strong>14 languages</strong> (<code class="docutils literal notranslate"><span class="pre">en</span> <span class="pre">es</span> <span class="pre">fr</span> <span class="pre">pt_BR</span> <span class="pre">de</span> <span class="pre">ru</span> <span class="pre">zh_CN</span> <span class="pre">id</span> <span class="pre">it</span> <span class="pre">pl</span> <span class="pre">nl</span> <span class="pre">fi</span> <span class="pre">hi</span> <span class="pre">ja</span></code>).</p></li>
+<li><p>Copies the HTML to <strong><code class="docutils literal notranslate"><span class="pre">../sec_interp_docs/&lt;lang&gt;/</span></code></strong>.</p></li>
+<li><p>Syncs the offline manual into <code class="docutils literal notranslate"><span class="pre">help/html/&lt;lang&gt;</span></code> (image dedup; search/API/sources stripped).</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">../sec_interp_docs/.git</span></code> exists, commits (<code class="docutils literal notranslate"><span class="pre">docs:</span> <span class="pre">auto-build</span> <span class="pre">from</span> <span class="pre">sec_interp&#64;&lt;hash&gt;</span></code>) and pushes to <code class="docutils literal notranslate"><span class="pre">geociencio/sec_interp_docs</span></code> (<code class="docutils literal notranslate"><span class="pre">main</span></code>).</p></li>
 </ol>
-<p><strong>Note:</strong> You must have write access to the <code class="docutils literal notranslate"><span class="pre">sec_interp_docs</span></code> repository and have <code class="docutils literal notranslate"><span class="pre">../sec_interp_docs</span></code> initialized as a git repo (which is done automatically if you follow setup).</p>
+<p><strong>Output repository</strong></p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Item</p></th>
+<th class="head"><p>Value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Local output</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">../sec_interp_docs</span></code> (<code class="docutils literal notranslate"><span class="pre">/home/jmbernales/qgispluginsdev/sec_interp_docs/</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Remote</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">https://github.com/geociencio/sec_interp_docs.git</span></code> (branch <code class="docutils literal notranslate"><span class="pre">main</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p>GitHub Pages</p></td>
+<td><p>https://geociencio.github.io/sec_interp_docs/</p></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<div><p>[!warning] Side effects</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">docs</span></code> regenerates the <strong>tracked</strong> <code class="docutils literal notranslate"><span class="pre">.rst</span></code> stubs in <code class="docutils literal notranslate"><span class="pre">docs/source/</span></code>, leaving the working tree dirty — review and commit them.</p></li>
+<li><p>Step 6 performs a real <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span></code> to the external docs repo (there is no flag to skip it). To build without publishing, run steps 1–5 manually.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sphinx-apidoc</span> <span class="pre">--force</span></code> does <strong>not</strong> delete stubs for removed modules; delete orphan <code class="docutils literal notranslate"><span class="pre">.rst</span></code> files in <code class="docutils literal notranslate"><span class="pre">docs/source/</span></code> if the build warns about missing modules.</p></li>
+</ul>
+</div></blockquote>
+<blockquote>
+<div><p>[!note] Shell note
+The language loop in the script assumes <code class="docutils literal notranslate"><span class="pre">bash</span></code>. When replicating it in <strong>zsh</strong>, use an array (<code class="docutils literal notranslate"><span class="pre">LOCALES=(en</span> <span class="pre">es</span> <span class="pre">fr</span> <span class="pre">…)</span></code>) or <code class="docutils literal notranslate"><span class="pre">bash</span> <span class="pre">-c</span></code>, since zsh does not word-split a scalar variable.</p>
+</div></blockquote>
 </section>
 <section id="image-assets">
 <h3>Image Assets<a class="headerlink" href="#image-assets" title="Link to this heading"></a></h3>

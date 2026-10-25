@@ -6,21 +6,21 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp.gui.preview_param_hasher module &mdash; documentación de SecInterp - 3.8.0</title>
+  <title>sec_interp.gui.preview_param_hasher module &mdash; documentación de SecInterp - 3.11.0</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=2f1d8df3"></script>
+      <script src="_static/documentation_options.js?v=329748b9"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/translations.js?v=f85f4cfb"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Índice" href="genindex.html" />
     <link rel="search" title="Búsqueda" href="search.html" />
-    <link rel="next" title="sec_interp.gui.preview_renderer module" href="sec_interp.gui.preview_renderer.html" />
+    <link rel="next" title="sec_interp.gui.preview_render_mixin module" href="sec_interp.gui.preview_render_mixin.html" />
     <link rel="prev" title="sec_interp.gui.preview_legend_renderer module" href="sec_interp.gui.preview_legend_renderer.html" /> 
 </head>
 
@@ -49,10 +49,9 @@
 <li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
-<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Core Component Distinction Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Guía de Distinción de Componentes «Core»</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE_EN.html">Core Components Distinction Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">sec_interp</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="sec_interp.html">sec_interp package</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.html#sec_interp.classFactory"><code class="docutils literal notranslate"><span class="pre">classFactory()</span></code></a></li>
@@ -60,6 +59,7 @@
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.html">sec_interp.core package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.html">sec_interp.exporters package</a></li>
 <li class="toctree-l4 current"><a class="reference internal" href="sec_interp.gui.html">sec_interp.gui package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.plugin.html">sec_interp.plugin package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.resources.html">sec_interp.resources package</a></li>
 </ul>
 </li>
@@ -71,6 +71,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project Archive</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Phase Closure - SecInterp v2.7.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.8.0.html">Cierre de Fase - SecInterp v2.8.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.9.0.html">Phase Closure - SecInterp v2.9.0</a></li>
@@ -128,6 +129,28 @@
 
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="sec_interp.gui.preview_param_hasher.assemble_preview_params">
+<span class="sig-prename descclassname"><span class="pre">sec_interp.gui.preview_param_hasher.</span></span><span class="sig-name descname"><span class="pre">assemble_preview_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preview_options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">canvas_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams" title="sec_interp.core.domain.dtos.PreviewParams"><span class="pre">PreviewParams</span></a></span></span><a class="headerlink" href="#sec_interp.gui.preview_param_hasher.assemble_preview_params" title="Link to this definition"></a></dt>
+<dd><p>Assemble PreviewParams from raw dialog values without side effects.</p>
+<p>Pure assembly step shared by input validation and preview-currency checks:
+no <code class="docutils literal notranslate"><span class="pre">validate()</span></code> call, no error dialogs, no layer-notification wiring, and
+no geometry reads (the hasher only uses layer <code class="docutils literal notranslate"><span class="pre">.id()</span></code> values and primitives,
+so this stays cheap enough to run on every UI state refresh).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> – Flattened page values (<code class="docutils literal notranslate"><span class="pre">get_selected_values()</span></code>).</p></li>
+<li><p><strong>preview_options</strong> – Preview widget options (<code class="docutils literal notranslate"><span class="pre">get_preview_options()</span></code>).</p></li>
+<li><p><strong>canvas_width</strong> – Current preview canvas width in pixels.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Devuelve<span class="colon">:</span></dt>
+<dd class="field-even"><p>Unvalidated PreviewParams.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 
@@ -135,7 +158,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
         <a href="sec_interp.gui.preview_legend_renderer.html" class="btn btn-neutral float-left" title="sec_interp.gui.preview_legend_renderer module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
-        <a href="sec_interp.gui.preview_renderer.html" class="btn btn-neutral float-right" title="sec_interp.gui.preview_renderer module" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="sec_interp.gui.preview_render_mixin.html" class="btn btn-neutral float-right" title="sec_interp.gui.preview_render_mixin module" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

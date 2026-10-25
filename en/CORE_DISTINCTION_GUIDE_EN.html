@@ -6,21 +6,21 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Core Components Distinction Guide &mdash; SecInterp 3.8.0 documentation</title>
+  <title>Core Components Distinction Guide &mdash; SecInterp 3.11.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=948f11bf"></script>
+      <script src="_static/documentation_options.js?v=8905d4f5"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="SecInterp - Maintenance &amp; Release Log" href="MAINTENANCE_LOG.html" />
-    <link rel="prev" title="Core Component Distinction Guide" href="CORE_DISTINCTION_GUIDE.html" /> 
+    <link rel="prev" title="Guía de Distinción de Componentes “Core”" href="CORE_DISTINCTION_GUIDE.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -48,7 +48,7 @@
 <li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
-<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Core Component Distinction Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Guía de Distinción de Componentes “Core”</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Core Components Distinction Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#the-fundamental-distinction">⚠️ The Fundamental Distinction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#guidelines-for-developers-and-ai">🧭 Guidelines for Developers and AI</a><ul>
@@ -64,11 +64,11 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">sec_interp</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project Archive</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Phase Closure - SecInterp v2.7.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.8.0.html">Cierre de Fase - SecInterp v2.8.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.9.0.html">Phase Closure - SecInterp v2.9.0</a></li>
@@ -151,7 +151,7 @@
 <ol class="arabic simple">
 <li><p><strong>GUI/Task Interface Layer</strong>: Receives QGIS objects (<code class="docutils literal notranslate"><span class="pre">QgsVectorLayer</span></code>, <code class="docutils literal notranslate"><span class="pre">QgsFeature</span></code>). Extracts what is necessary (WKT geometry, attribute dictionaries).</p></li>
 <li><p><strong>Core Layer</strong>: Receives only the extracted data (strings, dicts, floats). Performs heavy geometric calculations.</p></li>
-<li><p><strong>Result</strong>: The Core returns DTOs (Data Transfer Objects) defined in <code class="docutils literal notranslate"><span class="pre">core/types.py</span></code>. The GUI layer is responsible for converting these back to QGIS layers if necessary.</p></li>
+<li><p><strong>Result</strong>: The Core returns DTOs (Data Transfer Objects) defined in <code class="docutils literal notranslate"><span class="pre">core/domain/</span></code> (<code class="docutils literal notranslate"><span class="pre">dtos.py</span></code>, <code class="docutils literal notranslate"><span class="pre">entities.py</span></code>, <code class="docutils literal notranslate"><span class="pre">task_inputs.py</span></code>). The GUI layer is responsible for converting these back to QGIS layers if necessary.</p></li>
 </ol>
 </section>
 <section id="golden-rules-for-thread-safety">
@@ -188,7 +188,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="CORE_DISTINCTION_GUIDE.html" class="btn btn-neutral float-left" title="Core Component Distinction Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="CORE_DISTINCTION_GUIDE.html" class="btn btn-neutral float-left" title="Guía de Distinción de Componentes “Core”" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="MAINTENANCE_LOG.html" class="btn btn-neutral float-right" title="SecInterp - Maintenance &amp; Release Log" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

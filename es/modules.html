@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp &mdash; documentación de SecInterp - 3.8.0</title>
+  <title>sec_interp &mdash; documentación de SecInterp - 3.11.0</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=2f1d8df3"></script>
+      <script src="_static/documentation_options.js?v=329748b9"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/translations.js?v=f85f4cfb"></script>
@@ -21,7 +21,7 @@
     <link rel="index" title="Índice" href="genindex.html" />
     <link rel="search" title="Búsqueda" href="search.html" />
     <link rel="next" title="sec_interp package" href="sec_interp.html" />
-    <link rel="prev" title="Análisis Técnico Avanzado: SecInterp v2.9.0" href="v2.9.0_technical_analysis.html" /> 
+    <link rel="prev" title="SecInterp - Maintenance &amp; Release Log" href="MAINTENANCE_LOG.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -49,10 +49,9 @@
 <li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
-<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Core Component Distinction Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Guía de Distinción de Componentes «Core»</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE_EN.html">Core Components Distinction Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">sec_interp</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.html">sec_interp package</a></li>
 </ul>
@@ -60,6 +59,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project Archive</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Phase Closure - SecInterp v2.7.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.8.0.html">Cierre de Fase - SecInterp v2.8.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.9.0.html">Phase Closure - SecInterp v2.9.0</a></li>
@@ -121,6 +121,7 @@
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.html#sec_interp.exporters.StructureVectorExporter"><code class="docutils literal notranslate"><span class="pre">StructureVectorExporter</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.html#sec_interp.exporters.VectorExporter"><code class="docutils literal notranslate"><span class="pre">VectorExporter</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.html#sec_interp.exporters.get_exporter"><code class="docutils literal notranslate"><span class="pre">get_exporter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.html#subpackages">Subpackages</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.html#submodules">Submodules</a></li>
 </ul>
 </li>
@@ -129,6 +130,13 @@
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.html#subpackages">Subpackages</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.plugin.html">sec_interp.plugin package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.plugin.html#sec_interp.plugin.InputValidationMixin"><code class="docutils literal notranslate"><span class="pre">InputValidationMixin</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.plugin.html#sec_interp.plugin.PluginLifecycleMixin"><code class="docutils literal notranslate"><span class="pre">PluginLifecycleMixin</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.plugin.html#sec_interp.plugin.RenderPipelineMixin"><code class="docutils literal notranslate"><span class="pre">RenderPipelineMixin</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.plugin.html#submodules">Submodules</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.resources.html">sec_interp.resources package</a><ul>
@@ -163,7 +171,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
-        <a href="v2.9.0_technical_analysis.html" class="btn btn-neutral float-left" title="Análisis Técnico Avanzado: SecInterp v2.9.0" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="MAINTENANCE_LOG.html" class="btn btn-neutral float-left" title="SecInterp - Maintenance &amp; Release Log" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
         <a href="sec_interp.html" class="btn btn-neutral float-right" title="sec_interp package" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

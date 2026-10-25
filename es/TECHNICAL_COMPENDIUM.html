@@ -6,21 +6,21 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SecInterp - Technical Compendium &mdash; documentación de SecInterp - 3.8.0</title>
+  <title>SecInterp - Technical Compendium &mdash; documentación de SecInterp - 3.11.0</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=2f1d8df3"></script>
+      <script src="_static/documentation_options.js?v=329748b9"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/translations.js?v=f85f4cfb"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Índice" href="genindex.html" />
     <link rel="search" title="Búsqueda" href="search.html" />
-    <link rel="next" title="Core Component Distinction Guide" href="CORE_DISTINCTION_GUIDE.html" />
+    <link rel="next" title="Guía de Distinción de Componentes «Core»" href="CORE_DISTINCTION_GUIDE.html" />
     <link rel="prev" title="SecInterp - Development Guide" href="DEVELOPMENT_GUIDE.html" /> 
 </head>
 
@@ -57,10 +57,12 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#api-reference">🔧 API Reference</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#core-services-core-services">Core Services (<code class="docutils literal notranslate"><span class="pre">core/services/</span></code>)</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#profileservice"><code class="docutils literal notranslate"><span class="pre">ProfileService</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#geologyservice"><code class="docutils literal notranslate"><span class="pre">GeologyService</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#structureservice"><code class="docutils literal notranslate"><span class="pre">StructureService</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#drillholeservice"><code class="docutils literal notranslate"><span class="pre">DrillholeService</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#previewservice"><code class="docutils literal notranslate"><span class="pre">PreviewService</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#accesscontrolservice"><code class="docutils literal notranslate"><span class="pre">AccessControlService</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#export-package-core-services-export">Export package (<code class="docutils literal notranslate"><span class="pre">core/services/export/</span></code>)</a></li>
 </ul>
 </li>
 </ul>
@@ -73,14 +75,14 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Core Component Distinction Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Guía de Distinción de Componentes «Core»</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE_EN.html">Core Components Distinction Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">sec_interp</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project Archive</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Phase Closure - SecInterp v2.7.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.8.0.html">Cierre de Fase - SecInterp v2.8.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.9.0.html">Phase Closure - SecInterp v2.9.0</a></li>
@@ -145,33 +147,46 @@
 <h2>🔧 API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h2>
 <section id="core-services-core-services">
 <h3>Core Services (<code class="docutils literal notranslate"><span class="pre">core/services/</span></code>)<a class="headerlink" href="#core-services-core-services" title="Link to this heading"></a></h3>
-<section id="profileservice">
-<h4><code class="docutils literal notranslate"><span class="pre">ProfileService</span></code><a class="headerlink" href="#profileservice" title="Link to this heading"></a></h4>
-<ul class="simple">
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">generate_topographic_profile(line_lyr,</span> <span class="pre">raster_lyr,</span> <span class="pre">band)</span></code></strong>: Samples raster data along a line.</p></li>
-<li><p><strong>Returns</strong>: <code class="docutils literal notranslate"><span class="pre">List[Tuple[float,</span> <span class="pre">float]]</span></code> (distance, elevation).</p></li>
-</ul>
-</section>
 <section id="geologyservice">
 <h4><code class="docutils literal notranslate"><span class="pre">GeologyService</span></code><a class="headerlink" href="#geologyservice" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">generate_geological_profile(...)</span></code></strong>: Intersects section lines with geological geometry.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">build_segments(context,</span> <span class="pre">feedback=None)</span></code></strong>: Intersects section lines with geological geometry.</p></li>
 <li><p><strong>Returns</strong>: <code class="docutils literal notranslate"><span class="pre">List[GeologySegment]</span></code>.</p></li>
 </ul>
 </section>
 <section id="structureservice">
 <h4><code class="docutils literal notranslate"><span class="pre">StructureService</span></code><a class="headerlink" href="#structureservice" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">project_structures(...)</span></code></strong>: Projects 3D structural data and calculates apparent dip.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">project_structures(context,</span> <span class="pre">feedback=None)</span></code></strong>: Projects 3D structural data and calculates apparent dip.</p></li>
 <li><p><strong>Formula</strong>: <code class="docutils literal notranslate"><span class="pre">tan(beta)</span> <span class="pre">=</span> <span class="pre">tan(alpha)</span> <span class="pre">*</span> <span class="pre">|cos(strike</span> <span class="pre">-</span> <span class="pre">azimuth)|</span></code>.</p></li>
 </ul>
 </section>
 <section id="drillholeservice">
 <h4><code class="docutils literal notranslate"><span class="pre">DrillholeService</span></code><a class="headerlink" href="#drillholeservice" title="Link to this heading"></a></h4>
 <ul class="simple">
-<li><p><strong>Architecture</strong>: Decomposed into specialized processors (<code class="docutils literal notranslate"><span class="pre">CollarProcessor</span></code>, <code class="docutils literal notranslate"><span class="pre">SurveyProcessor</span></code>, <code class="docutils literal notranslate"><span class="pre">IntervalProcessor</span></code>).</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">project_collars()</span></code></strong>: Projects collar points 3D-&gt;2D.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">process_intervals()</span></code></strong>: Handles full pipeline for trace and interval generation.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">process_context(context,</span> <span class="pre">feedback=None)</span></code></strong>: Full drillhole pipeline.</p></li>
+<li><p><strong>Architecture</strong>: Decomposed into <code class="docutils literal notranslate"><span class="pre">CollarProcessor</span></code>, <code class="docutils literal notranslate"><span class="pre">SurveyProcessor</span></code>, <code class="docutils literal notranslate"><span class="pre">IntervalProcessor</span></code>, <code class="docutils literal notranslate"><span class="pre">TrajectoryEngine</span></code>, <code class="docutils literal notranslate"><span class="pre">ProjectionEngine</span></code>.</p></li>
+</ul>
+</section>
+<section id="previewservice">
+<h4><code class="docutils literal notranslate"><span class="pre">PreviewService</span></code><a class="headerlink" href="#previewservice" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">generate_all(params,</span> <span class="pre">transform_context)</span></code></strong>: Orchestrates topography + structures for the preview.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">calculate_max_points(canvas_width,</span> <span class="pre">manual_max,</span> <span class="pre">auto_lod)</span></code></strong>: Adaptive LOD.</p></li>
+</ul>
+</section>
+<section id="accesscontrolservice">
+<h4><code class="docutils literal notranslate"><span class="pre">AccessControlService</span></code><a class="headerlink" href="#accesscontrolservice" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">can_export_3d()</span></code></strong>: Gates 3D export via <code class="docutils literal notranslate"><span class="pre">QgsSettings</span></code> (<code class="docutils literal notranslate"><span class="pre">SecInterp/enable_3d</span></code>).</p></li>
+</ul>
+</section>
+<section id="export-package-core-services-export">
+<h4>Export package (<code class="docutils literal notranslate"><span class="pre">core/services/export/</span></code>)<a class="headerlink" href="#export-package-core-services-export" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">ExportService.export_data(output_folder,</span> <span class="pre">params,</span> <span class="pre">...)</span></code></strong>: facade over <code class="docutils literal notranslate"><span class="pre">handlers/</span></code> (one per data type).</p></li>
+<li><p><strong>Note</strong>: topography extraction lives in the GUI adapter <code class="docutils literal notranslate"><span class="pre">gui/adapters/profile_extractor.py</span></code>
+(<code class="docutils literal notranslate"><span class="pre">ProfileExtractor.extract_profile</span></code>), not in <code class="docutils literal notranslate"><span class="pre">core/services/</span></code>.</p></li>
 </ul>
 </section>
 </section>
@@ -182,7 +197,7 @@
 <p>Modularized in <code class="docutils literal notranslate"><span class="pre">core/validation/</span></code>:</p>
 <ul class="simple">
 <li><p><strong>FieldValidator</strong>: Numeric and existence checks.</p></li>
-<li><p><strong>LayerValidator</strong>: CS, geometry, and feature count validation.</p></li>
+<li><p><strong>LayerValidator</strong>: CRS, geometry, and feature count validation.</p></li>
 <li><p><strong>PathValidator</strong>: Security and permission handling.</p></li>
 <li><p><strong>ProjectValidator</strong>: High-level orchestration.</p></li>
 </ul>
@@ -192,13 +207,13 @@
 <h2>🧬 Key Data Structures<a class="headerlink" href="#key-data-structures" title="Link to this heading"></a></h2>
 <section id="geologysegment">
 <h3><code class="docutils literal notranslate"><span class="pre">GeologySegment</span></code><a class="headerlink" href="#geologysegment" title="Link to this heading"></a></h3>
-<p>Used to represent both surface outcrops and drillhole intervals.</p>
+<p>Used to represent both surface outcrops and drillhole intervals (QGIS-agnostic: WKT, not <code class="docutils literal notranslate"><span class="pre">QgsGeometry</span></code>).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">GeologySegment</span><span class="p">:</span>
     <span class="n">unit_name</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">points</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span>
-    <span class="n">geometry</span><span class="p">:</span> <span class="n">QgsGeometry</span>
-    <span class="n">attributes</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+    <span class="n">geometry_wkt</span><span class="p">:</span> <span class="n">DomainGeometry</span> <span class="o">|</span> <span class="kc">None</span>
+    <span class="n">attributes</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+    <span class="n">points</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span>
 </pre></div>
 </div>
 </section>
@@ -211,6 +226,7 @@
     <span class="n">apparent_dip</span><span class="p">:</span> <span class="nb">float</span>
     <span class="n">original_dip</span><span class="p">:</span> <span class="nb">float</span>
     <span class="n">original_strike</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">attributes</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
 </pre></div>
 </div>
 </section>
@@ -222,7 +238,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
         <a href="DEVELOPMENT_GUIDE.html" class="btn btn-neutral float-left" title="SecInterp - Development Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
-        <a href="CORE_DISTINCTION_GUIDE.html" class="btn btn-neutral float-right" title="Core Component Distinction Guide" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="CORE_DISTINCTION_GUIDE.html" class="btn btn-neutral float-right" title="Guía de Distinción de Componentes «Core»" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

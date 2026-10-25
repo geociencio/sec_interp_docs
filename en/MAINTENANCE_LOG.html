@@ -6,20 +6,20 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SecInterp - Maintenance &amp; Release Log &mdash; SecInterp 3.8.0 documentation</title>
+  <title>SecInterp - Maintenance &amp; Release Log &mdash; SecInterp 3.11.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=948f11bf"></script>
+      <script src="_static/documentation_options.js?v=8905d4f5"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Análisis Técnico Avanzado: SecInterp v2.9.0" href="v2.9.0_technical_analysis.html" />
+    <link rel="next" title="sec_interp" href="modules.html" />
     <link rel="prev" title="Core Components Distinction Guide" href="CORE_DISTINCTION_GUIDE_EN.html" /> 
 </head>
 
@@ -48,9 +48,11 @@
 <li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
-<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Core Component Distinction Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Guía de Distinción de Componentes “Core”</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE_EN.html">Core Components Distinction Guide</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">SecInterp - Maintenance &amp; Release Log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#release-train-unblock-v3-10-0-published">[2026-10-11] RELEASE TRAIN UNBLOCK &amp; v3.10.0 PUBLISHED</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#qgis-mcp-integration-vendored-fork-qgis-driver-subagent">[2026-10-11] QGIS MCP INTEGRATION (VENDORED FORK + <code class="docutils literal notranslate"><span class="pre">qgis_driver</span></code> SUBAGENT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#phase-closure-v3-7-0-i18n-quality-gate-ux-qt6-qgis-4-enum-migration">[2026-09-12] PHASE CLOSURE v3.7.0 (I18N QUALITY GATE, UX &amp; QT6/QGIS 4 ENUM MIGRATION)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#phase-closure-v3-6-0-next-gen-stability-spatial-optimization">[2026-05-18] PHASE CLOSURE v3.6.0 (NEXT-GEN STABILITY &amp; SPATIAL OPTIMIZATION)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#phase-closure-v3-5-0-operational-excellence-agentic-autonomy">[2026-04-28] PHASE CLOSURE v3.5.0 (OPERATIONAL EXCELLENCE &amp; AGENTIC AUTONOMY)</a></li>
@@ -108,11 +110,11 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">sec_interp</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project Archive</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Phase Closure - SecInterp v2.7.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.8.0.html">Cierre de Fase - SecInterp v2.8.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.9.0.html">Phase Closure - SecInterp v2.9.0</a></li>
@@ -145,6 +147,20 @@
              
   <section id="secinterp-maintenance-release-log">
 <h1>SecInterp - Maintenance &amp; Release Log<a class="headerlink" href="#secinterp-maintenance-release-log" title="Link to this heading"></a></h1>
+<section id="release-train-unblock-v3-10-0-published">
+<h2>[2026-10-11] RELEASE TRAIN UNBLOCK &amp; v3.10.0 PUBLISHED<a class="headerlink" href="#release-train-unblock-v3-10-0-published" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Changes</strong>: Fixed <code class="docutils literal notranslate"><span class="pre">scheduled-release.yml</span></code> for main↔branch tooling drift — <code class="docutils literal notranslate"><span class="pre">.agent</span></code> is a submodule on <code class="docutils literal notranslate"><span class="pre">main</span></code> but a directory on the train branches (clean it before checkout), and the offline-help build needs <code class="docutils literal notranslate"><span class="pre">main</span></code>’s <code class="docutils literal notranslate"><span class="pre">conf.py</span></code> + <code class="docutils literal notranslate"><span class="pre">help_index.rst</span></code>, not just <code class="docutils literal notranslate"><span class="pre">build_docs.sh</span></code>. Published <strong>v3.10.0</strong> (interactive preview legend / side panel).</p></li>
+<li><p><strong>Metrics/Impact</strong>: Scheduled publishing works again (dry-run <code class="docutils literal notranslate"><span class="pre">38151593980</span></code> success, publish <code class="docutils literal notranslate"><span class="pre">38151877186</span></code> success). <code class="docutils literal notranslate"><span class="pre">v3.10.0</span></code> live and <em>Latest</em>: <code class="docutils literal notranslate"><span class="pre">sec_interp.3.10.0.zip</span></code> (<strong>2.27 MiB</strong>, 14-language offline manual). Next: v3.11.0 (2026-10-18); then the final train→<code class="docutils literal notranslate"><span class="pre">main</span></code> merge (not <code class="docutils literal notranslate"><span class="pre">--ff-only</span></code>).</p></li>
+</ul>
+</section>
+<section id="qgis-mcp-integration-vendored-fork-qgis-driver-subagent">
+<h2>[2026-10-11] QGIS MCP INTEGRATION (VENDORED FORK + <code class="docutils literal notranslate"><span class="pre">qgis_driver</span></code> SUBAGENT)<a class="headerlink" href="#qgis-mcp-integration-vendored-fork-qgis-driver-subagent" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Changes</strong>: Vendored a fork of <code class="docutils literal notranslate"><span class="pre">nkarasiak/qgis-mcp</span></code> (v0.15.1) under <code class="docutils literal notranslate"><span class="pre">tools/qgis_mcp/</span></code> and extended it with a <code class="docutils literal notranslate"><span class="pre">secinterp</span></code> tool group (six commands: status/open/preview/ready/results/export) that drives the SecInterp dialog over MCP. Default port moved to <strong>9877</strong>; added a <strong><code class="docutils literal notranslate"><span class="pre">qgis_driver</span></code></strong> subagent (MCP enabled only there, disabled globally), a <code class="docutils literal notranslate"><span class="pre">/smoke-qgis4</span></code> workflow, and packaging/analysis exclusions for <code class="docutils literal notranslate"><span class="pre">tools/</span></code>.</p></li>
+<li><p><strong>Metrics/Impact</strong>: A live QGIS 4 smoke (open → preview → assert → results → export) is now <strong>programmatic</strong> instead of manual, closing the mock↔real-QGIS gap. Fork suite <strong>429 passed / 2 skipped</strong>; verified end-to-end on QGIS 4.2.1. No plugin-runtime impact (dev-only tooling).</p></li>
+</ul>
+</section>
 <section id="phase-closure-v3-7-0-i18n-quality-gate-ux-qt6-qgis-4-enum-migration">
 <h2>[2026-09-12] PHASE CLOSURE v3.7.0 (I18N QUALITY GATE, UX &amp; QT6/QGIS 4 ENUM MIGRATION)<a class="headerlink" href="#phase-closure-v3-7-0-i18n-quality-gate-ux-qt6-qgis-4-enum-migration" title="Link to this heading"></a></h2>
 <ul class="simple">
@@ -590,7 +606,7 @@ See <code class="docutils literal notranslate"><span class="pre">docs/docsec/arc
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="CORE_DISTINCTION_GUIDE_EN.html" class="btn btn-neutral float-left" title="Core Components Distinction Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="v2.9.0_technical_analysis.html" class="btn btn-neutral float-right" title="Análisis Técnico Avanzado: SecInterp v2.9.0" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="modules.html" class="btn btn-neutral float-right" title="sec_interp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

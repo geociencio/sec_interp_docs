@@ -6,22 +6,22 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp.gui.preview_reporter module &mdash; documentación de SecInterp - 3.8.0</title>
+  <title>sec_interp.gui.preview_reporter module &mdash; documentación de SecInterp - 3.11.0</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=2f1d8df3"></script>
+      <script src="_static/documentation_options.js?v=329748b9"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/translations.js?v=f85f4cfb"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Índice" href="genindex.html" />
     <link rel="search" title="Búsqueda" href="search.html" />
-    <link rel="next" title="sec_interp.gui.preview_state module" href="sec_interp.gui.preview_state.html" />
-    <link rel="prev" title="sec_interp.gui.preview_renderer module" href="sec_interp.gui.preview_renderer.html" /> 
+    <link rel="next" title="sec_interp.gui.preview_side_panel module" href="sec_interp.gui.preview_side_panel.html" />
+    <link rel="prev" title="sec_interp.gui.preview_renderer_layers module" href="sec_interp.gui.preview_renderer_layers.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -49,10 +49,9 @@
 <li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
-<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Core Component Distinction Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Guía de Distinción de Componentes «Core»</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE_EN.html">Core Components Distinction Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">sec_interp</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="sec_interp.html">sec_interp package</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.html#sec_interp.classFactory"><code class="docutils literal notranslate"><span class="pre">classFactory()</span></code></a></li>
@@ -60,6 +59,7 @@
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.html">sec_interp.core package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.html">sec_interp.exporters package</a></li>
 <li class="toctree-l4 current"><a class="reference internal" href="sec_interp.gui.html">sec_interp.gui package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.plugin.html">sec_interp.plugin package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.resources.html">sec_interp.resources package</a></li>
 </ul>
 </li>
@@ -71,6 +71,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project Archive</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Phase Closure - SecInterp v2.7.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.8.0.html">Cierre de Fase - SecInterp v2.8.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.9.0.html">Phase Closure - SecInterp v2.9.0</a></li>
@@ -140,13 +141,15 @@ preview generation results and performance metrics into human-readable messages.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.gui.preview_reporter.PreviewReporter.format_results_message">
-<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">format_results_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewResult" title="sec_interp.core.domain.dtos.PreviewResult"><span class="pre">PreviewResult</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.core.performance_metrics.html#sec_interp.core.performance_metrics.MetricsCollector" title="sec_interp.core.performance_metrics.MetricsCollector"><span class="pre">MetricsCollector</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#sec_interp.gui.preview_reporter.PreviewReporter.format_results_message" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">format_results_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewResult" title="sec_interp.core.domain.dtos.PreviewResult"><span class="pre">PreviewResult</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.core.performance_metrics.html#sec_interp.core.performance_metrics.MetricsCollector" title="sec_interp.core.performance_metrics.MetricsCollector"><span class="pre">MetricsCollector</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">vert_exag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_vert_exag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#sec_interp.gui.preview_reporter.PreviewReporter.format_results_message" title="Link to this definition"></a></dt>
 <dd><p>Format results message for display using core result objects.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parámetros<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>result</strong> – The preview result object containing data and metadata.</p></li>
 <li><p><strong>metrics</strong> – Performance metrics collector.</p></li>
+<li><p><strong>vert_exag</strong> – The applied vertical exaggeration factor, if known.</p></li>
+<li><p><strong>auto_vert_exag</strong> – Whether the exaggeration was set automatically.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Devuelve<span class="colon">:</span></dt>
@@ -161,6 +164,23 @@ preview generation results and performance metrics into human-readable messages.
 <dd><p>Format a summary line for structural data.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="sec_interp.gui.preview_reporter.PreviewReporter.format_vertical_exaggeration">
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">format_vertical_exaggeration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vert_exag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_vert_exag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.gui.preview_reporter.PreviewReporter.format_vertical_exaggeration" title="Link to this definition"></a></dt>
+<dd><p>Format the applied vertical exaggeration factor, if known.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vert_exag</strong> – The applied VE factor, or None when unavailable.</p></li>
+<li><p><strong>auto_vert_exag</strong> – Whether the factor was set automatically.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Devuelve<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of message lines (empty when no factor is known).</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -169,8 +189,8 @@ preview generation results and performance metrics into human-readable messages.
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
-        <a href="sec_interp.gui.preview_renderer.html" class="btn btn-neutral float-left" title="sec_interp.gui.preview_renderer module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
-        <a href="sec_interp.gui.preview_state.html" class="btn btn-neutral float-right" title="sec_interp.gui.preview_state module" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="sec_interp.gui.preview_renderer_layers.html" class="btn btn-neutral float-left" title="sec_interp.gui.preview_renderer_layers module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="sec_interp.gui.preview_side_panel.html" class="btn btn-neutral float-right" title="sec_interp.gui.preview_side_panel module" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

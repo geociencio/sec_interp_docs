@@ -13,6 +13,8 @@ Subpackages
    :maxdepth: 4
 
    sec_interp.core.services.drillhole
+   sec_interp.core.services.export
+   sec_interp.core.services.profile
 
 Submodules
 ----------
@@ -26,3 +28,4 @@ Submodules
    sec_interp.core.services.geology_service
    sec_interp.core.services.preview_service
    sec_interp.core.services.structure_service
+   sec_interp.core.services.vertical_exaggeration_service

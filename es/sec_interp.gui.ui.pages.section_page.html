@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp.gui.ui.pages.section_page module &mdash; documentación de SecInterp - 3.8.0</title>
+  <title>sec_interp.gui.ui.pages.section_page module &mdash; documentación de SecInterp - 3.11.0</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=2f1d8df3"></script>
+      <script src="_static/documentation_options.js?v=329748b9"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/translations.js?v=f85f4cfb"></script>
@@ -21,7 +21,7 @@
     <link rel="index" title="Índice" href="genindex.html" />
     <link rel="search" title="Búsqueda" href="search.html" />
     <link rel="next" title="sec_interp.gui.ui.pages.settings_page module" href="sec_interp.gui.ui.pages.settings_page.html" />
-    <link rel="prev" title="sec_interp.gui.ui.pages.preview_page module" href="sec_interp.gui.ui.pages.preview_page.html" /> 
+    <link rel="prev" title="sec_interp.gui.ui.pages.section_feature_selector module" href="sec_interp.gui.ui.pages.section_feature_selector.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -49,10 +49,9 @@
 <li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
-<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Core Component Distinction Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Guía de Distinción de Componentes «Core»</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE_EN.html">Core Components Distinction Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">sec_interp</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="sec_interp.html">sec_interp package</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.html#sec_interp.classFactory"><code class="docutils literal notranslate"><span class="pre">classFactory()</span></code></a></li>
@@ -60,6 +59,7 @@
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.html">sec_interp.core package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.html">sec_interp.exporters package</a></li>
 <li class="toctree-l4 current"><a class="reference internal" href="sec_interp.gui.html">sec_interp.gui package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.plugin.html">sec_interp.plugin package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.resources.html">sec_interp.resources package</a></li>
 </ul>
 </li>
@@ -71,6 +71,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project Archive</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Phase Closure - SecInterp v2.7.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.8.0.html">Cierre de Fase - SecInterp v2.8.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.9.0.html">Phase Closure - SecInterp v2.9.0</a></li>
@@ -126,6 +127,12 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="sec_interp.gui.ui.pages.section_page.SectionPage.connect_signals">
+<span class="sig-name descname"><span class="pre">connect_signals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.ui.pages.section_page.SectionPage.connect_signals" title="Link to this definition"></a></dt>
+<dd><p>Connect internal signals for the section page.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.gui.ui.pages.section_page.SectionPage.disconnect_signals">
 <span class="sig-name descname"><span class="pre">disconnect_signals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.ui.pages.section_page.SectionPage.disconnect_signals" title="Link to this definition"></a></dt>
 <dd><p>Disconnect all signals to prevent memory leaks.</p>
@@ -146,7 +153,7 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.gui.ui.pages.section_page.SectionPage.is_complete">
 <span class="sig-name descname"><span class="pre">is_complete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.gui.ui.pages.section_page.SectionPage.is_complete" title="Link to this definition"></a></dt>
-<dd><p>Check if required fields are filled.</p>
+<dd><p>Check if the section line is a valid 2-point line.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -167,9 +174,26 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="sec_interp.gui.ui.pages.section_page.SectionPage.set_dem_provider">
+<span class="sig-name descname"><span class="pre">set_dem_provider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">provider</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.ui.pages.section_page.SectionPage.set_dem_provider" title="Link to this definition"></a></dt>
+<dd><p>Set the callable returning <code class="docutils literal notranslate"><span class="pre">(raster_layer,</span> <span class="pre">band_number)</span></code> for stats.</p>
+<p>Injected by the dialog so the Section page can read the DEM selection
+without importing the DEM page (avoids page-to-page coupling).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sec_interp.gui.ui.pages.section_page.SectionPage.update_dem_stats">
+<span class="sig-name descname"><span class="pre">update_dem_stats</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.ui.pages.section_page.SectionPage.update_dem_stats" title="Link to this definition"></a></dt>
+<dd><p>Refresh the read-only perfil-vs-DEM statistics.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.gui.ui.pages.section_page.SectionPage.validate">
 <span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.gui.ui.pages.section_page.SectionPage.validate" title="Link to this definition"></a></dt>
 <dd><p>Validate page settings.</p>
+<p>Enforces the simple 2-point section line invariant: the selected line
+must be a valid line with exactly two vertices (start and end) in a
+projected CRS.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Devuelve<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Tuple of (success, error message).</p>
@@ -185,7 +209,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
-        <a href="sec_interp.gui.ui.pages.preview_page.html" class="btn btn-neutral float-left" title="sec_interp.gui.ui.pages.preview_page module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="sec_interp.gui.ui.pages.section_feature_selector.html" class="btn btn-neutral float-left" title="sec_interp.gui.ui.pages.section_feature_selector module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
         <a href="sec_interp.gui.ui.pages.settings_page.html" class="btn btn-neutral float-right" title="sec_interp.gui.ui.pages.settings_page module" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

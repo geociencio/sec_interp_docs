@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SecInterp User Guide &mdash; SecInterp 3.8.0 documentation</title>
+  <title>SecInterp User Guide &mdash; SecInterp 3.11.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=948f11bf"></script>
+      <script src="_static/documentation_options.js?v=8905d4f5"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -61,11 +61,11 @@
 <li class="toctree-l3"><a class="reference internal" href="#step-6-generate-preview">Step 6: Generate Preview</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#advanced-features-v3-0-0">4. Advanced Features (v3.0.0)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#advanced-features">4. Advanced Features</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#interpretation-tool-drawing">4.1 Interpretation Tool (Drawing)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#attribute-inheritance">4.2 Attribute Inheritance</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#exporting-to-3d-polygonz">4.3 Exporting to 3D (PolygonZ)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#settings-page">4.3 Settings Page</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#settings-page">4.4 Settings Page</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#default-tab-export-selection">1. Default Tab (Export Selection)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#advanced-tab">2. Advanced Tab</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#plugin-information-tab">3. Plugin Information Tab</a></li>
@@ -95,14 +95,14 @@
 <li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
-<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Core Component Distinction Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Guía de Distinción de Componentes “Core”</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE_EN.html">Core Components Distinction Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">sec_interp</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project Archive</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Phase Closure - SecInterp v2.7.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.8.0.html">Cierre de Fase - SecInterp v2.8.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.9.0.html">Phase Closure - SecInterp v2.9.0</a></li>
@@ -137,16 +137,17 @@
 <h1>SecInterp User Guide<a class="headerlink" href="#secinterp-user-guide" title="Link to this heading"></a></h1>
 <section id="introduction">
 <h2>1. Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h2>
-<p>Welcome to the SecInterp plugin! This guide will help you get started with creating geological cross-sections from your QGIS layers.</p>
+<p>Welcome to the SecInterp plugin! This guide will help you create geological cross-sections from your QGIS layers and a Digital Elevation Model (DEM). SecInterp supports <strong>QGIS 3.28+ and QGIS 4.x</strong>.</p>
 <p>SecInterp allows you to:</p>
 <ul class="simple">
 <li><p>Create a topographic profile from a Digital Elevation Model (DEM).</p></li>
 <li><p>Project geological units from a polygon layer onto the profile.</p></li>
 <li><p>Project structural measurements (e.g., dip and strike) onto the profile.</p></li>
 <li><p>Project drillhole traces and geological intervals (sondajes) onto the section.</p></li>
+<li><p><strong>Section Feature Selector</strong>: choose a specific line from a multi-feature layer. Only single-part lines with <strong>exactly two vertices</strong> (start and end) are listed, as <code class="docutils literal notranslate"><span class="pre">fid</span> <span class="pre">—</span> <span class="pre">label</span></code>; lines with 3 or more vertices are excluded. Choose <code class="docutils literal notranslate"><span class="pre">Auto</span></code> or any attribute field to label the entries.</p></li>
 <li><p><strong>Interpretation Tool</strong>: Digitize geological interpretations directly on the section with smart snapping.</p></li>
 <li><p><strong>3D Export (PolygonZ)</strong>: Export your 2D interpretations as valid 3D Shapefiles.</p></li>
-<li><p><strong>i18n Support</strong>: Core interface available in 10 languages (English, Spanish, French, German, Italian, Portuguese, Russian, Chinese, Hindi, Japanese).</p></li>
+<li><p><strong>i18n Support</strong>: Interface available in English plus 13 translations (Spanish, German, French, Italian, Portuguese (Brazil), Russian, Chinese (Simplified), Hindi, Japanese, Indonesian, Dutch, Polish and Finnish).</p></li>
 <li><p>View an interactive preview with level-of-detail (LOD) optimization.</p></li>
 <li><p>Measure distances and gradients with automatic snapping to vertices.</p></li>
 </ul>
@@ -182,8 +183,10 @@
 <ol class="arabic simple">
 <li><p>Navigate to the <strong>Section Line</strong> page.</p></li>
 <li><p><strong>Section Layer</strong>: Select the vector line layer representing your section traces (Mandatory).</p></li>
+<li><p><strong>Feature</strong>: Choose the section line from the <code class="docutils literal notranslate"><span class="pre">fid</span> <span class="pre">—</span> <span class="pre">label</span></code> combo. Only single-part lines with exactly two vertices are listed; lines with 3 or more vertices are excluded.</p></li>
+<li><p><strong>Label Field</strong>: Choose <code class="docutils literal notranslate"><span class="pre">Auto</span></code> or an attribute field to label the feature entries. This changes only the combo text, not the sampled section.</p></li>
 <li><p><strong>Buffer Dist. (m)</strong>: Set a buffer distance (e.g., 50m) to capture data around the line (Mandatory).</p></li>
-<li><p><strong>Important</strong>: The line must be single line (not multipart, only P1 and P2) in order to calculate 3d section export.</p></li>
+<li><p><strong>Important</strong>: The selected line must be a single-part line with exactly two vertices (start and end) for profile and 3D section export.</p></li>
 </ol>
 <p><img alt="Section Line selection and buffer configuration" src="_images/guide_section_setup.png" />
 <em>Section Line selection and buffer configuration.</em></p>
@@ -273,8 +276,8 @@
 <em>Section Preview with all panels collapsed.</em></p>
 </section>
 </section>
-<section id="advanced-features-v3-0-0">
-<h2>4. Advanced Features (v3.0.0)<a class="headerlink" href="#advanced-features-v3-0-0" title="Link to this heading"></a></h2>
+<section id="advanced-features">
+<h2>4. Advanced Features<a class="headerlink" href="#advanced-features" title="Link to this heading"></a></h2>
 <section id="interpretation-tool-drawing">
 <h3>4.1 Interpretation Tool (Drawing)<a class="headerlink" href="#interpretation-tool-drawing" title="Link to this heading"></a></h3>
 <p>The new <strong>Interpretation Tool</strong> allows you to draw geological polygons directly on the profile section.</p>
@@ -313,7 +316,7 @@
 <p>SecInterp now bridges the gap between 2D sections and 3D modeling. This feature allows you to export your 2D interpretations as real 3D objects.</p>
 <p><strong>Workflow:</strong></p>
 <ol class="arabic simple">
-<li><p>Go to the <strong>Advanced</strong> tab in the <strong>Settings</strong> tab and check <strong>“Enable 3D Interpretation Export”</strong>.</p></li>
+<li><p>Go to the <strong>Advanced</strong> tab in the <strong>Settings</strong> tab and check <strong>“Enable 3D Interpretation Export”</strong> (enabled by default since v3.8.0).</p></li>
 <li><p>Use the <strong>Save</strong> button (not Export) to generate your data.</p></li>
 <li><p>The plugin will create a <strong>PolygonZ</strong> Shapefile in your output folder.</p></li>
 <li><p>Every vertex of your interpretation is projected into real-world 3D coordinates based on the section plane and surface elevation.</p></li>
@@ -321,7 +324,7 @@
 </ol>
 </section>
 <section id="settings-page">
-<h3>4.3 Settings Page<a class="headerlink" href="#settings-page" title="Link to this heading"></a></h3>
+<h3>4.4 Settings Page<a class="headerlink" href="#settings-page" title="Link to this heading"></a></h3>
 <p>The <strong>Settings</strong> page manages export configurations and advanced features. It is organized into three sub-tabs:</p>
 <section id="default-tab-export-selection">
 <h4>1. Default Tab (Export Selection)<a class="headerlink" href="#default-tab-export-selection" title="Link to this heading"></a></h4>
@@ -364,6 +367,12 @@
 <li><p><strong>Interpret</strong>: Activates the digitization tool for drawing geological polygons completely.</p></li>
 <li><p><strong>Export (Image)</strong>: Saves the <strong>current view</strong> as an image file (PNG, JPG, PDF, SVG). <em>Note: To export SHP/CSV data, use the main SAVE button.</em></p></li>
 </ul>
+<blockquote>
+<div><p>[!note] Collapsible controls (v3.7.0+)
+The preview action buttons, the LOD controls and the layer checkboxes are grouped in a
+collapsible <strong>Controls</strong> box, so the map canvas and status bar stay visible while you
+interpret the section.</p>
+</div></blockquote>
 </section>
 <section id="visualization-controls-lod">
 <h3>5.2 Visualization Controls (LOD)<a class="headerlink" href="#visualization-controls-lod" title="Link to this heading"></a></h3>

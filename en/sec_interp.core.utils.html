@@ -6,21 +6,21 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp.core.utils package &mdash; SecInterp 3.8.0 documentation</title>
+  <title>sec_interp.core.utils package &mdash; SecInterp 3.11.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=948f11bf"></script>
+      <script src="_static/documentation_options.js?v=8905d4f5"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="sec_interp.core.utils.geometry_utils package" href="sec_interp.core.utils.geometry_utils.html" />
-    <link rel="prev" title="sec_interp.core.services.structure_service module" href="sec_interp.core.services.structure_service.html" /> 
+    <link rel="prev" title="sec_interp.core.services.vertical_exaggeration_service module" href="sec_interp.core.services.vertical_exaggeration_service.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -48,10 +48,9 @@
 <li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
-<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Core Component Distinction Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Guía de Distinción de Componentes “Core”</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE_EN.html">Core Components Distinction Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">sec_interp</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="sec_interp.html">sec_interp package</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.html#sec_interp.classFactory"><code class="docutils literal notranslate"><span class="pre">classFactory()</span></code></a></li>
@@ -59,6 +58,7 @@
 <li class="toctree-l4 current"><a class="reference internal" href="sec_interp.core.html">sec_interp.core package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.html">sec_interp.exporters package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.html">sec_interp.gui package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.plugin.html">sec_interp.plugin package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.resources.html">sec_interp.resources package</a></li>
 </ul>
 </li>
@@ -70,6 +70,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project Archive</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Phase Closure - SecInterp v2.7.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.8.0.html">Cierre de Fase - SecInterp v2.8.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.9.0.html">Phase Closure - SecInterp v2.9.0</a></li>
@@ -246,7 +247,7 @@ to pixel coordinates (x, y) based on the provided view dimensions.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="sec_interp.core.utils.create_shapefile_writer">
-<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">create_shapefile_writer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qgis.core.QgsVectorFileWriter</span></span></span><a class="headerlink" href="#sec_interp.core.utils.create_shapefile_writer" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">create_shapefile_writer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qgis.core.QgsVectorFileWriter</span></span></span><a class="headerlink" href="#sec_interp.core.utils.create_shapefile_writer" title="Link to this definition"></a></dt>
 <dd><p>Delegate to create_vector_writer (deprecated shim).</p>
 </dd></dl>
 
@@ -357,6 +358,28 @@ math.</p>
 </dl>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="sec_interp.core.utils.smooth_profile_by_distance">
+<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.</span></span><span class="sig-name descname"><span class="pre">smooth_profile_by_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">passes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.core.utils.smooth_profile_by_distance" title="Link to this definition"></a></dt>
+<dd><p>Smooth a profile with a centered moving average over a distance window.</p>
+<p>Averages the elevation of every point within <code class="docutils literal notranslate"><span class="pre">window_m</span> <span class="pre">/</span> <span class="pre">2</span></code> of each
+station. The first and last elevations are preserved so the ends do not
+drift. Returns the input unchanged when there is nothing to smooth or the
+window is non-positive.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – List of (distance, elevation) tuples, sorted by distance.</p></li>
+<li><p><strong>window_m</strong> – Window width in distance units (map units, e.g. metres).</p></li>
+<li><p><strong>passes</strong> – Number of smoothing passes (&gt;= 1).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A new list of (distance, elevation) tuples of the same length.</p>
+</dd>
+</dl>
+</dd></dl>
+
 <section id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
@@ -373,6 +396,7 @@ math.</p>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.processing.html">sec_interp.core.utils.geometry_utils.processing module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.processing.html#sec_interp.core.utils.geometry_utils.processing.MAX_DENSIFY_POINTS"><code class="docutils literal notranslate"><span class="pre">MAX_DENSIFY_POINTS</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.processing.html#sec_interp.core.utils.geometry_utils.processing.densify_line_points"><code class="docutils literal notranslate"><span class="pre">densify_line_points()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.geometry_utils.processing.html#sec_interp.core.utils.geometry_utils.processing.interpolate_segment_points"><code class="docutils literal notranslate"><span class="pre">interpolate_segment_points()</span></code></a></li>
 </ul>
@@ -439,6 +463,7 @@ math.</p>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.core.utils.sampling.html">sec_interp.core.utils.sampling module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.sampling.html#sec_interp.core.utils.sampling.interpolate_elevation"><code class="docutils literal notranslate"><span class="pre">interpolate_elevation()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.sampling.html#sec_interp.core.utils.sampling.smooth_profile_by_distance"><code class="docutils literal notranslate"><span class="pre">smooth_profile_by_distance()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.core.utils.spatial.html">sec_interp.core.utils.spatial module</a><ul>
@@ -454,7 +479,7 @@ math.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="sec_interp.core.services.structure_service.html" class="btn btn-neutral float-left" title="sec_interp.core.services.structure_service module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="sec_interp.core.services.vertical_exaggeration_service.html" class="btn btn-neutral float-left" title="sec_interp.core.services.vertical_exaggeration_service module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="sec_interp.core.utils.geometry_utils.html" class="btn btn-neutral float-right" title="sec_interp.core.utils.geometry_utils package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

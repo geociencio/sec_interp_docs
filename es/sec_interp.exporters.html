@@ -6,21 +6,21 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp.exporters package &mdash; documentación de SecInterp - 3.8.0</title>
+  <title>sec_interp.exporters package &mdash; documentación de SecInterp - 3.11.0</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=2f1d8df3"></script>
+      <script src="_static/documentation_options.js?v=329748b9"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/translations.js?v=f85f4cfb"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Índice" href="genindex.html" />
     <link rel="search" title="Búsqueda" href="search.html" />
-    <link rel="next" title="sec_interp.exporters.base_exporter module" href="sec_interp.exporters.base_exporter.html" />
+    <link rel="next" title="sec_interp.exporters.interpretation_3d package" href="sec_interp.exporters.interpretation_3d.html" />
     <link rel="prev" title="sec_interp.core.performance_metrics module" href="sec_interp.core.performance_metrics.html" /> 
 </head>
 
@@ -49,10 +49,9 @@
 <li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
-<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Core Component Distinction Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Guía de Distinción de Componentes «Core»</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE_EN.html">Core Components Distinction Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">sec_interp</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="sec_interp.html">sec_interp package</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.html#sec_interp.classFactory"><code class="docutils literal notranslate"><span class="pre">classFactory()</span></code></a></li>
@@ -60,6 +59,7 @@
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.html">sec_interp.core package</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">sec_interp.exporters package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.html">sec_interp.gui package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.plugin.html">sec_interp.plugin package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.resources.html">sec_interp.resources package</a></li>
 </ul>
 </li>
@@ -71,6 +71,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project Archive</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Phase Closure - SecInterp v2.7.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.8.0.html">Cierre de Fase - SecInterp v2.8.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.9.0.html">Phase Closure - SecInterp v2.9.0</a></li>
@@ -108,7 +109,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="sec_interp.exporters.AxesVectorExporter">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.</span></span><span class="sig-name descname"><span class="pre">AxesVectorExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.exporters.AxesVectorExporter" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="sec_interp.exporters.base_exporter.html#sec_interp.exporters.base_exporter.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#sec_interp.exporters.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
 <p>Exports the profile axes to a vector file (SHP, GPKG, DXF).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.exporters.AxesVectorExporter.export">
@@ -252,7 +253,7 @@ and validation logic while delegating format-specific export to subclasses.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="sec_interp.exporters.CSVExporter">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.</span></span><span class="sig-name descname"><span class="pre">CSVExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.exporters.CSVExporter" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="sec_interp.exporters.base_exporter.html#sec_interp.exporters.base_exporter.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#sec_interp.exporters.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
 <p>Exporter for CSV tabular format.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.exporters.CSVExporter.export">
@@ -284,7 +285,7 @@ and “rows” (list of tuples or lists).</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="sec_interp.exporters.DXFExporter">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.</span></span><span class="sig-name descname"><span class="pre">DXFExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.exporters.DXFExporter" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="sec_interp.exporters.base_exporter.html#sec_interp.exporters.base_exporter.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#sec_interp.exporters.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
 <p>Exporter for DXF format.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.exporters.DXFExporter.export">
@@ -315,7 +316,7 @@ and “rows” (list of tuples or lists).</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="sec_interp.exporters.DrillholeInterval3DExporter">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.</span></span><span class="sig-name descname"><span class="pre">DrillholeInterval3DExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.exporters.DrillholeInterval3DExporter" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="sec_interp.exporters.base_exporter.html#sec_interp.exporters.base_exporter.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#sec_interp.exporters.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
 <p>Exports 3D drillhole intervals to a Shapefile.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.exporters.DrillholeInterval3DExporter.export">
@@ -350,7 +351,7 @@ Can include “use_projected” (bool).</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="sec_interp.exporters.DrillholeIntervalVectorExporter">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.</span></span><span class="sig-name descname"><span class="pre">DrillholeIntervalVectorExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.exporters.DrillholeIntervalVectorExporter" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="sec_interp.exporters.base_exporter.html#sec_interp.exporters.base_exporter.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#sec_interp.exporters.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
 <p>Exports drillhole intervals to a vector file (SHP, GPKG, DXF).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.exporters.DrillholeIntervalVectorExporter.export">
@@ -389,7 +390,7 @@ Can include “use_projected” (bool).</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="sec_interp.exporters.DrillholeTrace3DExporter">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.</span></span><span class="sig-name descname"><span class="pre">DrillholeTrace3DExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.exporters.DrillholeTrace3DExporter" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="sec_interp.exporters.base_exporter.html#sec_interp.exporters.base_exporter.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#sec_interp.exporters.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
 <p>Exports 3D drillhole traces to a Shapefile.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.exporters.DrillholeTrace3DExporter.export">
@@ -424,7 +425,7 @@ Can include “use_projected” (bool).</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="sec_interp.exporters.DrillholeTraceVectorExporter">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.</span></span><span class="sig-name descname"><span class="pre">DrillholeTraceVectorExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.exporters.DrillholeTraceVectorExporter" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="sec_interp.exporters.base_exporter.html#sec_interp.exporters.base_exporter.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#sec_interp.exporters.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
 <p>Exports drillhole traces to a vector file (SHP, GPKG, DXF).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.exporters.DrillholeTraceVectorExporter.export">
@@ -463,7 +464,7 @@ Can include “use_projected” (bool).</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="sec_interp.exporters.GeologyVectorExporter">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.</span></span><span class="sig-name descname"><span class="pre">GeologyVectorExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.exporters.GeologyVectorExporter" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="sec_interp.exporters.base_exporter.html#sec_interp.exporters.base_exporter.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#sec_interp.exporters.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
 <p>Exports the geological profile to a vector file (SHP, GPKG, DXF).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.exporters.GeologyVectorExporter.export">
@@ -496,17 +497,18 @@ Can include “use_projected” (bool).</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="sec_interp.exporters.ImageExporter">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.</span></span><span class="sig-name descname"><span class="pre">ImageExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.exporters.ImageExporter" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="sec_interp.exporters.base_exporter.html#sec_interp.exporters.base_exporter.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#sec_interp.exporters.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
 <p>Exporter for raster image formats (PNG, JPG, JPEG).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.exporters.ImageExporter.export">
-<span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">map_settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsMapSettings</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.exporters.ImageExporter.export" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">map_settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsMapSettings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.exporters.ImageExporter.export" title="Link to this definition"></a></dt>
 <dd><p>Export map to raster image.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parámetros<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>output_path</strong> – Output file path</p></li>
 <li><p><strong>map_settings</strong> – QgsMapSettings instance configured for rendering</p></li>
+<li><p><strong>layer_name</strong> – Unused (kept for <code class="docutils literal notranslate"><span class="pre">BaseExporter</span></code> signature compatibility).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Devuelve<span class="colon">:</span></dt>
@@ -526,7 +528,7 @@ Can include “use_projected” (bool).</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="sec_interp.exporters.Interpretation2DExporter">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.</span></span><span class="sig-name descname"><span class="pre">Interpretation2DExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.exporters.Interpretation2DExporter" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="sec_interp.exporters.base_exporter.html#sec_interp.exporters.base_exporter.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#sec_interp.exporters.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
 <p>Exports interpretations in 2D profile coordinates.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.exporters.Interpretation2DExporter.__init__">
@@ -572,11 +574,11 @@ Can include “use_projected” (bool).</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="sec_interp.exporters.Interpretation3DExporter">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.</span></span><span class="sig-name descname"><span class="pre">Interpretation3DExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.exporters.Interpretation3DExporter" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="sec_interp.exporters.base_exporter.html#sec_interp.exporters.base_exporter.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#sec_interp.exporters.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
 <p>Exporter for 3D Interpretation polygons (Shapefile 2.5D).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.exporters.Interpretation3DExporter.export">
-<span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.exporters.Interpretation3DExporter.export" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.exporters.Interpretation3DExporter.export" title="Link to this definition"></a></dt>
 <dd><p>Export interpretation data to a 3D Shapefile.</p>
 </dd></dl>
 
@@ -591,17 +593,18 @@ Can include “use_projected” (bool).</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="sec_interp.exporters.PDFExporter">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.</span></span><span class="sig-name descname"><span class="pre">PDFExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.exporters.PDFExporter" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="sec_interp.exporters.base_exporter.html#sec_interp.exporters.base_exporter.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#sec_interp.exporters.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
 <p>Exporter for PDF format.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.exporters.PDFExporter.export">
-<span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">map_settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsMapSettings</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.exporters.PDFExporter.export" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">map_settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsMapSettings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.exporters.PDFExporter.export" title="Link to this definition"></a></dt>
 <dd><p>Export map to PDF.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parámetros<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>output_path</strong> – Output file path</p></li>
 <li><p><strong>map_settings</strong> – QgsMapSettings instance configured for rendering</p></li>
+<li><p><strong>layer_name</strong> – Unused (kept for <code class="docutils literal notranslate"><span class="pre">BaseExporter</span></code> signature compatibility).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Devuelve<span class="colon">:</span></dt>
@@ -621,7 +624,7 @@ Can include “use_projected” (bool).</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="sec_interp.exporters.ProfileLineVectorExporter">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.</span></span><span class="sig-name descname"><span class="pre">ProfileLineVectorExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.exporters.ProfileLineVectorExporter" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="sec_interp.exporters.base_exporter.html#sec_interp.exporters.base_exporter.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#sec_interp.exporters.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
 <p>Exports the topographic profile line to a vector file (SHP, GPKG, DXF).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.exporters.ProfileLineVectorExporter.export">
@@ -654,17 +657,18 @@ Can include “use_projected” (bool).</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="sec_interp.exporters.SVGExporter">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.</span></span><span class="sig-name descname"><span class="pre">SVGExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.exporters.SVGExporter" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="sec_interp.exporters.base_exporter.html#sec_interp.exporters.base_exporter.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#sec_interp.exporters.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
 <p>Exporter for SVG vector format.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.exporters.SVGExporter.export">
-<span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">map_settings</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.exporters.SVGExporter.export" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">map_settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsMapSettings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#sec_interp.exporters.SVGExporter.export" title="Link to this definition"></a></dt>
 <dd><p>Export map to SVG.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parámetros<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>output_path</strong> – Output file path</p></li>
 <li><p><strong>map_settings</strong> – QgsMapSettings instance configured for rendering</p></li>
+<li><p><strong>layer_name</strong> – Unused (kept for <code class="docutils literal notranslate"><span class="pre">BaseExporter</span></code> signature compatibility).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Devuelve<span class="colon">:</span></dt>
@@ -684,7 +688,7 @@ Can include “use_projected” (bool).</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="sec_interp.exporters.StructureVectorExporter">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.</span></span><span class="sig-name descname"><span class="pre">StructureVectorExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.exporters.StructureVectorExporter" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="sec_interp.exporters.base_exporter.html#sec_interp.exporters.base_exporter.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#sec_interp.exporters.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
 <p>Exports the structural profile to a vector file (SHP, GPKG, DXF).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.exporters.StructureVectorExporter.export">
@@ -718,7 +722,7 @@ and “raster_res”.</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="sec_interp.exporters.VectorExporter">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.</span></span><span class="sig-name descname"><span class="pre">VectorExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.exporters.VectorExporter" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="sec_interp.exporters.base_exporter.html#sec_interp.exporters.base_exporter.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#sec_interp.exporters.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></p>
 <p>Generic exporter for vector formats (SHP, GPKG, DXF).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.exporters.VectorExporter.export">
@@ -748,7 +752,7 @@ and “raster_res”.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="sec_interp.exporters.get_exporter">
-<span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.</span></span><span class="sig-name descname"><span class="pre">get_exporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">extension</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="sec_interp.exporters.base_exporter.html#sec_interp.exporters.base_exporter.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><span class="pre">BaseExporter</span></a></span></span><a class="headerlink" href="#sec_interp.exporters.get_exporter" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">sec_interp.exporters.</span></span><span class="sig-name descname"><span class="pre">get_exporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">extension</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#sec_interp.exporters.BaseExporter" title="sec_interp.exporters.base_exporter.BaseExporter"><span class="pre">BaseExporter</span></a></span></span><a class="headerlink" href="#sec_interp.exporters.get_exporter" title="Link to this definition"></a></dt>
 <dd><p>Get the appropriate exporter instance for the file extension.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parámetros<span class="colon">:</span></dt>
@@ -766,6 +770,41 @@ and “raster_res”.</p></li>
 </dl>
 </dd></dl>
 
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.exporters.interpretation_3d.html">sec_interp.exporters.interpretation_3d package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.exporters.interpretation_3d.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.exporters.interpretation_3d.fields.html">sec_interp.exporters.interpretation_3d.fields module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.interpretation_3d.fields.html#sec_interp.exporters.interpretation_3d.fields.make_fields_obj"><code class="docutils literal notranslate"><span class="pre">make_fields_obj()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.interpretation_3d.fields.html#sec_interp.exporters.interpretation_3d.fields.prepare_fields"><code class="docutils literal notranslate"><span class="pre">prepare_fields()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.interpretation_3d.fields.html#sec_interp.exporters.interpretation_3d.fields.write_shapefile"><code class="docutils literal notranslate"><span class="pre">write_shapefile()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.exporters.interpretation_3d.geometry.html">sec_interp.exporters.interpretation_3d.geometry module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.interpretation_3d.geometry.html#sec_interp.exporters.interpretation_3d.geometry.calculate_section_geometry"><code class="docutils literal notranslate"><span class="pre">calculate_section_geometry()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.interpretation_3d.geometry.html#sec_interp.exporters.interpretation_3d.geometry.collect_projected_features"><code class="docutils literal notranslate"><span class="pre">collect_projected_features()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.interpretation_3d.geometry.html#sec_interp.exporters.interpretation_3d.geometry.create_3d_rings"><code class="docutils literal notranslate"><span class="pre">create_3d_rings()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.interpretation_3d.geometry.html#sec_interp.exporters.interpretation_3d.geometry.ensure_closed_polygon"><code class="docutils literal notranslate"><span class="pre">ensure_closed_polygon()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.interpretation_3d.geometry.html#sec_interp.exporters.interpretation_3d.geometry.get_unique_vertices"><code class="docutils literal notranslate"><span class="pre">get_unique_vertices()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.interpretation_3d.geometry.html#sec_interp.exporters.interpretation_3d.geometry.prepare_2d_geometry"><code class="docutils literal notranslate"><span class="pre">prepare_2d_geometry()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.interpretation_3d.geometry.html#sec_interp.exporters.interpretation_3d.geometry.project_to_3d_features"><code class="docutils literal notranslate"><span class="pre">project_to_3d_features()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.exporters.interpretation_3d.style.html">sec_interp.exporters.interpretation_3d.style module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.interpretation_3d.style.html#sec_interp.exporters.interpretation_3d.style.configure_3d_renderer"><code class="docutils literal notranslate"><span class="pre">configure_3d_renderer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.interpretation_3d.style.html#sec_interp.exporters.interpretation_3d.style.generate_qml_style"><code class="docutils literal notranslate"><span class="pre">generate_qml_style()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.interpretation_3d.style.html#sec_interp.exporters.interpretation_3d.style.setup_2d_renderer"><code class="docutils literal notranslate"><span class="pre">setup_2d_renderer()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
 <div class="toctree-wrapper compound">
@@ -906,7 +945,7 @@ and “raster_res”.</p></li>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
         <a href="sec_interp.core.performance_metrics.html" class="btn btn-neutral float-left" title="sec_interp.core.performance_metrics module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
-        <a href="sec_interp.exporters.base_exporter.html" class="btn btn-neutral float-right" title="sec_interp.exporters.base_exporter module" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="sec_interp.exporters.interpretation_3d.html" class="btn btn-neutral float-right" title="sec_interp.exporters.interpretation_3d package" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

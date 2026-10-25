@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp.gui.adapters package &mdash; SecInterp 3.8.0 documentation</title>
+  <title>sec_interp.gui.adapters package &mdash; SecInterp 3.11.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=948f11bf"></script>
+      <script src="_static/documentation_options.js?v=8905d4f5"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -48,10 +48,9 @@
 <li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
-<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Core Component Distinction Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Guía de Distinción de Componentes “Core”</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE_EN.html">Core Components Distinction Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">sec_interp</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="sec_interp.html">sec_interp package</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.html#sec_interp.classFactory"><code class="docutils literal notranslate"><span class="pre">classFactory()</span></code></a></li>
@@ -59,6 +58,7 @@
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.html">sec_interp.core package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.html">sec_interp.exporters package</a></li>
 <li class="toctree-l4 current"><a class="reference internal" href="sec_interp.gui.html">sec_interp.gui package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.plugin.html">sec_interp.plugin package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.resources.html">sec_interp.resources package</a></li>
 </ul>
 </li>
@@ -70,6 +70,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project Archive</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Phase Closure - SecInterp v2.7.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.8.0.html">Cierre de Fase - SecInterp v2.8.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.9.0.html">Phase Closure - SecInterp v2.9.0</a></li>
@@ -139,6 +140,22 @@ needs live QGIS objects — so the core never has to.</p>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html">sec_interp.gui.adapters.geometry module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.ProfileRasterStats"><code class="docutils literal notranslate"><span class="pre">ProfileRasterStats</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.ProfileRasterStats.count"><code class="docutils literal notranslate"><span class="pre">ProfileRasterStats.count</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.ProfileRasterStats.minimum"><code class="docutils literal notranslate"><span class="pre">ProfileRasterStats.minimum</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.ProfileRasterStats.maximum"><code class="docutils literal notranslate"><span class="pre">ProfileRasterStats.maximum</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.ProfileRasterStats.mean"><code class="docutils literal notranslate"><span class="pre">ProfileRasterStats.mean</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.ProfileRasterStats.resolution"><code class="docutils literal notranslate"><span class="pre">ProfileRasterStats.resolution</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.ProfileRasterStats.length"><code class="docutils literal notranslate"><span class="pre">ProfileRasterStats.length</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#id0"><code class="docutils literal notranslate"><span class="pre">ProfileRasterStats.count</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#id1"><code class="docutils literal notranslate"><span class="pre">ProfileRasterStats.length</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#id2"><code class="docutils literal notranslate"><span class="pre">ProfileRasterStats.maximum</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#id3"><code class="docutils literal notranslate"><span class="pre">ProfileRasterStats.mean</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#id4"><code class="docutils literal notranslate"><span class="pre">ProfileRasterStats.minimum</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#id5"><code class="docutils literal notranslate"><span class="pre">ProfileRasterStats.resolution</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.build_sampling_transform"><code class="docutils literal notranslate"><span class="pre">build_sampling_transform()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.calculate_segment_range"><code class="docutils literal notranslate"><span class="pre">calculate_segment_range()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.create_distance_area"><code class="docutils literal notranslate"><span class="pre">create_distance_area()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.densify_line_by_interval"><code class="docutils literal notranslate"><span class="pre">densify_line_by_interval()</span></code></a></li>
@@ -147,8 +164,61 @@ needs live QGIS objects — so the core never has to.</p>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.get_line_vertices"><code class="docutils literal notranslate"><span class="pre">get_line_vertices()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.line_length"><code class="docutils literal notranslate"><span class="pre">line_length()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.prepare_profile_context"><code class="docutils literal notranslate"><span class="pre">prepare_profile_context()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.profile_raster_statistics"><code class="docutils literal notranslate"><span class="pre">profile_raster_statistics()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.raster_resolution_in_crs"><code class="docutils literal notranslate"><span class="pre">raster_resolution_in_crs()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.resolve_sampling_interval"><code class="docutils literal notranslate"><span class="pre">resolve_sampling_interval()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.resolve_section_feature"><code class="docutils literal notranslate"><span class="pre">resolve_section_feature()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.resolve_section_geometry"><code class="docutils literal notranslate"><span class="pre">resolve_section_geometry()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.sample_elevation_along_line"><code class="docutils literal notranslate"><span class="pre">sample_elevation_along_line()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.sample_point_elevation"><code class="docutils literal notranslate"><span class="pre">sample_point_elevation()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry.html#sec_interp.gui.adapters.geometry.section_line_start_point"><code class="docutils literal notranslate"><span class="pre">section_line_start_point()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.adapters.geometry_crs.html">sec_interp.gui.adapters.geometry_crs module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry_crs.html#sec_interp.gui.adapters.geometry_crs.build_sampling_transform"><code class="docutils literal notranslate"><span class="pre">build_sampling_transform()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry_crs.html#sec_interp.gui.adapters.geometry_crs.create_distance_area"><code class="docutils literal notranslate"><span class="pre">create_distance_area()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry_crs.html#sec_interp.gui.adapters.geometry_crs.raster_resolution_in_crs"><code class="docutils literal notranslate"><span class="pre">raster_resolution_in_crs()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry_crs.html#sec_interp.gui.adapters.geometry_crs.resolve_sampling_interval"><code class="docutils literal notranslate"><span class="pre">resolve_sampling_interval()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.adapters.geometry_lines.html">sec_interp.gui.adapters.geometry_lines module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry_lines.html#sec_interp.gui.adapters.geometry_lines.calculate_segment_range"><code class="docutils literal notranslate"><span class="pre">calculate_segment_range()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry_lines.html#sec_interp.gui.adapters.geometry_lines.densify_line_by_interval"><code class="docutils literal notranslate"><span class="pre">densify_line_by_interval()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry_lines.html#sec_interp.gui.adapters.geometry_lines.extract_all_vertices"><code class="docutils literal notranslate"><span class="pre">extract_all_vertices()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry_lines.html#sec_interp.gui.adapters.geometry_lines.extract_lines_from_geometry"><code class="docutils literal notranslate"><span class="pre">extract_lines_from_geometry()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry_lines.html#sec_interp.gui.adapters.geometry_lines.get_line_vertices"><code class="docutils literal notranslate"><span class="pre">get_line_vertices()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry_lines.html#sec_interp.gui.adapters.geometry_lines.section_line_start_point"><code class="docutils literal notranslate"><span class="pre">section_line_start_point()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.adapters.geometry_sampling.html">sec_interp.gui.adapters.geometry_sampling module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry_sampling.html#sec_interp.gui.adapters.geometry_sampling.sample_elevation_along_line"><code class="docutils literal notranslate"><span class="pre">sample_elevation_along_line()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry_sampling.html#sec_interp.gui.adapters.geometry_sampling.sample_point_elevation"><code class="docutils literal notranslate"><span class="pre">sample_point_elevation()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.adapters.geometry_sections.html">sec_interp.gui.adapters.geometry_sections module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry_sections.html#sec_interp.gui.adapters.geometry_sections.line_length"><code class="docutils literal notranslate"><span class="pre">line_length()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry_sections.html#sec_interp.gui.adapters.geometry_sections.prepare_profile_context"><code class="docutils literal notranslate"><span class="pre">prepare_profile_context()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry_sections.html#sec_interp.gui.adapters.geometry_sections.resolve_section_feature"><code class="docutils literal notranslate"><span class="pre">resolve_section_feature()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry_sections.html#sec_interp.gui.adapters.geometry_sections.resolve_section_geometry"><code class="docutils literal notranslate"><span class="pre">resolve_section_geometry()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.adapters.geometry_stats.html">sec_interp.gui.adapters.geometry_stats module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry_stats.html#sec_interp.gui.adapters.geometry_stats.ProfileRasterStats"><code class="docutils literal notranslate"><span class="pre">ProfileRasterStats</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.geometry_stats.html#sec_interp.gui.adapters.geometry_stats.ProfileRasterStats.count"><code class="docutils literal notranslate"><span class="pre">ProfileRasterStats.count</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.geometry_stats.html#sec_interp.gui.adapters.geometry_stats.ProfileRasterStats.minimum"><code class="docutils literal notranslate"><span class="pre">ProfileRasterStats.minimum</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.geometry_stats.html#sec_interp.gui.adapters.geometry_stats.ProfileRasterStats.maximum"><code class="docutils literal notranslate"><span class="pre">ProfileRasterStats.maximum</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.geometry_stats.html#sec_interp.gui.adapters.geometry_stats.ProfileRasterStats.mean"><code class="docutils literal notranslate"><span class="pre">ProfileRasterStats.mean</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.geometry_stats.html#sec_interp.gui.adapters.geometry_stats.ProfileRasterStats.resolution"><code class="docutils literal notranslate"><span class="pre">ProfileRasterStats.resolution</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.geometry_stats.html#sec_interp.gui.adapters.geometry_stats.ProfileRasterStats.length"><code class="docutils literal notranslate"><span class="pre">ProfileRasterStats.length</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.geometry_stats.html#id0"><code class="docutils literal notranslate"><span class="pre">ProfileRasterStats.count</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.geometry_stats.html#id1"><code class="docutils literal notranslate"><span class="pre">ProfileRasterStats.length</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.geometry_stats.html#id2"><code class="docutils literal notranslate"><span class="pre">ProfileRasterStats.maximum</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.geometry_stats.html#id3"><code class="docutils literal notranslate"><span class="pre">ProfileRasterStats.mean</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.geometry_stats.html#id4"><code class="docutils literal notranslate"><span class="pre">ProfileRasterStats.minimum</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.geometry_stats.html#id5"><code class="docutils literal notranslate"><span class="pre">ProfileRasterStats.resolution</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.geometry_stats.html#sec_interp.gui.adapters.geometry_stats.profile_raster_statistics"><code class="docutils literal notranslate"><span class="pre">profile_raster_statistics()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.gui.adapters.layer_resolver.html">sec_interp.gui.adapters.layer_resolver module</a><ul>
@@ -186,6 +256,7 @@ needs live QGIS objects — so the core never has to.</p>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.structure_extractor.html#sec_interp.gui.adapters.structure_extractor.StructureExtractor.detach_structures"><code class="docutils literal notranslate"><span class="pre">StructureExtractor.detach_structures()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.structure_extractor.html#sec_interp.gui.adapters.structure_extractor.StructureExtractor.extract_line"><code class="docutils literal notranslate"><span class="pre">StructureExtractor.extract_line()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.structure_extractor.html#sec_interp.gui.adapters.structure_extractor.StructureExtractor.extract_section_and_structures"><code class="docutils literal notranslate"><span class="pre">StructureExtractor.extract_section_and_structures()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.structure_extractor.html#sec_interp.gui.adapters.structure_extractor.StructureExtractor.make_elevation_sampler"><code class="docutils literal notranslate"><span class="pre">StructureExtractor.make_elevation_sampler()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.structure_extractor.html#sec_interp.gui.adapters.structure_extractor.StructureExtractor.sample_elevation"><code class="docutils literal notranslate"><span class="pre">StructureExtractor.sample_elevation()</span></code></a></li>
 </ul>
 </li>
@@ -195,6 +266,7 @@ needs live QGIS objects — so the core never has to.</p>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.validation_extractor.html#sec_interp.gui.adapters.validation_extractor.build_validation_params"><code class="docutils literal notranslate"><span class="pre">build_validation_params()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.validation_extractor.html#sec_interp.gui.adapters.validation_extractor.extract_layer_metadata"><code class="docutils literal notranslate"><span class="pre">extract_layer_metadata()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.validation_extractor.html#sec_interp.gui.adapters.validation_extractor.extract_raster_metadata"><code class="docutils literal notranslate"><span class="pre">extract_raster_metadata()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.validation_extractor.html#sec_interp.gui.adapters.validation_extractor.extract_section_line_metrics"><code class="docutils literal notranslate"><span class="pre">extract_section_line_metrics()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.validation_extractor.html#sec_interp.gui.adapters.validation_extractor.extract_vector_metadata"><code class="docutils literal notranslate"><span class="pre">extract_vector_metadata()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.adapters.validation_extractor.html#sec_interp.gui.adapters.validation_extractor.resolve_layer_metadata"><code class="docutils literal notranslate"><span class="pre">resolve_layer_metadata()</span></code></a></li>
 </ul>

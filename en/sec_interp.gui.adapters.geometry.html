@@ -6,20 +6,20 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp.gui.adapters.geometry module &mdash; SecInterp 3.8.0 documentation</title>
+  <title>sec_interp.gui.adapters.geometry module &mdash; SecInterp 3.11.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=948f11bf"></script>
+      <script src="_static/documentation_options.js?v=8905d4f5"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="sec_interp.gui.adapters.layer_resolver module" href="sec_interp.gui.adapters.layer_resolver.html" />
+    <link rel="next" title="sec_interp.gui.adapters.geometry_crs module" href="sec_interp.gui.adapters.geometry_crs.html" />
     <link rel="prev" title="sec_interp.gui.adapters.geology_extractor module" href="sec_interp.gui.adapters.geology_extractor.html" /> 
 </head>
 
@@ -48,10 +48,9 @@
 <li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
-<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Core Component Distinction Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Guía de Distinción de Componentes “Core”</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE_EN.html">Core Components Distinction Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">sec_interp</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="sec_interp.html">sec_interp package</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.html#sec_interp.classFactory"><code class="docutils literal notranslate"><span class="pre">classFactory()</span></code></a></li>
@@ -59,6 +58,7 @@
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.html">sec_interp.core package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.html">sec_interp.exporters package</a></li>
 <li class="toctree-l4 current"><a class="reference internal" href="sec_interp.gui.html">sec_interp.gui package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.plugin.html">sec_interp.plugin package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.resources.html">sec_interp.resources package</a></li>
 </ul>
 </li>
@@ -70,6 +70,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project Archive</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Phase Closure - SecInterp v2.7.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.8.0.html">Cierre de Fase - SecInterp v2.8.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.9.0.html">Phase Closure - SecInterp v2.9.0</a></li>
@@ -107,11 +108,140 @@
   <section id="module-sec_interp.gui.adapters.geometry">
 <span id="sec-interp-gui-adapters-geometry-module"></span><h1>sec_interp.gui.adapters.geometry module<a class="headerlink" href="#module-sec_interp.gui.adapters.geometry" title="Link to this heading"></a></h1>
 <p>Geometry extraction adapter (Extract phase).</p>
-<p>Collects the QGIS-dependent geometry helpers that were previously in
-<code class="docutils literal notranslate"><span class="pre">core/utils</span></code>. These perform the “Extract” step of the Extract-then-Compute
-pattern: creating distance areas, densifying lines, extracting vertices,
-buffering/filtering, and sampling raster elevations. The core layer no longer
-depends on QGIS for any of these operations.</p>
+<p>Compatibility facade for the QGIS-dependent geometry helpers. The
+implementation is split by concern:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_crs</span></code>: distance area, CRS transforms and sampling intervals.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_lines</span></code>: vertex extraction, densification and segment ranges.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_sampling</span></code>: point and line raster sampling.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_stats</span></code>: per-cell profile statistics.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_sections</span></code>: section-feature resolution and profile context.</p></li>
+</ul>
+<p>These perform the “Extract” step of the Extract-then-Compute pattern; the core
+layer stays QGIS-agnostic.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="sec_interp.gui.adapters.geometry.ProfileRasterStats">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.gui.adapters.geometry.</span></span><span class="sig-name descname"><span class="pre">ProfileRasterStats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.gui.adapters.geometry.ProfileRasterStats" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Read-only elevation statistics of the section over the DEM.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sec_interp.gui.adapters.geometry.ProfileRasterStats.count">
+<span class="sig-name descname"><span class="pre">count</span></span><a class="headerlink" href="#sec_interp.gui.adapters.geometry.ProfileRasterStats.count" title="Link to this definition"></a></dt>
+<dd><p>Number of distinct raster cells sampled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sec_interp.gui.adapters.geometry.ProfileRasterStats.minimum">
+<span class="sig-name descname"><span class="pre">minimum</span></span><a class="headerlink" href="#sec_interp.gui.adapters.geometry.ProfileRasterStats.minimum" title="Link to this definition"></a></dt>
+<dd><p>Minimum elevation (m).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sec_interp.gui.adapters.geometry.ProfileRasterStats.maximum">
+<span class="sig-name descname"><span class="pre">maximum</span></span><a class="headerlink" href="#sec_interp.gui.adapters.geometry.ProfileRasterStats.maximum" title="Link to this definition"></a></dt>
+<dd><p>Maximum elevation (m).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sec_interp.gui.adapters.geometry.ProfileRasterStats.mean">
+<span class="sig-name descname"><span class="pre">mean</span></span><a class="headerlink" href="#sec_interp.gui.adapters.geometry.ProfileRasterStats.mean" title="Link to this definition"></a></dt>
+<dd><p>Mean elevation (m).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sec_interp.gui.adapters.geometry.ProfileRasterStats.resolution">
+<span class="sig-name descname"><span class="pre">resolution</span></span><a class="headerlink" href="#sec_interp.gui.adapters.geometry.ProfileRasterStats.resolution" title="Link to this definition"></a></dt>
+<dd><p>Sampling interval in line-CRS units (raster pixel size).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sec_interp.gui.adapters.geometry.ProfileRasterStats.length">
+<span class="sig-name descname"><span class="pre">length</span></span><a class="headerlink" href="#sec_interp.gui.adapters.geometry.ProfileRasterStats.length" title="Link to this definition"></a></dt>
+<dd><p>Total sampled distance along the line (line-CRS units).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">count</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">length</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">maximum</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">mean</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">minimum</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">resolution</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sec_interp.gui.adapters.geometry.build_sampling_transform">
+<span class="sig-prename descclassname"><span class="pre">sec_interp.gui.adapters.geometry.</span></span><span class="sig-name descname"><span class="pre">build_sampling_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line_crs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QgsCoordinateReferenceSystem</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raster_layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QgsRasterLayer</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QgsCoordinateTransform</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.adapters.geometry.build_sampling_transform" title="Link to this definition"></a></dt>
+<dd><p>Build a transform from the line CRS to the raster CRS, or <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<p>A transform is only needed when both CRSs are known and differ. Across
+different CRSs, sampling with raw layer coordinates reads the wrong pixels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>line_crs</strong> – CRS of the section line (<code class="docutils literal notranslate"><span class="pre">None</span></code> if unknown).</p></li>
+<li><p><strong>raster_layer</strong> – The DEM/raster layer being sampled.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A <code class="docutils literal notranslate"><span class="pre">QgsCoordinateTransform</span></code> (line -&gt; raster) or <code class="docutils literal notranslate"><span class="pre">None</span></code> when the CRSs
+match, are unknown, or the transform cannot be created.</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="sec_interp.gui.adapters.geometry.calculate_segment_range">
 <span class="sig-prename descclassname"><span class="pre">sec_interp.gui.adapters.geometry.</span></span><span class="sig-name descname"><span class="pre">calculate_segment_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seg_geom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsGeometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsPointXY</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">da</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsDistanceArea</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.adapters.geometry.calculate_segment_range" title="Link to this definition"></a></dt>
@@ -150,27 +280,108 @@ depends on QGIS for any of these operations.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="sec_interp.gui.adapters.geometry.line_length">
-<span class="sig-prename descclassname"><span class="pre">sec_interp.gui.adapters.geometry.</span></span><span class="sig-name descname"><span class="pre">line_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line_lyr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsVectorLayer</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.adapters.geometry.line_length" title="Link to this definition"></a></dt>
-<dd><p>Return the length of the first feature’s geometry in a line layer.</p>
+<span class="sig-prename descclassname"><span class="pre">sec_interp.gui.adapters.geometry.</span></span><span class="sig-name descname"><span class="pre">line_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line_lyr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsVectorLayer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.adapters.geometry.line_length" title="Link to this definition"></a></dt>
+<dd><p>Return the length of the section feature’s geometry in a line layer.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="sec_interp.gui.adapters.geometry.prepare_profile_context">
-<span class="sig-prename descclassname"><span class="pre">sec_interp.gui.adapters.geometry.</span></span><span class="sig-name descname"><span class="pre">prepare_profile_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line_lyr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsVectorLayer</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">qgis.core.QgsGeometry</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">qgis.core.QgsPointXY</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">qgis.core.QgsDistanceArea</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.gui.adapters.geometry.prepare_profile_context" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">sec_interp.gui.adapters.geometry.</span></span><span class="sig-name descname"><span class="pre">prepare_profile_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line_lyr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsVectorLayer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">qgis.core.QgsGeometry</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">qgis.core.QgsPointXY</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">qgis.core.QgsDistanceArea</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.gui.adapters.geometry.prepare_profile_context" title="Link to this definition"></a></dt>
 <dd><p>Prepare a common context for profile calculation operations.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sec_interp.gui.adapters.geometry.profile_raster_statistics">
+<span class="sig-prename descclassname"><span class="pre">sec_interp.gui.adapters.geometry.</span></span><span class="sig-name descname"><span class="pre">profile_raster_statistics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line_geom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsGeometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raster_layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsRasterLayer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">band_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsDistanceArea</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="sec_interp.gui.adapters.geometry_stats.html#sec_interp.gui.adapters.geometry_stats.ProfileRasterStats" title="sec_interp.gui.adapters.geometry_stats.ProfileRasterStats"><span class="pre">ProfileRasterStats</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.adapters.geometry.profile_raster_statistics" title="Link to this definition"></a></dt>
+<dd><p>Compute min/max/mean elevation over unique DEM cells along the line.</p>
+<p>Densifies at the CRS-aware raster resolution, reprojects each sample into
+the raster CRS and collapses samples that fall in the same pixel cell (so
+repeated cells from the densification do not bias min/max/mean). Returns
+<code class="docutils literal notranslate"><span class="pre">None</span></code> when there is nothing usable to sample.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sec_interp.gui.adapters.geometry.raster_resolution_in_crs">
+<span class="sig-prename descclassname"><span class="pre">sec_interp.gui.adapters.geometry.</span></span><span class="sig-name descname"><span class="pre">raster_resolution_in_crs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raster_layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QgsRasterLayer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_crs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QgsCoordinateReferenceSystem</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.adapters.geometry.raster_resolution_in_crs" title="Link to this definition"></a></dt>
+<dd><p>Return the raster pixel size expressed in <code class="docutils literal notranslate"><span class="pre">target_crs</span></code> units.</p>
+<p><code class="docutils literal notranslate"><span class="pre">rasterUnitsPerPixelX()</span></code> is expressed in the raster’s own CRS. When the
+section line lives in a different CRS (on-the-fly reprojection), using that
+value directly as a sampling interval is meaningless and can densify the
+line into millions of vertices. This transforms a one-pixel-long segment
+from the raster CRS into <code class="docutils literal notranslate"><span class="pre">target_crs</span></code> to recover a usable interval.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>raster_layer</strong> – The DEM/raster layer.</p></li>
+<li><p><strong>target_crs</strong> – CRS in which to express the resolution (<code class="docutils literal notranslate"><span class="pre">None</span></code> to return
+the raw value).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Pixel size in <code class="docutils literal notranslate"><span class="pre">target_crs</span></code> units, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if it cannot be
+determined.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sec_interp.gui.adapters.geometry.resolve_sampling_interval">
+<span class="sig-prename descclassname"><span class="pre">sec_interp.gui.adapters.geometry.</span></span><span class="sig-name descname"><span class="pre">resolve_sampling_interval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QgsGeometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raster_layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QgsRasterLayer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_crs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QgsCoordinateReferenceSystem</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#sec_interp.gui.adapters.geometry.resolve_sampling_interval" title="Link to this definition"></a></dt>
+<dd><p>Resolve a safe sampling interval for a raster profile.</p>
+<p>Prefers the DEM pixel size expressed in the line’s CRS. Falls back to a
+length-derived interval when the resolution cannot be resolved, and always
+returns a strictly positive value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>geometry</strong> – The section line geometry (in <code class="docutils literal notranslate"><span class="pre">line_crs</span></code> units).</p></li>
+<li><p><strong>raster_layer</strong> – The DEM/raster layer.</p></li>
+<li><p><strong>line_crs</strong> – CRS of the section line (<code class="docutils literal notranslate"><span class="pre">None</span></code> if unknown).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A positive sampling interval in <code class="docutils literal notranslate"><span class="pre">line_crs</span></code> units.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sec_interp.gui.adapters.geometry.resolve_section_feature">
+<span class="sig-prename descclassname"><span class="pre">sec_interp.gui.adapters.geometry.</span></span><span class="sig-name descname"><span class="pre">resolve_section_feature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line_lyr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QgsVectorLayer</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QgsFeature</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.adapters.geometry.resolve_section_feature" title="Link to this definition"></a></dt>
+<dd><p>Return the section feature to use (first by default, or <code class="docutils literal notranslate"><span class="pre">feature_id</span></code>).</p>
+<p>This is the single resolution point for the section line, so every extractor
+picks the same feature. <code class="docutils literal notranslate"><span class="pre">None</span></code> returns the first feature; a fid filters by
+it. Defensive: an invalid layer or a missing feature returns <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sec_interp.gui.adapters.geometry.resolve_section_geometry">
+<span class="sig-prename descclassname"><span class="pre">sec_interp.gui.adapters.geometry.</span></span><span class="sig-name descname"><span class="pre">resolve_section_geometry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line_lyr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QgsVectorLayer</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QgsGeometry</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.gui.adapters.geometry.resolve_section_geometry" title="Link to this definition"></a></dt>
+<dd><p>Return the section feature geometry, or <code class="docutils literal notranslate"><span class="pre">None</span></code> when unavailable.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="sec_interp.gui.adapters.geometry.sample_elevation_along_line">
 <span class="sig-prename descclassname"><span class="pre">sec_interp.gui.adapters.geometry.</span></span><span class="sig-name descname"><span class="pre">sample_elevation_along_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QgsGeometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raster_layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QgsRasterLayer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">band_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QgsDistanceArea</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QgsPointXY</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">QgsPointXY</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sec_interp.gui.adapters.geometry.sample_elevation_along_line" title="Link to this definition"></a></dt>
 <dd><p>Sample elevation values along a line geometry from a raster layer.</p>
+<p>The sampling interval is the raster pixel size expressed in the section
+line’s CRS. When the line and raster CRSs differ (on-the-fly reprojection),
+the pixel size is transformed before use and each sample point is
+reprojected into the raster CRS.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="sec_interp.gui.adapters.geometry.sample_point_elevation">
-<span class="sig-prename descclassname"><span class="pre">sec_interp.gui.adapters.geometry.</span></span><span class="sig-name descname"><span class="pre">sample_point_elevation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raster_layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsRasterLayer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">band_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#sec_interp.gui.adapters.geometry.sample_point_elevation" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">sec_interp.gui.adapters.geometry.</span></span><span class="sig-name descname"><span class="pre">sample_point_elevation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raster_layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QgsRasterLayer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">band_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_crs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QgsCoordinateReferenceSystem</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#sec_interp.gui.adapters.geometry.sample_point_elevation" title="Link to this definition"></a></dt>
 <dd><p>Sample elevation from a raster layer at a 2D coordinate.</p>
-<p><code class="docutils literal notranslate"><span class="pre">point</span></code> may be a <code class="docutils literal notranslate"><span class="pre">QgsPointXY</span></code> or a <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code> tuple.</p>
+<p><code class="docutils literal notranslate"><span class="pre">point</span></code> may be a <code class="docutils literal notranslate"><span class="pre">QgsPointXY</span></code> or a <code class="docutils literal notranslate"><span class="pre">(x,</span> <span class="pre">y)</span></code> tuple. When <code class="docutils literal notranslate"><span class="pre">source_crs</span></code>
+differs from the raster CRS, the point is reprojected before sampling.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sec_interp.gui.adapters.geometry.section_line_start_point">
+<span class="sig-prename descclassname"><span class="pre">sec_interp.gui.adapters.geometry.</span></span><span class="sig-name descname"><span class="pre">section_line_start_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsGeometry</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qgis.core.QgsPointXY</span></span></span><a class="headerlink" href="#sec_interp.gui.adapters.geometry.section_line_start_point" title="Link to this definition"></a></dt>
+<dd><p>Return the first vertex of a line geometry (start of the section).</p>
 </dd></dl>
 
 </section>
@@ -180,7 +391,7 @@ depends on QGIS for any of these operations.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="sec_interp.gui.adapters.geology_extractor.html" class="btn btn-neutral float-left" title="sec_interp.gui.adapters.geology_extractor module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="sec_interp.gui.adapters.layer_resolver.html" class="btn btn-neutral float-right" title="sec_interp.gui.adapters.layer_resolver module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="sec_interp.gui.adapters.geometry_crs.html" class="btn btn-neutral float-right" title="sec_interp.gui.adapters.geometry_crs module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

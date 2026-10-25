@@ -1,7 +1,0 @@
-sec\_interp.debug\_discovery module
-===================================
-
-.. automodule:: sec_interp.debug_discovery
-   :members:
-   :show-inheritance:
-   :undoc-members:

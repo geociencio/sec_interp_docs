@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sec_interp package &mdash; SecInterp 3.8.0 documentation</title>
+  <title>sec_interp package &mdash; SecInterp 3.11.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=948f11bf"></script>
+      <script src="_static/documentation_options.js?v=8905d4f5"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -48,10 +48,9 @@
 <li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
-<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Core Component Distinction Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Guía de Distinción de Componentes “Core”</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE_EN.html">Core Components Distinction Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">sec_interp</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">sec_interp package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#sec_interp.classFactory"><code class="docutils literal notranslate"><span class="pre">classFactory()</span></code></a></li>
@@ -59,6 +58,7 @@
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.html">sec_interp.core package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.html">sec_interp.exporters package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.html">sec_interp.gui package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.plugin.html">sec_interp.plugin package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.resources.html">sec_interp.resources package</a></li>
 </ul>
 </li>
@@ -75,6 +75,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project Archive</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Phase Closure - SecInterp v2.7.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.8.0.html">Cierre de Fase - SecInterp v2.8.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.9.0.html">Phase Closure - SecInterp v2.9.0</a></li>
@@ -179,6 +180,7 @@
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.parse_dip"><code class="docutils literal notranslate"><span class="pre">parse_dip()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.parse_strike"><code class="docutils literal notranslate"><span class="pre">parse_strike()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.project_trajectory_to_section"><code class="docutils literal notranslate"><span class="pre">project_trajectory_to_section()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.smooth_profile_by_distance"><code class="docutils literal notranslate"><span class="pre">smooth_profile_by_distance()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#subpackages">Subpackages</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.html#submodules">Submodules</a></li>
 </ul>
@@ -186,6 +188,7 @@
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.validation.html">sec_interp.core.validation package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.validation.html#sec_interp.core.validation.ProjectValidator"><code class="docutils literal notranslate"><span class="pre">ProjectValidator</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.validation.html#sec_interp.core.validation.ValidationParams"><code class="docutils literal notranslate"><span class="pre">ValidationParams</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.validation.html#sec_interp.core.validation.implausible_crs_reason"><code class="docutils literal notranslate"><span class="pre">implausible_crs_reason()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.validation.html#sec_interp.core.validation.validate_angle_range"><code class="docutils literal notranslate"><span class="pre">validate_angle_range()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.validation.html#sec_interp.core.validation.validate_crs_compatibility"><code class="docutils literal notranslate"><span class="pre">validate_crs_compatibility()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.validation.html#sec_interp.core.validation.validate_field_exists"><code class="docutils literal notranslate"><span class="pre">validate_field_exists()</span></code></a></li>
@@ -333,6 +336,13 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.exporters.html#sec_interp.exporters.get_exporter"><code class="docutils literal notranslate"><span class="pre">get_exporter()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.exporters.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.exporters.interpretation_3d.html">sec_interp.exporters.interpretation_3d package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.interpretation_3d.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.exporters.html#submodules">Submodules</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.exporters.base_exporter.html">sec_interp.exporters.base_exporter module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.base_exporter.html#sec_interp.exporters.base_exporter.BaseExporter"><code class="docutils literal notranslate"><span class="pre">BaseExporter</span></code></a></li>
@@ -395,7 +405,9 @@
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.PreviewRenderer"><code class="docutils literal notranslate"><span class="pre">PreviewRenderer</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.PreviewRenderer.__init__"><code class="docutils literal notranslate"><span class="pre">PreviewRenderer.__init__()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.PreviewRenderer.active_units"><code class="docutils literal notranslate"><span class="pre">PreviewRenderer.active_units</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.PreviewRenderer.cleanup"><code class="docutils literal notranslate"><span class="pre">PreviewRenderer.cleanup()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.PreviewRenderer.draw_legend"><code class="docutils literal notranslate"><span class="pre">PreviewRenderer.draw_legend()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.PreviewRenderer.legend_units"><code class="docutils literal notranslate"><span class="pre">PreviewRenderer.legend_units()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.PreviewRenderer.render"><code class="docutils literal notranslate"><span class="pre">PreviewRenderer.render()</span></code></a></li>
 </ul>
 </li>
@@ -404,37 +416,26 @@
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.plugin_instance"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.plugin_instance</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.messagebar"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.messagebar</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.__init__"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.__init__()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.accept_handler"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.accept_handler()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.clear_cache_handler"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.clear_cache_handler()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.closeEvent"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.closeEvent()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.export_preview"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.export_preview()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.getThemeIcon"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.getThemeIcon()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.get_layer_names_by_geometry"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.get_layer_names_by_geometry()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.get_layer_names_by_type"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.get_layer_names_by_type()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.get_preview_options"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.get_preview_options()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.get_selected_values"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.get_selected_values()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.handle_error"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.handle_error()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.interpretations"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.interpretations</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.on_interpretation_finished"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.on_interpretation_finished()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.open_help"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.open_help()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.preview_profile_handler"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.preview_profile_handler()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.push_message"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.push_message()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.reject_handler"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.reject_handler()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.reset_defaults_handler"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.reset_defaults_handler()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.show_dialog"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.show_dialog()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.toggle_interpretation_tool"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.toggle_interpretation_tool()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.toggle_measure_tool"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.toggle_measure_tool()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.update_button_state"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.update_button_state()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.update_measurement_display"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.update_measurement_display()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.update_preview_checkbox_states"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.update_preview_checkbox_states()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.update_preview_from_checkboxes"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.update_preview_from_checkboxes()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.validate_inputs"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.validate_inputs()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.html#sec_interp.gui.SecInterpDialog.wheelEvent"><code class="docutils literal notranslate"><span class="pre">SecInterpDialog.wheelEvent()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.gui.html#subpackages">Subpackages</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.adapters.html">sec_interp.gui.adapters package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.adapters.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_layers.html">sec_interp.gui.preview_layers package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.preview_layers.html#sec_interp.gui.preview_layers.create_drillhole_interval_layer"><code class="docutils literal notranslate"><span class="pre">create_drillhole_interval_layer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.preview_layers.html#sec_interp.gui.preview_layers.create_drillhole_trace_layer"><code class="docutils literal notranslate"><span class="pre">create_drillhole_trace_layer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.preview_layers.html#sec_interp.gui.preview_layers.create_geol_layer"><code class="docutils literal notranslate"><span class="pre">create_geol_layer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.preview_layers.html#sec_interp.gui.preview_layers.create_interp_layer"><code class="docutils literal notranslate"><span class="pre">create_interp_layer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.preview_layers.html#sec_interp.gui.preview_layers.create_smoothed_topo_layer"><code class="docutils literal notranslate"><span class="pre">create_smoothed_topo_layer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.preview_layers.html#sec_interp.gui.preview_layers.create_struct_layer"><code class="docutils literal notranslate"><span class="pre">create_struct_layer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.preview_layers.html#sec_interp.gui.preview_layers.create_topo_fill_layer"><code class="docutils literal notranslate"><span class="pre">create_topo_fill_layer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.preview_layers.html#sec_interp.gui.preview_layers.create_topo_layer"><code class="docutils literal notranslate"><span class="pre">create_topo_layer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.preview_layers.html#submodules">Submodules</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.renderers.html">sec_interp.gui.renderers package</a><ul>
@@ -466,12 +467,24 @@
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.dialog_export_manager.html#sec_interp.gui.dialog_export_manager.ExportManager"><code class="docutils literal notranslate"><span class="pre">ExportManager</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_facade_mixin.html">sec_interp.gui.dialog_facade_mixin module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.dialog_facade_mixin.html#sec_interp.gui.dialog_facade_mixin.DialogFacadeMixin"><code class="docutils literal notranslate"><span class="pre">DialogFacadeMixin</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_input_manager.html">sec_interp.gui.dialog_input_manager module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.dialog_input_manager.html#sec_interp.gui.dialog_input_manager.InputManager"><code class="docutils literal notranslate"><span class="pre">InputManager</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_interpretation_manager.html">sec_interp.gui.dialog_interpretation_manager module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.dialog_interpretation_manager.html#sec_interp.gui.dialog_interpretation_manager.InterpretationManager"><code class="docutils literal notranslate"><span class="pre">InterpretationManager</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_lifecycle_mixin.html">sec_interp.gui.dialog_lifecycle_mixin module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.dialog_lifecycle_mixin.html#sec_interp.gui.dialog_lifecycle_mixin.DialogLifecycleMixin"><code class="docutils literal notranslate"><span class="pre">DialogLifecycleMixin</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_message_mixin.html">sec_interp.gui.dialog_message_mixin module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.dialog_message_mixin.html#sec_interp.gui.dialog_message_mixin.DialogMessageMixin"><code class="docutils literal notranslate"><span class="pre">DialogMessageMixin</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.dialog_preview_manager.html">sec_interp.gui.dialog_preview_manager module</a><ul>
@@ -495,12 +508,16 @@
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.dialog_tool_manager.html#sec_interp.gui.dialog_tool_manager.ToolManager"><code class="docutils literal notranslate"><span class="pre">ToolManager</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.layer_notification_manager.html">sec_interp.gui.layer_notification_manager module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.layer_notification_manager.html#sec_interp.gui.layer_notification_manager.LayerNotificationManager"><code class="docutils literal notranslate"><span class="pre">LayerNotificationManager</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.interpretation_inheritance_mixin.html">sec_interp.gui.interpretation_inheritance_mixin module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.interpretation_inheritance_mixin.html#sec_interp.gui.interpretation_inheritance_mixin.InterpretationInheritanceMixin"><code class="docutils literal notranslate"><span class="pre">InterpretationInheritanceMixin</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.legend_widget.html">sec_interp.gui.legend_widget module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.legend_widget.html#sec_interp.gui.legend_widget.LegendWidget"><code class="docutils literal notranslate"><span class="pre">LegendWidget</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.interpretation_persistence_mixin.html">sec_interp.gui.interpretation_persistence_mixin module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.interpretation_persistence_mixin.html#sec_interp.gui.interpretation_persistence_mixin.InterpretationPersistenceMixin"><code class="docutils literal notranslate"><span class="pre">InterpretationPersistenceMixin</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.layer_notification_manager.html">sec_interp.gui.layer_notification_manager module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.layer_notification_manager.html#sec_interp.gui.layer_notification_manager.LayerNotificationManager"><code class="docutils literal notranslate"><span class="pre">LayerNotificationManager</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.main_dialog.html">sec_interp.gui.main_dialog module</a><ul>
@@ -522,6 +539,10 @@
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.preview_axes_manager.html#sec_interp.gui.preview_axes_manager.PreviewAxesManager"><code class="docutils literal notranslate"><span class="pre">PreviewAxesManager</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_callbacks_mixin.html">sec_interp.gui.preview_callbacks_mixin module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.preview_callbacks_mixin.html#sec_interp.gui.preview_callbacks_mixin.PreviewCallbacksMixin"><code class="docutils literal notranslate"><span class="pre">PreviewCallbacksMixin</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_layer_factory.html">sec_interp.gui.preview_layer_factory module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory"><code class="docutils literal notranslate"><span class="pre">PreviewLayerFactory</span></code></a></li>
 </ul>
@@ -532,14 +553,37 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_param_hasher.html">sec_interp.gui.preview_param_hasher module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.preview_param_hasher.html#sec_interp.gui.preview_param_hasher.PreviewParamHasher"><code class="docutils literal notranslate"><span class="pre">PreviewParamHasher</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.preview_param_hasher.html#sec_interp.gui.preview_param_hasher.assemble_preview_params"><code class="docutils literal notranslate"><span class="pre">assemble_preview_params()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_render_mixin.html">sec_interp.gui.preview_render_mixin module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.preview_render_mixin.html#sec_interp.gui.preview_render_mixin.PreviewRenderMixin"><code class="docutils literal notranslate"><span class="pre">PreviewRenderMixin</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_renderer.html">sec_interp.gui.preview_renderer module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.preview_renderer.html#sec_interp.gui.preview_renderer.PreviewRenderer"><code class="docutils literal notranslate"><span class="pre">PreviewRenderer</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_renderer_cleanup.html">sec_interp.gui.preview_renderer_cleanup module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.preview_renderer_cleanup.html#sec_interp.gui.preview_renderer_cleanup.cleanup_layers"><code class="docutils literal notranslate"><span class="pre">cleanup_layers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.preview_renderer_cleanup.html#sec_interp.gui.preview_renderer_cleanup.cleanup_rubber_bands"><code class="docutils literal notranslate"><span class="pre">cleanup_rubber_bands()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.preview_renderer_cleanup.html#sec_interp.gui.preview_renderer_cleanup.get_valid_layer_ids"><code class="docutils literal notranslate"><span class="pre">get_valid_layer_ids()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_renderer_layers.html">sec_interp.gui.preview_renderer_layers module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.preview_renderer_layers.html#sec_interp.gui.preview_renderer_layers.add_drillhole_layers"><code class="docutils literal notranslate"><span class="pre">add_drillhole_layers()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.preview_renderer_layers.html#sec_interp.gui.preview_renderer_layers.add_struct_layer"><code class="docutils literal notranslate"><span class="pre">add_struct_layer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.preview_renderer_layers.html#sec_interp.gui.preview_renderer_layers.calculate_extent"><code class="docutils literal notranslate"><span class="pre">calculate_extent()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.preview_renderer_layers.html#sec_interp.gui.preview_renderer_layers.collect_data_layers"><code class="docutils literal notranslate"><span class="pre">collect_data_layers()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_reporter.html">sec_interp.gui.preview_reporter module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.preview_reporter.html#sec_interp.gui.preview_reporter.PreviewReporter"><code class="docutils literal notranslate"><span class="pre">PreviewReporter</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_side_panel.html">sec_interp.gui.preview_side_panel module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.preview_side_panel.html#sec_interp.gui.preview_side_panel.PreviewSidePanel"><code class="docutils literal notranslate"><span class="pre">PreviewSidePanel</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.preview_side_panel.html#sec_interp.gui.preview_side_panel.UnitStyleEditor"><code class="docutils literal notranslate"><span class="pre">UnitStyleEditor</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.preview_state.html">sec_interp.gui.preview_state module</a><ul>
@@ -558,6 +602,41 @@
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.gui.utils.html">sec_interp.gui.utils module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.utils.html#sec_interp.gui.utils.create_memory_layer"><code class="docutils literal notranslate"><span class="pre">create_memory_layer()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.utils.html#sec_interp.gui.utils.show_user_message"><code class="docutils literal notranslate"><span class="pre">show_user_message()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sec_interp.plugin.html">sec_interp.plugin package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.plugin.html#sec_interp.plugin.InputValidationMixin"><code class="docutils literal notranslate"><span class="pre">InputValidationMixin</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.plugin.html#sec_interp.plugin.InputValidationMixin.disconnect_layer_notifications"><code class="docutils literal notranslate"><span class="pre">InputValidationMixin.disconnect_layer_notifications()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.plugin.html#sec_interp.plugin.PluginLifecycleMixin"><code class="docutils literal notranslate"><span class="pre">PluginLifecycleMixin</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.plugin.html#sec_interp.plugin.PluginLifecycleMixin.add_action"><code class="docutils literal notranslate"><span class="pre">PluginLifecycleMixin.add_action()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.plugin.html#sec_interp.plugin.PluginLifecycleMixin.disconnect_signals"><code class="docutils literal notranslate"><span class="pre">PluginLifecycleMixin.disconnect_signals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.plugin.html#sec_interp.plugin.PluginLifecycleMixin.initGui"><code class="docutils literal notranslate"><span class="pre">PluginLifecycleMixin.initGui()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.plugin.html#sec_interp.plugin.PluginLifecycleMixin.process_data"><code class="docutils literal notranslate"><span class="pre">PluginLifecycleMixin.process_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.plugin.html#sec_interp.plugin.PluginLifecycleMixin.run"><code class="docutils literal notranslate"><span class="pre">PluginLifecycleMixin.run()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.plugin.html#sec_interp.plugin.PluginLifecycleMixin.unload"><code class="docutils literal notranslate"><span class="pre">PluginLifecycleMixin.unload()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.plugin.html#sec_interp.plugin.RenderPipelineMixin"><code class="docutils literal notranslate"><span class="pre">RenderPipelineMixin</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.plugin.html#sec_interp.plugin.RenderPipelineMixin.draw_preview"><code class="docutils literal notranslate"><span class="pre">RenderPipelineMixin.draw_preview()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sec_interp.plugin.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.plugin.input_validator.html">sec_interp.plugin.input_validator module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.plugin.input_validator.html#sec_interp.plugin.input_validator.InputValidationMixin"><code class="docutils literal notranslate"><span class="pre">InputValidationMixin</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.plugin.lifecycle.html">sec_interp.plugin.lifecycle module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.plugin.lifecycle.html#sec_interp.plugin.lifecycle.PluginLifecycleMixin"><code class="docutils literal notranslate"><span class="pre">PluginLifecycleMixin</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.plugin.render_pipeline.html">sec_interp.plugin.render_pipeline module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.plugin.render_pipeline.html#sec_interp.plugin.render_pipeline.RenderPipelineMixin"><code class="docutils literal notranslate"><span class="pre">RenderPipelineMixin</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -601,14 +680,7 @@
 <li class="toctree-l1"><a class="reference internal" href="sec_interp.sec_interp_plugin.html">sec_interp.sec_interp_plugin module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.sec_interp_plugin.html#sec_interp.sec_interp_plugin.SecInterp"><code class="docutils literal notranslate"><span class="pre">SecInterp</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.sec_interp_plugin.html#sec_interp.sec_interp_plugin.SecInterp.__init__"><code class="docutils literal notranslate"><span class="pre">SecInterp.__init__()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.sec_interp_plugin.html#sec_interp.sec_interp_plugin.SecInterp.add_action"><code class="docutils literal notranslate"><span class="pre">SecInterp.add_action()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.sec_interp_plugin.html#sec_interp.sec_interp_plugin.SecInterp.disconnect_signals"><code class="docutils literal notranslate"><span class="pre">SecInterp.disconnect_signals()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.sec_interp_plugin.html#sec_interp.sec_interp_plugin.SecInterp.draw_preview"><code class="docutils literal notranslate"><span class="pre">SecInterp.draw_preview()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.sec_interp_plugin.html#sec_interp.sec_interp_plugin.SecInterp.initGui"><code class="docutils literal notranslate"><span class="pre">SecInterp.initGui()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.sec_interp_plugin.html#sec_interp.sec_interp_plugin.SecInterp.process_data"><code class="docutils literal notranslate"><span class="pre">SecInterp.process_data()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.sec_interp_plugin.html#sec_interp.sec_interp_plugin.SecInterp.run"><code class="docutils literal notranslate"><span class="pre">SecInterp.run()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.sec_interp_plugin.html#sec_interp.sec_interp_plugin.SecInterp.save_profile_line"><code class="docutils literal notranslate"><span class="pre">SecInterp.save_profile_line()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.sec_interp_plugin.html#sec_interp.sec_interp_plugin.SecInterp.unload"><code class="docutils literal notranslate"><span class="pre">SecInterp.unload()</span></code></a></li>
 </ul>
 </li>
 </ul>

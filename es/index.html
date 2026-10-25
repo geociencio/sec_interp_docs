@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SecInterp Documentation &mdash; documentación de SecInterp - 3.8.0</title>
+  <title>SecInterp Documentation &mdash; documentación de SecInterp - 3.11.0</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=2f1d8df3"></script>
+      <script src="_static/documentation_options.js?v=329748b9"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/translations.js?v=f85f4cfb"></script>
@@ -48,14 +48,14 @@
 <li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
-<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Core Component Distinction Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Guía de Distinción de Componentes «Core»</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE_EN.html">Core Components Distinction Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">sec_interp</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project Archive</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Phase Closure - SecInterp v2.7.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.8.0.html">Cierre de Fase - SecInterp v2.8.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.9.0.html">Phase Closure - SecInterp v2.9.0</a></li>
@@ -96,7 +96,7 @@
 <li class="toctree-l2"><a class="reference internal" href="USER_GUIDE.html#introduction">1. Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="USER_GUIDE.html#the-main-window">2. The Main Window</a></li>
 <li class="toctree-l2"><a class="reference internal" href="USER_GUIDE.html#step-by-step-tutorial-creating-a-profile">3. Step-by-Step Tutorial: Creating a Profile</a></li>
-<li class="toctree-l2"><a class="reference internal" href="USER_GUIDE.html#advanced-features-v3-0-0">4. Advanced Features (v3.0.0)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="USER_GUIDE.html#advanced-features">4. Advanced Features</a></li>
 <li class="toctree-l2"><a class="reference internal" href="USER_GUIDE.html#preview-panel-tools">5. Preview Panel &amp; Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="USER_GUIDE.html#closing-saving">6. Closing &amp; Saving</a></li>
 </ul>
@@ -106,20 +106,13 @@
 <li class="toctree-l2"><a class="reference internal" href="ARCHITECTURE.html#overview">🎯 Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ARCHITECTURE.html#directory-structure">📂 Directory Structure</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ARCHITECTURE.html#system-architecture">🏗️ System Architecture</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ARCHITECTURE.html#visualizing-mermaid-diagrams-in-vs-code">🧩 Visualizing Mermaid Diagrams in VS Code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ARCHITECTURE.html#gui-layer-user-interface">🖥️ GUI Layer - User Interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ARCHITECTURE.html#core-layer-business-logic">⚙️ Core Layer - Business Logic</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ARCHITECTURE.html#level-validation-architecture">🛡️ 3-Level Validation Architecture</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ARCHITECTURE.html#exporters-layer-data-export">📤 Exporters Layer - Data Export</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ARCHITECTURE.html#main-data-flows">🔄 Main Data Flows</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ARCHITECTURE.html#design-patterns">🎨 Design Patterns</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ARCHITECTURE.html#external-dependencies">🌐 External Dependencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ARCHITECTURE.html#performance-optimizations">⚡ Performance Optimizations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ARCHITECTURE.html#project-metrics">📊 Project Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ARCHITECTURE.html#references">🔗 References</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ARCHITECTURE.html#exporters-layer">📤 Exporters Layer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ARCHITECTURE.html#design-principles">🎨 Design Principles</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ARCHITECTURE.html#extensibility">🚀 Extensibility</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ARCHITECTURE.html#deployment">📦 Deployment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ARCHITECTURE.html#project-metrics">📊 Project Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ARCHITECTURE.html#quality-assurance-security-scanning">🔒 Quality Assurance &amp; Security Scanning</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ARCHITECTURE.html#final-notes">📝 Final Notes</a></li>
 </ul>
 </li>
@@ -140,11 +133,11 @@
 <li class="toctree-l2"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html#key-data-structures">🧬 Key Data Structures</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Core Component Distinction Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html#the-fundamental-distinction">⚠️ The Fundamental Distinction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html#rules-for-developers-and-ai">🧭 Rules for Developers and AI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html#differentiated-testing-strategy">🧪 Differentiated Testing Strategy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html#decoupling-summary-january-2026">🛠️ Decoupling Summary (January 2026)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Guía de Distinción de Componentes «Core»</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html#la-distincion-fundamental">⚠️ La Distinción Fundamental</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html#reglas-para-desarrolladores-e-ia">🧭 Reglas para Desarrolladores e IA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html#estrategia-de-testing-diferenciada">🧪 Estrategia de Testing Diferenciada</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html#resumen-de-desacoplamiento-enero-2026">🛠️ Resumen de Desacoplamiento (Enero 2026)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE_EN.html">Core Components Distinction Guide</a><ul>
@@ -155,6 +148,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#release-train-unblock-v3-10-0-published">[2026-10-11] RELEASE TRAIN UNBLOCK &amp; v3.10.0 PUBLISHED</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#qgis-mcp-integration-vendored-fork-qgis-driver-subagent">[2026-10-11] QGIS MCP INTEGRATION (VENDORED FORK + <code class="docutils literal notranslate"><span class="pre">qgis_driver</span></code> SUBAGENT)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#phase-closure-v3-7-0-i18n-quality-gate-ux-qt6-qgis-4-enum-migration">[2026-09-12] PHASE CLOSURE v3.7.0 (I18N QUALITY GATE, UX &amp; QT6/QGIS 4 ENUM MIGRATION)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#phase-closure-v3-6-0-next-gen-stability-spatial-optimization">[2026-05-18] PHASE CLOSURE v3.6.0 (NEXT-GEN STABILITY &amp; SPATIAL OPTIMIZATION)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#phase-closure-v3-5-0-operational-excellence-agentic-autonomy">[2026-04-28] PHASE CLOSURE v3.5.0 (OPERATIONAL EXCELLENCE &amp; AGENTIC AUTONOMY)</a></li>
@@ -191,13 +186,6 @@
 <li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#massive-architectural-refactoring">[2025-12-23] MASSIVE ARCHITECTURAL REFACTORING</a></li>
 <li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#cumulative-development-summary">📊 Cumulative Development Summary</a></li>
 <li class="toctree-l2"><a class="reference internal" href="MAINTENANCE_LOG.html#historical-refactoring-notes">📁 Historical Refactoring Notes</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="v2.9.0_technical_analysis.html#innovaciones-arquitectonicas">🏛️ Innovaciones Arquitectónicas</a></li>
-<li class="toctree-l2"><a class="reference internal" href="v2.9.0_technical_analysis.html#patron-domain-pure-logic-desacoplamiento-qgis">🚀 Patrón «Domain-Pure Logic» (Desacoplamiento QGIS)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="v2.9.0_technical_analysis.html#estabilidad-y-calidad-de-codigo">🧪 Estabilidad y Calidad de Código</a></li>
-<li class="toctree-l2"><a class="reference internal" href="v2.9.0_technical_analysis.html#conclusion">📈 Conclusión</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">sec_interp</a><ul>
