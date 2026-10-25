@@ -70,6 +70,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project Archive</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="v3.11.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v3.11.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Phase Closure - SecInterp v2.7.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.8.0.html">Cierre de Fase - SecInterp v2.8.0</a></li>
@@ -109,7 +110,7 @@
 <p>Configuration Service module.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="sec_interp.core.config.ConfigService">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.core.config.</span></span><span class="sig-name descname"><span class="pre">ConfigService</span></span><a class="headerlink" href="#sec_interp.core.config.ConfigService" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.core.config.</span></span><span class="sig-name descname"><span class="pre">ConfigService</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">store</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.core.interfaces.settings_store.html#sec_interp.core.interfaces.settings_store.SettingsStore" title="sec_interp.core.interfaces.settings_store.SettingsStore"><span class="pre">SettingsStore</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sec_interp.core.config.ConfigService" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Service to handle plugin configuration and persistent settings.</p>
 <dl class="py attribute">
@@ -184,8 +185,10 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.core.config.ConfigService.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.core.config.ConfigService.__init__" title="Link to this definition"></a></dt>
-<dd><p>Initialize the Configuration Service with QgsSettings.</p>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">store</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="sec_interp.core.interfaces.settings_store.html#sec_interp.core.interfaces.settings_store.SettingsStore" title="sec_interp.core.interfaces.settings_store.SettingsStore"><span class="pre">SettingsStore</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.core.config.ConfigService.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the Configuration Service with a settings store.</p>
+<p>The plugin injects <code class="docutils literal notranslate"><span class="pre">QgsSettingsStore</span></code>; headless/core callers get an
+in-memory store that is immediately usable and never touches QGIS.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -234,7 +237,7 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.core.config.ConfigService.tr">
 <span class="sig-name descname"><span class="pre">tr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#sec_interp.core.config.ConfigService.tr" title="Link to this definition"></a></dt>
-<dd><p>Translate a message using QCoreApplication.</p>
+<dd><p>Translate a message using the injected translator.</p>
 </dd></dl>
 
 </dd></dl>

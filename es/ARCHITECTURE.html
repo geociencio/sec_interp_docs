@@ -483,6 +483,7 @@ window.runMermaid = runMermaid;</script>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project Archive</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="v3.11.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v3.11.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Phase Closure - SecInterp v2.7.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.8.0.html">Cierre de Fase - SecInterp v2.8.0</a></li>
@@ -610,7 +611,7 @@ Version 3.11.0 | Last Updated: 2026-10-24</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">services/export_service.py</span></code> — 13-line compatibility shim → <a class="reference external" href="https://github.com/geociencio/sec_interp/blob/main/docs/code_walkthrough_v2/core_services.md"><code class="docutils literal notranslate"><span class="pre">core_services</span></code></a> · <a class="reference external" href="https://github.com/geociencio/sec_interp/blob/main/docs/code_walkthrough_v2/layer_core_services.md">doc</a></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">services/export/</span></code> — Export package (orchestrator + handlers) → <a class="reference external" href="https://github.com/geociencio/sec_interp/blob/main/docs/code_walkthrough_v2/core_services_export.md"><code class="docutils literal notranslate"><span class="pre">core_services_export</span></code></a> · <a class="reference external" href="https://github.com/geociencio/sec_interp/blob/main/docs/code_walkthrough_v2/layer_core_services_export.md"><code class="docutils literal notranslate"><span class="pre">layer_core_services_export</span></code></a> · <a class="reference external" href="https://github.com/geociencio/sec_interp/blob/main/docs/code_walkthrough_v2/layer_core_services_export.md">doc</a></p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">services/export/orchestrator.py</span></code>, <code class="docutils literal notranslate"><span class="pre">path_resolver.py</span></code>, <code class="docutils literal notranslate"><span class="pre">map_settings_factory.py</span></code>, <code class="docutils literal notranslate"><span class="pre">compat.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">services/export/orchestrator.py</span></code>, <code class="docutils literal notranslate"><span class="pre">path_resolver.py</span></code>, <code class="docutils literal notranslate"><span class="pre">compat.py</span></code>; map settings factory lives in <code class="docutils literal notranslate"><span class="pre">exporters/map_settings.py</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">services/export/handlers/</span></code> (topography, geology, structures, drillholes, drillholes_3d, interpretations, axes) → <a class="reference external" href="https://github.com/geociencio/sec_interp/blob/main/docs/code_walkthrough_v2/layer_core_services_export_handlers.md"><code class="docutils literal notranslate"><span class="pre">layer_core_services_export_handlers</span></code></a></p></li>
 </ul>
 </li>
@@ -1429,9 +1430,9 @@ Version 3.11.0 | Last Updated: 2026-10-24</p>
 <td><p><code class="docutils literal notranslate"><span class="pre">i18n.py</span></code> → <a class="reference external" href="https://github.com/geociencio/sec_interp/blob/main/docs/code_walkthrough_v2/core_utils.md"><code class="docutils literal notranslate"><span class="pre">core_utils</span></code></a></p></td>
 <td><p>Translation helpers, locale management.</p></td>
 </tr>
-<tr class="row-even"><td><p>IO Utils</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">io.py</span></code> → <a class="reference external" href="https://github.com/geociencio/sec_interp/blob/main/docs/code_walkthrough_v2/layer_core_utils.md"><code class="docutils literal notranslate"><span class="pre">layer_core_utils</span></code></a></p></td>
-<td><p>File I/O, serialization, format handling.</p></td>
+<tr class="row-even"><td><p>QGIS I/O</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exporters/qgis_io.py</span></code> → <a class="reference external" href="https://github.com/geociencio/sec_interp/blob/main/docs/code_walkthrough_v2/layer_exporters.md"><code class="docutils literal notranslate"><span class="pre">layer_exporters</span></code></a></p></td>
+<td><p>Vector writer adapter (Shapefile/GPKG/DXF).</p></td>
 </tr>
 <tr class="row-odd"><td><p>Metadata Reader</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">metadata_reader.py</span></code> → <a class="reference external" href="https://github.com/geociencio/sec_interp/blob/main/docs/code_walkthrough_v2/layer_core_utils.md"><code class="docutils literal notranslate"><span class="pre">layer_core_utils</span></code></a></p></td>

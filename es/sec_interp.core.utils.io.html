@@ -19,9 +19,7 @@
       <script src="_static/translations.js?v=f85f4cfb"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Índice" href="genindex.html" />
-    <link rel="search" title="Búsqueda" href="search.html" />
-    <link rel="next" title="sec_interp.core.utils.metadata_reader module" href="sec_interp.core.utils.metadata_reader.html" />
-    <link rel="prev" title="sec_interp.core.utils.i18n module" href="sec_interp.core.utils.i18n.html" /> 
+    <link rel="search" title="Búsqueda" href="search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -44,7 +42,7 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="USER_GUIDE.html">Guía de Usuario de SecInterp</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
@@ -52,25 +50,11 @@
 <li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Guía de Distinción de Componentes «Core»</a></li>
 <li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE_EN.html">Core Components Distinction Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">sec_interp</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="sec_interp.html">sec_interp package</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.html#sec_interp.classFactory"><code class="docutils literal notranslate"><span class="pre">classFactory()</span></code></a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="sec_interp.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l4 current"><a class="reference internal" href="sec_interp.core.html">sec_interp.core package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.exporters.html">sec_interp.exporters package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.gui.html">sec_interp.gui package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.plugin.html">sec_interp.plugin package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.resources.html">sec_interp.resources package</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.html#submodules">Submodules</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">sec_interp</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project Archive</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="v3.11.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v3.11.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Phase Closure - SecInterp v2.7.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.8.0.html">Cierre de Fase - SecInterp v2.8.0</a></li>
@@ -92,10 +76,6 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="modules.html">sec_interp</a></li>
-          <li class="breadcrumb-item"><a href="sec_interp.html">sec_interp package</a></li>
-          <li class="breadcrumb-item"><a href="sec_interp.core.html">sec_interp.core package</a></li>
-          <li class="breadcrumb-item"><a href="sec_interp.core.utils.html">sec_interp.core.utils package</a></li>
       <li class="breadcrumb-item active">sec_interp.core.utils.io module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/sec_interp.core.utils.io.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
@@ -106,48 +86,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-sec_interp.core.utils.io">
-<span id="sec-interp-core-utils-io-module"></span><h1>sec_interp.core.utils.io module<a class="headerlink" href="#module-sec_interp.core.utils.io" title="Link to this heading"></a></h1>
-<p>I/O Utilities Module.</p>
-<p>File I/O operations and user messaging.</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="sec_interp.core.utils.io.create_shapefile_writer">
-<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.io.</span></span><span class="sig-name descname"><span class="pre">create_shapefile_writer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qgis.core.QgsVectorFileWriter</span></span></span><a class="headerlink" href="#sec_interp.core.utils.io.create_shapefile_writer" title="Link to this definition"></a></dt>
-<dd><p>Delegate to create_vector_writer (deprecated shim).</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="sec_interp.core.utils.io.create_vector_writer">
-<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.io.</span></span><span class="sig-name descname"><span class="pre">create_vector_writer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsCoordinateReferenceSystem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">qgis.core.QgsFields</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">qgis.core.QgsWkbTypes.Type.LineString</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite_layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symbology_export</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">qgis.core.QgsVectorFileWriter.SymbologyExport.NoSymbology</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">qgis.core.QgsVectorFileWriter</span></span></span><a class="headerlink" href="#sec_interp.core.utils.io.create_vector_writer" title="Link to this definition"></a></dt>
-<dd><p>Create and initialize a QgsVectorFileWriter for various vector formats.</p>
-<p>Supports Shapefile (.shp), GeoPackage (.gpkg), and DXF (.dxf) based on extension.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>output_path</strong> – File system path for the new file.</p></li>
-<li><p><strong>crs</strong> – The Coordinate Reference System.</p></li>
-<li><p><strong>fields</strong> – The attribute fields definition.</p></li>
-<li><p><strong>geometry_type</strong> – The mapping geometry type (default: LineString).</p></li>
-<li><p><strong>layer_name</strong> – Optional conceptual layer name.</p></li>
-<li><p><strong>overwrite_layer</strong> – Whether to overwrite existing layers.</p></li>
-<li><p><strong>symbology_export</strong> – Symbology export mode (default: NoSymbology).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Devuelve<span class="colon">:</span></dt>
-<dd class="field-even"><p>An initialized writer object.</p>
-</dd>
-</dl>
-</dd></dl>
-
+  <section id="sec-interp-core-utils-io-module">
+<h1>sec_interp.core.utils.io module<a class="headerlink" href="#sec-interp-core-utils-io-module" title="Link to this heading"></a></h1>
 </section>
 
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
-        <a href="sec_interp.core.utils.i18n.html" class="btn btn-neutral float-left" title="sec_interp.core.utils.i18n module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
-        <a href="sec_interp.core.utils.metadata_reader.html" class="btn btn-neutral float-right" title="sec_interp.core.utils.metadata_reader module" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 

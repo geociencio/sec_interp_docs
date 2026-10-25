@@ -19,7 +19,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="sec_interp.core.utils.io module" href="sec_interp.core.utils.io.html" />
+    <link rel="next" title="sec_interp.core.utils.metadata_reader module" href="sec_interp.core.utils.metadata_reader.html" />
     <link rel="prev" title="sec_interp.core.utils.geology module" href="sec_interp.core.utils.geology.html" /> 
 </head>
 
@@ -70,6 +70,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project Archive</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="v3.11.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v3.11.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Phase Closure - SecInterp v2.7.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.8.0.html">Cierre de Fase - SecInterp v2.8.0</a></li>
@@ -108,29 +109,31 @@
   <section id="module-sec_interp.core.utils.i18n">
 <span id="sec-interp-core-utils-i18n-module"></span><h1>sec_interp.core.utils.i18n module<a class="headerlink" href="#module-sec_interp.core.utils.i18n" title="Link to this heading"></a></h1>
 <p>Internationalization (i18n) utilities for SecInterp.</p>
-<p>Provides standardized ways to handle translations across the project,
-especially for classes that do not inherit from QObject.</p>
+<p>Core classes use an injectable translator so this package stays QGIS-agnostic.
+The Qt adapter is installed by the plugin composition root at startup.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="sec_interp.core.utils.i18n.TranslatableMixin">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.i18n.</span></span><span class="sig-name descname"><span class="pre">TranslatableMixin</span></span><a class="headerlink" href="#sec_interp.core.utils.i18n.TranslatableMixin" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Mixin to provide a standardized tr() method for translations.</p>
-<p>Classes using this mixin can call self.tr(“message”) to get the translated
-string using the class name as the translation context.</p>
+<p>Mixin providing a standardized <code class="docutils literal notranslate"><span class="pre">tr()</span></code> using the class name as context.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sec_interp.core.utils.i18n.TranslatableMixin.tr">
 <span class="sig-name descname"><span class="pre">tr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#sec_interp.core.utils.i18n.TranslatableMixin.tr" title="Link to this definition"></a></dt>
-<dd><p>Translate a message using QCoreApplication.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>message</strong> – The source string to translate.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The translated string.</p>
-</dd>
-</dl>
+<dd><p>Translate a message with the class name as translation context.</p>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sec_interp.core.utils.i18n.set_translator">
+<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.i18n.</span></span><span class="sig-name descname"><span class="pre">set_translator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">translator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sec_interp.core.utils.i18n.set_translator" title="Link to this definition"></a></dt>
+<dd><p>Install the translation backend (<code class="docutils literal notranslate"><span class="pre">None</span></code> restores identity).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="sec_interp.core.utils.i18n.translate">
+<span class="sig-prename descclassname"><span class="pre">sec_interp.core.utils.i18n.</span></span><span class="sig-name descname"><span class="pre">translate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#sec_interp.core.utils.i18n.translate" title="Link to this definition"></a></dt>
+<dd><p>Translate a message using the injected backend, or return it unchanged.</p>
 </dd></dl>
 
 </section>
@@ -140,7 +143,7 @@ string using the class name as the translation context.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="sec_interp.core.utils.geology.html" class="btn btn-neutral float-left" title="sec_interp.core.utils.geology module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="sec_interp.core.utils.io.html" class="btn btn-neutral float-right" title="sec_interp.core.utils.io module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="sec_interp.core.utils.metadata_reader.html" class="btn btn-neutral float-right" title="sec_interp.core.utils.metadata_reader module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

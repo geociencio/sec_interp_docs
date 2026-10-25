@@ -1,0 +1,397 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Análisis Técnico Avanzado: SecInterp v3.11.0 &mdash; SecInterp 3.11.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8905d4f5"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Análisis Técnico Avanzado: SecInterp v2.9.0" href="v2.9.0_technical_analysis.html" />
+    <link rel="prev" title="sec_interp.sec_interp_plugin module" href="sec_interp.sec_interp_plugin.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            SecInterp
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="USER_GUIDE.html">SecInterp User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ARCHITECTURE.html">SecInterp - Detailed Project Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DEVELOPMENT_GUIDE.html">SecInterp - Development Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TECHNICAL_COMPENDIUM.html">SecInterp - Technical Compendium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE.html">Guía de Distinción de Componentes “Core”</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CORE_DISTINCTION_GUIDE_EN.html">Core Components Distinction Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MAINTENANCE_LOG.html">SecInterp - Maintenance &amp; Release Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">sec_interp</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Project Archive</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Análisis Técnico Avanzado: SecInterp v3.11.0</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#innovaciones-arquitectonicas">🏛️ Innovaciones Arquitectónicas</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#core-realmente-qgis-agnostico">1. <code class="docutils literal notranslate"><span class="pre">core/</span></code> realmente QGIS-agnóstico</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#descomposicion-de-modulos-grandes">2. Descomposición de módulos grandes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#seleccion-de-seccion-y-configuracion-de-interpretaciones">3. Selección de sección y configuración de interpretaciones</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#extract-then-compute-y-puertos">🚀 Extract-then-Compute y puertos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#estabilidad-y-calidad">🧪 Estabilidad y Calidad</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#suite-y-gates">Suite y gates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#analyzer-actual">Analyzer actual</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#deuda-conocida">Deuda conocida</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#conclusion">📈 Conclusión</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Phase Closure - SecInterp v2.7.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.8.0.html">Cierre de Fase - SecInterp v2.8.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.9.0.html">Phase Closure - SecInterp v2.9.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase_closure_v3.0.0.html">Cierre de Fase - SecInterp v3.0.0</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SecInterp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Análisis Técnico Avanzado: SecInterp v3.11.0</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/v3.11.0_technical_analysis.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="analisis-tecnico-avanzado-secinterp-v3-11-0">
+<h1>Análisis Técnico Avanzado: SecInterp v3.11.0<a class="headerlink" href="#analisis-tecnico-avanzado-secinterp-v3-11-0" title="Link to this heading"></a></h1>
+<p>La versión 3.11.0 consolida la madurez arquitectónica de SecInterp: el núcleo ya no
+depende de QGIS, los módulos monolíticos se han descompuesto y la interfaz se ha
+reorganizado alrededor de flujos de trabajo claros. Este análisis describe el estado
+técnico actual, sus métricas y la deuda que queda.</p>
+<p><strong>Versión</strong>: 3.11.0 · <strong>QGIS</strong>: 3.28–4.99 · <strong>Fecha</strong>: 2026-10-24</p>
+<hr class="docutils" />
+<section id="innovaciones-arquitectonicas">
+<h2>🏛️ Innovaciones Arquitectónicas<a class="headerlink" href="#innovaciones-arquitectonicas" title="Link to this heading"></a></h2>
+<section id="core-realmente-qgis-agnostico">
+<h3>1. <code class="docutils literal notranslate"><span class="pre">core/</span></code> realmente QGIS-agnóstico<a class="headerlink" href="#core-realmente-qgis-agnostico" title="Link to this heading"></a></h3>
+<p>El cambio más profundo de esta etapa: <strong><code class="docutils literal notranslate"><span class="pre">core/</span></code> ya no importa <code class="docutils literal notranslate"><span class="pre">qgis.*</span></code> ni
+<code class="docutils literal notranslate"><span class="pre">qgis.PyQt</span></code></strong>. La puerta <code class="docutils literal notranslate"><span class="pre">tests/core/test_architecture_boundary.py</span></code> mantiene una
+allowlist que ahora está <strong>vacía</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">CORE_VIOLATIONS</span> <span class="o">=</span> <span class="p">{}</span>
+</pre></div>
+</div>
+<p>Las dependencias que antes estaban dispersas se sustituyeron por puertos y adaptadores:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Antes</p></th>
+<th class="head"><p>Ahora</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">QCoreApplication.translate</span></code> en core</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">TranslatableMixin.set_translator(...)</span></code>; el plugin instala Qt</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">QgsSettings()</span></code> en <code class="docutils literal notranslate"><span class="pre">ConfigService</span></code> / <code class="docutils literal notranslate"><span class="pre">AccessControlService</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SettingsStore</span></code>; <code class="docutils literal notranslate"><span class="pre">QgsSettingsStore</span></code> vive en <code class="docutils literal notranslate"><span class="pre">gui/adapters</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">QgsVectorFileWriter</span></code> dentro de <code class="docutils literal notranslate"><span class="pre">core</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exporters/qgis_io.py</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">QgsMapSettings</span></code> en <code class="docutils literal notranslate"><span class="pre">core/services/export/</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">exporters/map_settings.py</span></code>; factory inyectada en <code class="docutils literal notranslate"><span class="pre">ExportService</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>La composición raíz (<code class="docutils literal notranslate"><span class="pre">SecInterp</span></code>) crea el store de QGIS, el servicio de configuración
+y el control de acceso; <code class="docutils literal notranslate"><span class="pre">core</span></code> usa por defecto un <code class="docutils literal notranslate"><span class="pre">InMemorySettingsStore</span></code>. El resultado
+se puede comprobar sin QGIS:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>CORE IMPORT OK ProfileController ExportService
+</pre></div>
+</div>
+<blockquote>
+<div><p>[!TIP]
+<strong>Impacto</strong>: <code class="docutils literal notranslate"><span class="pre">core</span></code> es ahora testeable en Python puro y la frontera Core/GUI deja
+de ser una convención para convertirse en una regla ejecutable.</p>
+</div></blockquote>
+</section>
+<section id="descomposicion-de-modulos-grandes">
+<h3>2. Descomposición de módulos grandes<a class="headerlink" href="#descomposicion-de-modulos-grandes" title="Link to this heading"></a></h3>
+<p>La puerta de tamaño (<code class="docutils literal notranslate"><span class="pre">module_size_gate</span></code>, límite 400 líneas) está en <strong>PASS</strong> con
+<strong>0 módulos &gt;400</strong>.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Módulo</p></th>
+<th class="head text-right"><p>Antes</p></th>
+<th class="head text-right"><p>Ahora</p></th>
+<th class="head"><p>Estrategia</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">core/controller.py</span></code></p></td>
+<td class="text-right"><p>465</p></td>
+<td class="text-right"><p><strong>298</strong></p></td>
+<td><p>fachada + procesadores de perfil</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">gui/adapters/geometry.py</span></code></p></td>
+<td class="text-right"><p>598</p></td>
+<td class="text-right"><p><strong>69</strong></p></td>
+<td><p>fachada + <code class="docutils literal notranslate"><span class="pre">geometry_*</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">gui/preview_layer_factory.py</span></code></p></td>
+<td class="text-right"><p>535</p></td>
+<td class="text-right"><p><strong>202</strong></p></td>
+<td><p>fachada + <code class="docutils literal notranslate"><span class="pre">preview_layers/</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">exporters/interpretation_3d_exporter.py</span></code></p></td>
+<td class="text-right"><p>472</p></td>
+<td class="text-right"><p><strong>155</strong></p></td>
+<td><p>fachada + <code class="docutils literal notranslate"><span class="pre">interpretation_3d/</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">gui/preview_renderer.py</span></code></p></td>
+<td class="text-right"><p>438</p></td>
+<td class="text-right"><p><strong>335</strong></p></td>
+<td><p>collectors + cleanup</p></td>
+</tr>
+</tbody>
+</table>
+<p>Los módulos extraídos conservan los puntos de parcheo de los tests mediante wrappers
+finos; la lógica de negocio se movió a piezas con una única responsabilidad.</p>
+</section>
+<section id="seleccion-de-seccion-y-configuracion-de-interpretaciones">
+<h3>3. Selección de sección y configuración de interpretaciones<a class="headerlink" href="#seleccion-de-seccion-y-configuracion-de-interpretaciones" title="Link to this heading"></a></h3>
+<p>Dos mejoras de flujo completan la arquitectura de UI:</p>
+<ul class="simple">
+<li><p><strong>Section Feature Selector</strong> (<code class="docutils literal notranslate"><span class="pre">section_feature_selector.py</span></code>): lista <strong>solo líneas de
+exactamente dos vértices</strong>, con formato <code class="docutils literal notranslate"><span class="pre">fid</span> <span class="pre">—</span> <span class="pre">label</span></code> y campo de etiqueta <code class="docutils literal notranslate"><span class="pre">Auto</span></code> o
+un atributo. <code class="docutils literal notranslate"><span class="pre">section_feature_id</span></code> se propaga a topografía, geología, estructuras,
+sondajes, LOD y tareas asíncronas; las claves de caché ya lo aíslan.</p></li>
+<li><p><strong>Interpretation Settings</strong> es ahora una tab dentro de <code class="docutils literal notranslate"><span class="pre">SettingsPage</span></code>; el sidebar
+pasó de 7 a <strong>6 entradas</strong>. <code class="docutils literal notranslate"><span class="pre">MainWindow.page_interpretation</span></code> sigue siendo un alias
+del tab, por lo que persistencia y consumidores no cambiaron.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="extract-then-compute-y-puertos">
+<h2>🚀 Extract-then-Compute y puertos<a class="headerlink" href="#extract-then-compute-y-puertos" title="Link to this heading"></a></h2>
+<p>El patrón de dos etapas sigue siendo el eje del diseño:</p>
+<ol class="arabic simple">
+<li><p><strong>Extracción (GUI, hilo principal)</strong>: los adapters convierten <code class="docutils literal notranslate"><span class="pre">QgsVectorLayer</span></code>,
+<code class="docutils literal notranslate"><span class="pre">QgsRasterLayer</span></code> y <code class="docutils literal notranslate"><span class="pre">QgsFeature</span></code> en DTOs, WKT, diccionarios y primitivas.</p></li>
+<li><p><strong>Cómputo (core, sin QGIS)</strong>: servicios y procesadores calculan geología,
+estructuras, sondajes y perfiles; no tocan objetos QGIS no thread-safe.</p></li>
+</ol>
+<p>La novedad es que la frontera también cubre <strong>infraestructura</strong>:</p>
+<ul class="simple">
+<li><p><strong>i18n</strong>: puerto de traducción con fallback identity y adaptador Qt.</p></li>
+<li><p><strong>settings</strong>: <code class="docutils literal notranslate"><span class="pre">SettingsStore</span></code> con implementación en memoria y QGIS.</p></li>
+<li><p><strong>export</strong>: escritores y <code class="docutils literal notranslate"><span class="pre">QgsMapSettings</span></code> viven en <code class="docutils literal notranslate"><span class="pre">exporters/</span></code>; <code class="docutils literal notranslate"><span class="pre">ExportService</span></code>
+recibe la factory desde composición.</p></li>
+<li><p><strong>logging</strong>: <code class="docutils literal notranslate"><span class="pre">logger_config</span></code> importa QGIS solo cuando usa sus handlers.</p></li>
+</ul>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Característica</p></th>
+<th class="head"><p>v2.9.0</p></th>
+<th class="head"><p>v3.11.0</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Núcleo QGIS-agnóstico</p></td>
+<td><p>Parcial (allowlist)</p></td>
+<td><p><strong>Sí (allowlist vacía)</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>Tests</p></td>
+<td><p>199</p></td>
+<td><p><strong>839 ejecutados / 888 estáticos</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Módulos &gt;400 líneas</p></td>
+<td><p>5</p></td>
+<td><p><strong>0</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>Idiomas de interfaz</p></td>
+<td><p>10</p></td>
+<td><p><strong>14 (inglés + 13)</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>QGIS máximo</p></td>
+<td><p>3.x</p></td>
+<td><p><strong>4.99</strong></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="docutils" />
+<section id="estabilidad-y-calidad">
+<h2>🧪 Estabilidad y Calidad<a class="headerlink" href="#estabilidad-y-calidad" title="Link to this heading"></a></h2>
+<section id="suite-y-gates">
+<h3>Suite y gates<a class="headerlink" href="#suite-y-gates" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>839 tests OK</strong>, <strong>888 tests estáticos</strong>, <strong>131 archivos</strong> de test.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ruff</span></code>, <code class="docutils literal notranslate"><span class="pre">format</span></code>, <code class="docutils literal notranslate"><span class="pre">mypy</span></code> (core + exporters), <code class="docutils literal notranslate"><span class="pre">check_docs</span></code>, <code class="docutils literal notranslate"><span class="pre">forge</span> <span class="pre">validate</span></code>,
+<code class="docutils literal notranslate"><span class="pre">sync_metrics</span> <span class="pre">--validate</span></code> e <code class="docutils literal notranslate"><span class="pre">i18n-check</span></code>: PASS.</p></li>
+<li><p>QGIS 3.28 / Python 3.9 compatible; QGIS 4.2 probado y desplegado.</p></li>
+</ul>
+</section>
+<section id="analyzer-actual">
+<h3>Analyzer actual<a class="headerlink" href="#analyzer-actual" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Métrica</p></th>
+<th class="head text-right"><p>Valor</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Quality / Module Stability</p></td>
+<td class="text-right"><p><strong>56.6</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>Maintainability</p></td>
+<td class="text-right"><p><strong>99.9</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Security</p></td>
+<td class="text-right"><p><strong>100.0</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>CC gate</p></td>
+<td class="text-right"><p><strong>PASS</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Module size</p></td>
+<td class="text-right"><p><strong>PASS (0 &gt;400)</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>Issues</p></td>
+<td class="text-right"><p><strong>37</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p>Desglose de issues:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Tipo</p></th>
+<th class="head text-right"><p>Cantidad</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GOD_OBJECT</span></code></p></td>
+<td class="text-right"><p>20</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">MISSING_DOCSTRING</span></code></p></td>
+<td class="text-right"><p>9</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NON_PYTHONIC_LOOP</span></code></p></td>
+<td class="text-right"><p>4</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">POTENTIAL_MISSING_SLOT</span></code></p></td>
+<td class="text-right"><p>2</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SPAGHETTI_CODE</span></code></p></td>
+<td class="text-right"><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">UNPRECISE_LAYER</span></code></p></td>
+<td class="text-right"><p>1</p></td>
+</tr>
+</tbody>
+</table>
+<p>El <strong>quality score 56.6</strong> es la media del Maintainability Index por módulo, no una
+nota de cobertura ni de corrección: está dominado por el tamaño y la complejidad de
+los módulos. La mantenibilidad (99.9) y la seguridad (100) se miden aparte.</p>
+</section>
+<section id="deuda-conocida">
+<h3>Deuda conocida<a class="headerlink" href="#deuda-conocida" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>20 <code class="docutils literal notranslate"><span class="pre">GOD_OBJECT</span></code></strong>, incluyendo <code class="docutils literal notranslate"><span class="pre">ProfileController</span></code> (21 atributos), diferido.</p></li>
+<li><p><strong>9 funciones públicas sin docstring</strong>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uv</span></code> en Manjaro stable sigue en <strong>0.12.10</strong> (0.13.x está en unstable/Arch).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Invert</span> <span class="pre">line</span></code> no implementado; es una feature futura.</p></li>
+<li><p>Interop §9 (B1) pendiente.</p></li>
+<li><p>El benchmark <code class="docutils literal notranslate"><span class="pre">projection_math_performance</span></code> puede fallar por timing
+(0,0501 s vs 0,0500 s) y pasar al repetirse; no es una regresión funcional.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="conclusion">
+<h2>📈 Conclusión<a class="headerlink" href="#conclusion" title="Link to this heading"></a></h2>
+<p>SecInterp v3.11.0 ya no es solo un plugin con “arquitectura limpia” documentada:
+<strong>la frontera Core/GUI se ejecuta en tests</strong>, los módulos grandes se han descompuesto
+y la UI refleja mejor los flujos reales (sección → preview → interpretación/export).</p>
+<p>La base queda preparada para:</p>
+<ol class="arabic simple">
+<li><p>cerrar la deuda de <code class="docutils literal notranslate"><span class="pre">GOD_OBJECT</span></code> y docstrings;</p></li>
+<li><p>avanzar con interop §9 <strong>B1</strong>;</p></li>
+<li><p>añadir <code class="docutils literal notranslate"><span class="pre">Invert</span> <span class="pre">line</span></code> como extensión del selector de sección;</p></li>
+<li><p>mantener <code class="docutils literal notranslate"><span class="pre">core</span></code> sin QGIS como invariante de CI.</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sec_interp.sec_interp_plugin.html" class="btn btn-neutral float-left" title="sec_interp.sec_interp_plugin module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="v2.9.0_technical_analysis.html" class="btn btn-neutral float-right" title="Análisis Técnico Avanzado: SecInterp v2.9.0" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Juan M Bernales.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

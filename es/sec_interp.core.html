@@ -71,6 +71,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project Archive</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="v3.11.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v3.11.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Phase Closure - SecInterp v2.7.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.8.0.html">Cierre de Fase - SecInterp v2.8.0</a></li>
@@ -422,6 +423,11 @@
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.interfaces.preview_interface.html#sec_interp.core.interfaces.preview_interface.IPreviewService"><code class="docutils literal notranslate"><span class="pre">IPreviewService</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.interfaces.settings_store.html">sec_interp.core.interfaces.settings_store module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.interfaces.settings_store.html#sec_interp.core.interfaces.settings_store.InMemorySettingsStore"><code class="docutils literal notranslate"><span class="pre">InMemorySettingsStore</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.interfaces.settings_store.html#sec_interp.core.interfaces.settings_store.SettingsStore"><code class="docutils literal notranslate"><span class="pre">SettingsStore</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.interfaces.structure_interface.html">sec_interp.core.interfaces.structure_interface module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.interfaces.structure_interface.html#sec_interp.core.interfaces.structure_interface.IStructureService"><code class="docutils literal notranslate"><span class="pre">IStructureService</span></code></a></li>
 </ul>
@@ -469,7 +475,6 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.services.export.html">sec_interp.core.services.export package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.services.export.html#sec_interp.core.services.export.ExportService"><code class="docutils literal notranslate"><span class="pre">ExportService</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.services.export.html#sec_interp.core.services.export.create_map_settings"><code class="docutils literal notranslate"><span class="pre">create_map_settings()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.services.export.html#sec_interp.core.services.export.get_profile_name"><code class="docutils literal notranslate"><span class="pre">get_profile_name()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.services.export.html#sec_interp.core.services.export.resolve_export_path"><code class="docutils literal notranslate"><span class="pre">resolve_export_path()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.services.export.html#subpackages">Subpackages</a></li>
@@ -528,7 +533,6 @@
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.calculate_line_azimuth"><code class="docutils literal notranslate"><span class="pre">calculate_line_azimuth()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.cardinal_to_azimuth"><code class="docutils literal notranslate"><span class="pre">cardinal_to_azimuth()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.create_coordinate_transform"><code class="docutils literal notranslate"><span class="pre">create_coordinate_transform()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.create_shapefile_writer"><code class="docutils literal notranslate"><span class="pre">create_shapefile_writer()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.extract_feature_attributes"><code class="docutils literal notranslate"><span class="pre">extract_feature_attributes()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.interpolate_elevation"><code class="docutils literal notranslate"><span class="pre">interpolate_elevation()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="sec_interp.core.utils.html#sec_interp.core.utils.interpolate_intervals_on_trajectory"><code class="docutils literal notranslate"><span class="pre">interpolate_intervals_on_trajectory()</span></code></a></li>
@@ -556,11 +560,8 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.utils.i18n.html">sec_interp.core.utils.i18n module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.i18n.html#sec_interp.core.utils.i18n.TranslatableMixin"><code class="docutils literal notranslate"><span class="pre">TranslatableMixin</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="sec_interp.core.utils.io.html">sec_interp.core.utils.io module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.io.html#sec_interp.core.utils.io.create_shapefile_writer"><code class="docutils literal notranslate"><span class="pre">create_shapefile_writer()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.io.html#sec_interp.core.utils.io.create_vector_writer"><code class="docutils literal notranslate"><span class="pre">create_vector_writer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.i18n.html#sec_interp.core.utils.i18n.set_translator"><code class="docutils literal notranslate"><span class="pre">set_translator()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="sec_interp.core.utils.i18n.html#sec_interp.core.utils.i18n.translate"><code class="docutils literal notranslate"><span class="pre">translate()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="sec_interp.core.utils.metadata_reader.html">sec_interp.core.utils.metadata_reader module</a><ul>

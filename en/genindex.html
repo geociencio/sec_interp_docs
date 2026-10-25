@@ -410,6 +410,7 @@ window.runMermaid = runMermaid;</script>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Project Archive</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="v3.11.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v3.11.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="v2.9.0_technical_analysis.html">Análisis Técnico Avanzado: SecInterp v2.9.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.7.0.html">Phase Closure - SecInterp v2.7.0</a></li>
 <li class="toctree-l1"><a class="reference internal" href="phase_closure_v2.8.0.html">Cierre de Fase - SecInterp v2.8.0</a></li>
@@ -492,6 +493,8 @@ window.runMermaid = runMermaid;</script>
 </li>
         <li><a href="sec_interp.core.exceptions.html#sec_interp.core.exceptions.SecInterpError.__init__">(sec_interp.core.exceptions.SecInterpError method)</a>
 </li>
+        <li><a href="sec_interp.core.interfaces.settings_store.html#sec_interp.core.interfaces.settings_store.InMemorySettingsStore.__init__">(sec_interp.core.interfaces.settings_store.InMemorySettingsStore method)</a>
+</li>
         <li><a href="sec_interp.core.performance_metrics.html#sec_interp.core.performance_metrics.MetricsCollector.__init__">(sec_interp.core.performance_metrics.MetricsCollector method)</a>
 </li>
         <li><a href="sec_interp.core.performance_metrics.html#sec_interp.core.performance_metrics.PerformanceMonitor.__init__">(sec_interp.core.performance_metrics.PerformanceMonitor method)</a>
@@ -529,6 +532,8 @@ window.runMermaid = runMermaid;</script>
         <li><a href="sec_interp.exporters.interpretation_exporters.html#sec_interp.exporters.interpretation_exporters.Interpretation2DExporter.__init__">(sec_interp.exporters.interpretation_exporters.Interpretation2DExporter method)</a>
 </li>
         <li><a href="sec_interp.gui.adapters.drillhole_extractor.html#sec_interp.gui.adapters.drillhole_extractor.DrillholeExtractor.__init__">(sec_interp.gui.adapters.drillhole_extractor.DrillholeExtractor method)</a>
+</li>
+        <li><a href="sec_interp.gui.adapters.qgs_settings_store.html#sec_interp.gui.adapters.qgs_settings_store.QgsSettingsStore.__init__">(sec_interp.gui.adapters.qgs_settings_store.QgsSettingsStore method)</a>
 </li>
         <li><a href="sec_interp.gui.dialog_export_manager.html#sec_interp.gui.dialog_export_manager.ExportManager.__init__">(sec_interp.gui.dialog_export_manager.ExportManager method)</a>
 </li>
@@ -1145,14 +1150,14 @@ window.runMermaid = runMermaid;</script>
 </li>
       <li><a href="sec_interp.exporters.interpretation_3d.geometry.html#sec_interp.exporters.interpretation_3d.geometry.collect_projected_features">collect_projected_features() (in module sec_interp.exporters.interpretation_3d.geometry)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sec_interp.core.domain.entities.html#id12">color (sec_interp.core.domain.entities.InterpretationPolygon attribute)</a>, <a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon.color">[1]</a>
 
       <ul>
         <li><a href="sec_interp.core.domain.html#id26">(sec_interp.core.domain.InterpretationPolygon attribute)</a>, <a href="sec_interp.core.domain.html#sec_interp.core.domain.InterpretationPolygon.color">[1]</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sec_interp.core.domain.dtos.html#id11">color_mode (sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.color_mode">[1]</a>
 
       <ul>
@@ -1303,24 +1308,16 @@ window.runMermaid = runMermaid;</script>
         <li><a href="sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.create_interp_layer">(sec_interp.gui.preview_layer_factory.PreviewLayerFactory method)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.services.export.html#sec_interp.core.services.export.create_map_settings">create_map_settings() (in module sec_interp.core.services.export)</a>
-
-      <ul>
-        <li><a href="sec_interp.core.services.export.map_settings_factory.html#sec_interp.core.services.export.map_settings_factory.create_map_settings">(in module sec_interp.core.services.export.map_settings_factory)</a>
+      <li><a href="sec_interp.exporters.map_settings.html#sec_interp.exporters.map_settings.create_map_settings">create_map_settings() (in module sec_interp.exporters.map_settings)</a>
 </li>
-      </ul></li>
       <li><a href="sec_interp.gui.utils.html#sec_interp.gui.utils.create_memory_layer">create_memory_layer() (in module sec_interp.gui.utils)</a>
 
       <ul>
         <li><a href="sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.create_memory_layer">(sec_interp.gui.preview_layer_factory.PreviewLayerFactory method)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.utils.html#sec_interp.core.utils.create_shapefile_writer">create_shapefile_writer() (in module sec_interp.core.utils)</a>
-
-      <ul>
-        <li><a href="sec_interp.core.utils.io.html#sec_interp.core.utils.io.create_shapefile_writer">(in module sec_interp.core.utils.io)</a>
+      <li><a href="sec_interp.exporters.qgis_io.html#sec_interp.exporters.qgis_io.create_shapefile_writer">create_shapefile_writer() (in module sec_interp.exporters.qgis_io)</a>
 </li>
-      </ul></li>
       <li><a href="sec_interp.gui.preview_layers.html#sec_interp.gui.preview_layers.create_smoothed_topo_layer">create_smoothed_topo_layer() (in module sec_interp.gui.preview_layers)</a>
 
       <ul>
@@ -1353,7 +1350,7 @@ window.runMermaid = runMermaid;</script>
         <li><a href="sec_interp.gui.preview_layer_factory.html#sec_interp.gui.preview_layer_factory.PreviewLayerFactory.create_topo_layer">(sec_interp.gui.preview_layer_factory.PreviewLayerFactory method)</a>
 </li>
       </ul></li>
-      <li><a href="sec_interp.core.utils.io.html#sec_interp.core.utils.io.create_vector_writer">create_vector_writer() (in module sec_interp.core.utils.io)</a>
+      <li><a href="sec_interp.exporters.qgis_io.html#sec_interp.exporters.qgis_io.create_vector_writer">create_vector_writer() (in module sec_interp.exporters.qgis_io)</a>
 </li>
       <li><a href="sec_interp.core.domain.entities.html#id13">created_at (sec_interp.core.domain.entities.InterpretationPolygon attribute)</a>, <a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon.created_at">[1]</a>
 
@@ -2457,6 +2454,8 @@ window.runMermaid = runMermaid;</script>
       </ul></li>
       <li><a href="sec_interp.gui.dialog_tool_manager.html#sec_interp.gui.dialog_tool_manager.ToolManager.initialize_tools">initialize_tools() (sec_interp.gui.dialog_tool_manager.ToolManager method)</a>
 </li>
+      <li><a href="sec_interp.core.interfaces.settings_store.html#sec_interp.core.interfaces.settings_store.InMemorySettingsStore">InMemorySettingsStore (class in sec_interp.core.interfaces.settings_store)</a>
+</li>
       <li><a href="sec_interp.gui.dialog_input_manager.html#sec_interp.gui.dialog_input_manager.InputManager">InputManager (class in sec_interp.gui.dialog_input_manager)</a>
 </li>
       <li><a href="sec_interp.plugin.html#sec_interp.plugin.InputValidationMixin">InputValidationMixin (class in sec_interp.plugin)</a>
@@ -2543,14 +2542,14 @@ window.runMermaid = runMermaid;</script>
         <li><a href="sec_interp.core.domain.task_inputs.html#id5">(sec_interp.core.domain.task_inputs.DrillholeContext attribute)</a>, <a href="sec_interp.core.domain.task_inputs.html#sec_interp.core.domain.task_inputs.DrillholeContext.interval_data">[1]</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sec_interp.core.validation.project_validator.html#sec_interp.core.validation.project_validator.ValidationParams.interval_from">interval_from (sec_interp.core.validation.project_validator.ValidationParams attribute)</a>
 
       <ul>
         <li><a href="sec_interp.core.validation.html#sec_interp.core.validation.ValidationParams.interval_from">(sec_interp.core.validation.ValidationParams attribute)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sec_interp.core.domain.dtos.html#id14">interval_from_field (sec_interp.core.domain.dtos.PreviewParams attribute)</a>, <a href="sec_interp.core.domain.dtos.html#sec_interp.core.domain.dtos.PreviewParams.interval_from_field">[1]</a>
 
       <ul>
@@ -3033,6 +3032,8 @@ window.runMermaid = runMermaid;</script>
 </li>
         <li><a href="sec_interp.core.interfaces.preview_interface.html#module-sec_interp.core.interfaces.preview_interface">sec_interp.core.interfaces.preview_interface</a>
 </li>
+        <li><a href="sec_interp.core.interfaces.settings_store.html#module-sec_interp.core.interfaces.settings_store">sec_interp.core.interfaces.settings_store</a>
+</li>
         <li><a href="sec_interp.core.interfaces.structure_interface.html#module-sec_interp.core.interfaces.structure_interface">sec_interp.core.interfaces.structure_interface</a>
 </li>
         <li><a href="sec_interp.core.models.html#module-sec_interp.core.models">sec_interp.core.models</a>
@@ -3079,8 +3080,6 @@ window.runMermaid = runMermaid;</script>
 </li>
         <li><a href="sec_interp.core.services.export.handlers.topography.html#module-sec_interp.core.services.export.handlers.topography">sec_interp.core.services.export.handlers.topography</a>
 </li>
-        <li><a href="sec_interp.core.services.export.map_settings_factory.html#module-sec_interp.core.services.export.map_settings_factory">sec_interp.core.services.export.map_settings_factory</a>
-</li>
         <li><a href="sec_interp.core.services.export.orchestrator.html#module-sec_interp.core.services.export.orchestrator">sec_interp.core.services.export.orchestrator</a>
 </li>
         <li><a href="sec_interp.core.services.export.path_resolver.html#module-sec_interp.core.services.export.path_resolver">sec_interp.core.services.export.path_resolver</a>
@@ -3126,8 +3125,6 @@ window.runMermaid = runMermaid;</script>
         <li><a href="sec_interp.core.utils.geometry_utils.processing.html#module-sec_interp.core.utils.geometry_utils.processing">sec_interp.core.utils.geometry_utils.processing</a>
 </li>
         <li><a href="sec_interp.core.utils.i18n.html#module-sec_interp.core.utils.i18n">sec_interp.core.utils.i18n</a>
-</li>
-        <li><a href="sec_interp.core.utils.io.html#module-sec_interp.core.utils.io">sec_interp.core.utils.io</a>
 </li>
         <li><a href="sec_interp.core.utils.metadata_reader.html#module-sec_interp.core.utils.metadata_reader">sec_interp.core.utils.metadata_reader</a>
 </li>
@@ -3191,9 +3188,13 @@ window.runMermaid = runMermaid;</script>
 </li>
         <li><a href="sec_interp.exporters.interpretation_exporters.html#module-sec_interp.exporters.interpretation_exporters">sec_interp.exporters.interpretation_exporters</a>
 </li>
+        <li><a href="sec_interp.exporters.map_settings.html#module-sec_interp.exporters.map_settings">sec_interp.exporters.map_settings</a>
+</li>
         <li><a href="sec_interp.exporters.pdf_exporter.html#module-sec_interp.exporters.pdf_exporter">sec_interp.exporters.pdf_exporter</a>
 </li>
         <li><a href="sec_interp.exporters.profile_exporters.html#module-sec_interp.exporters.profile_exporters">sec_interp.exporters.profile_exporters</a>
+</li>
+        <li><a href="sec_interp.exporters.qgis_io.html#module-sec_interp.exporters.qgis_io">sec_interp.exporters.qgis_io</a>
 </li>
         <li><a href="sec_interp.exporters.svg_exporter.html#module-sec_interp.exporters.svg_exporter">sec_interp.exporters.svg_exporter</a>
 </li>
@@ -3224,6 +3225,8 @@ window.runMermaid = runMermaid;</script>
         <li><a href="sec_interp.gui.adapters.layer_resolver.html#module-sec_interp.gui.adapters.layer_resolver">sec_interp.gui.adapters.layer_resolver</a>
 </li>
         <li><a href="sec_interp.gui.adapters.profile_extractor.html#module-sec_interp.gui.adapters.profile_extractor">sec_interp.gui.adapters.profile_extractor</a>
+</li>
+        <li><a href="sec_interp.gui.adapters.qgs_settings_store.html#module-sec_interp.gui.adapters.qgs_settings_store">sec_interp.gui.adapters.qgs_settings_store</a>
 </li>
         <li><a href="sec_interp.gui.adapters.structure_extractor.html#module-sec_interp.gui.adapters.structure_extractor">sec_interp.gui.adapters.structure_extractor</a>
 </li>
@@ -3814,9 +3817,11 @@ window.runMermaid = runMermaid;</script>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sec_interp.resources.resources.html#sec_interp.resources.resources.qCleanupResources">qCleanupResources() (in module sec_interp.resources.resources)</a>
 </li>
+      <li><a href="sec_interp.logger_config.html#sec_interp.logger_config.QgsLogHandler">QgsLogHandler (class in sec_interp.logger_config)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="sec_interp.logger_config.html#sec_interp.logger_config.QgsLogHandler">QgsLogHandler (class in sec_interp.logger_config)</a>
+      <li><a href="sec_interp.gui.adapters.qgs_settings_store.html#sec_interp.gui.adapters.qgs_settings_store.QgsSettingsStore">QgsSettingsStore (class in sec_interp.gui.adapters.qgs_settings_store)</a>
 </li>
       <li><a href="sec_interp.resources.resources.html#sec_interp.resources.resources.qInitResources">qInitResources() (in module sec_interp.resources.resources)</a>
 </li>
@@ -4180,6 +4185,13 @@ window.runMermaid = runMermaid;</script>
 </li>
       </ul></li>
       <li>
+    sec_interp.core.interfaces.settings_store
+
+      <ul>
+        <li><a href="sec_interp.core.interfaces.settings_store.html#module-sec_interp.core.interfaces.settings_store">module</a>
+</li>
+      </ul></li>
+      <li>
     sec_interp.core.interfaces.structure_interface
 
       <ul>
@@ -4341,13 +4353,6 @@ window.runMermaid = runMermaid;</script>
 </li>
       </ul></li>
       <li>
-    sec_interp.core.services.export.map_settings_factory
-
-      <ul>
-        <li><a href="sec_interp.core.services.export.map_settings_factory.html#module-sec_interp.core.services.export.map_settings_factory">module</a>
-</li>
-      </ul></li>
-      <li>
     sec_interp.core.services.export.orchestrator
 
       <ul>
@@ -4506,13 +4511,6 @@ window.runMermaid = runMermaid;</script>
 
       <ul>
         <li><a href="sec_interp.core.utils.i18n.html#module-sec_interp.core.utils.i18n">module</a>
-</li>
-      </ul></li>
-      <li>
-    sec_interp.core.utils.io
-
-      <ul>
-        <li><a href="sec_interp.core.utils.io.html#module-sec_interp.core.utils.io">module</a>
 </li>
       </ul></li>
       <li>
@@ -4733,6 +4731,13 @@ window.runMermaid = runMermaid;</script>
 </li>
       </ul></li>
       <li>
+    sec_interp.exporters.map_settings
+
+      <ul>
+        <li><a href="sec_interp.exporters.map_settings.html#module-sec_interp.exporters.map_settings">module</a>
+</li>
+      </ul></li>
+      <li>
     sec_interp.exporters.pdf_exporter
 
       <ul>
@@ -4744,6 +4749,13 @@ window.runMermaid = runMermaid;</script>
 
       <ul>
         <li><a href="sec_interp.exporters.profile_exporters.html#module-sec_interp.exporters.profile_exporters">module</a>
+</li>
+      </ul></li>
+      <li>
+    sec_interp.exporters.qgis_io
+
+      <ul>
+        <li><a href="sec_interp.exporters.qgis_io.html#module-sec_interp.exporters.qgis_io">module</a>
 </li>
       </ul></li>
       <li>
@@ -4849,6 +4861,13 @@ window.runMermaid = runMermaid;</script>
 
       <ul>
         <li><a href="sec_interp.gui.adapters.profile_extractor.html#module-sec_interp.gui.adapters.profile_extractor">module</a>
+</li>
+      </ul></li>
+      <li>
+    sec_interp.gui.adapters.qgs_settings_store
+
+      <ul>
+        <li><a href="sec_interp.gui.adapters.qgs_settings_store.html#module-sec_interp.gui.adapters.qgs_settings_store">module</a>
 </li>
       </ul></li>
       <li>
@@ -5019,8 +5038,6 @@ window.runMermaid = runMermaid;</script>
         <li><a href="sec_interp.gui.preview_layers.html#module-sec_interp.gui.preview_layers">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     sec_interp.gui.preview_layers.drillholes
 
@@ -5028,6 +5045,8 @@ window.runMermaid = runMermaid;</script>
         <li><a href="sec_interp.gui.preview_layers.drillholes.html#module-sec_interp.gui.preview_layers.drillholes">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     sec_interp.gui.preview_layers.geology
 
@@ -5601,6 +5620,8 @@ window.runMermaid = runMermaid;</script>
 </li>
       <li><a href="sec_interp.gui.dialog_interpretation_manager.html#sec_interp.gui.dialog_interpretation_manager.InterpretationManager.set_preview_update_handler">set_preview_update_handler() (sec_interp.gui.dialog_interpretation_manager.InterpretationManager method)</a>
 </li>
+      <li><a href="sec_interp.core.utils.i18n.html#sec_interp.core.utils.i18n.set_translator">set_translator() (in module sec_interp.core.utils.i18n)</a>
+</li>
       <li><a href="sec_interp.gui.ui.pages.settings.symbology_units.html#sec_interp.gui.ui.pages.settings.symbology_units.UnitsEditorMixin.set_unit_manager">set_unit_manager() (sec_interp.gui.ui.pages.settings.symbology_units.UnitsEditorMixin method)</a>
 </li>
       <li><a href="sec_interp.gui.tasks.drillhole_task.html#sec_interp.gui.tasks.drillhole_task.DrillholeGenerationTask.setProgress">setProgress() (sec_interp.gui.tasks.drillhole_task.DrillholeGenerationTask method)</a>
@@ -5619,6 +5640,8 @@ window.runMermaid = runMermaid;</script>
         <li><a href="sec_interp.gui.ui.pages.settings_page.html#sec_interp.gui.ui.pages.settings_page.SettingsPage">(class in sec_interp.gui.ui.pages.settings_page)</a>
 </li>
       </ul></li>
+      <li><a href="sec_interp.core.interfaces.settings_store.html#sec_interp.core.interfaces.settings_store.SettingsStore">SettingsStore (class in sec_interp.core.interfaces.settings_store)</a>
+</li>
       <li><a href="sec_interp.exporters.interpretation_3d.style.html#sec_interp.exporters.interpretation_3d.style.setup_2d_renderer">setup_2d_renderer() (in module sec_interp.exporters.interpretation_3d.style)</a>
 </li>
       <li><a href="sec_interp.gui.dialog_state_manager.html#sec_interp.gui.dialog_state_manager.StateManager.setup_indicators">setup_indicators() (sec_interp.gui.dialog_state_manager.StateManager method)</a>
@@ -5629,6 +5652,14 @@ window.runMermaid = runMermaid;</script>
       </ul></li>
       <li><a href="sec_interp.logger_config.html#sec_interp.logger_config.setup_logging">setup_logging() (in module sec_interp.logger_config)</a>
 </li>
+      <li><a href="sec_interp.core.interfaces.settings_store.html#sec_interp.core.interfaces.settings_store.InMemorySettingsStore.setValue">setValue() (sec_interp.core.interfaces.settings_store.InMemorySettingsStore method)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.interfaces.settings_store.html#sec_interp.core.interfaces.settings_store.SettingsStore.setValue">(sec_interp.core.interfaces.settings_store.SettingsStore method)</a>
+</li>
+        <li><a href="sec_interp.gui.adapters.qgs_settings_store.html#sec_interp.gui.adapters.qgs_settings_store.QgsSettingsStore.setValue">(sec_interp.gui.adapters.qgs_settings_store.QgsSettingsStore method)</a>
+</li>
+      </ul></li>
       <li><a href="sec_interp.core.validation.validation_helpers.html#sec_interp.core.validation.validation_helpers.RichValidationError.severity">severity (sec_interp.core.validation.validation_helpers.RichValidationError attribute)</a>
 </li>
       <li><a href="sec_interp.gui.main_dialog.html#sec_interp.gui.main_dialog.SecInterpDialog.show_dialog">show_dialog() (sec_interp.gui.main_dialog.SecInterpDialog method)</a>
@@ -5899,6 +5930,14 @@ window.runMermaid = runMermaid;</script>
       </ul></li>
       <li><a href="sec_interp.gui.ui.pages.settings.symbology_tab.html#sec_interp.gui.ui.pages.settings.symbology_tab.SymbologyTab">SymbologyTab (class in sec_interp.gui.ui.pages.settings.symbology_tab)</a>
 </li>
+      <li><a href="sec_interp.core.interfaces.settings_store.html#sec_interp.core.interfaces.settings_store.InMemorySettingsStore.sync">sync() (sec_interp.core.interfaces.settings_store.InMemorySettingsStore method)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.interfaces.settings_store.html#sec_interp.core.interfaces.settings_store.SettingsStore.sync">(sec_interp.core.interfaces.settings_store.SettingsStore method)</a>
+</li>
+        <li><a href="sec_interp.gui.adapters.qgs_settings_store.html#sec_interp.gui.adapters.qgs_settings_store.QgsSettingsStore.sync">(sec_interp.gui.adapters.qgs_settings_store.QgsSettingsStore method)</a>
+</li>
+      </ul></li>
       <li><a href="sec_interp.gui.interpretation_persistence_mixin.html#sec_interp.gui.interpretation_persistence_mixin.InterpretationPersistenceMixin.sync_from_layer">sync_from_layer() (sec_interp.gui.interpretation_persistence_mixin.InterpretationPersistenceMixin method)</a>
 </li>
   </ul></td>
@@ -6018,6 +6057,8 @@ window.runMermaid = runMermaid;</script>
       <li><a href="sec_interp.core.services.drillhole.trajectory_engine.html#sec_interp.core.services.drillhole.trajectory_engine.TrajectoryEngine">TrajectoryEngine (class in sec_interp.core.services.drillhole.trajectory_engine)</a>
 </li>
       <li><a href="sec_interp.core.utils.i18n.html#sec_interp.core.utils.i18n.TranslatableMixin">TranslatableMixin (class in sec_interp.core.utils.i18n)</a>
+</li>
+      <li><a href="sec_interp.core.utils.i18n.html#sec_interp.core.utils.i18n.translate">translate() (in module sec_interp.core.utils.i18n)</a>
 </li>
       <li><a href="sec_interp.core.domain.entities.html#id16">type (sec_interp.core.domain.entities.InterpretationPolygon attribute)</a>, <a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.InterpretationPolygon.type">[1]</a>
 
@@ -6241,10 +6282,10 @@ window.runMermaid = runMermaid;</script>
         <li><a href="sec_interp.core.validation.layer_validator.html#sec_interp.core.validation.layer_validator.validate_layer_has_features">(in module sec_interp.core.validation.layer_validator)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sec_interp.core.validation.validators.html#sec_interp.core.validation.validators.validate_non_empty">validate_non_empty() (in module sec_interp.core.validation.validators)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sec_interp.core.validation.validators.html#sec_interp.core.validation.validators.validate_non_negative">validate_non_negative() (in module sec_interp.core.validation.validators)</a>
 </li>
       <li><a href="sec_interp.core.validation.html#sec_interp.core.validation.validate_numeric_input">validate_numeric_input() (in module sec_interp.core.validation)</a>
@@ -6325,6 +6366,14 @@ window.runMermaid = runMermaid;</script>
 </li>
       <li><a href="sec_interp.core.domain.entities.html#sec_interp.core.domain.entities.ValidationResult">ValidationResult (in module sec_interp.core.domain.entities)</a>
 </li>
+      <li><a href="sec_interp.core.interfaces.settings_store.html#sec_interp.core.interfaces.settings_store.InMemorySettingsStore.value">value() (sec_interp.core.interfaces.settings_store.InMemorySettingsStore method)</a>
+
+      <ul>
+        <li><a href="sec_interp.core.interfaces.settings_store.html#sec_interp.core.interfaces.settings_store.SettingsStore.value">(sec_interp.core.interfaces.settings_store.SettingsStore method)</a>
+</li>
+        <li><a href="sec_interp.gui.adapters.qgs_settings_store.html#sec_interp.gui.adapters.qgs_settings_store.QgsSettingsStore.value">(sec_interp.gui.adapters.qgs_settings_store.QgsSettingsStore method)</a>
+</li>
+      </ul></li>
       <li><a href="sec_interp.exporters.html#sec_interp.exporters.VectorExporter">VectorExporter (class in sec_interp.exporters)</a>
 
       <ul>
